@@ -10,7 +10,8 @@ export type Component<T = any> =
 export type AppRouteRecordRaw = Omit<RouteRecordRaw, 'meta' | 'component' | 'children'> | {
     meta?: Meta,
     component: Component | string,
-    children: AppRouteRecordRaw[]
+    children: AppRouteRecordRaw[],
+    props?: Recordable | boolean
 }
 
 

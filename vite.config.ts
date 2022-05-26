@@ -1,13 +1,23 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import * as path from 'path'
-// https://vitejs.dev/config/
+import Components from 'unplugin-vue-components/vite'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+
 export default defineConfig({
-    plugins: [ vue() ],
+    plugins: [
+        vue(),
+        Components({
+            dts: true,
+            resolvers: [ NaiveUiResolver() ]
+        })
+    ],
     resolve: {
+        // 别名
         alias: {
             '@': path.resolve('src')
         },
         extensions: [ '.js', '.ts', '.tsx', '.jsx', '.vue' ]
     }
+
 })

@@ -1,5 +1,12 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from '@/router'
+import '@/styles/index.less'
+import { solveStyleConflict } from '@/plugins/naive'
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App)
+
+app.use(router)
+
+solveStyleConflict()
+app.mount('#app', true)

@@ -1,12 +1,20 @@
 import { AppRouteRecordRaw } from '@/router/types'
+import { Layout } from '@/layout/constant'
 
 // 公共、无需权限的路由
 const publicRouter: AppRouteRecordRaw[] = [
     {
-        path: '/',
+        path: '/root',
+        name: 'root',
+        component: Layout,
         meta: {
-            title: '主页'
+            title: 'Root'
         }
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: import('@/views/login/index.vue')
     }
 ]
 export default publicRouter

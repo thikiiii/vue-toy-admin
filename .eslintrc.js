@@ -69,6 +69,7 @@ module.exports = defineConfig({
                 svg: 'always',
                 math: 'always'
             }
-        ]
+        ],
+        'vue/multi-word-component-names': 0
     }
 })
