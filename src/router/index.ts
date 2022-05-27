@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import publicRouter from '@/router/public'
+import type { App } from 'vue'
 
 
 // const routerMoudules = import.meta.globEager('./modules/**.ts')
@@ -11,9 +12,16 @@ import publicRouter from '@/router/public'
 // }, [])
 // console.log(routeModuleList)
 
-export default createRouter({
+const router = createRouter({
     history: createWebHashHistory(),
     routes: publicRouter as RouteRecordRaw[]
 })
+export { router }
+router.beforeEach((to, from) => {
+    console.log(window.$message)
+    // return false
+})
+export const setupRouter = (app: App<Element>) => app.use(router)
+
 
 

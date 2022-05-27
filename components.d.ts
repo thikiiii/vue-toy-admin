@@ -5,8 +5,12 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    AppProvider: typeof import('./src/components/AppProvider/index.vue')['default']
+    DialogCotent: typeof import('./src/components/AppProvider/DialogCotent.vue')['default']
+    MessageContent: typeof import('./src/components/AppProvider/MessageContent.vue')['default']
+    Messagee: typeof import('./src/components/AppProvider/Messagee.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
