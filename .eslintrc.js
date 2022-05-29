@@ -22,6 +22,7 @@ module.exports = defineConfig({
     ],
     rules: {
         'comma-dangle': [ 'error', 'never' ],
+        'vue/no-multiple-template-root': 'off',
         'vue/script-setup-uses-vars': 'error',
         '@typescript-eslint/ban-ts-ignore': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
@@ -58,18 +59,7 @@ module.exports = defineConfig({
         'vue/singleline-html-element-content-newline': 'off',
         'vue/attribute-hyphenation': 'off',
         'vue/require-default-prop': 'off',
-        'vue/html-self-closing': [
-            'error',
-            {
-                html: {
-                    void: 'always',
-                    normal: 'never',
-                    component: 'always'
-                },
-                svg: 'always',
-                math: 'always'
-            }
-        ],
-        'vue/multi-word-component-names': 0
+        'vue/multi-word-component-names': 0,
+        'vue/valid-template-root':'off'
     }
 })

@@ -17,10 +17,6 @@ const router = createRouter({
     routes: publicRouter as RouteRecordRaw[]
 })
 export { router }
-router.beforeEach((to, from) => {
-    console.log(window.$message)
-    // return false
-})
 export const setupRouter = (app: App<Element>) => app.use(router)
 
 

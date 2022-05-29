@@ -9,7 +9,7 @@ export default defineConfig({
         vue(),
         Components({
             dts: true,
-            resolvers: [ NaiveUiResolver() ]
+            resolvers: [NaiveUiResolver()]
         })
     ],
     resolve: {
@@ -17,7 +17,17 @@ export default defineConfig({
         alias: {
             '@': path.resolve('src')
         },
-        extensions: [ '.js', '.ts', '.tsx', '.jsx', '.vue' ]
+        extensions: ['.js', '.ts', '.tsx', '.jsx', '.vue']
+    },
+    css: {
+        preprocessorOptions: {
+            // 配置 less 全局变量
+            less: {
+                modifyVars: {},
+                javascriptEnabled: true,
+                additionalData: `@import "src/styles/variable.less";`
+            }
+        }
     }
 
 })

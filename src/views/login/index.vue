@@ -1,16 +1,29 @@
 <template>
   <div class="login">
     <div class="login-container">
-      <div class="login-frontCover"></div>
+      <div class="login-frontCover" />
       <div class="login-form">
-        <n-button type="primary">test</n-button>
+        <n-button type="primary" @click="test">test</n-button>
+        <n-checkbox v-model:checked="value">
+          复选框
+        </n-checkbox>
+        <n-checkbox v-model:checked="value" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useThemeStore } from '@/store/modules/theme'
+import { ref } from 'vue'
+
+const value = ref()
+const themeStore = useThemeStore()
+const test = () => {
+  themeStore.toggleTheme()
+}
 </script>
+
 
 <style lang="less" scoped>
 .login {
@@ -19,7 +32,7 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: #717ff9;
+  background: @theme;
 
   .login-container {
     height: 560px;

@@ -5,18 +5,15 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AppProvider: typeof import('./src/components/AppProvider/index.vue')['default']
-    DialogCotent: typeof import('./src/components/AppProvider/DialogCotent.vue')['default']
-    MessageContent: typeof import('./src/components/AppProvider/MessageContent.vue')['default']
-    Messagee: typeof import('./src/components/AppProvider/Messagee.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
-    NConfigProvider: typeof import('naive-ui')['NConfigProvider']
+    NCheckbox: typeof import('naive-ui')['NCheckbox']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StoreMessageProvider: typeof import('./src/components/StoreMessageProvider/StoreMessageProvider.vue')['default']
   }
 }
 
