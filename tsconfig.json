@@ -21,7 +21,8 @@
       "esnext"
     ],
     "types": [
-      "vite/client"
+      "vite/client",
+      "unplugin-icons/types/vue"
     ],
     "typeRoots": [
       "./node_modules/@types/",
