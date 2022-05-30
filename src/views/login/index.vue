@@ -8,14 +8,20 @@
           <n-form-item path="username" required>
             <n-input v-model="form.username" placeholder="请输入用户名">
               <template #prefix>
-                <n-icon color="red" size="26px">
-                  <icon-carbon-accessibility />
+                <n-icon>
+                  <icon-ep-user />
                 </n-icon>
               </template>
             </n-input>
           </n-form-item>
           <n-form-item path="password" required>
-            <n-input v-model="form.password" placeholder="请输入密码" show-password-on="mousedown" type="password" />
+            <n-input v-model="form.password" placeholder="请输入密码" show-password-on="mousedown" type="password">
+              <template #prefix>
+                <n-icon>
+                  <icon-ep-lock />
+                </n-icon>
+              </template>
+            </n-input>
           </n-form-item>
           <n-form-item>
             <n-row justify-content="space-between">
@@ -38,7 +44,6 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
-// import {  } from '@vicons/ionicons5'
 
 const formRef = ref()
 const form = reactive({
