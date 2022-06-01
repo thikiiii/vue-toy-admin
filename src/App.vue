@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme="theme" :theme-overrides="themeStore.currentThemeOverrides">
+  <n-config-provider :index="index" :index-overrides="themeStore.currentThemeOverrides">
     <app-provider>
       <router-view />
     </app-provider>
@@ -14,7 +14,7 @@ import { AppProvider } from '@/components/Provider/index'
 
 const themeStore = useThemeStore()
 // 组件库主题类型
-const theme = computed(() => themeStore.themeType === 'dark' ? darkTheme : null)
+const index = computed(() => themeStore.themeType === 'dark' ? darkTheme : null)
 onMounted(() => {
   // dom加载完成后 初始化主题
   themeStore.initTheme()

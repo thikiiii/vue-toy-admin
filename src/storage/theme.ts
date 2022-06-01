@@ -1,6 +1,6 @@
 // 此文件用于操作 sessionStorage 和 localStorage
 import store from 'store'
-import { ThemeType } from '@/store/modules/theme'
+import { ThemeType } from '@/store/modules/theme/type'
 
 // 主题
 export default class ThemeStorage {

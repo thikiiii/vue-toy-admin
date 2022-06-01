@@ -1,4 +1,4 @@
-import { ThemeType } from '@/store/modules/theme'
+import { ThemeType } from '@/store/modules/theme/type'
 
 /**
  * 获取当前操作系统的主题
