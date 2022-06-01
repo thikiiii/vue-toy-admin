@@ -2,7 +2,7 @@ import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import IconsResolver from 'unplugin-icons/resolver'
 
-export const setupAutoComponents = () => Components({
+export const autoComponents = () => Components({
     // 为全局组件生成 TypeScript 声明
     dts: true,
     resolvers: [

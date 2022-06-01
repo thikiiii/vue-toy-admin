@@ -3,7 +3,8 @@ import { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Icons from 'unplugin-icons/vite'
 import { setupMock } from './mock'
-import { setupAutoComponents } from './setupAutoComponents'
+import { autoComponents } from './autoComponents'
+import { setupHtml } from './html'
 
 export const createVitePlugins = (viteEnv: ViteEnv, isBuild: boolean): PluginOption[] => {
     const { VITE_USE_MOCK } = viteEnv
@@ -15,7 +16,9 @@ export const createVitePlugins = (viteEnv: ViteEnv, isBuild: boolean): PluginOpt
             autoInstall: true
         }),
         // 组件自动按需导入
-        setupAutoComponents()
+        autoComponents(),
+        // 配置 ejs
+        setupHtml(viteEnv,isBuild)
     ]
     // mock
     VITE_USE_MOCK && plugins.push(setupMock(isBuild))

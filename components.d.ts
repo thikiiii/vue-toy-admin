@@ -5,22 +5,12 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Dialog: typeof import('./src/components/Provider/Dialog/index.vue')['default']
-    IconEpLock: typeof import('~icons/ep/lock')['default']
-    IconEpUser: typeof import('~icons/ep/user')['default']
     Message: typeof import('./src/components/Provider/Message/index.vue')['default']
-    NButton: typeof import('naive-ui')['NButton']
-    NCheckbox: typeof import('naive-ui')['NCheckbox']
-    NCol: typeof import('naive-ui')['NCol']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
-    NForm: typeof import('naive-ui')['NForm']
-    NFormItem: typeof import('naive-ui')['NFormItem']
-    NIcon: typeof import('naive-ui')['NIcon']
-    NInput: typeof import('naive-ui')['NInput']
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
     Notification: typeof import('./src/components/Provider/Notification/index.vue')['default']
-    NRow: typeof import('naive-ui')['NRow']
     Provider: typeof import('./src/components/Provider/index.vue')['default']
   }
 }
