@@ -23,9 +23,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@test: ~'100vh - 30px';
-.test {
-  height: @test;
-  width: 100%;
-  background: red;
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: @scrollColor;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: @scrollColor;
 }

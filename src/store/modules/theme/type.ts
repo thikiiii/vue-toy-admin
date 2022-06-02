@@ -15,8 +15,6 @@ export interface SystemThemeConfig {
     backgroundColor: string
     // 副背景颜色
     subBackgroundColor: string
-    // 滚动条颜色
-    scrollColor: string
     // 透明
     hover: string
     // 透明背景

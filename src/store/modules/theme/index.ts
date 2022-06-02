@@ -5,18 +5,18 @@ import { ThemeState, ThemeType } from '@/store/modules/theme/type'
 
 
 // 主题颜色
-const index = '#5a6bff'
+const themeColor = '#5a6bff'
 // 减轻颜色
-const lightenColor = lighten(index, 6)
+const lightenColor = lighten(themeColor, 6)
 
 // 主题
 export const useThemeStore = defineStore('theme', {
     state: (): ThemeState => ({
-        theme: index,
+        theme: themeColor,
         themeType: ThemeStorage.getTheme() || getSystemTheme(),
         lightThemeOverrides: {
             common: {
-                primaryColor: index,
+                primaryColor: themeColor,
                 primaryColorHover: lightenColor,
                 primaryColorPressed: lightenColor,
                 primaryColorSuppl: lightenColor
@@ -24,30 +24,28 @@ export const useThemeStore = defineStore('theme', {
         },
         darkThemeOverrides: {
             common: {
-                primaryColor: index,
+                primaryColor: themeColor,
                 primaryColorHover: lightenColor,
                 primaryColorPressed: lightenColor,
                 primaryColorSuppl: lightenColor
             }
         },
         lightThemeConfig: {
-            theme: index,
+            theme: themeColor,
             textColor: '#272828',
             subTextColor: '#606770',
             backgroundColor: '#ffffff',
             subBackgroundColor: '#f2f2f2',
-            scrollColor: 'rgba(0, 0, 0, 0.5)',
             hover: '#e8e9ed',
             transparent: 'rgba(255,255,255,.7)',
             divder: 'rgba(0, 0, 0, .06)'
         },
         darkThemeConfig: {
-            theme: index,
+            theme: themeColor,
             textColor: '#F5F6F7',
             subTextColor: '#d6d7d7',
             backgroundColor: '#242526',
             subBackgroundColor: '#2e3236',
-            scrollColor: 'rgba(255, 255, 255, 0.5)',
             hover: '#343639',
             transparent: 'rgba(36,37,38,.7)',
             divder: 'rgba(255, 255, 255, .06)'

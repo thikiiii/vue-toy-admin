@@ -50,9 +50,6 @@ const form = reactive({
   username: '',
   password: ''
 })
-onMounted(() => {
-  console.log(formRef.value)
-})
 
 </script>
 
