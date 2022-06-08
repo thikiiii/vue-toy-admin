@@ -58,7 +58,7 @@ const form = reactive({
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: @index;
+  background: @theme;
 
   &-card {
     width: 500px;

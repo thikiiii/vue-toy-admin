@@ -1,1 +1,0 @@
-export const Sidebar = () => import('@/layout/components/Sidebar/index.vue')

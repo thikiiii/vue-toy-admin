@@ -1,12 +1,18 @@
 <template>
-  <n-menu inverted :options="menuOptions" />
+  <n-menu class="menu" inverted :options="menuOptions" />
 </template>
 
 <script lang="ts" setup>
 
-const menuOptions = [
+import type { MenuOption } from 'naive-ui'
+import Lock from '~icons/ep/lock'
+import * as Icon from '@iconify-json/ep'
+
+console.log(Icon)
+console.log(Lock)
+const menuOptions: MenuOption[] = [
   {
-    label: '且听风吟',
+    label: 'sads',
     key: 'hear-the-wind-sing'
     // icon: renderIcon(BookIcon)
   },

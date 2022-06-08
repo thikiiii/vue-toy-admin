@@ -13,11 +13,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
+  height: @layout-header-height;
   border-bottom: 1px solid @divder;
+  width: 100%;
 
   .title {
     color: @textColor;
+    text-align: center;
   }
 }
 </style>
