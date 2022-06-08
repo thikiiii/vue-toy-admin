@@ -14,4 +14,5 @@
 </template>
 
 <script lang="ts" setup>
-import { DialogProvider, MessageProvider, NotificationProvider } from '@/components/Provider/index';</script>
+import { DialogProvider, MessageProvider, NotificationProvider } from '@/components/Provider/index'
+</script>

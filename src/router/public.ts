@@ -1,5 +1,5 @@
 import { AppRouteRecordRaw } from '@/router/types'
-import { Layout } from '@/layout/constant'
+import { Layout } from '@/layout/index'
 
 // 公共、无需权限的路由
 const publicRouter: AppRouteRecordRaw[] = [
