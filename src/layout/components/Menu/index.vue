@@ -14,12 +14,12 @@ const menuOptions: MenuOption[] = [
   {
     label: () => renderEllipsis({ content: '测试测试测试测试测试测试测试测试测试' }),
     key: 'hear-the-wind-sing',
-    icon: () => renderIcon({ icon: 'lock' })
+    icon: () => renderIcon({ icon: 'user-outlined' })
   },
   {
     label: '1973年的弹珠玩具',
     key: 'pinball-1973',
-    icon: () => renderIcon({ icon: 'lock' }),
+    icon: () => renderIcon({ icon: 'user-outlined' }),
     children: [
       {
         label: '鼠',

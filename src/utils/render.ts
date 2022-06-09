@@ -1,5 +1,5 @@
 import { NEllipsis, NIcon } from 'naive-ui'
-import { icons as ep } from '@iconify-json/ep'
+import { icons as ep } from '@iconify-json/ant-design'
 import { Depth } from 'naive-ui/es/icon/src/Icon'
 
 // 渲染icon配置
@@ -19,7 +19,7 @@ export const renderIcon = ({ icon, color, size, depth }: RenderIconOption) => h(
     color,
     size,
     depth
-}, h('svg', {
+}, () => h('svg', {
     innerHTML: ep.icons[icon].body,
     viewBox: '0 0 1024 1024'
 }))
@@ -36,4 +36,4 @@ export interface RenderEllipsisOption {
 
 // 渲染 ellipsis
 export const renderEllipsis = ({ expandTrigger, lineClamp, content }: RenderEllipsisOption) =>
-    h(NEllipsis, { expandTrigger, lineClamp }, content)
+    h(NEllipsis, { expandTrigger, lineClamp }, () => content)

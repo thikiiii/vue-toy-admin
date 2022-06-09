@@ -9,7 +9,7 @@
             <n-input v-model="form.username" placeholder="请输入用户名">
               <template #prefix>
                 <n-icon>
-                  <ep-user />
+                  <antd-user-outlined />
                 </n-icon>
               </template>
             </n-input>
@@ -18,7 +18,7 @@
             <n-input v-model="form.password" placeholder="请输入密码" show-password-on="mousedown" type="password">
               <template #prefix>
                 <n-icon>
-                  <ep-lock />
+                  <antd-lock-outlined />
                 </n-icon>
               </template>
             </n-input>

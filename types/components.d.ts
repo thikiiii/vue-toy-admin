@@ -4,9 +4,9 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AntdLockOutlined: typeof import('~icons/ant-design/lock-outlined')['default']
+    AntdUserOutlined: typeof import('~icons/ant-design/user-outlined')['default']
     Dialog: typeof import('./../src/components/Provider/Dialog/index.vue')['default']
-    EpLock: typeof import('~icons/ep/lock')['default']
-    EpUser: typeof import('~icons/ep/user')['default']
     Message: typeof import('./../src/components/Provider/Message/index.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCheckbox: typeof import('naive-ui')['NCheckbox']
