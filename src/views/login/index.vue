@@ -9,7 +9,7 @@
             <n-input v-model="form.username" placeholder="请输入用户名">
               <template #prefix>
                 <n-icon>
-                  <icon-ep-user />
+                  <ep-user />
                 </n-icon>
               </template>
             </n-input>
@@ -18,7 +18,7 @@
             <n-input v-model="form.password" placeholder="请输入密码" show-password-on="mousedown" type="password">
               <template #prefix>
                 <n-icon>
-                  <icon-ep-lock />
+                  <ep-lock />
                 </n-icon>
               </template>
             </n-input>

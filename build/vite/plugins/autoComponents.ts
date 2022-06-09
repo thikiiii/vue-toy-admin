@@ -13,8 +13,8 @@ export const setupAutoComponents = () => Components({
         NaiveUiResolver(),
         // icon
         IconsResolver({
-            // 前缀
-            prefix: 'icon',
+            // 不要前缀
+            prefix: false,
             // 限制 icon 为 饿了么的
             enabledCollections: [ 'ep' ]
         }) ]

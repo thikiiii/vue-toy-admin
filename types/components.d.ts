@@ -5,8 +5,8 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Dialog: typeof import('./../src/components/Provider/Dialog/index.vue')['default']
-    IconEpLock: typeof import('~icons/ep/lock')['default']
-    IconEpUser: typeof import('~icons/ep/user')['default']
+    EpLock: typeof import('~icons/ep/lock')['default']
+    EpUser: typeof import('~icons/ep/user')['default']
     Message: typeof import('./../src/components/Provider/Message/index.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCheckbox: typeof import('naive-ui')['NCheckbox']

@@ -1,25 +1,25 @@
 <template>
-  <n-menu class="menu" inverted :options="menuOptions" />
+  <n-menu class="menu" :collapsed-width="sidebarCollapsedWidth" :collapsed="collapsed" :options="menuOptions" />
 </template>
 
 <script lang="ts" setup>
 
 import type { MenuOption } from 'naive-ui'
-import Lock from '~icons/ep/lock'
-import * as Icon from '@iconify-json/ep'
+import { renderEllipsis, renderIcon } from '@/utils/render'
+import { useLayoutStore } from '@/store/modules/layout'
 
-console.log(Icon)
-console.log(Lock)
+const layoutStore = useLayoutStore()
+const { sidebarCollapsedWidth, collapsed } = storeToRefs(layoutStore)
 const menuOptions: MenuOption[] = [
   {
-    label: 'sads',
-    key: 'hear-the-wind-sing'
-    // icon: renderIcon(BookIcon)
+    label: () => renderEllipsis({ content: '测试测试测试测试测试测试测试测试测试' }),
+    key: 'hear-the-wind-sing',
+    icon: () => renderIcon({ icon: 'lock' })
   },
   {
     label: '1973年的弹珠玩具',
     key: 'pinball-1973',
-    // icon: renderIcon(BookIcon),
+    icon: () => renderIcon({ icon: 'lock' }),
     children: [
       {
         label: '鼠',

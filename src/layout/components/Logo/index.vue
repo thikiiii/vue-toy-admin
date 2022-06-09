@@ -15,6 +15,7 @@
   align-items: center;
   height: @layout-header-height;
   border-bottom: 1px solid @divder;
+  border-right: 1px solid @divder;
   width: 100%;
 
   .title {

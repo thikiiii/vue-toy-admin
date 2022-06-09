@@ -6,11 +6,13 @@ export const setupAutoImport = () => AutoImport({
     // 为全局组件生成 TypeScript 声明
     // 并指定生成目录
     dts: 'types/auto-improt.d.ts',
-    // 配置需要自动导入的目录
-    dirs: [
-        'src/store',
-        'src/storage',
-        'src/settings',
-        'src/hook'
-    ]
+    vueTemplate: true
+    // // 配置需要自动导入的目录
+    // dirs: [
+    //     'src/store',
+    //     'src/storage',
+    //     'src/settings',
+    //     'src/hook',
+    //     'src/utils'
+    // ]
 })
