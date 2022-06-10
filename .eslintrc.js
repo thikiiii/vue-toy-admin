@@ -60,6 +60,8 @@ module.exports = defineConfig({
         'vue/attribute-hyphenation': 'off',
         'vue/require-default-prop': 'off',
         'vue/multi-word-component-names': 0,
-        'vue/valid-template-root': 'off'
+        'vue/valid-template-root': 'off',
+        'vue/no-setup-props-destructure': 'off',
+        'vue/html-indent': 'off'
     }
 })

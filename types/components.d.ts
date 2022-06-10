@@ -4,18 +4,15 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AntdLockOutlined: typeof import('~icons/ant-design/lock-outlined')['default']
-    AntdUserOutlined: typeof import('~icons/ant-design/user-outlined')['default']
+    AntdMenuFoldOutlined: typeof import('~icons/ant-design/menu-fold-outlined')['default']
+    AntdMenuUnfoldOutlined: typeof import('~icons/ant-design/menu-unfold-outlined')['default']
+    AntdReloadOutlined: typeof import('~icons/ant-design/reload-outlined')['default']
     Dialog: typeof import('./../src/components/Provider/Dialog/index.vue')['default']
+    Mask: typeof import('./../src/components/Mask/index.vue')['default']
     Message: typeof import('./../src/components/Provider/Message/index.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
-    NCheckbox: typeof import('naive-ui')['NCheckbox']
-    NCol: typeof import('naive-ui')['NCol']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
-    NForm: typeof import('naive-ui')['NForm']
-    NFormItem: typeof import('naive-ui')['NFormItem']
     NIcon: typeof import('naive-ui')['NIcon']
-    NInput: typeof import('naive-ui')['NInput']
     NLayout: typeof import('naive-ui')['NLayout']
     NLayoutContent: typeof import('naive-ui')['NLayoutContent']
     NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
@@ -25,7 +22,7 @@ declare module 'vue' {
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
     Notification: typeof import('./../src/components/Provider/Notification/index.vue')['default']
-    NRow: typeof import('naive-ui')['NRow']
+    Overlay: typeof import('./../src/components/Overlay/index.vue')['default']
     Provider: typeof import('./../src/components/Provider/index.vue')['default']
   }
 }

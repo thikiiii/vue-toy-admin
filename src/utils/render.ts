@@ -1,6 +1,7 @@
 import { NEllipsis, NIcon } from 'naive-ui'
 import { icons as ep } from '@iconify-json/ant-design'
 import { Depth } from 'naive-ui/es/icon/src/Icon'
+import { h } from 'vue'
 
 // 渲染icon配置
 export interface RenderIconOption {

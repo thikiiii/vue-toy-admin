@@ -6,13 +6,14 @@
 
 <script setup lang="ts">
 import { useLayoutStore } from '@/store/modules/layout'
-
+import { storeToRefs } from 'pinia'
 const layoutStore = useLayoutStore()
+const { tabBarHeight } = storeToRefs(layoutStore)
 </script>
 
 <style lang="less" scoped>
 .tabBar {
   width: 100%;
-  height: v-bind('layoutStore.tabBarHeight');
+  height: v-bind(tabBarHeight);
 }
 </style>

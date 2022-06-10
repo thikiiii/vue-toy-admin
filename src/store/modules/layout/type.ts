@@ -17,4 +17,7 @@ export interface LayoutStore {
 
     // 移动端触发宽度
     mobileTriggerWidth: number
+
+    // 是否移动端
+    isMobile: boolean
 }

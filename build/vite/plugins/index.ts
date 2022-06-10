@@ -8,7 +8,6 @@ import { setupHtml } from './html'
 import { setupCompress } from './compress'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
-import { setupAutoImport } from './autoImport'
 
 export const createVitePlugins = (viteEnv: ViteEnv, isBuild: boolean): PluginOption[] => {
     const { VITE_USE_MOCK, VITE_LEGACY } = viteEnv
@@ -23,8 +22,6 @@ export const createVitePlugins = (viteEnv: ViteEnv, isBuild: boolean): PluginOpt
         vueJsx(),
         // 组件自动按需导入
         setupAutoComponents(),
-        // api 和 函数 自动导入
-        setupAutoImport(),
         // 配置 ejs
         setupHtml(viteEnv, isBuild)
     ]

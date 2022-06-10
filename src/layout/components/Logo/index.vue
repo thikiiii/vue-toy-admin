@@ -5,7 +5,10 @@
 </template>
 
 <script lang="ts" setup>
-
+import { useLayoutStore } from '@/store/modules/layout'
+import { storeToRefs } from 'pinia'
+const layoutStore = useLayoutStore()
+const { headerHeight } = storeToRefs(layoutStore)
 </script>
 
 <style lang="less" scoped>
@@ -13,7 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: @layout-header-height;
+  height: v-bind(headerHeight);
   border-bottom: 1px solid @divder;
   border-right: 1px solid @divder;
   width: 100%;
