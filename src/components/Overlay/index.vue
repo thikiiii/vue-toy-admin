@@ -1,8 +1,10 @@
 <template>
     <teleport :to="props.to">
-        <div v-if="show" class="overlay" @click.stop="closable">
-            <slot />
-        </div>
+        <transition name="slide-fade" appear>
+            <div v-if="show" class="overlay" @click.self="closable">
+                <slot />
+            </div>
+        </transition>
     </teleport>
 </template>
 

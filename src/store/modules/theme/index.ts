@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import ThemeStorage from '@/storage/theme'
 import { getSystemTheme, lighten } from '@/utils'
 import { ThemeState, ThemeType } from '@/store/modules/theme/type'
+import { darkTheme } from 'naive-ui'
 
 
 // 主题颜色
@@ -53,7 +54,9 @@ export const useThemeStore = defineStore('theme', {
     }),
     getters: {
         // 当前主题覆盖
-        currentThemeOverrides: (themeStore) => themeStore.themeType === 'dark' ? themeStore.darkThemeOverrides : themeStore.lightThemeOverrides
+        currentThemeOverrides: (themeStore) => themeStore.themeType === 'dark' ? themeStore.darkThemeOverrides : themeStore.lightThemeOverrides,
+        // 组件库主题类型
+        naiveThemeType: (themeStore) => themeStore.themeType === 'dark' ? darkTheme : null
     },
     actions: {
         // 初始化主题

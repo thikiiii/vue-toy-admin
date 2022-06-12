@@ -1,25 +1,33 @@
 <template>
     <n-layout has-sider class="layout" position="absolute">
+        <!-- PC 侧边栏 -->
         <n-layout-sider
-            v-if="!isMobile"
+            v-if="!isMobile && menuMode==='side'"
             collapse-mode="width"
             :collapsed-width="sidebarCollapsedWidth"
             :width="sidebarWidth"
+            inverted
             :collapsed="collapsed"
             @collapse="layoutStore.setCollapsed(true)"
             @expand="layoutStore.setCollapsed(false)"
             show-trigger="bar">
             <logo />
-            <menu-content :collapsed="collapsed" />
+            <menu-content inverted :collapsed="collapsed" />
         </n-layout-sider>
-        <overlay v-model:show="isShow">
-            <p>1561</p>
+        <!-- 移动端侧边栏 -->
+        <overlay v-model:show="mobileMenuVisible">
+            <n-layout-sider inverted class="layout-mobileMenu" :width="sidebarWidth">
+                <logo />
+                <menu-content inverted />
+            </n-layout-sider>
         </overlay>
         <n-layout>
+            <!-- 头部 -->
             <n-layout-header class="layout-header">
                 <header-content />
             </n-layout-header>
             <tab-bar />
+            <!-- 内容 -->
             <n-layout-content embedded class="layout-main">
                 <main-content />
             </n-layout-content>
@@ -30,7 +38,7 @@
 <script lang="ts" setup>
 import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/index'
 import { useLayoutStore } from '@/store/modules/layout'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { Overlay } from '@/components/Overlay/index'
 
@@ -41,10 +49,10 @@ const {
     collapsed,
     headerHeight,
     tabBarHeight,
-    isMobile
+    isMobile,
+    mobileMenuVisible,
+    menuMode
 } = storeToRefs(layoutStore)
-
-const isShow = ref(true)
 onMounted(() => {
     // 监听判断是否是移动端
     window.addEventListener('resize', layoutStore.judgeMobile)
@@ -66,6 +74,10 @@ onBeforeUnmount(() => {
     &-main {
         padding: 20px;
         height: calc(100% - v-bind(headerHeight) - v-bind(tabBarHeight));
+    }
+    
+    &-mobileMenu {
+        height: 100vh;
     }
 }
 </style>

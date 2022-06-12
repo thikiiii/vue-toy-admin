@@ -43,6 +43,8 @@
 </template>
 
 <script lang="ts" setup>
+import { reactive, ref } from 'vue'
+
 const formRef = ref()
 const form = reactive({
   username: '',
