@@ -18,9 +18,7 @@
                 <div class="headerContent-left-logo-container">
                     <logo />
                 </div>
-                <div class="headerContent-left-menu-container">
-                    <menu-content mode="horizontal" collapsed />
-                </div>
+                <menu-content mode="horizontal" collapsed />
             </template>
         </div>
         <div class="headerContent-right">
@@ -30,27 +28,27 @@
 </template>
 
 <script lang="ts" setup>
-    import { Logo, MenuContent } from '@/layout/index'
-    import { useLayoutStore } from '@/store/modules/layout'
-    import { computed } from 'vue'
-    
-    const layoutStore = useLayoutStore()
-    const test = () => {
-        if (layoutStore.menuMode === 'top') {
-            layoutStore.menuMode = 'side'
-        } else {
-            layoutStore.menuMode = 'top'
-        }
+import { Logo, MenuContent } from '@/layout/index'
+import { useLayoutStore } from '@/store/modules/layout'
+import { computed } from 'vue'
+
+const layoutStore = useLayoutStore()
+const test = () => {
+    if (layoutStore.menuMode === 'top') {
+        layoutStore.menuMode = 'side'
+    } else {
+        layoutStore.menuMode = 'top'
     }
-    
-    // 菜单icon 状态
-    const menuIconStatus = computed(() => layoutStore.isMobile ? layoutStore.mobileMenuVisible : layoutStore.collapsed)
-    
-    // 菜单icon 处理
-    const menuIconHandle = (status: boolean) => {
-        layoutStore.isMobile ?
-            layoutStore.setMobileMenuVisible(status) : layoutStore.setCollapsed(status)
-    }
+}
+
+// 菜单icon 状态
+const menuIconStatus = computed(() => layoutStore.isMobile ? layoutStore.mobileMenuVisible : layoutStore.collapsed)
+
+// 菜单icon 处理
+const menuIconHandle = (status: boolean) => {
+    layoutStore.isMobile ?
+        layoutStore.setMobileMenuVisible(status) : layoutStore.setCollapsed(status)
+}
 </script>
 
 <style lang="less" scoped>
@@ -77,10 +75,6 @@
             height: 100%;
             width: v-bind('layoutStore.sidebarWidth');
             flex-shrink: 0;
-        }
-        
-        &-menu-container {
-            overflow: scroll;
         }
     }
     

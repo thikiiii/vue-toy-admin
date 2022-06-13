@@ -20,7 +20,6 @@ declare module 'vue' {
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
     Notification: typeof import('./../src/components/Provider/Notification/index.vue')['default']
-    NScrollbar: typeof import('naive-ui')['NScrollbar']
     Overlay: typeof import('./../src/components/Overlay/index.vue')['default']
     Provider: typeof import('./../src/components/Provider/index.vue')['default']
   }
