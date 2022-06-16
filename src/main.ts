@@ -1,13 +1,17 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import {  setupRouter } from '@/router'
+import { setupRouter } from '@/router'
 import '@/styles/index.less'
 import { setupStore } from '@/store'
+import { setupGlobalComponent } from '@/components'
 
 const app = createApp(App)
 
 // 挂载状态管理
 setupStore(app)
+
+// 挂载全局组件
+setupGlobalComponent(app)
 
 // 挂载路由
 setupRouter(app)

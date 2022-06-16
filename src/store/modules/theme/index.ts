@@ -6,7 +6,7 @@ import { darkTheme } from 'naive-ui'
 
 
 // 主题颜色
-const themeColor = '#5a6bff'
+const themeColor = '#6366f1'
 // 减轻颜色
 const lightenColor = lighten(themeColor, 6)
 

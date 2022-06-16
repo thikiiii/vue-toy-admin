@@ -15,11 +15,7 @@ export const setupAutoComponents = () => Components({
         IconsResolver({
             // 不要前缀
             prefix: false,
-            // 限制 icon 为 ant、la、mdi
-            enabledCollections: [ 'ant-design', 'la', 'mdi' ],
-            // 别名
-            alias: {
-                antd: 'ant-design'
-            }
+            // 限制 icon 为mdi
+            enabledCollections: [ 'mdi' ]
         }) ]
 })

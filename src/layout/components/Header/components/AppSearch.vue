@@ -1,8 +1,6 @@
 <template>
     <!-- App搜索 -->
-    <n-icon size="22" @click="visibleModal=true" class="cursor-pointer">
-        <antd-search-outlined />
-    </n-icon>
+    <icon size="22" icon="magnify" @click="visibleModal=true" pointer />
     <n-modal v-model:show="visibleModal">
         <n-card
             class="appSearch"
@@ -14,56 +12,51 @@
         >
             <n-input v-model="searchText" placeholder="搜索菜单..." size="large">
                 <template #suffix>
-                    <n-icon size="22">
-                        <antd-search-outlined />
-                    </n-icon>
+                    <icon size="22" icon="magnify" />
                 </template>
             </n-input>
-            <icon icon-library="antd" icon="user-outlined" />
-            <div class="appSearch-content">
-                <h3 class="appSearch-content-title" v-if="historyRecordList.length&&!menuList.length">历史记录</h3>
-                <ul class="appSearch-content-list">
-                    <li class="appSearch-content-list-item" :key="i" v-for="(item,i) in historyRecordList">
-                        <n-icon size="22" />
-                        <span v-for="(menu,index) in item.menuList" :key="menu.path">{{ menu.title }}
-                            <n-icon v-if="index!==item.menuList.length-1" />
-                        </span>
-                    </li>
-                </ul>
-                <h3 class="appSearch-content-title" v-if="menuList.length">结果</h3>
+            <div class="appSearch-list" v-if="!menuList.length">
+                <!-- 记录 -->
+                <n-card
+                    hoverable size="small"
+                    :key="i"
+                    v-for="(item,i) in historyRecordList">
+                    <div class="appSearch-list-item">
+                        <div class="appSearch-list-item-name">
+                            <icon class="appSearch-list-item-icon" size="22" :icon="item.icon" />
+                            <span v-for="(title,index) in item.menuList" :key="title">
+                                {{ title }}
+                                <icon v-if="index!==item.menuList.length-1" size="20" icon="chevron-right" />
+                            </span>
+                        </div>
+                        <div class="appSearch-list-item-other">
+                            <icon size="20" icon="arrow-left-bottom" />
+                        </div>
+                    </div>
+                </n-card>
             </div>
-            <n-empty v-if="isEmpty" description="什么也没有找到" />
+            <n-empty v-if="!menuList.length&&!historyRecordList.length" description="什么也没有找到" />
             <template #footer>
                 <div class="appSearch-footer">
-                    <div class="appSearch-footer-button">
-                        <icon
-                            icon="enter-outlined"
-                            size="16"
-                            class="appSearch-footer-button-icon"
-                            icon-library="antd" />
-                        <span class="appSearch-footer-button-text">回车</span>
+                    <div class="appSearch-footer-prompt">
+                        <div class="appSearch-footer-prompt-key" v-for="item in keyPrompt" :key="item.prompt">
+                            <icon
+                                v-for="icon in item.icons"
+                                :key="icon.name"
+                                :icon="icon.name"
+                                size="16"
+                                :pointer="false"
+                                class="appSearch-footer-prompt-key-icon"
+                                :library="icon.iconLibrary" />
+                            {{ item.prompt }}
+                        </div>
                     </div>
-                    <div class="appSearch-footer-button">
-                        <icon
-                            icon="arrow-up"
-                            size="16"
-                            class="appSearch-footer-button-icon"
-                            icon-library="la" />
-                        <icon
-                            icon="arrow-down"
-                            size="16"
-                            class="appSearch-footer-button-icon"
-                            icon-library="la" />
-                        <span class="appSearch-footer-button-text">切换</span>
-                    </div>
-                    <div class="appSearch-footer-button">
-                        <icon
-                            icon="keyboard-esc"
-                            size="16"
-                            class="appSearch-footer-button-icon"
-                            icon-library="mdi" />
-                        <span class="appSearch-footer-button-text">回车</span>
-                    </div>
+                    <n-button size="small" quaternary>
+                        <template #icon>
+                            <icon icon="delete-empty-outline" />
+                        </template>
+                        清空记录
+                    </n-button>
                 </div>
             </template>
         </n-card>
@@ -72,8 +65,38 @@
 
 <script lang="ts" setup>
 import { reactive, toRefs } from 'vue'
-import { Icon } from '@/components/Icon'
+import useSystemStore from '@/store/modules/system'
 
+// 按键提示
+const keyPrompt = [
+    {
+        icons: [ { name: 'arrow-left-bottom', iconLibrary: 'mdi' } ],
+        prompt: '回车'
+    },
+    {
+        icons: [
+            {
+                name: 'arrow-up',
+                iconLibrary: 'mdi'
+            },
+            {
+                name: 'arrow-down',
+                iconLibrary: 'mdi'
+            }
+        ],
+        prompt: '切换'
+    },
+    {
+        icons: [
+            {
+                name: 'keyboard-esc',
+                iconLibrary: 'mdi'
+            }
+        ],
+        prompt: '切换'
+    }
+]
+console.log(useSystemStore())
 const state = reactive({
     // 模态框是否可见
     visibleModal: false,
@@ -84,63 +107,120 @@ const state = reactive({
     // 历史记录
     historyRecordList: [
         {
-            icon: 'ant-design:appstore-twotone',
-            menuList: [
-                {
-                    path: '/1',
-                    title: '测试1'
-                },
-                {
-                    path: '/2',
-                    title: '测试2'
-                }
-            ]
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
         },
         {
-            icon: 'ant-design:appstore-twotone',
-            menuList: [
-                {
-                    path: '/1',
-                    title: '测试1'
-                },
-                {
-                    path: '/2',
-                    title: '测试2'
-                }
-            ]
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
         }
-    ],
-    // 空是否显示
-    isEmpty: false
+    ]
+    
 })
 
-const { visibleModal, menuList, searchText, isEmpty, historyRecordList } = toRefs(state)
+const { visibleModal, menuList, searchText, historyRecordList } = toRefs(state)
 </script>
 
 <style lang="less" scoped>
 .appSearch {
     width: 600px;
     
-    &-content {
-        padding: 10px;
+    &-list {
         width: 100%;
         max-height: 400px;
         overflow: auto;
         margin-top: 10px;
+        
+        :deep(.n-card) {
+            margin-bottom: 5px;
+            
+            .n-card__content {
+                width: 100%;
+            }
+            
+            &:hover {
+                background: @theme;
+                color: white;
+            }
+        }
+        
+        &-item {
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            
+            &-name {
+                display: flex;
+                align-items: center;
+                flex: 1;
+            }
+            
+            span {
+                display: flex;
+                align-items: center;
+            }
+            
+            &-icon {
+                margin-right: 10px;
+            }
+        }
     }
     
     &-footer {
         display: flex;
         align-items: center;
-        gap: 20px;
+        justify-content: space-between;
         
-        &-button {
+        &-prompt {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 20px;
             
-            &-icon {
-                box-shadow: inset 0 -2px #cdcde6, inset 0 0 1px 1px #fff, 0 1px 2px 1px #1e235a66;
+            &-key {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                
+                &-icon {
+                    box-shadow: inset 0 -2px #cdcde6, inset 0 0 1px 1px #fff, 0 1px 2px 1px #1e235a66;
+                }
             }
         }
     }

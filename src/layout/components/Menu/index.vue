@@ -21,11 +21,12 @@
 
 <script lang="ts" setup>
 import { MenuOption, NMenu } from 'naive-ui'
-import { renderEllipsis, renderIcon } from '@/utils/render'
 import { useLayoutStore } from '@/store/modules/layout'
 import { storeToRefs } from 'pinia'
 import { reactive, ref } from 'vue'
 import { useCompressHorizontalMenu } from '@/layout/components/Header/hook/useCompressHorizontalMenu'
+import RenderIcon from '@/components/Render/icon'
+import RenderEllipsis from '@/components/Render/ellipsis'
 
 interface Props {
     // 模式
@@ -48,9 +49,9 @@ const { sidebarCollapsedWidth } = storeToRefs(layoutStore)
 let menuOptions: { list: MenuOption[] } = reactive({
     list: [
         {
-            label: () => renderEllipsis({ content: '测试测试测试' }),
+            label: () => RenderEllipsis({ content: '测试测试测试测试测试测试测试测试测试' }),
             key: 'hear-the-wind-sing',
-            icon: () => renderIcon({ icon: 'user-outlined' })
+            icon: () => RenderIcon({ icon: 'lock' })
         },
         {
             label: '1973年的弹珠玩具',
@@ -204,7 +205,6 @@ props.mode === 'horizontal' && useCompressHorizontalMenu({
     .menuPlaceholder {
         visibility: hidden;
         position: absolute;
-        background: #5a6bff;
     }
 }
 

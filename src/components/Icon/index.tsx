@@ -1,44 +1,45 @@
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
+import { Depth } from 'naive-ui/es/icon/src/Icon'
 import { NIcon } from 'naive-ui'
-import { icons as antd } from '@iconify-json/ant-design'
-import { icons as la } from '@iconify-json/la'
 import { icons as mdi } from '@iconify-json/mdi'
 
+export type IconLibrary = 'mdi'
+
 // 图标库
-const icon = {
-    antd,
-    la,
+const icons = {
+    // https://icon-sets.iconify.design/mdi/
+    // https://materialdesignicons.com/
     mdi
 }
-console.log(la)
-export const Icon = defineComponent({
+const Icon = defineComponent({
     name: 'Icon',
     props: {
-        // 图标库
-        iconLibrary: {
-            type: String,
-            validator(value: string) {
-                return [ 'antd', 'la', 'mdi' ].includes(value)
-            },
-            required: true
+        library: {
+            type: String as PropType<IconLibrary>,
+            default: 'mdi'
         },
-        // 图标
-        icon: {
-            type: String,
-            required: true
+        depth: {
+            type: [ String, Number ] as PropType<Depth>
         },
+        icon: { required: true, type: String },
         color: String,
-        size: [ Number, String ]
+        size: String,
+        pointer: { default: true, type: Boolean }
     },
     setup(props) {
-        console.log(props)
-        const svg = <svg viewBox="0 0 1024 1024"
-                         v-html={ icon[props.iconLibrary].icons[props.icon].body }></svg>
+
+        const iconLibrary = icons[props.library]
         return () => (
-            <NIcon size={ props.size }
-                   color={ props.color }
-                   component={ svg }>
+            <NIcon
+                class={ props.pointer ? 'cursor-pointer' : undefined }
+                size={ props.size }
+                depth={ props.depth }
+                color={ props.color }>
+                <svg
+                    viewBox={ `0 0 ${ iconLibrary?.width } ${ iconLibrary?.height }` }
+                    v-html={ iconLibrary?.icons[props.icon]?.body } />
             </NIcon>
         )
     }
 })
+export default Icon
