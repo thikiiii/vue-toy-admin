@@ -1,22 +1,22 @@
 <template>
-    <n-layout has-sider class="layout" position="absolute">
+    <n-layout class="layout" has-sider position="absolute">
         <!-- PC 侧边栏 -->
         <n-layout-sider
             v-if="!isMobile && menuMode==='side'"
-            collapse-mode="width"
+            :collapsed="collapsed"
             :collapsed-width="sidebarCollapsedWidth"
             :width="sidebarWidth"
+            collapse-mode="width"
             inverted
-            :collapsed="collapsed"
+            show-trigger="bar"
             @collapse="layoutStore.setCollapsed(true)"
-            @expand="layoutStore.setCollapsed(false)"
-            show-trigger="bar">
+            @expand="layoutStore.setCollapsed(false)">
             <logo />
-            <menu-content inverted :collapsed="collapsed" />
+            <menu-content :collapsed="collapsed" inverted />
         </n-layout-sider>
         <!-- 移动端侧边栏 -->
         <overlay v-model:show="mobileMenuVisible">
-            <n-layout-sider inverted class="layout-mobileMenu" :width="sidebarWidth">
+            <n-layout-sider :width="sidebarWidth" class="layout-mobileMenu" inverted>
                 <logo />
                 <menu-content inverted />
             </n-layout-sider>
@@ -28,7 +28,7 @@
             </n-layout-header>
             <tab-bar />
             <!-- 内容 -->
-            <n-layout-content embedded class="layout-main">
+            <n-layout-content class="layout-main">
                 <main-content />
             </n-layout-content>
         </n-layout>

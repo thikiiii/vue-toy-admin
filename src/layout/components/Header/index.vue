@@ -1,3 +1,22 @@
+<script lang="ts" setup>
+import { Logo, MenuContent } from '@/layout/index'
+import { useLayoutStore } from '@/store/modules/layout'
+import {
+    AppRefresh,
+    AppSearch,
+    Breadcrumb,
+    FullScreen,
+    Github,
+    MenuCollapsed
+} from '@/layout/components/Header/components'
+import { provide } from 'vue'
+import Avatar from '@/layout/components/Header/components/Avatar.vue'
+
+
+const layoutStore = useLayoutStore()
+provide('size', '22')
+
+</script>
 <template>
     <div class="headerContent">
         <div class="headerContent-left">
@@ -15,26 +34,23 @@
                     <logo />
                 </div>
                 <!-- 水平菜单 -->
-                <menu-content mode="horizontal" collapsed />
+                <menu-content collapsed mode="horizontal" />
             </template>
         </div>
         <div class="headerContent-right">
+            <!-- 搜索 -->
             <app-search />
+            <!-- GITHUB -->
+            <github />
+            <!-- 全屏 -->
+            <full-screen />
+            <!-- 主题切换 -->
+            <theme-switch />
+            <!-- 头像和昵称 -->
+            <avatar />
         </div>
     </div>
 </template>
-
-<script lang="ts" setup>
-import { Logo, MenuContent } from '@/layout/index'
-import { useLayoutStore } from '@/store/modules/layout'
-import { AppRefresh, AppSearch, Breadcrumb, MenuCollapsed } from '@/layout/components/Header/components'
-
-
-const layoutStore = useLayoutStore()
-
-
-</script>
-
 <style lang="less" scoped>
 .headerContent {
     display: flex;
@@ -46,13 +62,15 @@ const layoutStore = useLayoutStore()
     border-bottom: 1px solid @divder;
     gap: 10px;
     
-    &-left {
+    &-left, &-right {
         display: flex;
-        flex: .7;
-        gap: 15px;
+        gap: 20px;
         align-items: center;
+    }
+    
+    &-left {
+        flex: 1;
         overflow: hidden;
-        align-content: flex-start;
         height: 100%;
         
         &-logo-container {
@@ -63,7 +81,7 @@ const layoutStore = useLayoutStore()
     }
     
     &-right {
-        flex: .3;
+        justify-content: flex-end;
     }
 }
 </style>

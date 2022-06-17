@@ -1,9 +1,9 @@
 <template>
     <NIcon
         :class="pointer ? 'cursor-pointer' : undefined"
-        :size="size"
+        :color="color"
         :depth="depth"
-        :color="color">
+        :size="size">
         <svg
             :viewBox="`0 0 ${ iconLibrary?.width } ${ iconLibrary?.height }`"
             v-html="iconLibrary?.icons[icon]?.body" />
@@ -43,6 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
     pointer: true
 })
 const { icon, color, size, depth } = toRefs(props)
+console.log(props.color)
 const iconLibrary = icons[props.library]
 
 </script>

@@ -1,71 +1,8 @@
-<template>
-    <!-- App搜索 -->
-    <icon size="22" icon="magnify" @click="visibleModal=true" pointer />
-    <n-modal v-model:show="visibleModal">
-        <n-card
-            class="appSearch"
-            :bordered="false"
-            size="large"
-            role="dialog"
-            aria-modal="true"
-            :segmented="{ content: true,footer: 'soft'}"
-        >
-            <n-input v-model="searchText" placeholder="搜索菜单..." size="large">
-                <template #suffix>
-                    <icon size="22" icon="magnify" />
-                </template>
-            </n-input>
-            <div class="appSearch-list" v-if="!menuList.length">
-                <!-- 记录 -->
-                <n-card
-                    hoverable size="small"
-                    :key="i"
-                    v-for="(item,i) in historyRecordList">
-                    <div class="appSearch-list-item">
-                        <div class="appSearch-list-item-name">
-                            <icon class="appSearch-list-item-icon" size="22" :icon="item.icon" />
-                            <span v-for="(title,index) in item.menuList" :key="title">
-                                {{ title }}
-                                <icon v-if="index!==item.menuList.length-1" size="20" icon="chevron-right" />
-                            </span>
-                        </div>
-                        <div class="appSearch-list-item-other">
-                            <icon size="20" icon="arrow-left-bottom" />
-                        </div>
-                    </div>
-                </n-card>
-            </div>
-            <n-empty v-if="!menuList.length&&!historyRecordList.length" description="什么也没有找到" />
-            <template #footer>
-                <div class="appSearch-footer">
-                    <div class="appSearch-footer-prompt">
-                        <div class="appSearch-footer-prompt-key" v-for="item in keyPrompt" :key="item.prompt">
-                            <icon
-                                v-for="icon in item.icons"
-                                :key="icon.name"
-                                :icon="icon.name"
-                                size="16"
-                                :pointer="false"
-                                class="appSearch-footer-prompt-key-icon"
-                                :library="icon.iconLibrary" />
-                            {{ item.prompt }}
-                        </div>
-                    </div>
-                    <n-button size="small" quaternary>
-                        <template #icon>
-                            <icon icon="delete-empty-outline" />
-                        </template>
-                        清空记录
-                    </n-button>
-                </div>
-            </template>
-        </n-card>
-    </n-modal>
-</template>
-
 <script lang="ts" setup>
-import { reactive, toRefs } from 'vue'
+import { inject, reactive, toRefs } from 'vue'
 import useSystemStore from '@/store/modules/system'
+
+const size = inject<string>('size')
 
 // 按键提示
 const keyPrompt = [
@@ -157,6 +94,71 @@ const state = reactive({
 
 const { visibleModal, menuList, searchText, historyRecordList } = toRefs(state)
 </script>
+
+<template>
+    <!-- App搜索 -->
+    <icon :size="size" icon="magnify" pointer @click="visibleModal=true" />
+    <n-modal v-model:show="visibleModal">
+        <n-card
+            :bordered="false"
+            :segmented="{ content: true,footer: 'soft'}"
+            aria-modal="true"
+            class="appSearch"
+            role="dialog"
+            size="large"
+        >
+            <n-input v-model="searchText" placeholder="搜索菜单..." size="large">
+                <template #suffix>
+                    <icon icon="magnify" size="22" />
+                </template>
+            </n-input>
+            <div v-if="!menuList.length" class="appSearch-list">
+                <!-- 记录 -->
+                <n-card
+                    v-for="(item,i) in historyRecordList" :key="i"
+                    hoverable
+                    size="small">
+                    <div class="appSearch-list-item">
+                        <div class="appSearch-list-item-name">
+                            <icon :icon="item.icon" class="appSearch-list-item-icon" size="22" />
+                            <span v-for="(title,index) in item.menuList" :key="title">
+                                {{ title }}
+                                <icon v-if="index!==item.menuList.length-1" icon="chevron-right" size="20" />
+                            </span>
+                        </div>
+                        <div class="appSearch-list-item-other">
+                            <icon icon="arrow-left-bottom" size="20" />
+                        </div>
+                    </div>
+                </n-card>
+            </div>
+            <n-empty v-if="!menuList.length&&!historyRecordList.length" description="什么也没有找到" />
+            <template #footer>
+                <div class="appSearch-footer">
+                    <div class="appSearch-footer-prompt">
+                        <div v-for="item in keyPrompt" :key="item.prompt" class="appSearch-footer-prompt-key">
+                            <icon
+                                v-for="icon in item.icons"
+                                :key="icon.name"
+                                :icon="icon.name"
+                                :library="icon.iconLibrary"
+                                :pointer="false"
+                                class="appSearch-footer-prompt-key-icon"
+                                size="16" />
+                            {{ item.prompt }}
+                        </div>
+                    </div>
+                    <n-button quaternary size="small">
+                        <template #icon>
+                            <icon icon="delete-empty-outline" />
+                        </template>
+                        清空记录
+                    </n-button>
+                </div>
+            </template>
+        </n-card>
+    </n-modal>
+</template>
 
 <style lang="less" scoped>
 .appSearch {

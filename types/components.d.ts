@@ -7,6 +7,7 @@ declare module 'vue' {
     Dialog: typeof import('./../src/components/Provider/Dialog/index.vue')['default']
     Icon: typeof import('./../src/components/Icon/icon.vue')['default']
     Message: typeof import('./../src/components/Provider/Message/index.vue')['default']
+    NAvatar: typeof import('naive-ui')['NAvatar']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
     NBreadcrumbItem: typeof import('naive-ui')['NBreadcrumbItem']
     NButton: typeof import('naive-ui')['NButton']
@@ -14,6 +15,7 @@ declare module 'vue' {
     NCheckbox: typeof import('naive-ui')['NCheckbox']
     NCol: typeof import('naive-ui')['NCol']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
+    NDropdown: typeof import('naive-ui')['NDropdown']
     NEmpty: typeof import('naive-ui')['NEmpty']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
@@ -31,6 +33,7 @@ declare module 'vue' {
     NRow: typeof import('naive-ui')['NRow']
     Overlay: typeof import('./../src/components/Overlay/Overlay.vue')['default']
     Provider: typeof import('./../src/components/Provider/index.vue')['default']
+    ThemeSwitch: typeof import('./../src/components/ThemeSwitch/ThemeSwitch.vue')['default']
   }
 }
 

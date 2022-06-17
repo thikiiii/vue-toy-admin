@@ -5,8 +5,7 @@ const size = inject<string>('size')
 </script>
 
 <template>
-    <!-- 刷新 -->
-    <icon :size="size" icon="restore" pointer />
+    <icon :size="size" icon="github"></icon>
 </template>
 
 <style scoped>

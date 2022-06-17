@@ -36,7 +36,7 @@ export const useThemeStore = defineStore('theme', {
             textColor: '#272828',
             subTextColor: '#606770',
             backgroundColor: '#ffffff',
-            subBackgroundColor: '#f2f2f2',
+            subBackgroundColor: '#fafafc',
             hover: '#e8e9ed',
             transparent: 'rgba(255,255,255,.7)',
             divder: 'rgba(0, 0, 0, .06)'
@@ -45,8 +45,8 @@ export const useThemeStore = defineStore('theme', {
             theme: themeColor,
             textColor: '#F5F6F7',
             subTextColor: '#d6d7d7',
-            backgroundColor: '#242526',
-            subBackgroundColor: '#2e3236',
+            backgroundColor: '#101014',
+            subBackgroundColor: '#18181c',
             hover: '#343639',
             transparent: 'rgba(36,37,38,.7)',
             divder: 'rgba(255, 255, 255, .06)'

@@ -1,3 +1,12 @@
+<script lang="ts" setup>
+import { reactive, ref } from 'vue'
+
+const formRef = ref()
+const form = reactive({
+  username: '',
+  password: ''
+})
+</script>
 <template>
     <div class="login">
         <div class="login-card">
@@ -40,18 +49,8 @@
     </div>
 </template>
 
-<script lang="ts" setup>
-import { reactive, ref } from 'vue'
-
-const formRef = ref()
-const form = reactive({
-    username: '',
-    password: ''
-})
-</script>
-
-
 <style lang="less" scoped>
+//noinspection LessResolvedByNameOnly
 .login {
     display: flex;
     justify-content: center;
@@ -62,7 +61,7 @@ const form = reactive({
     
     &-card {
         width: 500px;
-        height: 560px;
+        height: 500px;
         box-shadow: #0003 0 0 20px;
         border-radius: 5px;
         background: white;
@@ -73,7 +72,7 @@ const form = reactive({
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        
+
         &-title {
             text-align: center;
             padding: 20px;
