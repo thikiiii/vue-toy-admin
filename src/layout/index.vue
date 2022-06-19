@@ -2,6 +2,7 @@
     <n-layout class="layout" has-sider position="absolute">
         <!-- PC 侧边栏 -->
         <n-layout-sider
+            class="layout-sider"
             v-if="!isMobile && menuMode==='side'"
             :collapsed="collapsed"
             :collapsed-width="sidebarCollapsedWidth"
@@ -36,43 +37,47 @@
 </template>
 
 <script lang="ts" setup>
-import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/index'
-import { useLayoutStore } from '@/store/modules/layout'
-import { onBeforeUnmount, onMounted } from 'vue'
-import { storeToRefs } from 'pinia'
-import { Overlay } from '@/components/Overlay/index'
-
-const layoutStore = useLayoutStore()
-const {
-    sidebarCollapsedWidth,
-    sidebarWidth,
-    collapsed,
-    headerHeight,
-    tabBarHeight,
-    isMobile,
-    mobileMenuVisible,
-    menuMode
-} = storeToRefs(layoutStore)
-onMounted(() => {
-    // 监听判断是否是移动端
-    window.addEventListener('resize', layoutStore.judgeMobile)
-})
-onBeforeUnmount(() => {
-    // 取消监听
-    window.removeEventListener('resize', layoutStore.judgeMobile)
-})
+    import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/index'
+    import { useLayoutStore } from '@/store/modules/layout'
+    import { onBeforeUnmount, onMounted } from 'vue'
+    import { storeToRefs } from 'pinia'
+    import { Overlay } from '@/components/Overlay/index'
+    
+    const layoutStore = useLayoutStore()
+    const {
+        sidebarCollapsedWidth,
+        sidebarWidth,
+        collapsed,
+        headerHeight,
+        tabBarHeight,
+        isMobile,
+        mobileMenuVisible,
+        menuMode
+    } = storeToRefs(layoutStore)
+    onMounted(() => {
+        // 监听判断是否是移动端
+        window.addEventListener('resize', layoutStore.judgeMobile)
+    })
+    onBeforeUnmount(() => {
+        // 取消监听
+        window.removeEventListener('resize', layoutStore.judgeMobile)
+    })
 </script>
 
 <style lang="less" scoped>
 .layout {
     height: 100vh;
     
+    &-sider {
+        border-right: 1px solid @divder;
+    }
+    
     &-header {
         height: v-bind(headerHeight);
     }
     
     &-main {
-        padding: 20px;
+        padding: 5px 20px;
         height: calc(100% - v-bind(headerHeight) - v-bind(tabBarHeight));
     }
     

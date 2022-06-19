@@ -3,38 +3,54 @@ import { GlobalThemeOverrides } from 'naive-ui'
 
 export type ThemeType = 'light' | 'dark'
 
-// 系统主题配置
-export interface SystemThemeConfig {
+// 自定义主题配置
+export interface CustomizeThemeConfig {
     // 主题颜色
     theme: string
-    // 字体颜色
-    textColor: string
+    
+    // 主字体颜色
+    mainTextColor: string
+    
     // 副字体颜色
     subTextColor: string
+    
+    // hover字体颜色
+    hoverTextColor: string
+    
+    // 反字体颜色
+    invertTextColor: string
+    
     // 背景颜色
-    backgroundColor: string
+    mainBackgroundColor: string
+    
     // 副背景颜色
     subBackgroundColor: string
-    // 透明
-    hover: string
-    // 透明背景
-    transparent: string
+    
+    // hover背景颜色
+    hoverBackgroundColor: string
+    
+    // 反背景颜色
+    invertBackgroundColor: string
+    
+    // 边框
+    borderColor: string
+    
     // 分割线
     divder: string
 }
 
+type ThemeTypeConfig<T> = {
+    [themeType in ThemeType]: T
+}
+
 // 主题 state
-export interface ThemeState {
+export interface ThemeStore {
     // 主题颜色
     theme: string
     // 当前主题类型
     themeType: ThemeType
-    // 明亮主题覆盖
-    lightThemeOverrides: GlobalThemeOverrides
-    // 暗黑主题覆盖
-    darkThemeOverrides: GlobalThemeOverrides
-    // 系统明亮主题
-    lightThemeConfig: SystemThemeConfig
-    // 系统暗黑主题
-    darkThemeConfig: SystemThemeConfig
+    // naive 主题
+    naive: ThemeTypeConfig<GlobalThemeOverrides>
+    // 自定义主题
+    customize: ThemeTypeConfig<CustomizeThemeConfig>
 }

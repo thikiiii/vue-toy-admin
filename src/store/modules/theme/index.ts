@@ -1,60 +1,16 @@
 import { defineStore } from 'pinia'
 import ThemeStorage from '@/storage/theme'
-import { getSystemTheme, lighten } from '@/utils'
-import { ThemeState, ThemeType } from '@/store/modules/theme/type'
+import { ThemeStore, ThemeType } from '@/store/modules/theme/type'
 import { darkTheme } from 'naive-ui'
+import { themeStore } from '@/store/modules/theme/store'
 
-
-// 主题颜色
-const themeColor = '#6366f1'
-// 减轻颜色
-const lightenColor = lighten(themeColor, 6)
 
 // 主题
 export const useThemeStore = defineStore('theme', {
-    state: (): ThemeState => ({
-        theme: themeColor,
-        themeType: ThemeStorage.getTheme() || getSystemTheme(),
-        lightThemeOverrides: {
-            common: {
-                primaryColor: themeColor,
-                primaryColorHover: lightenColor,
-                primaryColorPressed: lightenColor,
-                primaryColorSuppl: lightenColor
-            }
-        },
-        darkThemeOverrides: {
-            common: {
-                primaryColor: themeColor,
-                primaryColorHover: lightenColor,
-                primaryColorPressed: lightenColor,
-                primaryColorSuppl: lightenColor
-            }
-        },
-        lightThemeConfig: {
-            theme: themeColor,
-            textColor: '#272828',
-            subTextColor: '#606770',
-            backgroundColor: '#ffffff',
-            subBackgroundColor: '#fafafc',
-            hover: '#e8e9ed',
-            transparent: 'rgba(255,255,255,.7)',
-            divder: 'rgba(0, 0, 0, .06)'
-        },
-        darkThemeConfig: {
-            theme: themeColor,
-            textColor: '#F5F6F7',
-            subTextColor: '#d6d7d7',
-            backgroundColor: '#101014',
-            subBackgroundColor: '#18181c',
-            hover: '#343639',
-            transparent: 'rgba(36,37,38,.7)',
-            divder: 'rgba(255, 255, 255, .06)'
-        }
-    }),
+    state: (): ThemeStore => themeStore,
     getters: {
         // 当前主题覆盖
-        currentThemeOverrides: (themeStore) => themeStore.themeType === 'dark' ? themeStore.darkThemeOverrides : themeStore.lightThemeOverrides,
+        currentThemeOverrides: (themeStore) => themeStore.naive[themeStore.themeType],
         // 组件库主题类型
         naiveThemeType: (themeStore) => themeStore.themeType === 'dark' ? darkTheme : null
     },
@@ -76,10 +32,10 @@ export const useThemeStore = defineStore('theme', {
             this.themeType = themeType
             // 在 storage 中存储主题类型
             ThemeStorage.setTheme(themeType)
-            const systemThemeConfig = themeType === 'light' ? this.lightThemeConfig : this.darkThemeConfig
-            Object.keys(systemThemeConfig).forEach(key => {
+            const theme = this.customize[themeType]
+            Object.keys(theme).forEach(key => {
                 // 设置系统主题
-                bodyElement.style.setProperty(`--${ key }`, systemThemeConfig[key])
+                bodyElement.style.setProperty(`--${ key }`, theme[key])
             })
         }
     }

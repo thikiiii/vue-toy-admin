@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
-
-const formRef = ref()
-const form = reactive({
-  username: '',
-  password: ''
-})
+    import { reactive, ref } from 'vue'
+    
+    const formRef = ref()
+    const form = reactive({
+        username: '',
+        password: ''
+    })
 </script>
 <template>
     <div class="login">
@@ -67,17 +67,17 @@ const form = reactive({
         background: white;
         overflow: hidden;
         transition: .3s;
-        background: @backgroundColor;
+        background: @mainBackgroundColor;
         padding: 20px 40px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-
+        
         &-title {
             text-align: center;
             padding: 20px;
             font-size: 30px;
-            color: @textColor;
+            color: @mainTextColor;
         }
         
         
@@ -90,7 +90,7 @@ const form = reactive({
             
             &-subTitle {
                 font-size: 22px;
-                color: @textColor;
+                color: @mainTextColor;
                 margin-bottom: 10px;
             }
             
