@@ -4,8 +4,9 @@
             <icon icon="chevron-left" size="22" />
         </div>
         <div ref="scrollRef" class="tabBar-tabContainer">
-            <div v-for="item in tabBarStore.tabBar" :key="item.path"
-                 :class="tabBarStore.active===item.path?'active':undefined" class="tabBar-tabContainer-tab">
+            <div
+                v-for="item in tabBarStore.tabBar" :key="item.path"
+                :class="tabBarStore.active===item.path?'active':undefined" class="tabBar-tabContainer-tab">
                 {{ item.title }}
                 <icon class="tabBar-tabContainer-tab-icon" icon="close" size="14" />
             </div>
@@ -13,7 +14,7 @@
         <div v-show="state.scrollBtnVisible" class="tabBar-action-tab">
             <icon icon="chevron-right" size="22" />
         </div>
-        <n-dropdown :options="state.dropdownOption">
+        <n-dropdown @select="onSelect" :options="state.dropdownOption">
             <div class="tabBar-action-tab">
                 <icon icon="chevron-down" size="22" />
             </div>
@@ -22,50 +23,66 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
-import RenderIcon from '@/components/Render/icon'
-import useTabBarStore from '@/store/modules/tabBar'
-
-const tabBarStore = useTabBarStore()
-const state = reactive({
-    scrollBtnVisible: false,
-    dropdownOption: [
-        {
-            label: '刷新当前',
-            key: 'refresh',
-            icon: () => RenderIcon({ icon: 'restore' })
-        },
-        {
-            label: '关闭当前',
-            key: 'closeCurrent',
-            icon: () => RenderIcon({ icon: 'close' })
-        },
-        {
-            label: '关闭其他',
-            key: 'closeOther',
-            icon: () => RenderIcon({ icon: 'swap-horizontal' })
-        },
-        {
-            label: '关闭全部',
-            key: 'closeAll',
-            icon: () => RenderIcon({ icon: 'minus' })
-        }
-    ]
-})
-const scrollRef = ref<HTMLDivElement | null>(null)
-const isScroll = (): boolean => {
-    const scrollDom = scrollRef.value
-    if (!scrollDom) return false
-    const { clientWidth, children } = scrollDom
-    let widthSum = 0
-    return Array.from(children).some(tab => {
-        widthSum += tab.clientWidth + 15
-        return widthSum > clientWidth
+    import { onMounted, reactive, ref } from 'vue'
+    import RenderIcon from '@/components/Render/icon'
+    import useTabBarStore from '@/store/modules/tabBar'
+    
+    const tabBarStore = useTabBarStore()
+    const state = reactive({
+        scrollBtnVisible: false,
+        dropdownOption: [
+            {
+                label: '刷新当前',
+                key: 'refresh',
+                icon: () => RenderIcon({ icon: 'restore' })
+            },
+            {
+                label: '关闭当前',
+                key: 'closeCurrent',
+                icon: () => RenderIcon({ icon: 'close' })
+            },
+            {
+                label: '关闭其他',
+                key: 'closeOther',
+                icon: () => RenderIcon({ icon: 'swap-horizontal' })
+            },
+            {
+                label: '关闭全部',
+                key: 'closeAll',
+                icon: () => RenderIcon({ icon: 'minus' })
+            }
+        ]
     })
-}
-onMounted(() => {
-    console.log(isScroll())
-})
+    const scrollRef = ref<HTMLDivElement | null>(null)
+    const isScroll = (): boolean => {
+        const scrollDom = scrollRef.value
+        if (!scrollDom) return false
+        const { clientWidth, children } = scrollDom
+        let widthSum = 0
+        return Array.from(children).some(tab => {
+            widthSum += tab.clientWidth + 15
+            return widthSum > clientWidth
+        })
+    }
+    const onSelect = (key) => {
+        switch (key) {
+            case 'refresh':
+                tabBarStore.refreshCurrent()
+                break
+            case 'closeCurrent':
+                tabBarStore.closeCurrent()
+                break
+            case 'closeOther':
+                tabBarStore.closeOther()
+                break
+            case 'closeAll':
+                tabBarStore.closeAll()
+                break
+        }
+    }
+    onMounted(() => {
+        console.log(isScroll())
+    })
 </script>
 
 <style lang="less" scoped>
@@ -77,10 +94,8 @@ onMounted(() => {
     justify-content: space-between;
     align-items: center;
     gap: 15px;
-    //transition: none;
     
     &-action-tab {
-        //padding: 0 10px;
         background: @subBackgroundColor;
         display: flex;
         justify-content: center;

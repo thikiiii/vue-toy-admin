@@ -1,6 +1,7 @@
 import { CustomizeThemeConfig, ThemeStore } from '@/store/modules/theme/type'
 import { getSystemTheme, lighten } from '@/utils'
 import ThemeStorage from '@/storage/theme'
+import { GlobalThemeOverrides } from 'naive-ui'
 
 // 主题颜色
 const themeColor = '#6675ff'
@@ -38,6 +39,47 @@ const darkThemeConfig: CustomizeThemeConfig = {
 }
 
 
+const naiceConfg = (
+    {
+        mainTextColor,
+        subTextColor,
+        subBackgroundColor,
+        mainBackgroundColor,
+        invertBackgroundColor,
+        invertTextColor
+    }: CustomizeThemeConfig): GlobalThemeOverrides => ({
+    common: {
+        // 主字体颜色
+        textColor2: mainTextColor,
+        // 副字体颜色
+        textColor3: subTextColor,
+        // 侧边栏、头部的背景
+        cardColor: subBackgroundColor,
+        // 主内容背景
+        bodyColor: mainBackgroundColor,
+        // 模态框背景
+        modalColor: subBackgroundColor,
+        // 反转背景
+        invertedColor: invertBackgroundColor,
+        // 弹出框背景
+        popoverColor: subBackgroundColor,
+        primaryColor: themeColor,
+        primaryColorHover: lightenColor,
+        primaryColorPressed: lightenColor,
+        primaryColorSuppl: lightenColor
+    },
+    Card: {
+        color: subBackgroundColor,
+        borderRadius: '8px'
+    },
+    Menu: {
+        // 菜单字体反转颜色
+        itemTextColorInverted: invertTextColor,
+        // 菜单背景反转颜色
+        colorInverted: invertBackgroundColor
+    }
+})
+
 export const themeStore: ThemeStore = {
     theme: themeColor,
     themeType: ThemeStorage.getTheme() || getSystemTheme(),
@@ -46,68 +88,7 @@ export const themeStore: ThemeStore = {
         dark: darkThemeConfig
     },
     naive: {
-        light: {
-            common: {
-                // 主字体颜色
-                textColor2: lightThemeConfig.mainTextColor,
-                textColor3: lightThemeConfig.subTextColor,
-                // 侧边栏、头部的背景
-                cardColor: lightThemeConfig.subBackgroundColor,
-                // 主内容背景
-                bodyColor: lightThemeConfig.mainBackgroundColor,
-                // 模态框背景
-                modalColor: lightThemeConfig.subBackgroundColor,
-                // 反转背景
-                invertedColor: lightThemeConfig.invertBackgroundColor,
-                // 弹出框背景
-                popoverColor: lightThemeConfig.subBackgroundColor,
-                primaryColor: themeColor,
-                primaryColorHover: lightenColor,
-                primaryColorPressed: lightenColor,
-                primaryColorSuppl: lightenColor
-            },
-            Card: {
-                color: lightThemeConfig.subBackgroundColor,
-                borderRadius: '8px'
-            },
-            Menu: {
-                // 菜单字体反转颜色
-                itemTextColorInverted: lightThemeConfig.invertTextColor,
-                // 菜单背景反转颜色
-                colorInverted: lightThemeConfig.invertBackgroundColor
-            }
-        },
-        dark: {
-            common: {
-                // 主字体颜色
-                textColor2: darkThemeConfig.mainTextColor,
-                // 副字体颜色
-                textColor3: darkThemeConfig.subTextColor,
-                // 侧边栏、头部的背景
-                cardColor: darkThemeConfig.subBackgroundColor,
-                // 主内容背景
-                bodyColor: darkThemeConfig.mainBackgroundColor,
-                // 模态框背景
-                modalColor: darkThemeConfig.subBackgroundColor,
-                // 反转背景
-                invertedColor: darkThemeConfig.invertBackgroundColor,
-                // 弹出框背景
-                popoverColor: darkThemeConfig.subBackgroundColor,
-                primaryColor: themeColor,
-                primaryColorHover: lightenColor,
-                primaryColorPressed: lightenColor,
-                primaryColorSuppl: lightenColor
-            },
-            Card: {
-                color: darkThemeConfig.subBackgroundColor,
-                borderRadius: '8px'
-            },
-            Menu: {
-                // 菜单字体反转颜色
-                itemTextColorInverted: darkThemeConfig.invertTextColor,
-                // 菜单背景反转颜色
-                colorInverted: darkThemeConfig.invertBackgroundColor
-            }
-        }
+        light: naiceConfg(lightThemeConfig),
+        dark: naiceConfg(darkThemeConfig)
     }
 }
