@@ -58,7 +58,6 @@ provide('size', '22')
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 0 20px;
     border-bottom: 1px solid @divder;
     gap: 10px;
     

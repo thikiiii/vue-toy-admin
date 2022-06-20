@@ -2,11 +2,10 @@
     <n-layout class="layout" has-sider position="absolute">
         <!-- PC 侧边栏 -->
         <n-layout-sider
-            class="layout-sider"
             v-if="!isMobile && menuMode==='side'"
             :collapsed="collapsed"
-            :collapsed-width="sidebarCollapsedWidth"
-            :width="sidebarWidth"
+            :collapsed-width="collapsedWidth"
+            class="layout-sider"
             collapse-mode="width"
             inverted
             show-trigger="bar"
@@ -17,7 +16,7 @@
         </n-layout-sider>
         <!-- 移动端侧边栏 -->
         <overlay v-model:show="mobileMenuVisible">
-            <n-layout-sider :width="sidebarWidth" class="layout-mobileMenu" inverted>
+            <n-layout-sider class="layout-mobileMenu" inverted>
                 <logo />
                 <menu-content inverted />
             </n-layout-sider>
@@ -27,7 +26,7 @@
             <n-layout-header class="layout-header">
                 <header-content />
             </n-layout-header>
-            <tab-bar />
+            <tab-bar class="layout-tab-bar" />
             <!-- 内容 -->
             <n-layout-content class="layout-main">
                 <main-content />
@@ -37,31 +36,28 @@
 </template>
 
 <script lang="ts" setup>
-    import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/index'
-    import { useLayoutStore } from '@/store/modules/layout'
-    import { onBeforeUnmount, onMounted } from 'vue'
-    import { storeToRefs } from 'pinia'
-    import { Overlay } from '@/components/Overlay/index'
-    
-    const layoutStore = useLayoutStore()
-    const {
-        sidebarCollapsedWidth,
-        sidebarWidth,
-        collapsed,
-        headerHeight,
-        tabBarHeight,
-        isMobile,
-        mobileMenuVisible,
-        menuMode
-    } = storeToRefs(layoutStore)
-    onMounted(() => {
-        // 监听判断是否是移动端
-        window.addEventListener('resize', layoutStore.judgeMobile)
-    })
-    onBeforeUnmount(() => {
-        // 取消监听
-        window.removeEventListener('resize', layoutStore.judgeMobile)
-    })
+import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/index'
+import { useLayoutStore } from '@/store/modules/layout'
+import { onBeforeUnmount, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { Overlay } from '@/components/Overlay/index'
+
+const layoutStore = useLayoutStore()
+const {
+    collapsed,
+    isMobile,
+    mobileMenuVisible,
+    menuMode,
+    collapsedWidth
+} = storeToRefs(layoutStore)
+onMounted(() => {
+    // 监听判断是否是移动端
+    window.addEventListener('resize', layoutStore.judgeMobile)
+})
+onBeforeUnmount(() => {
+    // 取消监听
+    window.removeEventListener('resize', layoutStore.judgeMobile)
+})
 </script>
 
 <style lang="less" scoped>
@@ -70,19 +66,22 @@
     
     &-sider {
         border-right: 1px solid @divder;
+        width: @layout-sidebal-width !important;
     }
     
     &-header {
-        height: v-bind(headerHeight);
+        height: @layout-header-height;
+        padding: 0 10px;
     }
     
     &-main {
-        padding: 5px 20px;
-        height: calc(100% - v-bind(headerHeight) - v-bind(tabBarHeight));
+        height: calc(100% - @layout-header-height - @layout-tab-bar-height);
+        padding-bottom: 10px;
     }
     
     &-mobileMenu {
         height: 100vh;
+        width: @layout-sidebal-width !important;
     }
 }
 </style>

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-    import { reactive, ref } from 'vue'
-    
-    const formRef = ref()
-    const form = reactive({
-        username: '',
-        password: ''
-    })
+import { reactive, ref } from 'vue'
+
+const formRef = ref()
+const form = reactive({
+    username: '',
+    password: ''
+})
 </script>
 <template>
     <div class="login">
@@ -67,7 +67,7 @@
         background: white;
         overflow: hidden;
         transition: .3s;
-        background: @mainBackgroundColor;
+        background: @subBackgroundColor;
         padding: 20px 40px;
         display: flex;
         flex-direction: column;

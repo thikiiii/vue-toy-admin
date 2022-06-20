@@ -4,20 +4,14 @@
     </div>
 </template>
 
-<script lang="ts" setup>
-    import { useLayoutStore } from '@/store/modules/layout'
-    import { storeToRefs } from 'pinia'
-    
-    const layoutStore = useLayoutStore()
-    const { headerHeight } = storeToRefs(layoutStore)
-</script>
+<script lang="ts" setup></script>
 
 <style lang="less" scoped>
 .logo {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: v-bind(headerHeight);
+    height: @layout-header-height;
     width: 100%;
     
     .title {

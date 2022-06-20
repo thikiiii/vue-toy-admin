@@ -43,7 +43,6 @@ const props = withDefaults(defineProps<Props>(), {
     pointer: true
 })
 const { icon, color, size, depth } = toRefs(props)
-console.log(props.color)
 const iconLibrary = icons[props.library]
 
 </script>

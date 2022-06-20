@@ -6,10 +6,7 @@ import { LayoutStorage } from '@/storage/layout'
 const mobileTriggerWidth = 800
 export const useLayoutStore = defineStore('layout', {
     state: (): LayoutStore => ({
-        headerHeight: '66px',
-        tabBarHeight: '44px',
-        sidebarWidth: '220px',
-        sidebarCollapsedWidth: 64,
+        collapsedWidth: 64,
         collapsed: false,
         mobileTriggerWidth: mobileTriggerWidth,
         isMobile: document.body.offsetWidth <= mobileTriggerWidth,

@@ -1,8 +1,13 @@
 <script lang="ts" setup>
 import { inject, reactive, toRefs } from 'vue'
-import useSystemStore from '@/store/modules/system'
 
 const size = inject<string>('size')
+
+export interface SearchHistory {
+    icon: string
+    menuList: string[],
+    path: string
+}
 
 // 按键提示
 const keyPrompt = [
@@ -33,7 +38,6 @@ const keyPrompt = [
         prompt: '切换'
     }
 ]
-console.log(useSystemStore())
 const state = reactive({
     // 模态框是否可见
     visibleModal: false,
@@ -91,6 +95,7 @@ const state = reactive({
     ]
     
 })
+
 
 const { visibleModal, menuList, searchText, historyRecordList } = toRefs(state)
 </script>

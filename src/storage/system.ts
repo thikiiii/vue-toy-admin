@@ -1,5 +1,6 @@
 import store from 'store'
-import { SearchHistory } from '@/store/modules/system/type'
+import { SearchHistory } from '@/layout/components/Header/components/AppSearch.vue'
+
 
 // 系统
 export class SystemStorage {
