@@ -6,7 +6,8 @@
     "bootstrap": "pnpm install",
     "serve": "vite",
     "serve:open": "vite --open",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
+    "build:check": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint src --fix --ext .ts,.tsx,.vue,.js,.jsx"
   },

@@ -1,3 +1,6 @@
 import axios from 'axios'
 
-axios.create()
+console.log(import.meta.env)
+export const request = axios.create({
+    baseURL: ''
+})

@@ -1,52 +1,15 @@
+<script lang="ts" setup>
+
+import { request } from '@/services/request'
+
+console.log(request)
+</script>
+
 <template>
     <main class="main">
-        <p>156</p>
-        <n-card>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-        </n-card>
-        <n-card>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-        </n-card>
-        <n-card>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-        </n-card>
-        <n-card>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-        </n-card>
-        <n-card>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-        </n-card>
-        <n-card>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-        </n-card>
-        <n-card>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
-        </n-card>
+        <n-button @click="request">请求</n-button>
     </main>
 </template>
-
-<script lang="ts" setup></script>
 
 <style lang="less" scoped>
 .main {

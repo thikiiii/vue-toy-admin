@@ -74,7 +74,7 @@ provide('size', '22')
         
         &-logo-container {
             height: 100%;
-            width: v-bind('layoutStore.sidebarWidth');
+            width: @layout-sidebal-width;
             flex-shrink: 0;
         }
     }
