@@ -22,6 +22,7 @@ export const useCompressHorizontalMenu = (
     const compressHorizontalMenu = () => {
         if (!menuRef.value) return
         const { offsetWidth, children } = menuRef.value.$el as HTMLElement
+        if (children.length === 1) return
         // 宽度总和
         let widthSum = 0
         const index = Array.from(children).findIndex((item, i, arr) => {
