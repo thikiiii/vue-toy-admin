@@ -18,8 +18,6 @@ declare interface ViteEnv {
     VITE_GLOB_API_URL: string
     // 接口前缀
     VITE_GLOB_API_URL_PREFIX: string
-    // 代理配置
-    VITE_PROXY: [string, string][]
     // 打包压缩类型
     VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none'
     // 打包压缩是否删除源代码

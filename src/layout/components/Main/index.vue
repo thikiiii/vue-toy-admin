@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 
 import { request } from '@/services/request'
+import { wrapperEnv } from '@/utils'
 
-console.log(import.meta.env)
+console.log(wrapperEnv())
 const test = async () => {
     const {} = await request.get <any, { name: null }>('/cs/cs1')
 }
