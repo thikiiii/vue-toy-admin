@@ -1,14 +1,15 @@
-import { CustomizeThemeConfig, ThemeStore } from '@/store/modules/theme/type'
 import { getSystemTheme, lighten } from '@/utils'
-import ThemeStorage from '@/storage/theme'
+
 import { GlobalThemeOverrides } from 'naive-ui'
+import { Store } from '/#/store'
+import { StoreStorage } from '@/storage/store'
 
 // 主题颜色
 const themeColor = '#6675ff'
 // 减轻颜色
 const lightenColor = lighten(themeColor, 6)
 
-const lightThemeConfig: CustomizeThemeConfig = {
+const lightThemeConfig: Store.CustomizeThemeConfig = {
     theme: themeColor,
     mainTextColor: '#121828',
     subTextColor: '#65748b',
@@ -23,7 +24,7 @@ const lightThemeConfig: CustomizeThemeConfig = {
     scroll: '#b4bcc3'
 }
 
-const darkThemeConfig: CustomizeThemeConfig = {
+const darkThemeConfig: Store.CustomizeThemeConfig = {
     theme: themeColor,
     mainTextColor: '#edf2f7',
     subTextColor: '#a0aec0',
@@ -47,7 +48,7 @@ const naiceConfg = (
         mainBackgroundColor,
         invertBackgroundColor,
         invertTextColor
-    }: CustomizeThemeConfig): GlobalThemeOverrides => ({
+    }: Store.CustomizeThemeConfig): GlobalThemeOverrides => ({
     common: {
         // 主字体颜色
         textColor2: mainTextColor,
@@ -80,9 +81,9 @@ const naiceConfg = (
     }
 })
 
-export const themeStore: ThemeStore = {
+export const themeStore: Store.ThemeStore = {
     theme: themeColor,
-    themeType: ThemeStorage.getTheme() || getSystemTheme(),
+    themeType: StoreStorage.getTheme() || getSystemTheme(),
     customize: {
         light: lightThemeConfig,
         dark: darkThemeConfig

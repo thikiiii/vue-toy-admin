@@ -1,10 +1,10 @@
-import { ThemeType } from '@/store/modules/theme/type'
+import { Store } from '/#/store'
 
 /**
  * 获取当前操作系统的主题
  * @return 'light' | 'dark'
  * */
-export const getSystemTheme = (): ThemeType => {
+export const getSystemTheme = (): Store.ThemeType => {
     const themeMedia = window.matchMedia('(prefers-color-scheme: light)')
     return themeMedia.matches ? 'light' : 'dark'
 }

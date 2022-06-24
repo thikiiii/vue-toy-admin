@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import { TabBar, TabBarStore } from '@/store/modules/tabBar/type'
+import { Store } from '/#/store'
 
 const useTabBarStore = defineStore('tabBar', {
-    state: (): TabBarStore => ({
+    state: (): Store.TabBarStore => ({
         cacheWhiteList: [],
         tabBar: [
             {
@@ -18,7 +18,7 @@ const useTabBarStore = defineStore('tabBar', {
     }),
     actions: {
         // push tabBar
-        push(tab: TabBar) {
+        push(tab: Store.TabBar) {
             this.tabBar.push(tab)
         },
         // 删除

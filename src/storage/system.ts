@@ -1,5 +1,4 @@
 import store from 'store'
-import { SearchHistory } from '@/layout/components/Header/components/AppSearch.vue'
 
 
 // 系统
@@ -17,8 +16,8 @@ export class SystemStorage {
     static removeAutoLogin = () => store.remove(this.autoLogin)
 
     // 获取搜索记录
-    static getSearchHistory = (): SearchHistory[] | undefined => store.get(this.searchHistory)
+    static getSearchHistory = (): System.AppMenuSearch[] | undefined => store.get(this.searchHistory)
 
     // 设置搜索记录
-    static setSearchHistory = (searchHistory: SearchHistory[]) => store.set(this.searchHistory, searchHistory)
+    static setSearchHistory = (searchHistory: System.AppMenuSearch[]) => store.set(this.searchHistory, searchHistory)
 }

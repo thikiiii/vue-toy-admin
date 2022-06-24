@@ -15,7 +15,7 @@ import { Depth } from 'naive-ui/es/icon/src/Icon'
 import { icons as mdi } from '@iconify-json/mdi'
 import { toRefs } from 'vue'
 
-export type IconLibrary = 'mdi'
+export type IconLibrary = 'mdi' | string
 
 // 图标库
 const icons = {

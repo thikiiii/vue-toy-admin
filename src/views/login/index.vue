@@ -1,103 +1,102 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { Password } from '@/views/login/index'
+import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
 
-const formRef = ref()
-const form = reactive({
-    username: '',
-    password: ''
+const isMobile = ref(true)
+const loginType = shallowRef(Password)
+provide('loginType', loginType)
+const resize = () => {
+    isMobile.value = document.body.offsetWidth <= 1000
+}
+onMounted(() => {
+    resize()
+    window.addEventListener('resize', resize)
+})
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', resize)
 })
 </script>
+
 <template>
     <div class="login">
+        <div v-if="!isMobile" class="login-bg">
+            <img alt="" src="../../assets/svg/login.svg">
+        </div>
         <div class="login-card">
-            <h1 class="login-card-title">Simple Admin</h1>
+            <theme-switch class="login-card-theme" />
+            <transition appear name="right-slide-fade">
+                <h1 class="login-card-title">Simple Admin</h1>
+            </transition>
             <div class="login-card-form">
-                <p class="login-card-form-subTitle">登录</p>
-                <n-form ref="formRef" :model="form" label-placement="left">
-                    <n-form-item path="username" required>
-                        <n-input v-model="form.username" placeholder="请输入用户名">
-                            <template #prefix>
-                                <icon icon="account" />
-                            </template>
-                        </n-input>
-                    </n-form-item>
-                    <n-form-item path="password" required>
-                        <n-input
-                            v-model="form.password" placeholder="请输入密码" show-password-on="mousedown"
-                            type="password">
-                            <template #prefix>
-                                <icon icon="lock" />
-                            </template>
-                        </n-input>
-                    </n-form-item>
-                    <n-form-item>
-                        <n-row justify-content="space-between">
-                            <n-col span="8">
-                                <n-checkbox>自动登录</n-checkbox>
-                            </n-col>
-                            <n-col span="4">
-                                <span class="login-card-form-forgotPassword">忘记密码</span>
-                            </n-col>
-                        </n-row>
-                    </n-form-item>
-                    <n-form-item>
-                        <n-button block size="large" type="primary">登录</n-button>
-                    </n-form-item>
-                </n-form>
+                <component :is="loginType" />
             </div>
         </div>
     </div>
 </template>
 
 <style lang="less" scoped>
-//noinspection LessResolvedByNameOnly
 .login {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
     width: 100vw;
     height: 100vh;
     background: @theme;
     
+    &-bg {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        img {
+            width: 70%;
+        }
+    }
+    
     &-card {
-        width: 500px;
-        height: 500px;
-        box-shadow: #0003 0 0 20px;
-        border-radius: 5px;
-        background: white;
+        flex: 1;
+        height: 100%;
         overflow: hidden;
         transition: .3s;
         background: @subBackgroundColor;
         padding: 20px 40px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
+        position: relative;
         
         &-title {
             text-align: center;
-            padding: 20px;
-            font-size: 30px;
-            color: @mainTextColor;
+            font-size: 40px;
+            position: absolute;
+            top: 50px;
+            color: @theme;
+            background-image: -webkit-linear-gradient(0deg, @theme, #aa7fff);
+            -webkit-background-clip: text;
+            text-fill-color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        &-form {
+            width: 400px;
+            height: auto;
+            
+            &-title {
+                width: 100%;
+                text-align: left;
+                font-size: 30px;
+                margin-bottom: 10px;
+                font-weight: 500;
+                color: @mainTextColor;
+            }
         }
         
         
-        &-form {
-            flex: 1;
-            margin: 0 auto;
-            transition: .3s;
-            width: 100%;
-            padding: 20px 40px;
-            
-            &-subTitle {
-                font-size: 22px;
-                color: @mainTextColor;
-                margin-bottom: 10px;
-            }
-            
-            &-forgotPassword {
-                color: @subTextColor;
-                cursor: pointer;
-            }
+        &-theme {
+            position: absolute;
+            right: 15px;
+            top: 15px;
         }
     }
 }

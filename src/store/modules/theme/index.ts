@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
-import ThemeStorage from '@/storage/theme'
-import { ThemeStore, ThemeType } from '@/store/modules/theme/type'
 import { darkTheme } from 'naive-ui'
 import { themeStore } from '@/store/modules/theme/store'
+import { Store } from '/#/store'
+import { StoreStorage } from '@/storage/store'
 
 
 // 主题
 export const useThemeStore = defineStore('theme', {
-    state: (): ThemeStore => themeStore,
+    state: (): Store.ThemeStore => themeStore,
     getters: {
         // 当前主题覆盖
         currentThemeOverrides: (themeStore) => themeStore.naive[themeStore.themeType],
@@ -17,7 +17,7 @@ export const useThemeStore = defineStore('theme', {
     actions: {
         // 初始化主题
         initTheme() {
-            this.setTheme(ThemeStorage.getTheme() || this.themeType)
+            this.setTheme(StoreStorage.getTheme() || this.themeType)
         },
         // 切换主题
         toggleTheme() {
@@ -26,12 +26,12 @@ export const useThemeStore = defineStore('theme', {
             this.setTheme(type)
         },
         // 设置主题
-        setTheme(themeType: ThemeType) {
+        setTheme(themeType: Store.ThemeType) {
             const bodyElement = document.querySelector('body')
             if (!bodyElement) return false
             this.themeType = themeType
             // 在 storage 中存储主题类型
-            ThemeStorage.setTheme(themeType)
+            StoreStorage.setTheme(themeType)
             const theme = this.customize[themeType]
             Object.keys(theme).forEach(key => {
                 // 设置系统主题

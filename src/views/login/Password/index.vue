@@ -1,0 +1,75 @@
+<script lang="ts" setup>
+import { inject, reactive, Ref, ref } from 'vue'
+import { QrCode } from '@/views/login/index'
+
+const formRef = ref()
+const form = reactive({
+    username: 'admin',
+    password: '123456'
+})
+
+const loginType = inject('loginType') as Ref<typeof QrCode>
+// 设置登录类型
+const setLoginType = (component: typeof QrCode) => loginType.value = component
+
+</script>
+
+<template>
+    <div class="passwordLogin">
+        <h1 class="passwordLogin-title">登录</h1>
+        <n-form ref="formRef" :model="form" label-placement="left">
+            <transition-group appear name="right-slide-fade">
+                <n-form-item key="1" path="username" required>
+                    <n-input v-model="form.username" placeholder="请输入用户名" size="large">
+                        <template #prefix>
+                            <icon icon="account" />
+                        </template>
+                    </n-input>
+                </n-form-item>
+                <n-form-item key="2" path="password" required style="transition-delay: .1s">
+                    <n-input
+                        v-model="form.password" placeholder="请输入密码" show-password-on="mousedown"
+                        size="large"
+                        type="password">
+                        <template #prefix>
+                            <icon icon="lock" />
+                        </template>
+                    </n-input>
+                </n-form-item>
+                <n-form-item key="3" style="transition-delay: .25s">
+                    <n-row justify-content="flex-end">
+                        <n-col span="5">
+                            <span class="passwordLogin-forgotPassword">忘记密码？</span>
+                        </n-col>
+                    </n-row>
+                </n-form-item>
+                <n-form-item key="4" style="transition-delay: .4s">
+                    <n-button block size="large" type="primary">登录</n-button>
+                </n-form-item>
+                <n-space key="5" justify="space-evenly" style="transition-delay: .55s">
+                    <n-button size="large">手机登录</n-button>
+                    <n-button size="large" @click="setLoginType(QrCode)">二维码登录</n-button>
+                    <n-button size="large">注册</n-button>
+                </n-space>
+            </transition-group>
+        </n-form>
+    </div>
+</template>
+
+<style lang="less" scoped>
+.passwordLogin {
+    width: 400px;
+    height: auto;
+    
+    &-title {
+        font-size: 30px;
+        color: @mainTextColor;
+        margin-bottom: 10px;
+    }
+    
+    &-forgotPassword {
+        color: @subTextColor;
+        cursor: pointer;
+    }
+}
+</style>

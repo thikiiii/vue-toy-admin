@@ -5,11 +5,13 @@ const themeStore = useThemeStore()
 </script>
 
 <template>
-    <icon v-if="themeStore.themeType==='light'" icon="white-balance-sunny" size="22"
+    <icon v-if="themeStore.themeType==='light'" class="themeSwitch" icon="white-balance-sunny" size="22"
           @click="themeStore.setTheme('dark')" />
-    <icon v-else icon="weather-night" size="22" @click="themeStore.setTheme('light')" />
+    <icon v-else class="themeSwitch" icon="weather-night" size="22" @click="themeStore.setTheme('light')" />
 </template>
 
-<style scoped>
-
+<style lang="less" scoped>
+.themeSwitch {
+    color: @mainTextColor;
+}
 </style>

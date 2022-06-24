@@ -1,13 +1,9 @@
 <script lang="ts" setup>
 import { inject, reactive, toRefs } from 'vue'
 
+
 const size = inject<string>('size')
 
-export interface SearchHistory {
-    icon: string
-    menuList: string[],
-    path: string
-}
 
 // 按键提示
 const keyPrompt = [

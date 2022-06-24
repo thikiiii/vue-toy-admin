@@ -1,11 +1,15 @@
 import { defineStore } from 'pinia'
-import { UserStore } from '@/store/modules/user/type'
+import { Store } from '/#/store'
 
 
 export const useUserStore = defineStore('user', {
-    state: (): UserStore => ({
+    state: (): Store.UserStore => ({
         token: '',
         userinfo: null
     }),
-    actions: {}
+    actions: {
+        async passwordLogin() {
+
+        }
+    }
 })

@@ -1,17 +1,17 @@
-import { LayoutStore } from '@/store/modules/layout/type'
 import { defineStore } from 'pinia'
-import { LayoutStorage } from '@/storage/layout'
+import { StoreStorage } from '@/storage/store'
+import { Store } from '/#/store'
 
 // 移动触发宽度
 const mobileTriggerWidth = 800
 export const useLayoutStore = defineStore('layout', {
-    state: (): LayoutStore => ({
+    state: (): Store.LayoutStore => ({
         collapsedWidth: 64,
         collapsed: false,
         mobileTriggerWidth: mobileTriggerWidth,
         isMobile: document.body.offsetWidth <= mobileTriggerWidth,
         mobileMenuVisible: false,
-        menuMode: LayoutStorage.getMenuMode() || 'top'
+        menuMode: StoreStorage.getMenuMode() || 'top'
     }),
     getters: {},
     actions: {
