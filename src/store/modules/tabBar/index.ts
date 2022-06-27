@@ -7,10 +7,12 @@ const useTabBarStore = defineStore('tabBar', {
         tabBar: [
             {
                 path: '/index',
+                keepAlive: false,
                 title: '测试'
             },
             {
                 path: '/index2',
+                keepAlive: false,
                 title: '测试测试'
             }
         ],
@@ -31,13 +33,13 @@ const useTabBarStore = defineStore('tabBar', {
         },
         // 刷新当前
         refreshCurrent() {
-
+        
         },
         // 关闭其他
         closeOther() {
             const tab = this.tabBar.find(item => item.path === this.active)
             if (!tab) return
-            this.tabBar = [ tab ]
+            this.tabBar = [tab]
         },
         // 关闭全部
         closeAll() {

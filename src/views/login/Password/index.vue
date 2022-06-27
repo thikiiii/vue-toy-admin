@@ -1,17 +1,22 @@
 <script lang="ts" setup>
-import { inject, reactive, Ref, ref } from 'vue'
-import { QrCode } from '@/views/login/index'
-
-const formRef = ref()
-const form = reactive({
-    username: 'admin',
-    password: '123456'
-})
-
-const loginType = inject('loginType') as Ref<typeof QrCode>
-// 设置登录类型
-const setLoginType = (component: typeof QrCode) => loginType.value = component
-
+    import { inject, reactive, Ref, ref } from 'vue'
+    import { QrCode } from '@/views/login/index'
+    
+    const formRef = ref()
+    const form = reactive({
+        username: 'admin',
+        password: '123456'
+    })
+    const loading = ref(false)
+    
+    const loginType = inject('loginType') as Ref<typeof QrCode>
+    // 设置登录类型
+    const setLoginType = (component: typeof QrCode) => loginType.value = component
+    
+    // 处理登录
+    const handleLogin = () => {
+        loading.value = true
+    }
 </script>
 
 <template>
@@ -20,7 +25,7 @@ const setLoginType = (component: typeof QrCode) => loginType.value = component
         <n-form ref="formRef" :model="form" label-placement="left">
             <transition-group appear name="right-slide-fade">
                 <n-form-item key="1" path="username" required>
-                    <n-input v-model="form.username" placeholder="请输入用户名" size="large">
+                    <n-input v-model:value="form.username" placeholder="请输入用户名" size="large">
                         <template #prefix>
                             <icon icon="account" />
                         </template>
@@ -28,7 +33,7 @@ const setLoginType = (component: typeof QrCode) => loginType.value = component
                 </n-form-item>
                 <n-form-item key="2" path="password" required style="transition-delay: .1s">
                     <n-input
-                        v-model="form.password" placeholder="请输入密码" show-password-on="mousedown"
+                        v-model:value="form.password" placeholder="请输入密码" show-password-on="mousedown"
                         size="large"
                         type="password">
                         <template #prefix>
@@ -44,7 +49,7 @@ const setLoginType = (component: typeof QrCode) => loginType.value = component
                     </n-row>
                 </n-form-item>
                 <n-form-item key="4" style="transition-delay: .4s">
-                    <n-button block size="large" type="primary">登录</n-button>
+                    <n-button @click="handleLogin" :loading="loading" block size="large" type="primary">登录</n-button>
                 </n-form-item>
                 <n-space key="5" justify="space-evenly" style="transition-delay: .55s">
                     <n-button size="large">手机登录</n-button>

@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import { Password } from '@/views/login/index'
-import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
-
-const isMobile = ref(true)
-const loginType = shallowRef(Password)
-provide('loginType', loginType)
-const resize = () => {
-    isMobile.value = document.body.offsetWidth <= 1000
-}
-onMounted(() => {
-    resize()
-    window.addEventListener('resize', resize)
-})
-onBeforeUnmount(() => {
-    window.removeEventListener('resize', resize)
-})
+    import { Password } from '@/views/login/index'
+    import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
+    
+    const isMobile = ref(true)
+    const loginType = shallowRef(Password)
+    provide('loginType', loginType)
+    const resize = () => {
+        isMobile.value = document.body.offsetWidth <= 1000
+    }
+    onMounted(() => {
+        resize()
+        window.addEventListener('resize', resize)
+    })
+    onBeforeUnmount(() => {
+        window.removeEventListener('resize', resize)
+    })
 </script>
 
 <template>
@@ -49,7 +49,7 @@ onBeforeUnmount(() => {
         align-items: center;
         
         img {
-            width: 70%;
+            height: 50%;
         }
     }
     
