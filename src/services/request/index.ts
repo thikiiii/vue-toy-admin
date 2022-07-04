@@ -2,19 +2,20 @@ import axios from 'axios'
 import { wrapperEnv } from '@/utils'
 
 const { VITE_GLOB_API_URL } = wrapperEnv()
-const request = axios.create({
-    baseURL: VITE_GLOB_API_URL,
+const axiosInstance = axios.create({
+    baseURL: '/',
     timeout: 10000
 })
 
-request.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
     console.log(config)
+    return config
 }, error => {
     return Promise.reject(error)
 })
-request.interceptors.response.use((response) => {
+axiosInstance.interceptors.response.use((response) => {
     return response.data
 }, error => {
     console.log(error)
 })
-export default request
+export default axiosInstance

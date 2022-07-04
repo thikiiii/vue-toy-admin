@@ -15,12 +15,12 @@
             <menu-content :collapsed="collapsed" inverted />
         </n-layout-sider>
         <!-- 移动端侧边栏 -->
-        <overlay v-model:show="mobileMenuVisible">
+        <n-modal v-model:show="mobileMenuVisible">
             <n-layout-sider class="layout-mobileMenu" inverted>
                 <logo />
                 <menu-content inverted />
             </n-layout-sider>
-        </overlay>
+        </n-modal>
         <n-layout>
             <!-- 头部 -->
             <n-layout-header class="layout-header">
@@ -40,7 +40,6 @@ import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/
 import { useLayoutStore } from '@/store/modules/layout'
 import { onBeforeUnmount, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { Overlay } from '@/components/Overlay/index'
 
 const layoutStore = useLayoutStore()
 const {
@@ -81,7 +80,13 @@ onBeforeUnmount(() => {
     
     &-mobileMenu {
         height: 100vh;
+        position: fixed;
+        left: 0;
         width: @layout-sidebal-width !important;
+        
+        :deep(.n-layout-sider-scroll-container) {
+            min-width: @layout-sidebal-width !important;
+        }
     }
 }
 </style>

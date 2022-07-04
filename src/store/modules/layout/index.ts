@@ -11,7 +11,7 @@ export const useLayoutStore = defineStore('layout', {
         mobileTriggerWidth: mobileTriggerWidth,
         isMobile: document.body.offsetWidth <= mobileTriggerWidth,
         mobileMenuVisible: false,
-        menuMode: StoreStorage.getMenuMode() || 'top'
+        menuMode: StoreStorage.getMenuMode() || 'side'
     }),
     getters: {},
     actions: {

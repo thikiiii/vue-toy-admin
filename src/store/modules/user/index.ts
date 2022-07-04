@@ -13,10 +13,13 @@ export const useUserStore = defineStore('user', {
         // 密码登录
         async passwordLogin(form: Api.User.PasswordLoginRequset) {
             const passwordLoginResponse = await UserApi.passwordLogin(form)
+            console.log(passwordLoginResponse)
         },
         async getUserinfo() {
-            const data = await UserApi.getUserinfo()
-            this.userinfo = data
+            const { data } = await UserApi.getUserinfo()
+            if (data) {
+                this.userinfo = data
+            }
         }
     }
 })

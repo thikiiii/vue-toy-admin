@@ -1,22 +1,24 @@
 <script lang="ts" setup>
-    import { inject, reactive, Ref, ref } from 'vue'
-    import { QrCode } from '@/views/login/index'
-    
-    const formRef = ref()
-    const form = reactive({
-        username: 'admin',
-        password: '123456'
-    })
-    const loading = ref(false)
-    
-    const loginType = inject('loginType') as Ref<typeof QrCode>
-    // 设置登录类型
-    const setLoginType = (component: typeof QrCode) => loginType.value = component
-    
-    // 处理登录
-    const handleLogin = () => {
-        loading.value = true
-    }
+import { inject, reactive, Ref, ref } from 'vue'
+import { QrCode } from '@/views/login/index'
+import { useUserStore } from '@/store/modules/user'
+
+const userStore = useUserStore()
+const formRef = ref()
+const form = reactive({
+    username: 'admin',
+    password: '123456'
+})
+
+const loginType = inject('loginType') as Ref<typeof QrCode>
+// 设置登录类型
+const setLoginType = (component: typeof QrCode) => loginType.value = component
+
+// 处理登录
+const handleLogin = async () => {
+    userStore.loginLoading = true
+    await userStore.passwordLogin(form)
+}
 </script>
 
 <template>
@@ -42,14 +44,19 @@
                     </n-input>
                 </n-form-item>
                 <n-form-item key="3" style="transition-delay: .25s">
-                    <n-row justify-content="flex-end">
+                    <n-row key="3" justify-content="space-between" style="transition-delay: .25s">
+                        <n-col span="5">
+                            <n-checkbox>记住我</n-checkbox>
+                        </n-col>
                         <n-col span="5">
                             <span class="passwordLogin-forgotPassword">忘记密码？</span>
                         </n-col>
                     </n-row>
                 </n-form-item>
                 <n-form-item key="4" style="transition-delay: .4s">
-                    <n-button @click="handleLogin" :loading="loading" block size="large" type="primary">登录</n-button>
+                    <n-button :loading="userStore.loginLoading" block size="large" type="primary" @click="handleLogin">
+                        登录
+                    </n-button>
                 </n-form-item>
                 <n-space key="5" justify="space-evenly" style="transition-delay: .55s">
                     <n-button size="large">手机登录</n-button>

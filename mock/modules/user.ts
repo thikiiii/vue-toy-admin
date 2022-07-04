@@ -3,11 +3,11 @@ export default [
         url: '/mock/passwordLogin',
         method: 'post',
         timeout: 0,
-        response: () => {
+        response: (res) => {
+            console.log(res.body.username)
             return {
                 code: 200,
-                message: 'ok',
-                data: ['tom', 'jerry']
+                token: 'by simple admin'
             }
         }
     },
@@ -19,7 +19,7 @@ export default [
             return {
                 code: 200,
                 message: 'ok',
-                data: ['tom', 'jerry']
+                data: [ 'tom', 'jerry' ]
             }
         }
     }

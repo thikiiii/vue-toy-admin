@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 
-import { request } from '@/services/request'
+import axiosInstance from '@/services/request'
 import { wrapperEnv } from '@/utils'
 
 console.log(wrapperEnv())
 const test = async () => {
-    const {} = await request.get <any, { name: null }>('/cs/cs1')
+    const {} = await axiosInstance.get <any, { name: null }>('/cs/cs1')
 }
 </script>
 

@@ -1,26 +1,28 @@
 <script lang="ts" setup>
-    import { Password } from '@/views/login/index'
-    import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
-    
-    const isMobile = ref(true)
-    const loginType = shallowRef(Password)
-    provide('loginType', loginType)
-    const resize = () => {
-        isMobile.value = document.body.offsetWidth <= 1000
-    }
-    onMounted(() => {
-        resize()
-        window.addEventListener('resize', resize)
-    })
-    onBeforeUnmount(() => {
-        window.removeEventListener('resize', resize)
-    })
+import { Password } from '@/views/login/index'
+import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
+
+const isMobile = ref(true)
+const loginType = shallowRef(Password)
+provide('loginType', loginType)
+const resize = () => {
+    isMobile.value = document.body.offsetWidth <= 1000
+}
+onMounted(() => {
+    resize()
+    window.addEventListener('resize', resize)
+})
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', resize)
+})
 </script>
 
 <template>
     <div class="login">
         <div v-if="!isMobile" class="login-bg">
-            <img alt="" src="../../assets/svg/login.svg">
+            <transition appear name="right-slide-fade">
+                <img alt="" src="../../assets/svg/login.svg">
+            </transition>
         </div>
         <div class="login-card">
             <theme-switch class="login-card-theme" />

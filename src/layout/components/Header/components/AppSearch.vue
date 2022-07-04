@@ -34,6 +34,7 @@ const keyPrompt = [
         prompt: '切换'
     }
 ]
+// TODO: 缺默认激活
 const state = reactive({
     // 模态框是否可见
     visibleModal: false,
