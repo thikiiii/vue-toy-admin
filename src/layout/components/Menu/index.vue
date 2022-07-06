@@ -3,11 +3,13 @@
         <n-menu
             :collapsed="props.collapsed && props.mode==='vertical'"
             :collapsed-width="layoutStore.collapsedWidth"
+            :default-value="route.path"
             :inverted="inverted"
             :mode="props.mode"
             :options="menuOptions.list"
             accordion
-            class="menu" />
+            class="menu"
+            @update:value="selectMenu" />
         <!-- 垂直菜单占位 -->
         <n-menu
             v-if="props.mode==='horizontal'"
@@ -26,8 +28,7 @@ import { useCompressHorizontalMenu } from '@/layout/components/Header/hook/useCo
 import RenderIcon from '@/components/Render/icon'
 import RenderEllipsis from '@/components/Render/ellipsis'
 import { useLayoutStore } from '@/store/modules/layout'
-
-const layoutStore = useLayoutStore()
+import { useRoute, useRouter } from 'vue-router'
 
 interface Props {
     // 模式
@@ -38,6 +39,11 @@ interface Props {
     inverted?: boolean
 }
 
+const layoutStore = useLayoutStore()
+const router = useRouter()
+const route = useRoute()
+
+
 const props = withDefaults(defineProps<Props>(), {
     mode: 'vertical',
     collapsed: false,
@@ -47,9 +53,14 @@ const props = withDefaults(defineProps<Props>(), {
 let menuOptions: { list: MenuOption[] } = reactive({
     list: [
         {
-            label: () => RenderEllipsis({ content: '测试测试测试测试测试测试测试测试测试' }),
-            key: 'hear-the-wind-sing',
+            label: () => RenderEllipsis({ content: '用户' }),
+            key: '/user',
             icon: () => RenderIcon({ icon: 'lock' })
+        },
+        {
+            label: () => RenderEllipsis({ content: '角色' }),
+            key: '/role',
+            icon: () => RenderIcon({ icon: 'user' })
         }
     ]
 })
@@ -63,7 +74,9 @@ props.mode === 'horizontal' && useCompressHorizontalMenu({
         menuOptions.list = filterMenu
     }
 })
-
+const selectMenu = (key) => {
+    router.push(key)
+}
 </script>
 
 <style lang="less" scoped>

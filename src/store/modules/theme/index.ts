@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
 import { darkTheme } from 'naive-ui'
-import { themeStore } from '@/store/modules/theme/store'
+import { themeState } from '@/store/modules/theme/state'
 import { Store } from '/#/store'
 import { StoreStorage } from '@/storage/store'
 
 
 // 主题
 export const useThemeStore = defineStore('theme', {
-    state: (): Store.ThemeStore => themeStore,
+    state: (): Store.ThemeStore => themeState,
     getters: {
         // 当前主题覆盖
         currentThemeOverrides: (themeStore) => themeStore.naive[themeStore.themeType],

@@ -81,7 +81,7 @@ const naiceConfg = (
     }
 })
 
-export const themeStore: Store.ThemeStore = {
+export const themeState: Store.ThemeStore = {
     theme: themeColor,
     themeType: StoreStorage.getTheme() || getSystemTheme(),
     customize: {

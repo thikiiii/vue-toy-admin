@@ -7,7 +7,7 @@ export class UserApi {
         axiosInstance.post('/mock/passwordLogin', data)
 
     // 获取用户信息
-    static getUserinfo = (): Api.WrappingPromiseResponses<Api.User.Userinfo> =>
+    static getUserinfo = (): Api.WrapperPromiseResponses<Api.User.Userinfo> =>
         axiosInstance.get('/mock/getUserinfo')
 
 }

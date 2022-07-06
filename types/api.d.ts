@@ -1,23 +1,23 @@
 declare namespace Api {
     // 基础响应
     interface BaseResponse {
-        // code状态
+        // 系统状态
         code: number
-        // 状态信息
+        // 系统状态信息
         msg: string
-        // 副code状态
+        // 业务code状态
         subCode: number
-        // 副状态信息
+        // 业务状态信息
         subMsg: string
     }
 
     // 包装响应数据
-    interface WrappingResponses<D> extends BaseResponse {
+    interface WrapperResponses<D> extends BaseResponse {
         data?: D
     }
 
     // 包装 Promise 响应数据
-    type WrappingPromiseResponses<D> = Promise<WrappingResponses<D>>
+    type WrapperPromiseResponses<D> = Promise<WrapperResponses<D>>
 
     // 分页
     interface Pagination {
@@ -28,7 +28,7 @@ declare namespace Api {
     }
 
     // 包装 接口请求分页
-    type WrappingPageRequest<Q> = Pagination & Q
+    type WrapperPageRequest<Q> = Pagination & Q
 
     // 用户
     namespace User {
@@ -48,11 +48,18 @@ declare namespace Api {
 
         // 用户信息
         interface Userinfo {
-            userId: string | number
-            // 用户名
-            username: string
-            // 头像
-            avatar: string
+            // 权限
+            permissions: string[]
+            // 角色
+            roles: string[]
+            // 用户信息
+            info: {
+                userId: number
+                // 用户名
+                username: string
+                // 头像
+                avatar: string
+            }
         }
     }
 }

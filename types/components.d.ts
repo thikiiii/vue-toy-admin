@@ -4,9 +4,8 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Dialog: typeof import('./../src/components/Provider/Dialog/index.vue')['default']
     Icon: typeof import('./../src/components/Icon/icon.vue')['default']
-    Message: typeof import('./../src/components/Provider/Message/index.vue')['default']
+    NaiveTool: typeof import('./../src/components/Provider/NaiveTool.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
     NBreadcrumbItem: typeof import('naive-ui')['NBreadcrumbItem']
@@ -29,11 +28,9 @@ declare module 'vue' {
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NModal: typeof import('naive-ui')['NModal']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
-    Notification: typeof import('./../src/components/Provider/Notification/index.vue')['default']
     NRow: typeof import('naive-ui')['NRow']
     NSpace: typeof import('naive-ui')['NSpace']
     NThemeEditor: typeof import('naive-ui')['NThemeEditor']
-    Overlay: typeof import('./../src/components/Overlay/Overlay.vue')['default']
     Provider: typeof import('./../src/components/Provider/index.vue')['default']
     ThemeSwitch: typeof import('./../src/components/ThemeSwitch/ThemeSwitch.vue')['default']
   }

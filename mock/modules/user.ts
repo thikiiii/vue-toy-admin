@@ -4,9 +4,10 @@ export default [
         method: 'post',
         timeout: 0,
         response: (res) => {
-            console.log(res.body.username)
             return {
                 code: 200,
+                subCode: 200,
+                subMsg: '登录成功',
                 token: 'by simple admin'
             }
         }
@@ -18,8 +19,23 @@ export default [
         response: () => {
             return {
                 code: 200,
-                message: 'ok',
-                data: [ 'tom', 'jerry' ]
+                msg: 'ok',
+                subCode: 200,
+                subMsg: '登录成功',
+                data: {
+                    // 权限
+                    permissions: [],
+                    // 角色
+                    roles: [],
+                    // 用户信息
+                    info: {
+                        userId: 1,
+                        // 用户名
+                        username: 'admin',
+                        // 头像
+                        avatar: ''
+                    }
+                }
             }
         }
     }

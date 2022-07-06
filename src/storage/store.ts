@@ -9,6 +9,9 @@ export class StoreStorage {
     // 菜单模式
     public static readonly menuMode = 'MENU_MODE'
 
+    // token
+    public static readonly token = 'SIMPLE_TOKEN'
+
     // 设置菜单模式
     static setMenuMode = (menuMode: Store.MenuMode) => store.set(this.menuMode, menuMode)
 
@@ -20,4 +23,13 @@ export class StoreStorage {
 
     // 设置主题
     static setTheme = (themeType: Store.ThemeType) => store.set(this.themeType, themeType)
+
+    // 获取 token
+    static getToken = (): string | undefined => store.get(this.token)
+
+    // 设置 token
+    static setToken = (token: string) => store.set(this.token, token)
+
+    // 删除 token
+    static removeToken = () => store.remove(this.token)
 }

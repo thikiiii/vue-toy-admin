@@ -1,11 +1,9 @@
 <template>
     <n-loading-bar-provider>
         <n-dialog-provider>
-            <dialog-provider />
             <n-notification-provider>
-                <notification-provider />
                 <n-message-provider>
-                    <message-provider />
+                    <naive-tool />
                     <slot />
                 </n-message-provider>
             </n-notification-provider>
@@ -14,5 +12,5 @@
 </template>
 
 <script lang="ts" setup>
-import { DialogProvider, MessageProvider, NotificationProvider } from '@/components/Provider/index'
-</script>
+import NaiveTool from '@/components/Provider/NaiveTool.vue'</script>
+

@@ -8,12 +8,13 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use((config) => {
-    console.log(config)
+    window.$loadingBar?.start()
     return config
 }, error => {
     return Promise.reject(error)
 })
 axiosInstance.interceptors.response.use((response) => {
+    window.$loadingBar?.finish()
     return response.data
 }, error => {
     console.log(error)

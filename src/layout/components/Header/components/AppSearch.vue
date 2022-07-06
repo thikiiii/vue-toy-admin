@@ -109,7 +109,7 @@ const { visibleModal, menuList, searchText, historyRecordList } = toRefs(state)
             role="dialog"
             size="large"
         >
-            <n-input v-model="searchText" placeholder="搜索菜单..." size="large">
+            <n-input v-model="searchText" clearable placeholder="搜索菜单..." size="large">
                 <template #suffix>
                     <icon icon="magnify" size="22" />
                 </template>

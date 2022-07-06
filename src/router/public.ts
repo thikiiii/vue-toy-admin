@@ -1,15 +1,12 @@
 import { Layout } from '@/layout/index'
-import { Router } from '/#/router'
+import { RouteRecordRaw } from 'vue-router'
 
 // 公共、无需权限的路由
-const publicRouter: Router.AppRouteRecordRaw[] = [
+const publicRouter: RouteRecordRaw[] = [
     {
-        path: '/root',
-        name: 'root',
+        path: '/',
         component: Layout,
-        meta: {
-            title: 'Root'
-        }
+        redirect: '/dashboard/analysis'
     },
     {
         path: '/login',
