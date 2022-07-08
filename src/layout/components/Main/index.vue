@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 
 import { useRoute } from 'vue-router'
-import { useUserStore } from '@/store/modules/user'
+import usePermissionStore from '@/store/modules/permission'
 
+const permissionStore = usePermissionStore()
 const route = useRoute()
-const userStore = useUserStore()
 </script>
 
 <template>
     <main class="main">
         <router-view v-slot="{Component}">
             <transition appear mode="out-in" name="zoom-fade">
-                <keep-alive v-if="route.meta.keepAlive" :include="userStore.cacheMenu">
+                <keep-alive v-if="route.meta.keepAlive" :include="permissionStore.cacheMenu">
                     <component :is="Component" :key="route.fullPath" />
                 </keep-alive>
                 <component :is="Component" v-else :key="route.fullPath" />
