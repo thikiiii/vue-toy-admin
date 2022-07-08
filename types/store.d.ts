@@ -1,11 +1,9 @@
 import { GlobalThemeOverrides } from 'naive-ui'
-import { Nullable } from '/#/global'
+import { Nullable } from '#/global'
 import { RouteMeta, RouteRecordRaw } from 'vue-router'
+import { ThemeModeEnum } from '@/enums/theme'
 
 declare namespace Store {
-    // 菜单模式 side 侧边菜单模式 top 顶部菜单模式
-    type MenuMode = 'side' | 'top'
-
     // 布局 Store
     interface LayoutStore {
         // 折叠宽度
@@ -26,9 +24,6 @@ declare namespace Store {
         menuMode: MenuMode
     }
 
-
-    // 主题类型
-    type ThemeType = 'light' | 'dark'
 
     // 自定义主题配置
     interface CustomizeThemeConfig {
@@ -69,20 +64,20 @@ declare namespace Store {
         scroll: string
     }
 
-    type ThemeTypeConfig<T> = {
-        [themeType in ThemeType]: T
+    type ThemeModeConfig<T> = {
+        [themeMode in ThemeModeEnum]: T
     }
 
     // 主题 state
     interface ThemeStore {
         // 主题颜色
         theme: string
-        // 当前主题类型
-        themeType: ThemeType
+        // 当前主题模式
+        themeMode: ThemeModeEnum
         // naive 主题
-        naive: ThemeTypeConfig<GlobalThemeOverrides>
+        naive: ThemeModeConfig<GlobalThemeOverrides>
         // 自定义主题
-        customize: ThemeTypeConfig<CustomizeThemeConfig>
+        customize: ThemeModeConfig<CustomizeThemeConfig>
     }
 
     // 标签栏 Store
@@ -105,11 +100,9 @@ declare namespace Store {
     interface UserStore {
         token: Nullable<string>
         // 用户信息
-        userinfo: Nullable<Pick<Api.User.Userinfo, 'info'>>
+        userinfo: Nullable<Pick<Server.UserApi.Userinfo, 'info'>>
         // 登录 loading
         loginLoading: boolean
-        // 菜单
-        menu: RouteRecordRaw[]
     }
 
     // 权限 Store
@@ -118,5 +111,7 @@ declare namespace Store {
         authRouter: RouteRecordRaw[]
         // 公共路由
         publicRouter: RouteRecordRaw[]
+        // 菜单
+        menu: RouteRecordRaw[]
     }
 }

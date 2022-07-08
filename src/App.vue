@@ -1,18 +1,25 @@
 <template>
     <n-config-provider :theme="themeStore.naiveThemeType" :theme-overrides="themeStore.currentThemeOverrides">
         <n-theme-editor>
-            <app-provider>
-                <router-view />
-            </app-provider>
+            <n-loading-bar-provider>
+                <n-dialog-provider>
+                    <n-notification-provider>
+                        <n-message-provider>
+                            <naive-tool />
+                            <router-view />
+                        </n-message-provider>
+                    </n-notification-provider>
+                </n-dialog-provider>
+            </n-loading-bar-provider>
         </n-theme-editor>
     </n-config-provider>
 </template>
 
 <script lang="ts" setup>
+import NaiveTool from '@/components/NaiveTool/index.vue'
 import { NConfigProvider } from 'naive-ui'
 import { useThemeStore } from '@/store/modules/theme'
 import { onMounted } from 'vue'
-import AppProvider from '@/components/Provider/index.vue'
 
 const themeStore = useThemeStore()
 

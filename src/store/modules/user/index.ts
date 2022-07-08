@@ -1,26 +1,25 @@
 import { defineStore } from 'pinia'
-import { Store } from '/#/store'
+import { Store } from '#/store'
 import { UserApi } from '@/services/api/user'
-import { StoreStorage } from '@/storage/store'
+import { UserStorage } from '@/storage/user'
 
 export const useUserStore = defineStore('user', {
     state: (): Store.UserStore => ({
-        token: StoreStorage.getToken() || null,
+        token: UserStorage.getToken() || null,
         userinfo: null,
-        loginLoading: false,
-        menu: []
+        loginLoading: false
     }),
-    getters: {
-        // 缓存菜单
-        cacheMenu: (state) => state.menu.map(item => item.meta?.keepAlive ? item.name : undefined)
-    },
     actions: {
         // 密码登录
-        async passwordLogin(form: Api.User.PasswordLoginRequset) {
+        async passwordLogin(form: UserService.Request.PasswordLogin) {
             const { subCode, subMsg, token } = await UserApi.passwordLogin(form)
-            if (subCode !== 200) return window.$message?.error(subMsg)
-            StoreStorage.setToken(token)
+            if (subCode !== 200) {
+                window.$message?.error(subMsg)
+                return Promise.reject()
+            }
             this.token = token
+            UserStorage.setToken(token)
+            return Promise.resolve()
         },
         // 获取用户信息
         async getUserinfo() {

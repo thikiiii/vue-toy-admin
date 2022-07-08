@@ -14,7 +14,7 @@ const authRouteList = Object.keys(authRouterMoudules).reduce<RouteRecordRaw[]>((
 }, [])
 const router = createRouter({
     history: createWebHashHistory(),
-    routes: [ ...publicRouter ] as RouteRecordRaw[]
+    routes: [ ...publicRouter, ...authRouteList ] as RouteRecordRaw[]
 })
 
 export const setupRouter = (app: App<Element>) => app.use(router)

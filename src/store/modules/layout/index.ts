@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { StoreStorage } from '@/storage/store'
-import { Store } from '/#/store'
+import { Store } from '#/store'
+import Settings from '@/settings'
 
 // 移动触发宽度
 const mobileTriggerWidth = 800
@@ -11,7 +11,7 @@ export const useLayoutStore = defineStore('layout', {
         mobileTriggerWidth: mobileTriggerWidth,
         isMobile: document.body.offsetWidth <= mobileTriggerWidth,
         mobileMenuVisible: false,
-        menuMode: StoreStorage.getMenuMode() || 'side'
+        menuMode: Settings.menuMode
     }),
     getters: {},
     actions: {

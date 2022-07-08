@@ -1,9 +1,10 @@
-import axios from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { wrapperEnv } from '@/utils'
+import { handleResponseStatusError, hanldeInterceptorError } from '@/services/request/error'
 
 const { VITE_GLOB_API_URL } = wrapperEnv()
 const axiosInstance = axios.create({
-    baseURL: '/',
+    baseURL: VITE_GLOB_API_URL,
     timeout: 10000
 })
 
@@ -13,10 +14,12 @@ axiosInstance.interceptors.request.use((config) => {
 }, error => {
     return Promise.reject(error)
 })
-axiosInstance.interceptors.response.use((response) => {
+axiosInstance.interceptors.response.use(({ data }: AxiosResponse<Server.BaseResponse>) => {
+    const statusError = handleResponseStatusError(data)
+    if (statusError) return statusError
     window.$loadingBar?.finish()
-    return response.data
-}, error => {
-    console.log(error)
+    return data
+}, (error: AxiosError) => {
+    return hanldeInterceptorError(error)
 })
 export default axiosInstance

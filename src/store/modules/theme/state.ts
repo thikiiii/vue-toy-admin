@@ -1,16 +1,15 @@
-import { getSystemTheme, lighten } from '@/utils'
+import { lighten } from '@/utils'
 
 import { GlobalThemeOverrides } from 'naive-ui'
-import { Store } from '/#/store'
-import { StoreStorage } from '@/storage/store'
+import { Store } from '#/store'
+import Settings from '@/settings'
 
-// 主题颜色
-const themeColor = '#6675ff'
+
 // 减轻颜色
-const lightenColor = lighten(themeColor, 6)
+const lightenColor = lighten(Settings.theme, 6)
 
 const lightThemeConfig: Store.CustomizeThemeConfig = {
-    theme: themeColor,
+    theme: Settings.theme,
     mainTextColor: '#121828',
     subTextColor: '#65748b',
     invertTextColor: '#d1d5db',
@@ -25,7 +24,7 @@ const lightThemeConfig: Store.CustomizeThemeConfig = {
 }
 
 const darkThemeConfig: Store.CustomizeThemeConfig = {
-    theme: themeColor,
+    theme: Settings.theme,
     mainTextColor: '#edf2f7',
     subTextColor: '#a0aec0',
     invertTextColor: '#d1d5db',
@@ -40,7 +39,7 @@ const darkThemeConfig: Store.CustomizeThemeConfig = {
 }
 
 
-const naiceConfg = (
+const naiveConfg = (
     {
         mainTextColor,
         subTextColor,
@@ -64,7 +63,7 @@ const naiceConfg = (
         invertedColor: invertBackgroundColor,
         // 弹出框背景
         popoverColor: subBackgroundColor,
-        primaryColor: themeColor,
+        primaryColor: Settings.theme,
         primaryColorHover: lightenColor,
         primaryColorPressed: lightenColor,
         primaryColorSuppl: lightenColor
@@ -82,14 +81,14 @@ const naiceConfg = (
 })
 
 export const themeState: Store.ThemeStore = {
-    theme: themeColor,
-    themeType: StoreStorage.getTheme() || getSystemTheme(),
+    theme: Settings.theme,
+    themeMode: Settings.themeMode,
     customize: {
         light: lightThemeConfig,
         dark: darkThemeConfig
     },
     naive: {
-        light: naiceConfg(lightThemeConfig),
-        dark: naiceConfg(darkThemeConfig)
+        light: naiveConfg(lightThemeConfig),
+        dark: naiveConfg(darkThemeConfig)
     }
 }

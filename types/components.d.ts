@@ -5,7 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Icon: typeof import('./../src/components/Icon/icon.vue')['default']
-    NaiveTool: typeof import('./../src/components/Provider/NaiveTool.vue')['default']
+    NaiveTool: typeof import('./../src/components/NaiveTool/index.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
     NBreadcrumbItem: typeof import('naive-ui')['NBreadcrumbItem']

@@ -1,12 +1,13 @@
-import { Store } from '/#/store'
+import { ViteEnv } from '#/global'
+import { ThemeModeEnum } from '@/enums/theme'
 
 /**
  * 获取当前操作系统的主题
  * @return 'light' | 'dark'
  * */
-export const getSystemTheme = (): Store.ThemeType => {
+export const getSystemTheme = (): ThemeModeEnum => {
     const themeMedia = window.matchMedia('(prefers-color-scheme: light)')
-    return themeMedia.matches ? 'light' : 'dark'
+    return themeMedia.matches ? ThemeModeEnum.LIGHT : ThemeModeEnum.DARK
 }
 
 /**

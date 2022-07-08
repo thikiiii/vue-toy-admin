@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Store } from '/#/store'
+import { Store } from '#/store'
 
 const useTabBarStore = defineStore('tabBar', {
     state: (): Store.TabBarStore => ({
@@ -33,13 +33,13 @@ const useTabBarStore = defineStore('tabBar', {
         },
         // 刷新当前
         refreshCurrent() {
-        
+
         },
         // 关闭其他
         closeOther() {
             const tab = this.tabBar.find(item => item.path === this.active)
             if (!tab) return
-            this.tabBar = [tab]
+            this.tabBar = [ tab ]
         },
         // 关闭全部
         closeAll() {
