@@ -9,7 +9,12 @@ const usePermissionStore = defineStore('router', {
     }),
     getters: {
         // 缓存菜单
-        cacheMenu: (state) => state.menu.map(item => item.meta?.keepAlive ? item.name : undefined)
+        cacheMenu: (state) => state.menu.reduce((arr, item) => {
+            if (item.meta?.keepAlive) {
+                arr.push(item.name as never)
+                return arr
+            }
+        }, [])
     },
     actions: {
         setAuthRouter(authRouter) {
