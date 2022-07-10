@@ -5,18 +5,18 @@ const usePermissionStore = defineStore('router', {
     state: (): Store.PermissionStore => ({
         authRouter: [],
         publicRouter: [],
+        roles: [],
         menu: []
     }),
     getters: {
         // 缓存菜单
         cacheMenu: (state) => state.menu.reduce((arr, item) => {
-            if (item.meta?.keepAlive) {
-                arr.push(item.name as never)
-                return arr
-            }
+            item.meta?.keepAlive && arr.push(item.name as never)
+            return arr
         }, [])
     },
     actions: {
+        
         setAuthRouter(authRouter) {
             this.authRouter = authRouter
         }

@@ -16,7 +16,6 @@ declare module 'vue' {
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
     NDropdown: typeof import('naive-ui')['NDropdown']
     NEmpty: typeof import('naive-ui')['NEmpty']
-    NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
     NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
@@ -31,7 +30,6 @@ declare module 'vue' {
     NRow: typeof import('naive-ui')['NRow']
     NSpace: typeof import('naive-ui')['NSpace']
     NThemeEditor: typeof import('naive-ui')['NThemeEditor']
-    Provider: typeof import('./../src/components/Provider/index.vue')['default']
     ThemeSwitch: typeof import('./../src/components/ThemeSwitch/ThemeSwitch.vue')['default']
   }
 }

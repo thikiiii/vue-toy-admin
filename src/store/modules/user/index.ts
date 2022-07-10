@@ -12,24 +12,32 @@ export const useUserStore = defineStore('user', {
     actions: {
         // 密码登录
         async passwordLogin(form: UserService.Request.PasswordLogin) {
-            const { subCode, subMsg, token } = await UserApi.passwordLogin(form)
-            if (subCode !== 200) {
-                window.$message?.error(subMsg)
-                return Promise.reject()
+            try {
+                const { subCode, subMsg, token } = await UserApi.passwordLogin(form)
+                if (subCode !== 200) {
+                    window.$message?.error(subMsg)
+                    return Promise.reject()
+                }
+                this.token = token
+                UserStorage.setToken(token)
+                return Promise.resolve()
+            } catch (e) {
+                this.loginLoading = false
             }
-            this.token = token
-            UserStorage.setToken(token)
-            return Promise.resolve()
         },
         // 获取用户信息
         async getUserinfo() {
             const { subCode, data, subMsg } = await UserApi.getUserinfo()
-            if (subCode !== 200 || !data) return window.$message?.error(subMsg)
+            if (subCode !== 200 || !data) {
+                window.$message?.error(subMsg)
+                this.loginLoading = false
+                return Promise.reject()
+            }
             this.userinfo = data
         },
         // 获取路由
         async getRouter() {
-
+        
         }
     }
 })

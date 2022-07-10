@@ -1,30 +1,49 @@
 <script lang="ts" setup>
-import { inject, reactive, Ref, ref } from 'vue'
-import { QrCode } from '@/views/login/index'
-import { useUserStore } from '@/store/modules/user'
-
-const userStore = useUserStore()
-const formRef = ref()
-const form = reactive({
-    username: 'admin',
-    password: '123456'
-})
-
-const loginType = inject('loginType') as Ref<typeof QrCode>
-// 设置登录类型
-const setLoginType = (component: typeof QrCode) => loginType.value = component
-
-// 处理登录
-const handleLogin = async () => {
-    userStore.loginLoading = true
-    await userStore.passwordLogin(form)
-}
+    import { inject, reactive, Ref, ref } from 'vue'
+    import { QrCode } from '@/views/login/index'
+    import { useUserStore } from '@/store/modules/user'
+    import { FormRules, NForm } from 'naive-ui'
+    
+    const userStore = useUserStore()
+    const formRef = ref<InstanceType<typeof NForm> | null>()
+    const form = reactive({
+        username: 'admin',
+        password: '123456'
+    })
+    const rules: FormRules = reactive({
+        username: [
+            {
+                required: true,
+                message: '请输入用户名',
+                trigger: 'blur'
+            }
+        ],
+        password: [
+            {
+                required: true,
+                message: '请输入密码',
+                trigger: 'blur'
+            }
+        ]
+    })
+    const loginType = inject('loginType') as Ref<typeof QrCode>
+    // 设置登录类型
+    const setLoginType = (component: typeof QrCode) => loginType.value = component
+    
+    // 处理登录
+    const handleLogin = () => {
+        formRef.value?.validate(async (errors) => {
+            if (errors) return
+            userStore.loginLoading = true
+            await userStore.passwordLogin(form)
+        })
+    }
 </script>
 
 <template>
     <div class="passwordLogin">
         <h1 class="passwordLogin-title">登录</h1>
-        <n-form ref="formRef" :model="form" label-placement="left">
+        <n-form ref="formRef" :model="form" :rules="rules" label-placement="left">
             <transition-group appear name="right-slide-fade">
                 <n-form-item key="1" path="username" required>
                     <n-input v-model:value="form.username" placeholder="请输入用户名" size="large">
