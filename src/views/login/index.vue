@@ -8,10 +8,12 @@ provide('loginType', loginType)
 const resize = () => {
     isMobile.value = document.body.offsetWidth <= 1000
 }
+
 onMounted(() => {
     resize()
     window.addEventListener('resize', resize)
 })
+
 onBeforeUnmount(() => {
     window.removeEventListener('resize', resize)
 })
@@ -45,7 +47,7 @@ onBeforeUnmount(() => {
     background: @theme;
     
     &-bg {
-        flex: 1;
+        width: 50vw;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -56,6 +58,7 @@ onBeforeUnmount(() => {
     }
     
     &-card {
+        width: 50vw;
         flex: 1;
         height: 100%;
         overflow: hidden;

@@ -49,6 +49,7 @@ const {
     menuMode,
     collapsedWidth
 } = storeToRefs(layoutStore)
+
 onMounted(() => {
     // 监听判断是否是移动端
     window.addEventListener('resize', layoutStore.judgeMobile)

@@ -1,6 +1,6 @@
 import { LayoutStorage } from '@/storage/layout'
 import { getSystemTheme } from '@/utils'
-import { PermissionModeEnum } from '@/enums/permission'
+import { PermissionModeEnum } from '@/enums/auth'
 import { ThemeStorage } from '@/storage/theme'
 import { MenuModeEnum } from '@/enums/layout'
 // 全局配置

@@ -1,23 +1,21 @@
 <script lang="ts" setup>
 
-import { useRoute } from 'vue-router'
 import usePermissionStore from '@/store/modules/permission'
+import RootWrapper from '@/layout/components/Main/RootWrapper.vue'
 
 const permissionStore = usePermissionStore()
-const route = useRoute()
 </script>
 
 <template>
-    <main class="main">
-        <router-view v-slot="{Component}">
-            <transition appear mode="out-in" name="zoom-fade">
-                <keep-alive v-if="route.meta.keepAlive" :include="permissionStore.cacheMenu">
-                    <component :is="Component" :key="route.fullPath" />
-                </keep-alive>
-                <component :is="Component" v-else :key="route.fullPath" />
-            </transition>
-        </router-view>
-    </main>
+    <router-view v-slot="{Component,route}">
+        <transition appear mode="out-in" name="zoom-fade">
+            <keep-alive :include="permissionStore.cacheMenu">
+                <root-wrapper :key="route.name">
+                    <component :is="Component" />
+                </root-wrapper>
+            </keep-alive>
+        </transition>
+    </router-view>
 </template>
 
 <style lang="less" scoped>
@@ -26,5 +24,11 @@ const route = useRoute()
     height: 100%;
     padding: 0 20px;
     position: relative;
+    
+    &-transition-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
 }
 </style>

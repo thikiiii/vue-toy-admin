@@ -2,10 +2,10 @@ import { defineStore } from 'pinia'
 import { Store } from '#/store'
 import { UserApi } from '@/services/api/user'
 import { UserStorage } from '@/storage/user'
+import useAuthStore from '@/store/modules/auth'
 
 export const useUserStore = defineStore('user', {
     state: (): Store.UserStore => ({
-        token: UserStorage.getToken() || null,
         userinfo: null,
         loginLoading: false
     }),
@@ -18,7 +18,7 @@ export const useUserStore = defineStore('user', {
                     window.$message?.error(subMsg)
                     return Promise.reject()
                 }
-                this.token = token
+                useAuthStore().setToken(token)
                 UserStorage.setToken(token)
                 return Promise.resolve()
             } catch (e) {
@@ -33,11 +33,11 @@ export const useUserStore = defineStore('user', {
                 this.loginLoading = false
                 return Promise.reject()
             }
-            this.userinfo = data
+            this.userinfo = data.userinfo
         },
         // 获取路由
         async getRouter() {
-        
+
         }
     }
 })

@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import { RoleEnum } from '@/enums/auth'
 
 const about: RouteRecordRaw[] = [
     {
@@ -10,7 +11,11 @@ const about: RouteRecordRaw[] = [
             {
                 path: '/about/index',
                 name: 'about_index',
-                component: () => import('@/views/about/index.vue')
+                meta: {
+                    title: '关于',
+                    roles: [ RoleEnum.SUPER ]
+                },
+                component: () => import('@/views/about/About.vue')
             }
         ]
     }

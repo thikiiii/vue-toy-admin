@@ -19,19 +19,23 @@ declare namespace UserService {
         }
 
         // 用户信息
+
         interface Userinfo {
+            userId: number
+            // 用户名
+            username: string
+            // 头像
+            avatar: string
+        }
+
+        // 用户详情
+        interface UserDetails {
             // 权限
             permissions: string[]
             // 角色
             roles: string[]
             // 用户信息
-            info: {
-                userId: number
-                // 用户名
-                username: string
-                // 头像
-                avatar: string
-            }
+            userinfo: Userinfo
         }
     }
 

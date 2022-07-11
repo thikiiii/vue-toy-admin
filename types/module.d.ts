@@ -1,10 +1,12 @@
+import { PermissionEnum, RoleEnum } from '@/enums/auth'
+import 'vue-router'
+
 declare module '*.vue' {
-  import type { DefineComponent } from 'vue'
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
+    import type { DefineComponent } from 'vue'
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
     const component: DefineComponent<{}, {}, any>
     export default component
 }
-import 'vue-router'
 
 declare module 'vue-router' {
     // 路由元数据
@@ -13,7 +15,10 @@ declare module 'vue-router' {
         title: string;
         // 是否忽略权限
         ignoreAuth?: boolean;
-        permissions?: string[];
+        // 细粒度权限
+        permissions?: PermissionEnum[];
+        // 角色
+        roles: RoleEnum[]
         // 是否缓存
         keepAlive?: boolean;
         // 是否固定在tab上

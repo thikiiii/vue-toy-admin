@@ -42,7 +42,7 @@ const handleErrorMessage = (message: string) => {
 }
 
 // 处理响应状态错误
-export const handleResponseStatusError = (data: Server.BaseResponse) => {
+export const handleResponseStatusError = (data: Service.BaseResponse) => {
     const noSignOutStatusMessage = NO_SIGN_OUT_STATUS_CODE.get(data.code)
     // 不需要退出登录,只错误提示
     if (noSignOutStatusMessage) {

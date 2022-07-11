@@ -15,3 +15,8 @@ export enum RoleEnum {
     // 测试
     TEST = 'test'
 }
+
+// 细粒度权限
+export enum PermissionEnum {
+    
+}

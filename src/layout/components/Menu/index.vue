@@ -54,12 +54,12 @@ let menuOptions: { list: MenuOption[] } = reactive({
     list: [
         {
             label: () => RenderEllipsis({ content: '用户' }),
-            key: '/user',
+            key: '/about/index',
             icon: () => RenderIcon({ icon: 'lock' })
         },
         {
             label: () => RenderEllipsis({ content: '角色' }),
-            key: '/role',
+            key: '/system/user',
             icon: () => RenderIcon({ icon: 'user' })
         }
     ]

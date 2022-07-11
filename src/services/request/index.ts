@@ -14,7 +14,7 @@ axiosInstance.interceptors.request.use((config) => {
 }, error => {
     return Promise.reject(error)
 })
-axiosInstance.interceptors.response.use(({ data }: AxiosResponse<Server.BaseResponse>) => {
+axiosInstance.interceptors.response.use(({ data }: AxiosResponse<Service.BaseResponse>) => {
     const statusError = handleResponseStatusError(data)
     if (statusError) return statusError
     window.$loadingBar?.finish()

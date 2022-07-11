@@ -6,7 +6,7 @@ import { RouteRecordRaw } from 'vue-router'
 const system: RouteRecordRaw[] = [
     {
         path: '/system',
-        name: 'dashboard',
+        name: 'system',
         component: Layout,
         children: [
             {

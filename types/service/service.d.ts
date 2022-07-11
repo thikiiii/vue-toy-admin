@@ -1,4 +1,4 @@
-declare namespace Server {
+declare namespace Service {
     // 基础响应
     interface BaseResponse {
         // 系统状态
