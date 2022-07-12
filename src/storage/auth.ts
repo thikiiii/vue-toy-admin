@@ -1,6 +1,6 @@
 import store from 'store'
 
-export class UserStorage {
+export class AuthStorage {
     static readonly token = 'SIMPLE_TOKEN'
 
     // 设置 token

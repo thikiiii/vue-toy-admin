@@ -68,3 +68,5 @@ export const hanldeInterceptorError = (axiosError: AxiosError) => {
     message && handleErrorMessage(message)
     return Promise.reject(message)
 }
+
+

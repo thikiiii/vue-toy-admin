@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import publicRouter from '@/router/public'
 import type { App } from 'vue'
+import { createGuard } from '@/router/guard'
 
 
 // 需要权限的路由模块 权限路由
@@ -17,7 +18,11 @@ const router = createRouter({
     routes: [ ...publicRouter, ...authRouteList ] as RouteRecordRaw[]
 })
 
-export const setupRouter = (app: App<Element>) => app.use(router)
+export const setupRouter = (app: App<Element>) => {
+    app.use(router)
+    createGuard(router)
+}
+export default router
 
 
 

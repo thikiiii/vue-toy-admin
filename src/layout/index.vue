@@ -77,6 +77,7 @@ onBeforeUnmount(() => {
     &-main {
         height: calc(100% - @layout-header-height - @layout-tab-bar-height);
         padding-bottom: 10px;
+        overflow: hidden;
     }
     
     &-mobileMenu {

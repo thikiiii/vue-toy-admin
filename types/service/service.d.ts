@@ -30,4 +30,6 @@ declare namespace Service {
     // 包装 接口请求分页
     type WrapperPageRequest<Q> = Pagination & Q
 
+    //
+    type Test = string
 }

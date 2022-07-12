@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import useAuthStore from '@/store/modules/auth'
+
+const authStore = useAuthStore()
 const option = [
     {
         label: '个人中心',
@@ -9,10 +12,18 @@ const option = [
         key: 'signOut'
     }
 ]
+const onSelect = (key) => {
+    switch (key) {
+        case 'user':
+            break
+        case 'signOut':
+            authStore.signOut()
+    }
+}
 </script>
 
 <template>
-    <n-dropdown :options="option" trigger="hover">
+    <n-dropdown :options="option" trigger="hover" @select="onSelect">
         <div class="avatar">
             <n-avatar
                 round

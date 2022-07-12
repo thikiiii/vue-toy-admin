@@ -1,7 +1,8 @@
 import { GlobalThemeOverrides } from 'naive-ui'
 import { RouteMeta, RouteRecordRaw } from 'vue-router'
 import { ThemeModeEnum } from '@/enums/theme'
-import { RoleEnum } from '@/enums/auth'
+import { PermissionEnum, RoleEnum } from '@/enums/auth'
+
 
 declare namespace Store {
     // 布局 Store
@@ -72,10 +73,13 @@ declare namespace Store {
     interface ThemeStore {
         // 主题颜色
         theme: string
+
         // 当前主题模式
         themeMode: ThemeModeEnum
+
         // naive 主题
         naive: ThemeModeConfig<GlobalThemeOverrides>
+
         // 自定义主题
         customize: ThemeModeConfig<CustomizeThemeConfig>
     }
@@ -84,8 +88,10 @@ declare namespace Store {
     interface TabBarStore {
         // 缓存白名单
         cacheWhiteList: string[],
+
         // 标签栏
         tabBar: TabBar[]
+
         // 激活
         active: string
     }
@@ -97,23 +103,29 @@ declare namespace Store {
     }
 
 
-    // 用户 Store
-    interface UserStore {
-        userinfo: Nullable<UserService.Response.Userinfo>
-        // 登录 loading
-        loginLoading: boolean
-    }
-
-    // 权限 Store
+    // 鉴权 Store
     interface AuthStore {
         token: Nullable<string>
-        // 权限路由
-        authRouter: RouteRecordRaw[]
-        // 公共路由
-        publicRouter: RouteRecordRaw[]
+
+        // // 权限路由
+        // authRouter: RouteRecordRaw[]
+        //
+        // // 公共路由
+        // publicRouter: RouteRecordRaw[]
+
         // 菜单
         menu: RouteRecordRaw[]
+
         // 角色
-        roles: RoleEnum[]
+        roles: RoleEnum[],
+
+        // 细粒度权限
+        permissions: PermissionEnum[]
+
+        // 用户信息
+        userinfo: Nullable<UserService.Response.Userinfo>
+
+        // 登录 loading
+        loginLoading: boolean
     }
 }

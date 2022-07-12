@@ -31,9 +31,9 @@ declare namespace UserService {
         // 用户详情
         interface UserDetails {
             // 权限
-            permissions: string[]
+            permissions: import('@/enums/auth').PermissionEnum[]
             // 角色
-            roles: string[]
+            roles: import('@/enums/auth').RoleEnum[]
             // 用户信息
             userinfo: Userinfo
         }

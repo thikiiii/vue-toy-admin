@@ -12,7 +12,7 @@ const system: RouteRecordRaw[] = [
             {
                 path: '/system/user',
                 name: '/system_user',
-                component: () => import('@/views/system/user/index.vue')
+                component: () => import('@/views/system/user/User.vue')
             },
             {
                 path: '/system/role',

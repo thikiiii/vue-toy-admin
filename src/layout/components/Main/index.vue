@@ -1,34 +1,28 @@
 <script lang="ts" setup>
 
-import usePermissionStore from '@/store/modules/permission'
-import RootWrapper from '@/layout/components/Main/RootWrapper.vue'
+import useAuthStore from '@/store/modules/auth'
 
-const permissionStore = usePermissionStore()
+const authStore = useAuthStore()
 </script>
 
 <template>
-    <router-view v-slot="{Component,route}">
-        <transition appear mode="out-in" name="zoom-fade">
-            <keep-alive :include="permissionStore.cacheMenu">
-                <root-wrapper :key="route.name">
-                    <component :is="Component" />
-                </root-wrapper>
-            </keep-alive>
-        </transition>
-    </router-view>
+    <div class="main">
+        <router-view v-slot="{Component,route}">
+            <transition appear mode="out-in" name="zoom-fade">
+                <keep-alive :include="authStore.cacheMenu">
+                    <component :is="Component" :key="route.fullPath" />
+                </keep-alive>
+            </transition>
+        </router-view>
+    </div>
 </template>
 
 <style lang="less" scoped>
 .main {
     width: 100%;
     height: 100%;
-    padding: 0 20px;
+    padding: 0 10px;
     position: relative;
-    
-    &-transition-container {
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
+    overflow: hidden;
 }
 </style>

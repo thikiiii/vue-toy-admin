@@ -1,43 +1,48 @@
 <script lang="ts" setup>
-    import { inject, reactive, Ref, ref } from 'vue'
-    import { QrCode } from '@/views/login/index'
-    import { useUserStore } from '@/store/modules/user'
-    import { FormRules, NForm } from 'naive-ui'
-    
-    const userStore = useUserStore()
-    const formRef = ref<InstanceType<typeof NForm> | null>()
-    const form = reactive({
-        username: 'admin',
-        password: '123456'
+import { inject, reactive, Ref, ref } from 'vue'
+import { QrCode } from '@/views/login/index'
+import useAuthStore from '@/store/modules/auth'
+import { FormRules, NForm } from 'naive-ui'
+import { useRoute, useRouter } from 'vue-router'
+
+const authStore = useAuthStore()
+const router = useRouter()
+const route = useRoute()
+
+const formRef = ref<InstanceType<typeof NForm> | null>()
+const form = reactive({
+    username: 'admin',
+    password: '123456'
+})
+const rules: FormRules = reactive({
+    username: [
+        {
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur'
+        }
+    ],
+    password: [
+        {
+            required: true,
+            message: '请输入密码',
+            trigger: 'blur'
+        }
+    ]
+})
+const loginType = inject('loginType') as Ref<typeof QrCode>
+// 设置登录类型
+const setLoginType = (component: typeof QrCode) => loginType.value = component
+
+// 处理登录
+const handleLogin = () => {
+    formRef.value?.validate(async (errors) => {
+        if (errors) return
+        authStore.loginLoading = true
+        await authStore.passwordLogin(form)
+        await router.push(route.query?.redirect as string || '/system/user')
     })
-    const rules: FormRules = reactive({
-        username: [
-            {
-                required: true,
-                message: '请输入用户名',
-                trigger: 'blur'
-            }
-        ],
-        password: [
-            {
-                required: true,
-                message: '请输入密码',
-                trigger: 'blur'
-            }
-        ]
-    })
-    const loginType = inject('loginType') as Ref<typeof QrCode>
-    // 设置登录类型
-    const setLoginType = (component: typeof QrCode) => loginType.value = component
-    
-    // 处理登录
-    const handleLogin = () => {
-        formRef.value?.validate(async (errors) => {
-            if (errors) return
-            userStore.loginLoading = true
-            await userStore.passwordLogin(form)
-        })
-    }
+}
 </script>
 
 <template>
@@ -73,7 +78,7 @@
                     </n-row>
                 </n-form-item>
                 <n-form-item key="4" style="transition-delay: .4s">
-                    <n-button :loading="userStore.loginLoading" block size="large" type="primary" @click="handleLogin">
+                    <n-button :loading="authStore.loginLoading" block size="large" type="primary" @click="handleLogin">
                         登录
                     </n-button>
                 </n-form-item>

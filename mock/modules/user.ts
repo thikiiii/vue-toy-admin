@@ -2,11 +2,11 @@ export default [
     {
         url: '/mock/passwordLogin',
         method: 'post',
-        timeout: 5000,
+        // timeout: 5000,
         // statusCode: 400,
         response: () => {
             return {
-                code: 400,
+                code: 200,
                 subCode: 200,
                 subMsg: '登录成功',
                 token: 'by simple admin'
@@ -37,6 +37,19 @@ export default [
                         avatar: ''
                     }
                 }
+            }
+        }
+    },
+    {
+        url: '/mock/signOut',
+        method: 'post',
+        timeout: 0,
+        response: () => {
+            return {
+                code: 200,
+                msg: 'ok',
+                subCode: 200,
+                subMsg: '成功'
             }
         }
     }

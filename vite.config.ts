@@ -33,7 +33,7 @@ export default defineConfig(({ command, mode }) => {
                 less: {
                     modifyVars: {},
                     javascriptEnabled: true,
-                    additionalData: `@import "src/styles/variable.less";`
+                    additionalData: `@import "src/assets/styles/variable.less";`
                 }
             }
         },
