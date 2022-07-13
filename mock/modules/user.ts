@@ -27,7 +27,7 @@ export default [
                     // 权限
                     permissions: [],
                     // 角色
-                    roles: [],
+                    roles: ['Super'],
                     // 用户信息
                     info: {
                         userId: 1,

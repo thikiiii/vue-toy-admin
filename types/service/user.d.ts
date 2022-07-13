@@ -1,6 +1,6 @@
 // 用户
 declare namespace UserService {
-
+    
     namespace Request {
         // 密码登录请求
         interface PasswordLogin {
@@ -10,24 +10,14 @@ declare namespace UserService {
             password: string
         }
     }
-
+    
     namespace Response {
         // 密码登录响应
         interface PasswordLogin {
             // token
             token: string
         }
-
-        // 用户信息
-
-        interface Userinfo {
-            userId: number
-            // 用户名
-            username: string
-            // 头像
-            avatar: string
-        }
-
+        
         // 用户详情
         interface UserDetails {
             // 权限
@@ -35,8 +25,14 @@ declare namespace UserService {
             // 角色
             roles: import('@/enums/auth').RoleEnum[]
             // 用户信息
-            userinfo: Userinfo
+            userinfo: {
+                userId: number
+                // 用户名
+                username: string
+                // 头像
+                avatar: string
+            }
         }
     }
-
+    
 }

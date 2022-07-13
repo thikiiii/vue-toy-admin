@@ -9,11 +9,11 @@ export enum PermissionModeEnum {
 // 角色
 export enum RoleEnum {
     // 超级管理员
-    SUPER = 'super',
+    SUPER = 'Super',
     // 管理员
-    ADMIN = 'admin',
+    ADMIN = 'Admin',
     // 测试
-    TEST = 'test'
+    TEST = 'Test'
 }
 
 // 细粒度权限

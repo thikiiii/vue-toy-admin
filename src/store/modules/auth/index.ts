@@ -19,7 +19,7 @@ const useAuthStore = defineStore('auth', {
         cacheMenu: (state) => state.menu.reduce((arr, item) => {
             item.meta?.keepAlive && arr.push(item.name as never)
             return arr
-        }, [ 'About' ])
+        }, [])
     },
     actions: {
         // 密码登录
@@ -66,7 +66,7 @@ const useAuthStore = defineStore('auth', {
         async signOut() {
             await UserApi.signOut().finally(() => {
                 this.init()
-                window.$message?.success('退出登录成功')
+                window.$message?.success('退出登录成功!')
                 console.log(router.currentRoute)
                 router.currentRoute.value.path !== '/login' && router.push({
                     path: '/login',
