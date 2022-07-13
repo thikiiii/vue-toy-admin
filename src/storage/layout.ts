@@ -1,6 +1,7 @@
 // 布局
-import store from 'store'
+import store from 'store2'
 import { MenuModeEnum } from '@/enums/layout'
+
 
 export class LayoutStorage {
     // 菜单模式

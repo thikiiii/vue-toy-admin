@@ -1,4 +1,3 @@
-import { PermissionEnum, RoleEnum } from '@/enums/auth'
 import 'vue-router'
 
 declare module '*.vue' {
@@ -16,9 +15,9 @@ declare module 'vue-router' {
         // 是否忽略权限
         ignoreAuth?: boolean;
         // 细粒度权限
-        permissions?: PermissionEnum[];
+        permissions?: import('@/enums/auth').PermissionEnum[];
         // 角色
-        roles: RoleEnum[]
+        roles?: import('@/enums/auth').RoleEnum[]
         // 是否缓存
         keepAlive?: boolean;
         // 是否固定在tab上

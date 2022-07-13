@@ -1,4 +1,4 @@
-import store from 'store'
+import store from 'store2'
 import { ThemeModeEnum } from '@/enums/theme'
 
 export class ThemeStorage {

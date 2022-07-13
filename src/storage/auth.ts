@@ -1,14 +1,15 @@
-import store from 'store'
+import Settings from '@/settings'
+import Cookies from 'js-cookie'
 
-export class AuthStorage {
+export class AuthCookie {
     static readonly token = 'SIMPLE_TOKEN'
 
     // 设置 token
-    static setToken = (token: string) => store.set(this.token, token)
+    static setToken = (token: string) => Cookies.set(this.token, token, { expires: Settings.tokenExpirationTime })
 
     // 获取 token
-    static getToken = (): string | undefined => store.get(this.token)
+    static getToken = (): string | undefined => Cookies.get(this.token)
 
     // 删除 token
-    static removeToken = () => store.remove(this.token)
+    static removeToken = () => Cookies.remove(this.token)
 }

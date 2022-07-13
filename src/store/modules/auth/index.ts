@@ -1,16 +1,15 @@
 import { defineStore } from 'pinia'
 import { Store } from '#/store'
-import { AuthStorage } from '@/storage/auth'
+import { AuthCookie } from '@/storage/auth'
 import { UserApi } from '@/services/api/user'
 import router from '@/router'
-
 
 // 鉴权
 const useAuthStore = defineStore('auth', {
     state: (): Store.AuthStore => ({
         userinfo: null,
         loginLoading: false,
-        token: AuthStorage.getToken() || null,
+        token: AuthCookie.getToken() || null,
         roles: [],
         menu: [],
         permissions: []
@@ -35,7 +34,7 @@ const useAuthStore = defineStore('auth', {
                 return Promise.reject()
             }
             this.token = token
-            AuthStorage.setToken(token)
+            AuthCookie.setToken(token)
             return Promise.resolve()
         },
         // 获取用户信息
@@ -55,7 +54,7 @@ const useAuthStore = defineStore('auth', {
         },
         // 初始化
         init() {
-            AuthStorage.removeToken()
+            AuthCookie.removeToken()
             this.token = null
             this.userinfo = null
             this.roles = []

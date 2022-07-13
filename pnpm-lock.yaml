@@ -2,8 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@iconify-json/mdi': ^1.1.19
+  '@types/js-cookie': ^3.0.2
   '@types/node': ^17.0.35
-  '@types/store': ^2.0.2
   '@typescript-eslint/eslint-plugin': ^5.26.0
   '@typescript-eslint/parser': ^5.26.0
   '@vitejs/plugin-legacy': ^1.8.2
@@ -15,11 +15,12 @@ specifiers:
   eslint: ^8.16.0
   eslint-define-config: ^1.4.1
   eslint-plugin-vue: ^9.0.1
+  js-cookie: ^3.0.1
   less: ^4.1.2
   mockjs: ^1.1.0
   naive-ui: ^2.29.0
   pinia: ^2.0.14
-  store: ^2.0.12
+  store2: ^2.13.2
   typescript: ^4.6.4
   unplugin-icons: ^0.14.3
   unplugin-vue-components: ^0.17.21
@@ -33,17 +34,18 @@ specifiers:
   vue-tsc: ^0.34.7
 
 dependencies:
+  '@types/js-cookie': 3.0.2
   '@vueuse/core': 8.6.0_vue@3.2.36
   axios: 0.27.2
+  js-cookie: 3.0.1
   pinia: 2.0.14_qhv4oyzxhhzeba5rd2zztmcg2y
-  store: 2.0.12
+  store2: 2.13.2
   vue: 3.2.36
   vue-router: 4.0.15_vue@3.2.36
 
 devDependencies:
   '@iconify-json/mdi': 1.1.19
   '@types/node': 17.0.35
-  '@types/store': 2.0.2
   '@typescript-eslint/eslint-plugin': 5.26.0_hzuh7e2up357pvq3mkokjvu2lq
   '@typescript-eslint/parser': 5.26.0_xztl6dhthcahlo6akmb2bmjmle
   '@vitejs/plugin-legacy': 1.8.2_vite@2.9.9
@@ -571,6 +573,10 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
+  /@types/js-cookie/3.0.2:
+    resolution: {integrity: sha512-6+0ekgfusHftJNYpihfkMu8BWdeHs9EOJuGcSofErjstGPfPGEu9yTu4t460lTzzAMl2cM5zngQJqPMHbbnvYA==}
+    dev: false
+
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
@@ -597,10 +603,6 @@ packages:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
       '@types/node': 17.0.35
-    dev: true
-
-  /@types/store/2.0.2:
-    resolution: {integrity: sha512-ZPHnXkzmGMfk+pHqAGzTSpA9CbsHmJLgkvOl5w52LZ0XTxB1ZIHWZzQ7lEtjTNWScBbsQekg8TjApMXkMe4nkw==}
     dev: true
 
   /@types/throttle-debounce/2.1.0:
@@ -2213,6 +2215,11 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
+  /js-cookie/3.0.1:
+    resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
+    engines: {node: '>=12'}
+    dev: false
+
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     dev: true
@@ -2835,8 +2842,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /store/2.0.12:
-    resolution: {integrity: sha1-jFNOKguDH3K3X8XxEZhXxE711ZM=}
+  /store2/2.13.2:
+    resolution: {integrity: sha512-CMtO2Uneg3SAz/d6fZ/6qbqqQHi2ynq6/KzMD/26gTkiEShCcpqFfTHgOxsE0egAq6SX3FmN4CeSqn8BzXQkJg==}
     dev: false
 
   /strip-ansi/6.0.1:

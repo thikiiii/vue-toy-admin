@@ -49,3 +49,8 @@ export const wrapperEnv = (): ViteEnv => {
     }, {} as ViteEnv)
 }
 
+// 执行策略模式
+export const runTacticsAction = (tacticsAction: TacticsAction[]) => tacticsAction.some(([ flag, action ]) => {
+    flag && action()
+    return flag
+})

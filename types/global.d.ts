@@ -10,5 +10,10 @@ interface Window {
     $loadingBar?: import('naive-ui').LoadingBarApi
 }
 
+/**
+ * 策略模式
+ * [状态, 为true时执行的回调函数]
+ */
+declare type TacticsAction = [ boolean, () => void ]
 
 
