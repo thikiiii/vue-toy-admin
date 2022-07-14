@@ -1,17 +1,15 @@
 <template>
     <n-config-provider :theme="themeStore.naiveThemeType" :theme-overrides="themeStore.currentThemeOverrides">
-        <n-theme-editor>
-            <n-loading-bar-provider>
-                <n-dialog-provider>
-                    <n-notification-provider>
-                        <n-message-provider>
-                            <naive-tool />
-                            <router-view />
-                        </n-message-provider>
-                    </n-notification-provider>
-                </n-dialog-provider>
-            </n-loading-bar-provider>
-        </n-theme-editor>
+        <n-loading-bar-provider>
+            <n-dialog-provider>
+                <n-notification-provider>
+                    <n-message-provider>
+                        <naive-tool />
+                        <router-view />
+                    </n-message-provider>
+                </n-notification-provider>
+            </n-dialog-provider>
+        </n-loading-bar-provider>
     </n-config-provider>
 </template>
 

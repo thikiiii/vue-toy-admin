@@ -1,6 +1,7 @@
 // 不需要退出登录错误状态码
 import { AxiosError } from 'axios'
 import { extractNumbers } from '@/utils/regularCheck'
+import useAuthStore from '@/store/modules/auth'
 
 const NO_SIGN_OUT_STATUS_CODE = new Map<number | string, string>([
     [ 400, '400: 请求出现语法错误 ~' ],
@@ -23,6 +24,7 @@ const SIGN_OUT_STATUS_CODE = new Map<number | string, string>([
 
 // 信息错误
 const MESSAGE_ERROR = new Map([
+    [ 'theInterfaceReturnsAnException', '接口返回异常 ~' ],
     [ 'timeout', '网络请求超时 ~' ],
     [ 'Network Error', '接口链接异常 ~' ]
 ])
@@ -43,6 +45,10 @@ const handleErrorMessage = (message: string) => {
 
 // 处理响应状态错误
 export const handleResponseStatusError = (data: Service.BaseResponse) => {
+    if (!data) {
+        handleErrorMessage(MESSAGE_ERROR.get('theInterfaceReturnsAnException') as string)
+        return Promise.reject()
+    }
     const noSignOutStatusMessage = NO_SIGN_OUT_STATUS_CODE.get(data.code)
     // 不需要退出登录,只错误提示
     if (noSignOutStatusMessage) {
@@ -53,7 +59,7 @@ export const handleResponseStatusError = (data: Service.BaseResponse) => {
     // 退出登录
     if (signOutStatusMessage) {
         handleErrorMessage(signOutStatusMessage)
-        // TODO:退出登录
+        void useAuthStore().signOut()
     }
 }
 

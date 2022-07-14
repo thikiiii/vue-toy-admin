@@ -26,11 +26,11 @@ const onSelect = (key) => {
     <n-dropdown :options="option" trigger="hover" @select="onSelect">
         <div class="avatar">
             <n-avatar
+                :src="authStore.userinfo?.avatar"
                 round
                 size="medium"
-                src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
             />
-            Simple Admin
+            {{ authStore.userinfo?.username }}
         </div>
     </n-dropdown>
 </template>

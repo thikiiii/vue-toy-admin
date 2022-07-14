@@ -3,11 +3,9 @@ import { inject, reactive, Ref, ref } from 'vue'
 import { QrCode } from '@/views/login/index'
 import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
-import { useRoute, useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
-const router = useRouter()
-const route = useRoute()
+
 
 const formRef = ref<InstanceType<typeof NForm> | null>()
 const form = reactive({
@@ -40,7 +38,6 @@ const handleLogin = () => {
         if (errors) return
         authStore.loginLoading = true
         await authStore.passwordLogin(form)
-        await router.push(route.query?.redirect as string || '/system/user')
     })
 }
 </script>

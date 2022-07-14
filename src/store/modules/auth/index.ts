@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 import { Store } from '#/store'
 import { AuthCookie } from '@/storage/auth'
 import { UserApi } from '@/services/api/user'
-import router from '@/router'
+import router, { authRouteList } from '@/router'
+import Settings from '@/settings'
 
 // 鉴权
 const useAuthStore = defineStore('auth', {
@@ -12,7 +13,9 @@ const useAuthStore = defineStore('auth', {
         token: AuthCookie.getToken() || null,
         roles: [],
         menu: [],
-        permissions: []
+        permissions: [],
+        authRoute: authRouteList,
+        publicRoute: []
     }),
     getters: {
         // 缓存菜单
@@ -22,6 +25,14 @@ const useAuthStore = defineStore('auth', {
         }, [])
     },
     actions: {
+        setToken(token) {
+            this.token = token
+            AuthCookie.setToken(token)
+        },
+        removeToken() {
+            this.token = null
+            AuthCookie.removeToken()
+        },
         // 密码登录
         async passwordLogin(form: UserService.Request.PasswordLogin) {
             const { subCode, subMsg, token } = await UserApi.passwordLogin(form).catch(() => {
@@ -33,8 +44,12 @@ const useAuthStore = defineStore('auth', {
                 this.loginLoading = false
                 return Promise.reject()
             }
-            this.token = token
-            AuthCookie.setToken(token)
+            this.setToken(token)
+            await this.getUserinfo()
+            const redirect = router.currentRoute.value.query.redirect
+            await router.replace(redirect as string || Settings.homePath)
+            this.loginLoading = false
+            window.$message?.success('登录成功')
             return Promise.resolve()
         },
         // 获取用户信息
@@ -51,6 +66,7 @@ const useAuthStore = defineStore('auth', {
             this.roles = data.roles
             this.permissions = data.permissions
             this.userinfo = data.userinfo
+            // this.filterMenusByRole()
         },
         // 初始化
         init() {
@@ -61,19 +77,25 @@ const useAuthStore = defineStore('auth', {
             this.permissions = []
             this.menu = []
             this.loginLoading = false
+            this.authRoute = authRouteList
+            this.publicRoute = []
         },
         // 退出登录
         async signOut() {
             await UserApi.signOut().finally(() => {
                 this.init()
                 window.$message?.success('退出登录成功!')
-                console.log(router.currentRoute)
                 router.currentRoute.value.path !== '/login' && router.push({
                     path: '/login',
                     query: {
                         redirect: router.currentRoute.value.path
                     }
                 })
+            })
+        },
+        filterMenusByRole() {
+            this.authRoute.forEach(item => {
+                router.addRoute(item)
             })
         }
     }

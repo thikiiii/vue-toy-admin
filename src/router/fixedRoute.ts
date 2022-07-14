@@ -1,12 +1,17 @@
 import { Layout } from '@/layout/index'
 import { RouteRecordRaw } from 'vue-router'
+import Settings from '@/settings'
 
-// 公共、无需权限的路由
-const publicRouter: RouteRecordRaw[] = [
+// 固定路由
+const FixedRoute: RouteRecordRaw[] = [
     {
         path: '/',
+        name: 'root',
         component: Layout,
-        redirect: '/dashboard'
+        redirect: Settings.homePath,
+        meta: {
+            title: 'Root'
+        }
     },
     {
         path: '/login',
@@ -18,5 +23,5 @@ const publicRouter: RouteRecordRaw[] = [
         }
     }
 ]
-export default publicRouter
+export default FixedRoute
 

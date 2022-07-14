@@ -1,3 +1,28 @@
+<script lang="ts" setup>
+import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/index'
+import { useLayoutStore } from '@/store/modules/layout'
+import { onBeforeUnmount, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+
+const layoutStore = useLayoutStore()
+const {
+    collapsed,
+    isMobile,
+    mobileMenuVisible,
+    menuMode,
+    collapsedWidth
+} = storeToRefs(layoutStore)
+
+onMounted(() => {
+    // 监听判断是否是移动端
+    window.addEventListener('resize', layoutStore.judgeMobile)
+})
+onBeforeUnmount(() => {
+    // 取消监听
+    window.removeEventListener('resize', layoutStore.judgeMobile)
+})
+</script>
+
 <template>
     <n-layout class="layout" has-sider position="absolute">
         <!-- PC 侧边栏 -->
@@ -34,31 +59,6 @@
         </n-layout>
     </n-layout>
 </template>
-
-<script lang="ts" setup>
-import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/index'
-import { useLayoutStore } from '@/store/modules/layout'
-import { onBeforeUnmount, onMounted } from 'vue'
-import { storeToRefs } from 'pinia'
-
-const layoutStore = useLayoutStore()
-const {
-    collapsed,
-    isMobile,
-    mobileMenuVisible,
-    menuMode,
-    collapsedWidth
-} = storeToRefs(layoutStore)
-
-onMounted(() => {
-    // 监听判断是否是移动端
-    window.addEventListener('resize', layoutStore.judgeMobile)
-})
-onBeforeUnmount(() => {
-    // 取消监听
-    window.removeEventListener('resize', layoutStore.judgeMobile)
-})
-</script>
 
 <style lang="less" scoped>
 .layout {

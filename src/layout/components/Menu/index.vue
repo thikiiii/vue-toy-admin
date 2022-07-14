@@ -76,6 +76,7 @@ props.mode === 'horizontal' && useCompressHorizontalMenu({
 })
 const selectMenu = (key) => {
     router.push(key)
+    console.log(router.getRoutes())
 }
 </script>
 

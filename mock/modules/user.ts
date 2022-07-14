@@ -15,8 +15,8 @@ export default [
     },
     {
         url: '/mock/getUserinfo',
-        method: 'post',
-        timeout: 0,
+        method: 'get',
+        timeout: 5000,
         response: () => {
             return {
                 code: 200,
@@ -27,14 +27,14 @@ export default [
                     // 权限
                     permissions: [],
                     // 角色
-                    roles: ['Super'],
+                    roles: [ 'Super' ],
                     // 用户信息
-                    info: {
+                    userinfo: {
                         userId: 1,
                         // 用户名
                         username: 'admin',
                         // 头像
-                        avatar: ''
+                        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfVMhgRPHf9mSpyfVGvJTX2-UP9B_5xFsyg&usqp=CAU'
                     }
                 }
             }

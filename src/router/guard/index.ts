@@ -7,13 +7,23 @@ import { AuthCookie } from '@/storage/auth'
 export const createGuard = (router: Router) => {
     router.beforeEach(async (to, from, next) => {
         window.$loadingBar?.start()
+        const loginPath = '/login'
         const authStore = useAuthStore()
         // 是否登录
-        const isLogin = Boolean(authStore.token) && Boolean(authStore.roles.length)
+        const isLogin = Boolean(authStore.token)
         // 是否忽略权限
         const isIgnoreAuth = Boolean(to.meta.ignoreAuth)
-        const loginPath = '/login'
-        
+        const hasPermission = Boolean(authStore.roles.length) && Boolean(authStore.userinfo)
+
+        if (isLogin && !hasPermission) {
+            await authStore.getUserinfo().catch(() => {
+                authStore.init()
+                next(loginPath)
+                return Promise.reject()
+            })
+            console.log(router.getRoutes())
+            authStore.filterMenusByRole()
+        }
         const guardTacticsAction: TacticsAction[] = [
             // token 失效
             [
@@ -33,7 +43,7 @@ export const createGuard = (router: Router) => {
             ],
             // 登录状态或者无权限页面直接通过
             [
-                isLogin || isIgnoreAuth,
+                (isLogin && hasPermission) || isIgnoreAuth,
                 () => {
                     next()
                 }
@@ -42,7 +52,6 @@ export const createGuard = (router: Router) => {
             [
                 !isLogin || !isIgnoreAuth,
                 () => {
-                    window.$message?.warning('请登录后访问！')
                     next(loginPath)
                 }
             ],

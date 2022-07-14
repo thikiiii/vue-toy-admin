@@ -19,4 +19,7 @@ export default class Settings {
 
     // token 过期时间 （4小时后过期） 
     static readonly tokenExpirationTime = 1 / 24 * 4
+
+    // root 有路由重定向路径
+    static readonly homePath = '/dashboard'
 }
