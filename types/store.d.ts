@@ -107,12 +107,6 @@ declare namespace Store {
     interface AuthStore {
         token: Nullable<string>
 
-        // 权限路由
-        authRoute: RouteRecordRaw[]
-
-        // 公共路由
-        publicRoute: RouteRecordRaw[]
-
         // 菜单
         menu: RouteRecordRaw[]
 

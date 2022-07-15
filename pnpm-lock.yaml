@@ -41,7 +41,7 @@ dependencies:
   pinia: 2.0.14_qhv4oyzxhhzeba5rd2zztmcg2y
   store2: 2.13.2
   vue: 3.2.36
-  vue-router: 4.0.15_vue@3.2.36
+  vue-router: 4.1.2_vue@3.2.36
 
 devDependencies:
   '@iconify-json/mdi': 1.1.19
@@ -3229,8 +3229,8 @@ packages:
       - supports-color
     dev: true
 
-  /vue-router/4.0.15_vue@3.2.36:
-    resolution: {integrity: sha512-xa+pIN9ZqORdIW1MkN2+d9Ui2pCM1b/UMgwYUCZOiFYHAvz/slKKBDha8DLrh5aCG/RibtrpyhKjKOZ85tYyWg==}
+  /vue-router/4.1.2_vue@3.2.36:
+    resolution: {integrity: sha512-5BP1qXFncVRwgV/XnqzsKApdMjQPqWIpoUBdL1ynz8HyLxIX/UDAx7Ql2BjmA5CXT/p61JfZvkpiFWFpaqcfag==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:

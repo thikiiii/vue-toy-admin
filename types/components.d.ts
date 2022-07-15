@@ -29,7 +29,6 @@ declare module 'vue' {
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
     NRow: typeof import('naive-ui')['NRow']
     NSpace: typeof import('naive-ui')['NSpace']
-    NThemeEditor: typeof import('naive-ui')['NThemeEditor']
     ThemeSwitch: typeof import('./../src/components/ThemeSwitch/ThemeSwitch.vue')['default']
   }
 }

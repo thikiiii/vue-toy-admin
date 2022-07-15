@@ -1,9 +1,9 @@
 import { Layout } from '@/layout/index'
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import Settings from '@/settings'
 
 // 固定路由
-const FixedRoute: RouteRecordRaw[] = [
+export const fixedRoute: RouteRecordRaw[] = [
     {
         path: '/',
         name: 'root',
@@ -11,7 +11,17 @@ const FixedRoute: RouteRecordRaw[] = [
         redirect: Settings.homePath,
         meta: {
             title: 'Root'
-        }
+        },
+        children: [
+            {
+                path: '/:pathMatch(.*)*',
+                name: '404',
+                component: () => import('@/views/404/index.vue'),
+                meta: {
+                    title: '404'
+                }
+            }
+        ]
     },
     {
         path: '/login',
@@ -21,7 +31,21 @@ const FixedRoute: RouteRecordRaw[] = [
             title: '登录',
             ignoreAuth: true
         }
+    },
+    {
+        path: '/:NotFound(.*)*',
+        name: 'NotFound',
+        component: Layout,
+        children: [
+            {
+                path: '/:NotFound(.*)*',
+                component: () => import('@/views/404/index.vue'),
+                meta: {
+                    title: '404'
+                }
+            }
+        ]
     }
 ]
-export default FixedRoute
+
 

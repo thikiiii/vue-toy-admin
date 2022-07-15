@@ -8,21 +8,17 @@ export const createGuard = (router: Router) => {
     router.beforeEach(async (to, from, next) => {
         window.$loadingBar?.start()
         const loginPath = '/login'
-        const authStore = useAuthStore()
-        // 是否登录
-        const isLogin = Boolean(authStore.token)
+        const { isLogin, hasAuth, initUserStore, getUserinfo } = useAuthStore()
         // 是否忽略权限
-        const isIgnoreAuth = Boolean(to.meta.ignoreAuth)
-        const hasPermission = Boolean(authStore.roles.length) && Boolean(authStore.userinfo)
+        const ignoreAuth = Boolean(to.meta.ignoreAuth)
 
-        if (isLogin && !hasPermission) {
-            await authStore.getUserinfo().catch(() => {
-                authStore.init()
+        if (isLogin && !hasAuth) {
+            await getUserinfo().catch(() => {
+                initUserStore()
                 next(loginPath)
                 return Promise.reject()
             })
-            console.log(router.getRoutes())
-            authStore.filterMenusByRole()
+            return next(to.path)
         }
         const guardTacticsAction: TacticsAction[] = [
             // token 失效
@@ -30,7 +26,7 @@ export const createGuard = (router: Router) => {
                 isLogin && !Boolean(AuthCookie.getToken()),
                 () => {
                     window.$message?.warning('令牌已失效，请重新登录！')
-                    authStore.init()
+                    initUserStore()
                     next(loginPath)
                 }
             ],
@@ -43,15 +39,16 @@ export const createGuard = (router: Router) => {
             ],
             // 登录状态或者无权限页面直接通过
             [
-                (isLogin && hasPermission) || isIgnoreAuth,
+                (isLogin && hasAuth) || ignoreAuth,
                 () => {
                     next()
                 }
             ],
             // 未登录进入权限页面
             [
-                !isLogin || !isIgnoreAuth,
+                !isLogin || !ignoreAuth,
                 () => {
+                    window.$message?.warning('请登录后在访问！')
                     next(loginPath)
                 }
             ],

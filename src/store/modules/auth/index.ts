@@ -13,77 +13,75 @@ const useAuthStore = defineStore('auth', {
         token: AuthCookie.getToken() || null,
         roles: [],
         menu: [],
-        permissions: [],
-        authRoute: authRouteList,
-        publicRoute: []
+        permissions: []
     }),
     getters: {
         // 缓存菜单
         cacheMenu: (state) => state.menu.reduce((arr, item) => {
             item.meta?.keepAlive && arr.push(item.name as never)
             return arr
-        }, [])
+        }, []),
+
+        // 是否登录
+        isLogin(state) {
+            return Boolean(state.token)
+        },
+
+        // 是否有鉴权
+        hasAuth(state) {
+            return Boolean(state.roles.length) && Boolean(state.userinfo)
+        }
     },
     actions: {
-        setToken(token) {
-            this.token = token
-            AuthCookie.setToken(token)
-        },
-        removeToken() {
-            this.token = null
-            AuthCookie.removeToken()
-        },
         // 密码登录
         async passwordLogin(form: UserService.Request.PasswordLogin) {
             const { subCode, subMsg, token } = await UserApi.passwordLogin(form).catch(() => {
                 this.loginLoading = false
                 return Promise.reject()
             })
+
             if (subCode !== 200 || !token) {
                 window.$message?.error(subMsg)
                 this.loginLoading = false
                 return Promise.reject()
             }
+
+            // 登录成功后的操作
+            await this.loginSuccessAction(token)
+            return Promise.resolve()
+        },
+
+        // 登录成功后的操作
+        async loginSuccessAction(token) {
             this.setToken(token)
             await this.getUserinfo()
             const redirect = router.currentRoute.value.query.redirect
             await router.replace(redirect as string || Settings.homePath)
             this.loginLoading = false
             window.$message?.success('登录成功')
-            return Promise.resolve()
         },
+
         // 获取用户信息
         async getUserinfo() {
             const { subCode, data, subMsg } = await UserApi.getUserinfo().catch(() => {
-                this.loginLoading = false
+                this.initUserStore()
                 return Promise.reject()
             })
             if (subCode !== 200 || !data) {
                 window.$message?.error(subMsg)
-                this.loginLoading = false
+                this.initUserStore()
                 return Promise.reject()
             }
             this.roles = data.roles
             this.permissions = data.permissions
             this.userinfo = data.userinfo
-            // this.filterMenusByRole()
+            this.filterAuthRoute()
         },
-        // 初始化
-        init() {
-            AuthCookie.removeToken()
-            this.token = null
-            this.userinfo = null
-            this.roles = []
-            this.permissions = []
-            this.menu = []
-            this.loginLoading = false
-            this.authRoute = authRouteList
-            this.publicRoute = []
-        },
+
         // 退出登录
         async signOut() {
             await UserApi.signOut().finally(() => {
-                this.init()
+                this.initUserStore()
                 window.$message?.success('退出登录成功!')
                 router.currentRoute.value.path !== '/login' && router.push({
                     path: '/login',
@@ -93,10 +91,34 @@ const useAuthStore = defineStore('auth', {
                 })
             })
         },
-        filterMenusByRole() {
-            this.authRoute.forEach(item => {
-                router.addRoute(item)
+
+        // 过滤权限路由
+        filterAuthRoute() {
+            return authRouteList.filter(route => {
+                const { meta } = route
+                if (!meta?.roles || !meta?.roles.length) return
+                return meta.roles.some(role => this.roles.includes(role))
             })
+        },
+
+        // 初始化
+        initUserStore() {
+            this.removeToken()
+            this.userinfo = null
+            this.roles = []
+            this.permissions = []
+            this.menu = []
+            this.loginLoading = false
+        },
+
+        setToken(token) {
+            this.token = token
+            AuthCookie.setToken(token)
+        },
+
+        removeToken() {
+            this.token = null
+            AuthCookie.removeToken()
         }
     }
 })
