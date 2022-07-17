@@ -41,6 +41,13 @@ export default defineConfig(({ command, mode }) => {
             // 生产环境去掉 日志 和 debugger
             pure: VITE_DELETE_CONSOLE ? [ 'console.log', 'debugger' ] : [],
             minify: true
+        },
+        build: {
+            reportCompressedSize: false,
+            sourcemap: false,
+            commonjsOptions: {
+                ignoreTryCatch: false
+            }
         }
     }
 })

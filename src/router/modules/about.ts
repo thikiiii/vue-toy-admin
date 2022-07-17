@@ -1,23 +1,16 @@
 import { RouteRecordRaw } from 'vue-router'
-import Layout from '@/layout/index.vue'
 import { RoleEnum } from '@/enums/auth'
 
+// 没有 children 说明就是单页面，有子项这一级就是目录
 const about: RouteRecordRaw[] = [
     {
         path: '/about',
         name: 'about',
-        component: Layout,
-        children: [
-            {
-                path: '/about/index',
-                name: 'about_index',
-                meta: {
-                    title: '关于',
-                    roles: [ RoleEnum.SUPER ]
-                },
-                component: () => import('@/views/about/About.vue')
-            }
-        ]
+        meta: {
+            title: '关于',
+            roles: [ RoleEnum.SUPER ]
+        },
+        component: () => import('@/views/about/About.vue')
     }
 ]
 export default about
