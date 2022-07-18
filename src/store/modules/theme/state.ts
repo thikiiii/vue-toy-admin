@@ -1,7 +1,7 @@
 import { lighten } from '@/utils'
 
 import { GlobalThemeOverrides } from 'naive-ui'
-import { Store } from '#/store'
+
 import Settings from '@/settings'
 
 

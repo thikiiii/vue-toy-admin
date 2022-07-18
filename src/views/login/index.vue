@@ -4,7 +4,9 @@ import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
 
 const isMobile = ref(true)
 const loginType = shallowRef(Password)
+
 provide('loginType', loginType)
+
 const resize = () => {
     isMobile.value = document.body.offsetWidth <= 1000
 }

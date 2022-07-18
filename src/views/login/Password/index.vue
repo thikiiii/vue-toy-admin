@@ -5,8 +5,6 @@ import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
 
 const authStore = useAuthStore()
-
-
 const formRef = ref<InstanceType<typeof NForm> | null>()
 const form = reactive({
     username: 'admin',
@@ -29,6 +27,7 @@ const rules: FormRules = reactive({
     ]
 })
 const loginType = inject('loginType') as Ref<typeof QrCode>
+
 // 设置登录类型
 const setLoginType = (component: typeof QrCode) => loginType.value = component
 

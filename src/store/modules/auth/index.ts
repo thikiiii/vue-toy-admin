@@ -1,12 +1,10 @@
 import { defineStore } from 'pinia'
-import { Store } from '#/store'
 import { AuthCookie } from '@/storage/auth'
 import { UserApi } from '@/services/api/user'
 import router, { authRouteList } from '@/router'
 import Settings from '@/settings'
 import { RouteRecordRaw } from 'vue-router'
-import { Layout } from '@/layout/index'
-
+import { createDirectory } from '@/router/fixedRoute'
 
 // 鉴权
 const useAuthStore = defineStore('auth', {
@@ -24,12 +22,12 @@ const useAuthStore = defineStore('auth', {
             item.meta?.keepAlive && arr.push(item.name as never)
             return arr
         }, []),
-        
+
         // 是否登录
         isLogin(state) {
             return Boolean(state.token)
         },
-        
+
         // 是否有鉴权
         hasAuth(state) {
             return Boolean(state.roles.length) && Boolean(state.userinfo)
@@ -42,18 +40,18 @@ const useAuthStore = defineStore('auth', {
                 this.loginLoading = false
                 return Promise.reject()
             })
-            
+
             if (subCode !== 200 || !token) {
                 window.$message?.error(subMsg)
                 this.loginLoading = false
                 return Promise.reject()
             }
-            
+
             // 登录成功后的操作
             await this.loginSuccessAction(token)
             return Promise.resolve()
         },
-        
+
         // 登录成功后的操作
         async loginSuccessAction(token) {
             this.setToken(token)
@@ -63,7 +61,7 @@ const useAuthStore = defineStore('auth', {
             this.loginLoading = false
             window.$message?.success('登录成功')
         },
-        
+
         // 获取用户信息
         async getUserinfo() {
             const { subCode, data, subMsg } = await UserApi.getUserinfo().catch(() => {
@@ -78,9 +76,12 @@ const useAuthStore = defineStore('auth', {
             this.roles = data.roles
             this.permissions = data.permissions
             this.userinfo = data.userinfo
-            console.log(this.filterAuthRoute(authRouteList))
+            this.filterAuthRoute(authRouteList).forEach(route => {
+                router.addRoute(route as RouteRecordRaw)
+            })
         },
-        
+
+
         // 退出登录
         async signOut() {
             await UserApi.signOut().finally(() => {
@@ -94,31 +95,51 @@ const useAuthStore = defineStore('auth', {
                 })
             })
         },
-        
+
         // 过滤权限路由
-        filterAuthRoute(authRouteList) {
-            return authRouteList.map(route => {
-                const roles = route.meta?.roles
-                const isAuth = Boolean(roles?.length) && roles?.some(role => this.roles.includes(role))
-                if (!isAuth) return
-                
-                // isSelf：是否本身， 无 children 自己就是菜单
-                const isSelf = !Boolean(route.children?.length)
-                console.log(route.children)
-                if (isSelf) {
-                    const rootRoute: RouteRecordRaw = {
-                        path: '/',
-                        name: 'root',
-                        component: Layout,
-                        children: [ route ]
-                    }
+        filterAuthRoute(authRouteList: RouteRecordRaw[]) {
+            // 是否有权限
+            const isAuth = (route: RouteRecordRaw) => route.meta?.ignoreAuth ||
+                (
+                    Boolean(route.meta?.roles?.length) &&
+                    route.meta?.roles?.some(role => this.roles.includes(role))
+                )
+
+            // 处理本身
+            const hanldeSelf = (route: RouteRecordRaw) => {
+                if (!Boolean(route.children?.length) && isAuth(route)) {
+                    // 创建目录
+                    const rootRoute = createDirectory()
+                    rootRoute.children?.push(route)
                     return rootRoute
                 }
-                // 有 children 自己就是目录
-                return this.filterAuthRoute(route.children)
-            })
+            }
+
+            // 处理目录
+            const handleDirectory = (route: RouteRecordRaw) => {
+                const directory: RouteRecordRaw = { ...route, children: [] }
+
+                directory.children = route.children?.filter(route => {
+                    if (route.children) return handleDirectory(route)
+
+                    return isAuth(route)
+                })
+
+                if (directory.children?.length) return directory
+            }
+
+            return authRouteList.map(route => {
+                const self = hanldeSelf(route)
+                if (self) return self
+                return handleDirectory(route)
+            }).filter((route) => Boolean(route))
         },
-        
+
+        // // 生成菜单
+        // createMenu(authRouteList: RouteRecordRaw[]): MenuOption[] {
+        //     // const menu
+        // },
+
         // 初始化
         initUserStore() {
             this.removeToken()
@@ -128,12 +149,12 @@ const useAuthStore = defineStore('auth', {
             this.menu = []
             this.loginLoading = false
         },
-        
+
         setToken(token) {
             this.token = token
             AuthCookie.setToken(token)
         },
-        
+
         removeToken() {
             this.token = null
             AuthCookie.removeToken()

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Store } from '#/store'
+
 import Settings from '@/settings'
 
 // 移动触发宽度

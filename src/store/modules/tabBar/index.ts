@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Store } from '#/store'
+
 
 const useTabBarStore = defineStore('tabBar', {
     state: (): Store.TabBarStore => ({

@@ -22,8 +22,7 @@ const system: RouteRecordRaw[] = [
                 path: '/system/role',
                 name: 'system_role',
                 meta: {
-                    title: '角色',
-                    ignoreAuth: true
+                    title: '角色'
                 },
                 component: () => import('@/views/system/role/index.vue')
             },
@@ -34,6 +33,21 @@ const system: RouteRecordRaw[] = [
                     title: '菜单'
                 },
                 component: () => import('@/views/system/menu/index.vue')
+            },
+            {
+                path: '/system/test',
+                name: '/system_test',
+                component: Layout,
+                children: [
+                    {
+                        path: '/system/test/menu',
+                        name: 'system_test_menu',
+                        meta: {
+                            title: '测试菜单'
+                        },
+                        component: () => import('@/views/system/menu/index.vue')
+                    }
+                ]
             }
         ]
     }

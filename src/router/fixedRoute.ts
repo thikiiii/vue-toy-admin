@@ -49,3 +49,10 @@ export const fixedRoute: RouteRecordRaw[] = [
 ]
 
 
+// 创建目录
+export const createDirectory = (): RouteRecordRaw => ({
+    path: '/',
+    name: 'root',
+    component: Layout,
+    children: []
+})

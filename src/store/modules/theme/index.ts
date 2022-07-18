@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { darkTheme } from 'naive-ui'
 import { themeState } from '@/store/modules/theme/state'
-import { Store } from '#/store'
+
 import { ThemeStorage } from '@/storage/theme'
 import { ThemeModeEnum } from '@/enums/theme'
 

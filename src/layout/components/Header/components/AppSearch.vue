@@ -1,100 +1,100 @@
 <script lang="ts" setup>
-    import { inject, reactive, toRefs } from 'vue'
-    
-    
-    const size = inject<string>('size')
-    
-    
-    // 按键提示
-    const keyPrompt = [
+import { inject, reactive, toRefs } from 'vue'
+
+
+const size = inject<string>('size')
+
+
+// 按键提示
+const keyPrompt = [
+    {
+        icons: [ { name: 'arrow-left-bottom', iconLibrary: 'mdi' } ],
+        prompt: '回车'
+    },
+    {
+        icons: [
+            {
+                name: 'arrow-up',
+                iconLibrary: 'mdi'
+            },
+            {
+                name: 'arrow-down',
+                iconLibrary: 'mdi'
+            }
+        ],
+        prompt: '切换'
+    },
+    {
+        icons: [
+            {
+                name: 'keyboard-esc',
+                iconLibrary: 'mdi'
+            }
+        ],
+        prompt: '切换'
+    }
+]
+// TODO: 缺默认激活
+const state = reactive({
+    // 模态框是否可见
+    visibleModal: false,
+    // 搜索值
+    searchText: false,
+    // 搜索列表
+    menuList: [],
+    // 历史记录
+    historyRecordList: [
         {
-            icons: [{ name: 'arrow-left-bottom', iconLibrary: 'mdi' }],
-            prompt: '回车'
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
         },
         {
-            icons: [
-                {
-                    name: 'arrow-up',
-                    iconLibrary: 'mdi'
-                },
-                {
-                    name: 'arrow-down',
-                    iconLibrary: 'mdi'
-                }
-            ],
-            prompt: '切换'
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
         },
         {
-            icons: [
-                {
-                    name: 'keyboard-esc',
-                    iconLibrary: 'mdi'
-                }
-            ],
-            prompt: '切换'
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
+        },
+        {
+            icon: 'lock',
+            menuList: [ '测试1', '测试2' ],
+            path: '/'
         }
     ]
-    // TODO: 缺默认激活
-    const state = reactive({
-        // 模态框是否可见
-        visibleModal: false,
-        // 搜索值
-        searchText: false,
-        // 搜索列表
-        menuList: [],
-        // 历史记录
-        historyRecordList: [
-            {
-                icon: 'lock',
-                menuList: ['测试1', '测试2'],
-                path: '/'
-            },
-            {
-                icon: 'lock',
-                menuList: ['测试1', '测试2'],
-                path: '/'
-            },
-            {
-                icon: 'lock',
-                menuList: ['测试1', '测试2'],
-                path: '/'
-            },
-            {
-                icon: 'lock',
-                menuList: ['测试1', '测试2'],
-                path: '/'
-            },
-            {
-                icon: 'lock',
-                menuList: ['测试1', '测试2'],
-                path: '/'
-            },
-            {
-                icon: 'lock',
-                menuList: ['测试1', '测试2'],
-                path: '/'
-            },
-            {
-                icon: 'lock',
-                menuList: ['测试1', '测试2'],
-                path: '/'
-            },
-            {
-                icon: 'lock',
-                menuList: ['测试1', '测试2'],
-                path: '/'
-            },
-            {
-                icon: 'lock',
-                menuList: ['测试1', '测试2'],
-                path: '/'
-            }
-        ]
-        
-    })
     
-    
-    const { visibleModal, menuList, searchText, historyRecordList } = toRefs(state)
+})
+
+
+const { visibleModal, menuList, searchText, historyRecordList } = toRefs(state)
 </script>
 
 <template>

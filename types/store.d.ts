@@ -1,9 +1,3 @@
-import { GlobalThemeOverrides } from 'naive-ui'
-import { RouteMeta, RouteRecordRaw } from 'vue-router'
-import { ThemeModeEnum } from '@/enums/theme'
-import { PermissionEnum, RoleEnum } from '@/enums/auth'
-
-
 declare namespace Store {
     // 布局 Store
     interface LayoutStore {
@@ -66,7 +60,7 @@ declare namespace Store {
     }
 
     type ThemeModeConfig<T> = {
-        [themeMode in ThemeModeEnum]: T
+        [themeMode in import('@/enums/theme').ThemeModeEnum]: T
     }
 
     // 主题 state
@@ -75,10 +69,10 @@ declare namespace Store {
         theme: string
 
         // 当前主题模式
-        themeMode: ThemeModeEnum
+        themeMode: import('@/enums/theme').ThemeModeEnum
 
         // naive 主题
-        naive: ThemeModeConfig<GlobalThemeOverrides>
+        naive: ThemeModeConfig<import('naive-ui').GlobalThemeOverrides>
 
         // 自定义主题
         customize: ThemeModeConfig<CustomizeThemeConfig>
@@ -97,7 +91,7 @@ declare namespace Store {
     }
 
     // 标签栏
-    interface TabBar extends Pick<RouteMeta, 'title' | 'keepAlive'> {
+    interface TabBar extends Pick<import('vue-router').RouteMeta, 'title' | 'keepAlive'> {
         // 路由
         path: string,
     }
@@ -108,13 +102,13 @@ declare namespace Store {
         token: Nullable<string>
 
         // 菜单
-        menu: RouteRecordRaw[]
+        menu: MenuOption[]
 
         // 角色
-        roles: RoleEnum[],
+        roles: import('@/enums/auth').RoleEnum[],
 
         // 细粒度权限
-        permissions: PermissionEnum[]
+        permissions: import('@/enums/auth').PermissionEnum[]
 
         // 用户信息
         userinfo: Nullable<UserService.Response.UserDetails['userinfo']>
