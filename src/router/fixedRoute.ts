@@ -2,6 +2,9 @@ import { Layout } from '@/layout/index'
 import type { RouteRecordRaw } from 'vue-router'
 import Settings from '@/settings'
 
+// 登录路由路径
+export const LOGIN_PATH = '/login'
+
 // 固定路由
 export const fixedRoute: RouteRecordRaw[] = [
     {
@@ -11,20 +14,10 @@ export const fixedRoute: RouteRecordRaw[] = [
         redirect: Settings.homePath,
         meta: {
             title: 'Root'
-        },
-        children: [
-            {
-                path: '/:pathMatch(.*)*',
-                name: '404',
-                component: () => import('@/views/404/index.vue'),
-                meta: {
-                    title: '404'
-                }
-            }
-        ]
+        }
     },
     {
-        path: '/login',
+        path: LOGIN_PATH,
         name: 'login',
         component: () => import('@/views/login/index.vue'),
         meta: {
@@ -47,12 +40,3 @@ export const fixedRoute: RouteRecordRaw[] = [
         ]
     }
 ]
-
-
-// 创建目录
-export const createDirectory = (): RouteRecordRaw => ({
-    path: '/',
-    name: 'root',
-    component: Layout,
-    children: []
-})

@@ -31,7 +31,7 @@ onBeforeUnmount(() => {
         <div class="login-card">
             <theme-switch class="login-card-theme" />
             <transition appear name="right-slide-fade">
-                <h1 class="login-card-title">Simple Admin</h1>
+                <h1 class="login-card-title">Thik Admin</h1>
             </transition>
             <div class="login-card-form">
                 <component :is="loginType" />

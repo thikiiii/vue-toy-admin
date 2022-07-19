@@ -101,9 +101,6 @@ declare namespace Store {
     interface AuthStore {
         token: Nullable<string>
 
-        // 菜单
-        menu: MenuOption[]
-
         // 角色
         roles: import('@/enums/auth').RoleEnum[],
 
@@ -115,5 +112,15 @@ declare namespace Store {
 
         // 登录 loading
         loginLoading: boolean
+    }
+
+    type MenuOption = import('naive-ui').MenuOption & {
+        meta: import('vue-router').RouteMeta
+    }
+
+    // 路由 Store
+    interface RouteStore {
+        // 菜单
+        menus: MenuOption[]
     }
 }

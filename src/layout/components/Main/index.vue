@@ -1,15 +1,14 @@
 <script lang="ts" setup>
+import { useRouteStore } from '@/store/modules/route'
 
-import useAuthStore from '@/store/modules/auth'
-
-const authStore = useAuthStore()
+const routeStore = useRouteStore()
 </script>
 
 <template>
     <div class="main">
         <router-view v-slot="{Component,route}">
             <transition appear mode="out-in" name="zoom-fade">
-                <keep-alive :include="authStore.cacheMenu">
+                <keep-alive :include="routeStore.cacheMenu">
                     <component :is="Component" :key="route.fullPath" />
                 </keep-alive>
             </transition>
