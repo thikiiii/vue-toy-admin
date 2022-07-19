@@ -3,7 +3,6 @@ import * as path from 'path'
 import { createVitePlugins } from './build/vite/plugins'
 import { wrapperEnv } from './build/utils'
 
-
 export default defineConfig(({ command, mode }) => {
     // 是否生产环境
     const isBuild = command === 'build'
@@ -38,13 +37,10 @@ export default defineConfig(({ command, mode }) => {
             }
         },
         build: {
-            minify: true,
-            terserOptions: {
-                compress: {
-                    // 生产环境去掉 日志
-                    drop_console: VITE_DELETE_CONSOLE
-                }
-            }
+            target: 'es2015'
+        },
+        esbuild: {
+            pure: VITE_DELETE_CONSOLE ? [ 'console.log', 'debugger' ] : []
         }
     }
 })

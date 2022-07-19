@@ -32,7 +32,7 @@ export const useRouteStore = defineStore('route', {
         },
 
         // 过滤权限路由
-        filterAuthRoute(): RouteRecordRaw[] {
+        filterAuthRoutes(): RouteRecordRaw[] {
             const authStore = useAuthStore()
             // 是否有权限
             const isAuth = (route: RouteRecordRaw) => route.meta?.ignoreAuth ||
@@ -68,6 +68,13 @@ export const useRouteStore = defineStore('route', {
                 const self = hanldeSelf(route)
                 return self ? self : handleDirectory(route)
             }).filter((route) => Boolean(route)) as RouteRecordRaw[]
+        },
+
+        // 添加权限路由
+        addAuthRoues() {
+            this.filterAuthRoutes().forEach(route => {
+                router.addRoute(route)
+            })
         }
     }
 })

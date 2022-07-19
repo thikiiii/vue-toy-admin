@@ -12,9 +12,7 @@ export const fixedRoute: RouteRecordRaw[] = [
         name: 'root',
         component: Layout,
         redirect: Settings.homePath,
-        meta: {
-            title: 'Root'
-        }
+        children: []
     },
     {
         path: LOGIN_PATH,
