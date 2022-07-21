@@ -2,6 +2,7 @@
 
 import { Layout } from '@/layout/index'
 import { RouteRecordRaw } from 'vue-router'
+import { RoleEnum } from '@/enums/auth'
 
 const system: RouteRecordRaw[] = [
     {
@@ -30,6 +31,7 @@ const system: RouteRecordRaw[] = [
                 path: '/system/menu',
                 name: 'system_menu',
                 meta: {
+                    roles: [ RoleEnum.TEST ],
                     title: '菜单'
                 },
                 component: () => import('@/views/system/menu/index.vue')
@@ -43,7 +45,8 @@ const system: RouteRecordRaw[] = [
                         path: '/system/test/menu',
                         name: 'system_test_menu',
                         meta: {
-                            title: '测试菜单'
+                            title: '测试菜单',
+                            roles: [ RoleEnum.TEST ]
                         },
                         component: () => import('@/views/system/menu/index.vue')
                     }

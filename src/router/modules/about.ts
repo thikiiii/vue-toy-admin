@@ -8,7 +8,8 @@ const about: RouteRecordRaw[] = [
         name: 'about',
         meta: {
             title: '关于',
-            roles: [ RoleEnum.SUPER ]
+            roles: [ RoleEnum.SUPER ],
+            icon: 'lock'
         },
         component: () => import('@/views/about/About.vue')
     }

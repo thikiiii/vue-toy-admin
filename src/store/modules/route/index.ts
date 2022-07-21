@@ -2,8 +2,11 @@ import { defineStore } from 'pinia'
 import { RouteRecordRaw } from 'vue-router'
 import { fixedRoute } from '@/router/fixedRoute'
 import useAuthStore from '@/store/modules/auth'
-import { authRouteList, createDirectory } from '@/router/helpers'
+import { authRouteList, createRootRoute } from '@/router/helpers'
 import router from '@/router'
+import RenderIcon from '@/components/Render/icon'
+import RenderEllipsis from '@/components/Render/ellipsis'
+
 
 export const useRouteStore = defineStore('route', {
     state: (): Store.RouteStore => ({
@@ -41,18 +44,8 @@ export const useRouteStore = defineStore('route', {
                     route.meta?.roles?.some(role => authStore.roles.includes(role))
                 )
 
-            // 处理本身
-            const hanldeSelf = (route: RouteRecordRaw) => {
-                if (!Boolean(route.children?.length) && isAuth(route)) {
-                    // 创建目录
-                    const rootRoute = createDirectory()
-                    rootRoute.children?.push(route)
-                    return rootRoute
-                }
-            }
-
             // 处理目录
-            const handleDirectory = (route: RouteRecordRaw) => {
+            const handleDirectory = (route: RouteRecordRaw): RouteRecordRaw | undefined => {
                 const directory: RouteRecordRaw = { ...route, children: [] }
 
                 directory.children = route.children?.filter(route => {
@@ -63,18 +56,59 @@ export const useRouteStore = defineStore('route', {
 
                 if (directory.children?.length) return directory
             }
+            // 将过滤好的权限路由返回
+            return authRouteList.reduce<RouteRecordRaw[]>((authRoutes, route) => {
+                if (!Boolean(route.children?.length) && isAuth(route)) {
+                    authRoutes.push(route)
+                    return authRoutes
+                }
+                const directory = handleDirectory(route)
+                directory && authRoutes.push(directory)
+                return authRoutes
+            }, [])
+        },
 
-            return authRouteList.map(route => {
-                const self = hanldeSelf(route)
-                return self ? self : handleDirectory(route)
-            }).filter((route) => Boolean(route)) as RouteRecordRaw[]
+        // 包装权限路由,一级路由转二级路由
+        wrapperAuthRoutes(authRoutes: RouteRecordRaw[]) {
+            return authRoutes.map((route) => {
+                if (route.children) return route
+                const root = createRootRoute()
+                root.children?.push(route)
+                return root
+            }, [])
+        },
+
+        // 权限路由转菜单
+        authRoutesToMenus(authRoutes: RouteRecordRaw[]): Store.MenuOption[] {
+            // 创建菜单
+            const createMenu = ({ path, children, meta }: RouteRecordRaw): Store.MenuOption => ({
+                key: path,
+                label: () => RenderEllipsis({ content: meta?.title }),
+                icon: () => RenderIcon({ icon: meta?.icon || '' }),
+                meta: meta,
+                children: children as Store.MenuOption['children']
+            })
+
+            return authRoutes.map(route => {
+                if (!route.children) return createMenu(route)
+                const menu = createMenu(route)
+                menu.children = this.authRoutesToMenus(route.children)
+                return menu
+            })
         },
 
         // 添加权限路由
         addAuthRoues() {
-            this.filterAuthRoutes().forEach(route => {
+            // 过滤权限路由
+            const authRoutes = this.filterAuthRoutes()
+            // 包装路由
+            const wrapperAuthRoutes = this.wrapperAuthRoutes(authRoutes)
+            // 添加路由
+            wrapperAuthRoutes.forEach(route => {
                 router.addRoute(route)
             })
+            // 权限路由转菜单   TODO: 递归 TS 类型错误
+            this.menus = this.authRoutesToMenus(authRoutes) as never
         }
     }
 })

@@ -115,7 +115,7 @@ declare namespace Store {
     }
 
     type MenuOption = import('naive-ui').MenuOption & {
-        meta: import('vue-router').RouteMeta
+        meta?: import('vue-router').RouteMeta
     }
 
     // 路由 Store

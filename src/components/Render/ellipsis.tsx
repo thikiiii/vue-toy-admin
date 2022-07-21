@@ -3,7 +3,7 @@ import { NEllipsis } from 'naive-ui'
 // 渲染ellipsis配置
 export interface RenderEllipsisOption {
     // 内容
-    content: string
+    content?: string
     // 展开方式
     expandTrigger?: 'click',
     // 最大行数

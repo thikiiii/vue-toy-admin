@@ -15,14 +15,10 @@ const useAuthStore = defineStore('auth', {
     }),
     getters: {
         // 是否登录
-        isLogin(state) {
-            return Boolean(state.token)
-        },
+        isLogin: (state) => Boolean(state.token),
 
         // 是否有鉴权
-        isAuth(state) {
-            return Boolean(state.roles.length) && Boolean(state.userinfo)
-        }
+        isAuth: (state) => Boolean(state.roles.length) && Boolean(state.userinfo)
     },
     actions: {
         // 密码登录
@@ -39,16 +35,15 @@ const useAuthStore = defineStore('auth', {
             }
 
             // 登录成功后的操作
-            await this.loginSuccessAction(token)
+            this.loginSuccessAction(token)
             return Promise.resolve()
         },
 
         // 登录成功后的操作
-        async loginSuccessAction(token) {
+        loginSuccessAction(token) {
             this.setToken(token)
-            await this.getUserinfo()
             const redirect = router.currentRoute.value.query.redirect
-            await router.replace(redirect as string || Settings.homePath)
+            void router.replace(redirect as string || Settings.homePath)
             this.loginLoading = false
             window.$message?.success('登录成功')
         },
