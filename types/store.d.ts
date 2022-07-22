@@ -114,8 +114,18 @@ declare namespace Store {
         loginLoading: boolean
     }
 
-    type MenuOption = import('naive-ui').MenuOption & {
+    interface MenuOption {
         meta?: import('vue-router').RouteMeta
+
+        label: string | (() => import('vue').VNodeChild)
+
+        icon: string | (() => import('vue').VNodeChild)
+
+        key: string | number
+
+        name: string
+
+        children?: MenuOption[]
     }
 
     // 路由 Store

@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import { RouteRecordRaw } from 'vue-router'
 import { fixedRoute } from '@/router/fixedRoute'
 import useAuthStore from '@/store/modules/auth'
 import { authRouteList, createRootRoute } from '@/router/helpers'
 import router from '@/router'
 import RenderIcon from '@/components/Render/icon'
 import RenderEllipsis from '@/components/Render/ellipsis'
+import { AppRouteRecordRaw } from '#/router'
+import { RouteRecordRaw } from 'vue-router'
 
 
 export const useRouteStore = defineStore('route', {
@@ -15,11 +16,12 @@ export const useRouteStore = defineStore('route', {
 
     getters: {
         // 缓存菜单
-        cacheMenu: (state) => state.menus.reduce((arr, item) => {
-            item.meta?.keepAlive && arr.push(item.key as never)
-            return arr
+        cacheMenu: (state) => state.menus.reduce<string[]>((caches, item) => {
+            item.meta?.keepAlive && item.name && caches.push(item.name)
+            return caches
         }, [])
     },
+
     actions: {
         // 初始化路由
         initRouteStore() {
@@ -31,33 +33,32 @@ export const useRouteStore = defineStore('route', {
         resetRoutes() {
             const routes = router.getRoutes()
             routes.forEach(route => route.name && router.removeRoute(route.name))
-            fixedRoute.forEach(route => router.addRoute(route))
+            fixedRoute.forEach(route => router.addRoute(route as RouteRecordRaw))
         },
 
         // 过滤权限路由
-        filterAuthRoutes(): RouteRecordRaw[] {
+        filterAuthRoutes(): AppRouteRecordRaw[] {
             const authStore = useAuthStore()
             // 是否有权限
-            const isAuth = (route: RouteRecordRaw) => route.meta?.ignoreAuth ||
+            const isAuth = (route: AppRouteRecordRaw) => route.meta?.ignoreAuth ||
                 (
                     Boolean(route.meta?.roles?.length) &&
                     route.meta?.roles?.some(role => authStore.roles.includes(role))
                 )
 
             // 处理目录
-            const handleDirectory = (route: RouteRecordRaw): RouteRecordRaw | undefined => {
-                const directory: RouteRecordRaw = { ...route, children: [] }
+            const handleDirectory = (route: AppRouteRecordRaw): AppRouteRecordRaw | undefined => {
+                const directory: AppRouteRecordRaw = { ...route, children: [] }
 
                 directory.children = route.children?.filter(route => {
                     if (route.children) return handleDirectory(route)
-
                     return isAuth(route)
                 })
 
                 if (directory.children?.length) return directory
             }
             // 将过滤好的权限路由返回
-            return authRouteList.reduce<RouteRecordRaw[]>((authRoutes, route) => {
+            return authRouteList.reduce<AppRouteRecordRaw[]>((authRoutes, route) => {
                 if (!Boolean(route.children?.length) && isAuth(route)) {
                     authRoutes.push(route)
                     return authRoutes
@@ -69,7 +70,7 @@ export const useRouteStore = defineStore('route', {
         },
 
         // 包装权限路由,一级路由转二级路由
-        wrapperAuthRoutes(authRoutes: RouteRecordRaw[]) {
+        wrapperAuthRoutes(authRoutes: AppRouteRecordRaw[]) {
             return authRoutes.map((route) => {
                 if (route.children) return route
                 const root = createRootRoute()
@@ -79,13 +80,14 @@ export const useRouteStore = defineStore('route', {
         },
 
         // 权限路由转菜单
-        authRoutesToMenus(authRoutes: RouteRecordRaw[]): Store.MenuOption[] {
+        authRoutesToMenus(authRoutes: AppRouteRecordRaw[]): Store.MenuOption[] {
             // 创建菜单
-            const createMenu = ({ path, children, meta }: RouteRecordRaw): Store.MenuOption => ({
+            const createMenu = ({ path, children, meta, name }: AppRouteRecordRaw): Store.MenuOption => ({
                 key: path,
                 label: () => RenderEllipsis({ content: meta?.title }),
                 icon: () => RenderIcon({ icon: meta?.icon || '' }),
-                meta: meta,
+                meta,
+                name: name as string,
                 children: children as Store.MenuOption['children']
             })
 
@@ -101,14 +103,37 @@ export const useRouteStore = defineStore('route', {
         addAuthRoues() {
             // 过滤权限路由
             const authRoutes = this.filterAuthRoutes()
+            console.log(authRoutes)
             // 包装路由
             const wrapperAuthRoutes = this.wrapperAuthRoutes(authRoutes)
             // 添加路由
-            wrapperAuthRoutes.forEach(route => {
-                router.addRoute(route)
-            })
-            // 权限路由转菜单   TODO: 递归 TS 类型错误
-            this.menus = this.authRoutesToMenus(authRoutes) as never
+            wrapperAuthRoutes.forEach(route => router.addRoute(route as RouteRecordRaw))
+            // 权限路由转菜单
+            this.menus = this.authRoutesToMenus(authRoutes)
+        },
+
+        // 获取面包屑
+        getBreadcrumb(routePath: string): Store.MenuOption[] {
+            const menus: Store.MenuOption[] = []
+            // 找与路由路径配置的菜单
+            const findMatchesMenus = (menus): Store.MenuOption => {
+                return menus.find(menu => {
+                    if (menu.key === routePath) return true
+                    if (menu.children) return findMatchesMenus(menu.children)
+                })
+            }
+            const menu = findMatchesMenus(this.menus)
+            if (!menu) return []
+            menus.push(menu)
+            // 扁平化菜单
+            const flatMenus = (menuChildren: Store.MenuOption[]) => {
+                menuChildren.forEach(menu => {
+                    menus.push(menu)
+                    if (menu.children) flatMenus(menu.children)
+                })
+            }
+            menu.children && flatMenus(menu.children)
+            return menus
         }
     }
 })

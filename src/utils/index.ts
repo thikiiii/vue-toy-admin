@@ -35,6 +35,7 @@ export const lighten = (color: string, amount: number) => {
         amount
     ) }${ addLight(color.substring(4, 6), amount) }`
 }
+
 // 包装 env
 export const wrapperEnv = (): ViteEnv => {
     const envConfig = import.meta.env
@@ -54,3 +55,11 @@ export const runTacticsAction = (tacticsAction: TacticsAction[]) => tacticsActio
     flag && action()
     return flag
 })
+
+// 跳转到新标签
+export const jumpToNewTab = (src: string) => {
+    const aTag = document.createElement('a')
+    aTag.target = '_blank'
+    aTag.href = src
+    aTag.click()
+}

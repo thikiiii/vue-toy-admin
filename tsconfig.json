@@ -21,6 +21,7 @@
       "esnext"
     ],
     "types": [
+      "unplugin-vue-define-options",
       "vite/client",
       "unplugin-icons/types/vue"
     ],

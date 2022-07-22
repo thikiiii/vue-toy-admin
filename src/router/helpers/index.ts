@@ -1,21 +1,26 @@
-import { RouteRecordRaw } from 'vue-router'
 import { Layout } from '@/layout/index'
+import { AppRouteRecordRaw } from '#/router'
 
-// 需要权限的路由模块
-const authRouterModules = import.meta.glob('../modules/**.ts', { eager: true })
+// 需要权限的路由模块列表
+const authRouterModulesList = import.meta.glob('../modules/**.ts', { eager: true })
 
 // 需要权限的路由列表
-export const authRouteList = Object.keys(authRouterModules).reduce<RouteRecordRaw[]>((routeList, routerKey) => {
-    const router = (authRouterModules[routerKey] as any).default
-    if (!Array.isArray(router)) return routeList
-    routeList.push(...router)
-    return routeList
+export const authRouteList = Object.keys(authRouterModulesList).reduce<AppRouteRecordRaw[]>((routerModules, routerKey) => {
+    const router = (authRouterModulesList[routerKey] as any).default
+    if (!(router instanceof Object)) return routerModules
+    routerModules.push(router)
+    return routerModules
 }, [])
 
 // 创建目录
-export const createRootRoute = (): RouteRecordRaw => ({
+export const createRootRoute = (): AppRouteRecordRaw => ({
     path: '/',
     name: 'root',
     component: Layout,
     children: []
 })
+
+// 路由路径拼接
+export const routouPathSplicing = () => {
+
+}

@@ -1,12 +1,12 @@
 import { Layout } from '@/layout/index'
-import type { RouteRecordRaw } from 'vue-router'
 import Settings from '@/settings'
+import { AppRouteRecordRaw } from '#/router'
 
 // 登录路由路径
 export const LOGIN_PATH = '/login'
 
 // 固定路由
-export const fixedRoute: RouteRecordRaw[] = [
+export const fixedRoute: AppRouteRecordRaw[] = [
     {
         path: '/',
         name: 'root',

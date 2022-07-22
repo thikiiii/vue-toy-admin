@@ -1,16 +1,26 @@
-<template>
-    <n-breadcrumb>
-        <n-breadcrumb-item>北京总行</n-breadcrumb-item>
-        <n-breadcrumb-item>天津分行</n-breadcrumb-item>
-        <n-breadcrumb-item>平山道支行</n-breadcrumb-item>
-    </n-breadcrumb>
-</template>
+<script lang="ts" setup>
+import { useRoute } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouteStore } from '@/store/modules/route'
 
-<script>
-export default {
-    name: 'Breadcrumb'
-}
+const route = useRoute()
+const routeStore = useRouteStore()
+
+const breadcrumb = ref<Store.MenuOption[]>([])
+
+
+watch(() => route.path, (path) => {
+  breadcrumb.value = routeStore.getBreadcrumb(path)
+  console.log(breadcrumb.value)
+})
+
 </script>
+
+<template>
+  <n-breadcrumb>
+    <n-breadcrumb-item v-for="menu in breadcrumb" :key="menu.key">{{ menu.meta.title }}</n-breadcrumb-item>
+  </n-breadcrumb>
+</template>
 
 <style scoped>
 
