@@ -1,7 +1,7 @@
-// 权限模式
-export enum PermissionModeEnum {
+// 路由鉴权模式
+export enum RouteAuthMode {
     // 前端,前端配置路由表，通过用户角色来过滤路由，然后自动生成菜单 （适合角色固定的系统）
-    FROUNT = 'FRONT',
+    FRONT = 'FRONT',
     // 后端，后端通过用户角色返回路由表，前端通过路由表自动生成菜单
     SERVER = 'SERVER'
 }

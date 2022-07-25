@@ -4,7 +4,7 @@
       :collapsed="props.collapsed && props.mode==='vertical'"
       :collapsed-width="layoutStore.collapsedWidth"
       :default-value="route.path"
-      :inverted="inverted"
+      :inverted="false"
       :mode="props.mode"
       :options="menus"
       :value="activeMenu"

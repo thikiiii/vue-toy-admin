@@ -8,7 +8,8 @@ const about: AppRouteRecordRaw = {
         title: '关于',
         roles: [ RoleEnum.SUPER ],
         icon: 'lock',
-        keepAlive: true
+        keepAlive: true,
+        orderNo: 2
     },
     component: () => import('@/views/about/index.vue')
 }

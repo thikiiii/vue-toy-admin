@@ -78,24 +78,19 @@ declare namespace Store {
         customize: ThemeModeConfig<CustomizeThemeConfig>
     }
 
+    type TabBar = Pick<import('#/router').AppRouteRecordRaw, 'path' | 'meta' | 'name'>
+
     // 标签栏 Store
     interface TabBarStore {
-        // 缓存白名单
-        cacheWhiteList: string[],
-
         // 标签栏
         tabBar: TabBar[]
 
-        // 激活
-        active: string
-    }
+        // 缓存菜单
+        cacheMenus: (string | symbol)[]
 
-    // 标签栏
-    interface TabBar extends Pick<import('vue-router').RouteMeta, 'title' | 'keepAlive'> {
-        // 路由
-        path: string,
+        // 固定标签
+        affixTabs: TabBar[]
     }
-
 
     // 鉴权 Store
     interface AuthStore {
@@ -119,11 +114,9 @@ declare namespace Store {
 
         label: string | (() => import('vue').VNodeChild)
 
-        icon: string | (() => import('vue').VNodeChild)
+        icon?: (() => import('vue').VNodeChild)
 
         key: string | number
-
-        name: string
 
         children?: MenuOption[]
     }
@@ -132,5 +125,7 @@ declare namespace Store {
     interface RouteStore {
         // 菜单
         menus: MenuOption[]
+        // 路由鉴权模式
+        routeAuthMode: import('@/enums/auth').RouteAuthMode
     }
 }

@@ -1,49 +1,55 @@
 import { defineStore } from 'pinia'
+import { AppRouteRecordRaw } from '#/router'
 
 
 const useTabBarStore = defineStore('tabBar', {
     state: (): Store.TabBarStore => ({
-        cacheWhiteList: [],
-        tabBar: [
-            {
-                path: '/index',
-                keepAlive: false,
-                title: '测试'
-            },
-            {
-                path: '/index2',
-                keepAlive: false,
-                title: '测试测试'
-            }
-        ],
-        active: '/index'
+        tabBar: [],
+        cacheMenus: [],
+        affixTabs: []
     }),
     actions: {
         // push tabBar
         push(tab: Store.TabBar) {
-            this.tabBar.push(tab)
+            !this.tabBar.some(item => item.path === tab.path) && this.tabBar.push(tab)
+            tab.name && !this.cacheMenus.some(name => name === tab.name) && this.cacheMenus.push(tab.name)
         },
+
         // 删除
         remove(path: string) {
             this.tabBar.splice(this.tabBar.findIndex(item => item.path === path), 1)
         },
+
         // 关闭当前
         closeCurrent() {
-            this.remove(this.active)
         },
+
         // 刷新当前
         refreshCurrent() {
 
         },
         // 关闭其他
-        closeOther() {
-            const tab = this.tabBar.find(item => item.path === this.active)
-            if (!tab) return
-            this.tabBar = [ tab ]
+        closeOther(path: string) {
+            const i = this.tabBar.findIndex(item => item.path === path)
+            if (i === -1) return
+            this.tabBar = [ this.tabBar[i] ]
         },
+
         // 关闭全部
         closeAll() {
             this.tabBar = []
+        },
+
+        // 筛选固定标签
+        filterAffixTabs(authRoutes: AppRouteRecordRaw[]) {
+            authRoutes.filter(route => {
+                route.meta?.affix
+            })
+        },
+
+        // 设置固定标签
+        setAffixTabs(authRoutes: AppRouteRecordRaw[]) {
+            this.filterAffixTabs(authRoutes)
         }
     }
 })

@@ -7,21 +7,15 @@ import RenderIcon from '@/components/Render/icon'
 import RenderEllipsis from '@/components/Render/ellipsis'
 import { AppRouteRecordRaw } from '#/router'
 import { RouteRecordRaw } from 'vue-router'
+import { Sort } from '@/enums/common'
+import Settings from '@/settings'
 
 
 export const useRouteStore = defineStore('route', {
     state: (): Store.RouteStore => ({
-        menus: []
+        menus: [],
+        routeAuthMode: Settings.routeAuthMode
     }),
-
-    getters: {
-        // 缓存菜单
-        cacheMenu: (state) => state.menus.reduce<string[]>((caches, item) => {
-            item.meta?.keepAlive && item.name && caches.push(item.name)
-            return caches
-        }, [])
-    },
-
     actions: {
         // 初始化路由
         initRouteStore() {
@@ -82,15 +76,15 @@ export const useRouteStore = defineStore('route', {
         // 权限路由转菜单
         authRoutesToMenus(authRoutes: AppRouteRecordRaw[]): Store.MenuOption[] {
             // 创建菜单
-            const createMenu = ({ path, children, meta, name }: AppRouteRecordRaw): Store.MenuOption => ({
+            const createMenu = ({ path, children, meta }: AppRouteRecordRaw): Store.MenuOption => ({
                 key: path,
-                label: () => RenderEllipsis({ content: meta?.title }),
-                icon: () => RenderIcon({ icon: meta?.icon || '' }),
+                label: meta?.title ? () => RenderEllipsis({ content: meta.title }) : '',
+                icon: meta?.icon ? () => RenderIcon({ icon: meta.icon || '' }) : undefined,
                 meta,
-                name: name as string,
                 children: children as Store.MenuOption['children']
             })
 
+            //TODO: hideMenu 隐藏菜单
             return authRoutes.map(route => {
                 if (!route.children) return createMenu(route)
                 const menu = createMenu(route)
@@ -99,17 +93,33 @@ export const useRouteStore = defineStore('route', {
             })
         },
 
-        // 添加权限路由
-        addAuthRoues() {
+        // 设置菜单
+        setMenu(authRoutes: AppRouteRecordRaw[]) {
+            // 权限路由转菜单
+            this.menus = this.authRoutesToMenus(authRoutes)
+        },
+
+        // 排序权限路由, 默认升序
+        sortAuthRoutes(authRoutes: AppRouteRecordRaw[], type: Sort) {
+            authRoutes.sort((a, b) => {
+                if (type === Sort.Ascending) return Number(a.meta?.orderNo) - Number(b.meta?.orderNo)
+                if (type === Sort.Descending) return Number(b.meta?.orderNo) - Number(a.meta?.orderNo)
+                return 0
+            })
+        },
+
+        // 初始化前端路由权限
+        initFrontRouteAuth() {
             // 过滤权限路由
             const authRoutes = this.filterAuthRoutes()
-            console.log(authRoutes)
+            // 升序
+            this.sortAuthRoutes(authRoutes, Sort.Ascending)
             // 包装路由
             const wrapperAuthRoutes = this.wrapperAuthRoutes(authRoutes)
             // 添加路由
             wrapperAuthRoutes.forEach(route => router.addRoute(route as RouteRecordRaw))
-            // 权限路由转菜单
-            this.menus = this.authRoutesToMenus(authRoutes)
+            // 设置菜单
+            this.setMenu(authRoutes)
         },
 
         // 获取面包屑

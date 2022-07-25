@@ -10,7 +10,7 @@ export const createGuard = (router: Router) => {
     router.beforeEach(async (to, from, next) => {
             window.$loadingBar?.start()
             const { isLogin, isAuth, initUserStore, getUserinfo } = useAuthStore()
-            const { initRouteStore, addAuthRoues } = useRouteStore()
+            const { initRouteStore, initFrontRouteAuth } = useRouteStore()
 
             // 是否忽略权限
             const ignoreAuth = Boolean(to.meta.ignoreAuth)
@@ -54,7 +54,7 @@ export const createGuard = (router: Router) => {
                 next(LOGIN_PATH)
                 return Promise.reject()
             })
-            addAuthRoues()
+            initFrontRouteAuth()
             next(to.path)
         }
     )

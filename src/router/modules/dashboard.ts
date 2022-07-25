@@ -10,7 +10,8 @@ const dashboard: AppRouteRecordRaw = {
     redirect: '/dashboard/analysis',
     meta: {
         title: '控制台',
-        icon: 'lock'
+        icon: 'lock',
+        orderNo: 1
     },
     children: [
         {
@@ -19,7 +20,7 @@ const dashboard: AppRouteRecordRaw = {
             meta: {
                 title: '分析页',
                 roles: [ RoleEnum.SUPER ],
-                icon: 'lock'
+                affix: true
             },
             component: () => import('@/views/dashboard/analysis/index.vue')
         }
