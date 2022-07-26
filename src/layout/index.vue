@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/index'
+import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/index.ts'
 import { useLayoutStore } from '@/store/modules/layout'
 import { onBeforeUnmount, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -36,11 +36,11 @@ onBeforeUnmount(() => {
         @collapse="layoutStore.setCollapsed(true)"
         @expand="layoutStore.setCollapsed(false)">
       <logo/>
-      <menu-content :collapsed="collapsed" inverted/>
+      <menu-content :collapsed="collapsed"/>
     </n-layout-sider>
     <!-- 移动端侧边栏 -->
     <n-modal v-model:show="mobileMenuVisible">
-      <n-layout-sider class="layout-mobileMenu" inverted>
+      <n-layout-sider class="layout-mobileMenu">
         <logo/>
         <menu-content inverted/>
       </n-layout-sider>

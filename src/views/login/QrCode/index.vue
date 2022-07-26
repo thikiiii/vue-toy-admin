@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import { Component, inject, Ref } from 'vue'
-import { Password } from '@/views/login/index'
+import Password from '@/views/login/Password/index.vue'
 
 const loginType = inject('loginType') as Ref<Component>
 const set = () => {
-    loginType.value = Password
+  loginType.value = Password
 }
 </script>
 
 <template>
-    <p @click="set">二维码</p>
+  <p @click="set">二维码</p>
 </template>
 
 <style scoped>

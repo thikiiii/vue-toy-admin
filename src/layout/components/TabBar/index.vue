@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import RenderIcon from '@/components/Render/icon'
 import useTabBarStore from '@/store/modules/tabBar'
 import { RouteRecordName, useRoute, useRouter } from 'vue-router'
@@ -8,33 +8,45 @@ const tabBarStore = useTabBarStore()
 const route = useRoute()
 const router = useRouter()
 
-const state = reactive({
-  scrollBtnVisible: false,
-  dropdownOption: [
-    {
-      label: '刷新当前',
-      key: 'refresh',
-      icon: () => RenderIcon({ icon: 'restore' })
-    },
-    {
-      label: '关闭当前',
-      key: 'closeCurrent',
-      icon: () => RenderIcon({ icon: 'close' })
-    },
-    {
-      label: '关闭其他',
-      key: 'closeOther',
-      icon: () => RenderIcon({ icon: 'swap-horizontal' })
-    },
-    {
-      label: '关闭全部',
-      key: 'closeAll',
-      icon: () => RenderIcon({ icon: 'minus' })
-    }
-  ]
-})
-
+const scrollBtnVisible = ref(false)
+const dropdownOption = reactive([
+  {
+    label: '刷新当前',
+    key: 'refresh',
+    icon: () => RenderIcon({ icon: 'restore' })
+  },
+  {
+    label: '关闭当前',
+    key: 'closeCurrent',
+    icon: () => RenderIcon({ icon: 'close' }),
+    // 当前激活标签是固定标签时禁用
+    disabled: computed(() => Boolean(route.meta?.affix))
+  },
+  {
+    label: '关闭其他',
+    key: 'closeOther',
+    icon: () => RenderIcon({ icon: 'swap-horizontal' }),
+    // 只有一个不固定标签，且当前激活标签是不固定时禁用
+    disabled: computed(() => !(tabBarStore.tabBar.length && tabBarStore.tabBar.some(tab => {
+          return !tab.meta?.affix && route.path !== tab.path
+        }))
+    )
+  },
+  {
+    label: '关闭全部',
+    key: 'closeAll',
+    icon: () => RenderIcon({ icon: 'minus' }),
+    // 没有不固定标签时，禁用
+    disabled: computed(() => !(tabBarStore.tabBar.length && tabBarStore.tabBar.some(tab => {
+      return !tab.meta?.affix
+    })))
+  }
+])
 const scrollRef = ref<HTMLDivElement | null>(null)
+
+// const currentActive = computed(() => {
+//     return  route.path ===
+// })
 
 const isScroll = (): boolean => {
   const scrollDom = scrollRef.value
@@ -72,12 +84,13 @@ onMounted(() => {
 watch(() => route.path, () => {
   const { meta, path } = route
   tabBarStore.push({ meta, path, name: route.name as RouteRecordName })
+  scrollBtnVisible.value = isScroll()
 })
 </script>
 
 <template>
   <div class="tabBar">
-    <div v-show="state.scrollBtnVisible" class="tabBar-action-tab">
+    <div v-show="scrollBtnVisible" class="tabBar-action-tab">
       <icon icon="chevron-left" size="22"/>
     </div>
     <div ref="scrollRef" class="tabBar-tabContainer">
@@ -88,15 +101,14 @@ watch(() => route.path, () => {
           class="tabBar-tabContainer-tab"
           @click="router.push(item.path)"
       >
-        <icon :icon="item.meta.icon" class="tabBar-tabContainer-tab-icon" size="18"/>
         {{ item.meta?.title }}
-        <icon class="tabBar-tabContainer-tab-close" icon="close" size="14"/>
+        <icon v-if="!item.meta?.affix" class="tabBar-tabContainer-tab-close" icon="close" size="12"/>
       </div>
     </div>
-    <div v-show="state.scrollBtnVisible" class="tabBar-action-tab">
+    <div v-show="scrollBtnVisible" class="tabBar-action-tab">
       <icon icon="chevron-right"/>
     </div>
-    <n-dropdown :options="state.dropdownOption" @select="onSelect">
+    <n-dropdown :options="dropdownOption" @select="onSelect">
       <div class="tabBar-action-tab">
         <icon icon="chevron-down"/>
       </div>
@@ -144,7 +156,7 @@ watch(() => route.path, () => {
       align-items: center;
       border-radius: 4px;
       height: calc(@layout-tab-bar-height - 15px);
-      padding: 0 10px 0 15px;
+      padding: 0 15px;
       gap: 5px;
       transition: .1s;
 
@@ -155,6 +167,7 @@ watch(() => route.path, () => {
       &-close {
         color: @subTextColor;
         transition: .1s;
+        margin-right: -5px;
 
         &:hover {
           color: @mainTextColor;

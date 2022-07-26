@@ -85,11 +85,11 @@ declare namespace Store {
         // 标签栏
         tabBar: TabBar[]
 
+        // 当前激活
+        active: TabBar
+
         // 缓存菜单
         cacheMenus: (string | symbol)[]
-
-        // 固定标签
-        affixTabs: TabBar[]
     }
 
     // 鉴权 Store

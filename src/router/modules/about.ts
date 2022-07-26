@@ -9,7 +9,7 @@ const about: AppRouteRecordRaw = {
         roles: [ RoleEnum.SUPER ],
         icon: 'lock',
         keepAlive: true,
-        orderNo: 2
+        orderNo: 3
     },
     component: () => import('@/views/about/index.vue')
 }

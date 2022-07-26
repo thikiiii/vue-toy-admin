@@ -9,6 +9,7 @@ import { AppRouteRecordRaw } from '#/router'
 import { RouteRecordRaw } from 'vue-router'
 import { Sort } from '@/enums/common'
 import Settings from '@/settings'
+import useTabBarStore from '@/store/modules/tabBar'
 
 
 export const useRouteStore = defineStore('route', {
@@ -73,30 +74,34 @@ export const useRouteStore = defineStore('route', {
             }, [])
         },
 
-        // 权限路由转菜单
-        authRoutesToMenus(authRoutes: AppRouteRecordRaw[]): Store.MenuOption[] {
-            // 创建菜单
-            const createMenu = ({ path, children, meta }: AppRouteRecordRaw): Store.MenuOption => ({
+        // 创建菜单
+        createMenu({ path, children, meta }: AppRouteRecordRaw): Store.MenuOption {
+            return {
                 key: path,
                 label: meta?.title ? () => RenderEllipsis({ content: meta.title }) : '',
                 icon: meta?.icon ? () => RenderIcon({ icon: meta.icon || '' }) : undefined,
                 meta,
                 children: children as Store.MenuOption['children']
-            })
+            }
+        },
 
-            //TODO: hideMenu 隐藏菜单
-            return authRoutes.map(route => {
-                if (!route.children) return createMenu(route)
-                const menu = createMenu(route)
+        // 权限路由转菜单
+        authRoutesToMenus(authRoutes: AppRouteRecordRaw[]): Store.MenuOption[] {
+            const menus = authRoutes.map((route) => {
+                if (route.meta?.hideMenu) return undefined
+                if (!route.children) return this.createMenu(route)
+                const menu = this.createMenu(route)
                 menu.children = this.authRoutesToMenus(route.children)
                 return menu
             })
+            return menus.filter(menu => menu) as Store.MenuOption[]
         },
 
         // 设置菜单
         setMenu(authRoutes: AppRouteRecordRaw[]) {
             // 权限路由转菜单
             this.menus = this.authRoutesToMenus(authRoutes)
+            console.log(this.menus)
         },
 
         // 排序权限路由, 默认升序
@@ -120,6 +125,8 @@ export const useRouteStore = defineStore('route', {
             wrapperAuthRoutes.forEach(route => router.addRoute(route as RouteRecordRaw))
             // 设置菜单
             this.setMenu(authRoutes)
+            // 设置固定标签
+            useTabBarStore().setAffixTabs(authRoutes)
         },
 
         // 获取面包屑

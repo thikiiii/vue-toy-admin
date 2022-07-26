@@ -5,8 +5,8 @@ import { AppRouteRecordRaw } from '#/router'
 const useTabBarStore = defineStore('tabBar', {
     state: (): Store.TabBarStore => ({
         tabBar: [],
-        cacheMenus: [],
-        affixTabs: []
+        active: null,
+        cacheMenus: []
     }),
     actions: {
         // push tabBar
@@ -22,6 +22,7 @@ const useTabBarStore = defineStore('tabBar', {
 
         // 关闭当前
         closeCurrent() {
+
         },
 
         // 刷新当前
@@ -41,15 +42,24 @@ const useTabBarStore = defineStore('tabBar', {
         },
 
         // 筛选固定标签
-        filterAffixTabs(authRoutes: AppRouteRecordRaw[]) {
-            authRoutes.filter(route => {
-                route.meta?.affix
-            })
+        filterAffixTabs(authRoutes: AppRouteRecordRaw[]): Store.TabBar[] {
+            const tabs: Store.TabBar[] = []
+            const filter = (authRoutes: AppRouteRecordRaw[]) => {
+                authRoutes.forEach(route => {
+                    if (route.meta?.affix) tabs.push({
+                        path: route.path,
+                        meta: route.meta
+                    })
+                    if (route.children) filter(route.children)
+                })
+            }
+            filter(authRoutes)
+            return tabs
         },
 
         // 设置固定标签
         setAffixTabs(authRoutes: AppRouteRecordRaw[]) {
-            this.filterAffixTabs(authRoutes)
+            this.tabBar = this.filterAffixTabs(authRoutes)
         }
     }
 })

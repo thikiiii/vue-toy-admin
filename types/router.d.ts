@@ -31,7 +31,7 @@ declare module 'vue-router' {
         orderNo?: number
 
         // 隐藏菜单
-        hideMenu: boolean
+        hideMenu?: boolean
     }
 }
 

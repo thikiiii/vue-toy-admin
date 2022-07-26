@@ -27,7 +27,6 @@ watch(() => route.path, (path) => {
     <n-breadcrumb-item v-for="menu in breadcrumb" :key="menu.key">
       <n-dropdown :options="menu.children" :value="route.path" @select="onSelect">
         <span>
-          <icon v-if="menu.meta?.icon" :icon="menu.meta?.icon"></icon>
           {{ menu.meta?.title }}
         </span>
       </n-dropdown>

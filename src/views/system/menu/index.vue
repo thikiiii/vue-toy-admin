@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    menu
+  <div>menu</div>
 </template>
 
 <style scoped>
