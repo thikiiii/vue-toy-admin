@@ -4,9 +4,11 @@
       :collapsed="props.collapsed && props.mode==='vertical'"
       :collapsed-width="layoutStore.collapsedWidth"
       :default-value="route.path"
+      :indent="30"
       :inverted="false"
       :mode="props.mode"
       :options="menus"
+      :root-indent="24"
       :value="activeMenu"
       accordion
       class="menu"

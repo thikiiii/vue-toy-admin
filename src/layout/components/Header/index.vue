@@ -1,14 +1,7 @@
 <script lang="ts" setup>
-import { Logo, MenuContent } from '@/layout/index'
+import { Logo, MenuContent } from '@/layout/index.ts'
 import { useLayoutStore } from '@/store/modules/layout'
-import {
-  AppRefresh,
-  AppSearch,
-  Breadcrumb,
-  FullScreen,
-  Github,
-  MenuCollapsed
-} from '@/layout/components/Header/components'
+import { AppSearch, Breadcrumb, FullScreen, Github, MenuCollapsed } from '@/layout/components/Header/components'
 import { provide } from 'vue'
 import Avatar from '@/layout/components/Header/components/Avatar.vue'
 
@@ -23,8 +16,6 @@ provide('size', '22')
       <template v-if="layoutStore.menuMode==='side'||layoutStore.isMobile">
         <!-- 菜单折叠 -->
         <menu-collapsed/>
-        <!-- 刷新 -->
-        <app-refresh/>
         <!-- 面包屑 -->
         <breadcrumb/>
       </template>

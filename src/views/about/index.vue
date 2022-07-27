@@ -5,6 +5,7 @@ defineOptions({
   name: 'About'
 })
 const count = ref(0)
+
 </script>
 
 <template>

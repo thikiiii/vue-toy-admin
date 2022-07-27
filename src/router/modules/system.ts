@@ -47,7 +47,7 @@ const system: AppRouteRecordRaw = {
             name: '/system_test',
             component: Layout,
             meta: {
-                title: '测试'
+                title: '测试测试测试测试测试测试测试测试测试'
             },
             children: [
                 {

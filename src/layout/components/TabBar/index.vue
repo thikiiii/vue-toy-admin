@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, TransitionGroup, watch } from 'vue'
 import RenderIcon from '@/components/Render/icon'
 import useTabBarStore from '@/store/modules/tabBar'
 import { RouteRecordName, useRoute, useRouter } from 'vue-router'
@@ -42,22 +42,21 @@ const dropdownOption = reactive([
     })))
   }
 ])
-const scrollRef = ref<HTMLDivElement | null>(null)
+const scrollRef = ref<InstanceType<typeof TransitionGroup> | null>(null)
 
-// const currentActive = computed(() => {
-//     return  route.path ===
-// })
+// const {} = useScroll({ scrollContainer: scrollRef })
 
-const isScroll = (): boolean => {
-  const scrollDom = scrollRef.value
-  if (!scrollDom) return false
-  const { clientWidth, children } = scrollDom
-  let widthSum = 0
-  return Array.from(children).some(tab => {
-    widthSum += tab.clientWidth + 15
-    return widthSum > clientWidth
-  })
-}
+
+// const isScroll = (): boolean => {
+//   const scrollDom = scrollRef.value.$el
+//   if (!scrollDom) return false
+//   const { clientWidth, children } = scrollDom
+//   let widthSum = 0
+//   return Array.from(children).some(tab => {
+//     widthSum += tab.clientWidth + 15
+//     return widthSum > clientWidth
+//   })
+// }
 
 
 const onSelect = (key) => {
@@ -77,14 +76,24 @@ const onSelect = (key) => {
   }
 }
 
+const addTabStore = () => {
+  const { meta, path } = route
+  tabBarStore.push({ meta, path, name: route.name as RouteRecordName })
+}
+
 onMounted(() => {
+  addTabStore()
 })
 
 // 监听路由变化
 watch(() => route.path, () => {
-  const { meta, path } = route
-  tabBarStore.push({ meta, path, name: route.name as RouteRecordName })
-  scrollBtnVisible.value = isScroll()
+  addTabStore()
+})
+
+// 监听 tabBar变化
+watch(tabBarStore.tabBar, () => {
+  // console.log(isScroll())
+  // scrollBtnVisible.value = isScroll()
 })
 </script>
 
@@ -93,18 +102,19 @@ watch(() => route.path, () => {
     <div v-show="scrollBtnVisible" class="tabBar-action-tab">
       <icon icon="chevron-left" size="22"/>
     </div>
-    <div ref="scrollRef" class="tabBar-tabContainer">
+    <transition-group ref="scrollRef" class="tabBar-tabContainer" name="fade" tag="div">
       <div
-          v-for="item in tabBarStore.tabBar"
+          v-for="(item) in tabBarStore.tabBar"
           :key="item.path"
           :class="route.path===item.path?'active':undefined"
           class="tabBar-tabContainer-tab"
           @click="router.push(item.path)"
       >
         {{ item.meta?.title }}
-        <icon v-if="!item.meta?.affix" class="tabBar-tabContainer-tab-close" icon="close" size="12"/>
+        <icon v-if="!item.meta?.affix" class="tabBar-tabContainer-tab-close" icon="close" size="12"
+              @click.stop="tabBarStore.closeTab(item)"/>
       </div>
-    </div>
+    </transition-group>
     <div v-show="scrollBtnVisible" class="tabBar-action-tab">
       <icon icon="chevron-right"/>
     </div>
@@ -144,6 +154,7 @@ watch(() => route.path, () => {
     gap: 15px;
     overflow: hidden;
     padding: 2px 0;
+    position: relative;
 
     &-tab {
       background: @subBackgroundColor;
@@ -158,7 +169,6 @@ watch(() => route.path, () => {
       height: calc(@layout-tab-bar-height - 15px);
       padding: 0 15px;
       gap: 5px;
-      transition: .1s;
 
       &:hover {
         color: @mainTextColor;
@@ -184,6 +194,25 @@ watch(() => route.path, () => {
       }
     }
   }
+}
 
+// 1. 声明过渡效果
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+// 2. 声明进入和离开的状态
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+  transform-origin: left top;
+  transform: translateY(-10px) scale(0.1);
+}
+
+// 3. 确保离开的项目被移除出了布局流
+//    以便正确地计算移动时的动画效果。
+.fade-leave-active {
+  position: absolute;
 }
 </style>

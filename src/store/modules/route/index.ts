@@ -127,30 +127,6 @@ export const useRouteStore = defineStore('route', {
             this.setMenu(authRoutes)
             // 设置固定标签
             useTabBarStore().setAffixTabs(authRoutes)
-        },
-
-        // 获取面包屑
-        getBreadcrumb(routePath: string): Store.MenuOption[] {
-            const menus: Store.MenuOption[] = []
-            // 找与路由路径配置的菜单
-            const findMatchesMenus = (menus): Store.MenuOption => {
-                return menus.find(menu => {
-                    if (menu.key === routePath) return true
-                    if (menu.children) return findMatchesMenus(menu.children)
-                })
-            }
-            const menu = findMatchesMenus(this.menus)
-            if (!menu) return []
-            menus.push(menu)
-            // 扁平化菜单
-            const flatMenus = (menuChildren: Store.MenuOption[]) => {
-                menuChildren.forEach(menu => {
-                    menus.push(menu)
-                    if (menu.children) flatMenus(menu.children)
-                })
-            }
-            menu.children && flatMenus(menu.children)
-            return menus
         }
     }
 })
