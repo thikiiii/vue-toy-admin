@@ -2,128 +2,128 @@
 import { ref } from 'vue'
 import { useScroll } from '@/hooks/element/useScroll'
 
-const container = ref()
-const { isScrolling } = useScroll({
-  scrollContainer: container
-})
+const container = ref<HTMLDivElement | null>(null)
+const scroll = useScroll(container)
+
 </script>
 
 <template>
   <div ref="container" class="app-container">
+    <n-button @click="test">测试</n-button>
     about
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
-    <p>{{ isScrolling }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
+    <p>{{ scroll.isScrolling }}{{ scroll.currentPosition.y }}</p>
   </div>
 </template>
 

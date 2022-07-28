@@ -3,6 +3,7 @@ import { computed, onMounted, reactive, ref, TransitionGroup, watch } from 'vue'
 import RenderIcon from '@/components/Render/icon'
 import useTabBarStore from '@/store/modules/tabBar'
 import { RouteRecordName, useRoute, useRouter } from 'vue-router'
+import { useScroll } from '@vueuse/core'
 
 const tabBarStore = useTabBarStore()
 const route = useRoute()
@@ -45,7 +46,7 @@ const dropdownOption = reactive([
 const scrollRef = ref<InstanceType<typeof TransitionGroup> | null>(null)
 
 // const {} = useScroll({ scrollContainer: scrollRef })
-
+useScroll()
 
 // const isScroll = (): boolean => {
 //   const scrollDom = scrollRef.value.$el
