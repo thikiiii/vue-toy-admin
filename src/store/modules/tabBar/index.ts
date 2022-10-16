@@ -17,17 +17,27 @@ const useTabBarStore = defineStore('tabBar', {
             return router.currentRoute.value.path === tab.path
         },
 
+        // 是否存在
+        isExist(path: string) {
+            return this.tabBar.some(item => item.path === path)
+        },
+
+        // 获取 index
+        getIndex(path: string) {
+            return this.tabBar.findIndex(item => item.path === path)
+        },
+
         // push tabBar
         push(tab: Store.TabBar) {
             // 不存在就 push
-            !this.tabBar.some(item => item.path === tab.path) && this.tabBar.push(tab)
+            !this.isExist(tab.path) && this.tabBar.push(tab)
             // name 为真，且 name 不存在就push
             tab.name && !this.cacheMenus.some(name => name === tab.name) && this.cacheMenus.push(tab.name)
         },
 
         // 关闭
         closeTab(tab: Store.TabBar) {
-            const index = this.tabBar.findIndex(item => item.path === tab.path)
+            const index = this.getIndex(tab.path)
             this.tabBar.splice(index, 1)
             // 激活状态 跳转到上一个标签
             this.isActive(tab) && router.push(this.tabBar[index - 1].path)

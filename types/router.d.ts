@@ -6,8 +6,8 @@ declare module 'vue-router' {
         // 名称
         title: string
 
-        // 是否忽略权限
-        ignoreAuth?: boolean
+        // 登录的情况下，是否忽略角色权限
+        ignoreRoleAuth?: boolean
 
         // 细粒度权限
         permissions?: import('@/enums/auth').PermissionEnum[]

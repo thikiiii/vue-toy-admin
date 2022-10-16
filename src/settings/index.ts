@@ -17,8 +17,8 @@ export default class Settings {
     // 主题颜色
     static readonly theme = '#6675ff'
 
-    // token 过期时间 （4小时后过期） 
-    static readonly tokenExpirationTime = 1 / 24 * 4
+    // token 过期时间 
+    static readonly tokenExpirationTime = 1 / 24 * 4  //（4小时后过期）
 
     // root 有路由重定向路径
     static readonly homePath = '/dashboard'

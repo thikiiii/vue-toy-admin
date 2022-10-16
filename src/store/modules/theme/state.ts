@@ -19,7 +19,7 @@ const lightThemeConfig: Store.CustomizeThemeConfig = {
     invertBackgroundColor: '#111827',
     hoverBackgroundColor: '',
     borderColor: '#212B36',
-    divder: 'rgba(145,158,171,0.24)',
+    divider: 'rgba(145,158,171,0.24)',
     scroll: '#b4bcc3'
 }
 
@@ -34,7 +34,7 @@ const darkThemeConfig: Store.CustomizeThemeConfig = {
     invertBackgroundColor: '#191e2c',
     hoverBackgroundColor: '',
     borderColor: '#212B36',
-    divder: 'rgb(45,55,72)',
+    divider: 'rgb(45,55,72)',
     scroll: '#3a4651'
 }
 

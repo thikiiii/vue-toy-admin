@@ -53,7 +53,7 @@ declare namespace Store {
         borderColor: string
 
         // 分割线
-        divder: string
+        divider: string
 
         // 滚动条
         scroll: string
@@ -128,7 +128,11 @@ declare namespace Store {
     interface RouteStore {
         // 菜单
         menus: MenuOption[]
+
         // 路由鉴权模式
         routeAuthMode: import('@/enums/auth').RouteAuthMode
+
+        // 是否初始化过权限路由
+        hasInitAuthRoute: boolean
     }
 }

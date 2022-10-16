@@ -3,6 +3,7 @@ import { inject, reactive, Ref, ref } from 'vue'
 import QrCode from '@/views/login/QrCode/index.vue'
 import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
+import { LoginMethod } from "@/enums/common";
 
 const authStore = useAuthStore()
 const formRef = ref<InstanceType<typeof NForm> | null>()
@@ -35,8 +36,7 @@ const setLoginType = (component: typeof QrCode) => loginType.value = component
 const handleLogin = () => {
   formRef.value?.validate(async (errors) => {
     if (errors) return
-    authStore.loginLoading = true
-    await authStore.passwordLogin(form)
+    await authStore.handleLogin(LoginMethod.Password, form)
   })
 }
 </script>

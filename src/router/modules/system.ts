@@ -1,5 +1,4 @@
 // 系统管理
-import { Layout } from '@/layout/index'
 import { RoleEnum } from '@/enums/auth'
 import { AppRouteRecordRaw } from '#/router'
 
@@ -7,7 +6,7 @@ import { AppRouteRecordRaw } from '#/router'
 const system: AppRouteRecordRaw = {
     path: '/system',
     name: 'system',
-    component: Layout,
+    component: () => import('@/layout/index.vue'),
     redirect: '/system/user',
     meta: {
         title: '系统管理',
@@ -45,7 +44,7 @@ const system: AppRouteRecordRaw = {
         {
             path: '/system/test',
             name: '/system_test',
-            component: Layout,
+            component: () => import('@/layout/index.vue'),
             meta: {
                 title: '测试测试测试测试测试测试测试测试测试'
             },

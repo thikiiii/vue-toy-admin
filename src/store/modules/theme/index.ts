@@ -28,7 +28,7 @@ export const useThemeStore = defineStore('theme', {
         },
         // 设置主题
         setTheme(themeType: ThemeModeEnum) {
-            const bodyElement = document.querySelector('body')
+            const bodyElement = document.querySelector('html')
             if (!bodyElement) return false
             this.themeMode = themeType
             // 在 storage 中存储主题类型

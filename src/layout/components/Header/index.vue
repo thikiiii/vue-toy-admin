@@ -51,7 +51,7 @@ provide('size', '22')
   align-items: center;
   width: 100%;
   height: 100%;
-  border-bottom: 1px solid @divder;
+  border-bottom: 1px solid @divider;
   gap: 10px;
 
   &-left, &-right {

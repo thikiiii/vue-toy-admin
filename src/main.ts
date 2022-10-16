@@ -8,6 +8,7 @@ import { setupGlobalComponent } from '@/components'
 const app = createApp(App)
 
 const bootStart = async () => {
+
     // 挂载状态管理
     setupStore(app)
 
@@ -16,9 +17,10 @@ const bootStart = async () => {
 
     // 挂载路由
     await setupRouter(app)
-    
+
     // 必须在应用配置加载完成后调用
     app.mount('#app', true)
+
 }
 
 void bootStart()

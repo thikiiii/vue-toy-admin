@@ -15,7 +15,8 @@ import useTabBarStore from '@/store/modules/tabBar'
 export const useRouteStore = defineStore('route', {
     state: (): Store.RouteStore => ({
         menus: [],
-        routeAuthMode: Settings.routeAuthMode
+        routeAuthMode: Settings.routeAuthMode,
+        hasInitAuthRoute: false
     }),
     actions: {
         // 初始化路由
@@ -35,7 +36,7 @@ export const useRouteStore = defineStore('route', {
         filterAuthRoutes(): AppRouteRecordRaw[] {
             const authStore = useAuthStore()
             // 是否有权限
-            const isAuth = (route: AppRouteRecordRaw) => route.meta?.ignoreAuth ||
+            const isAuth = (route: AppRouteRecordRaw) => route.meta?.ignoreRoleAuth ||
                 (
                     Boolean(route.meta?.roles?.length) &&
                     route.meta?.roles?.some(role => authStore.roles.includes(role))
@@ -101,7 +102,6 @@ export const useRouteStore = defineStore('route', {
         setMenu(authRoutes: AppRouteRecordRaw[]) {
             // 权限路由转菜单
             this.menus = this.authRoutesToMenus(authRoutes)
-            console.log(this.menus)
         },
 
         // 排序权限路由, 默认升序
@@ -127,6 +127,12 @@ export const useRouteStore = defineStore('route', {
             this.setMenu(authRoutes)
             // 设置固定标签
             useTabBarStore().setAffixTabs(authRoutes)
+            this.hasInitAuthRoute = true
+        },
+
+        // 初始化服务端路由权限
+        initServerRouteAuth() {
+
         }
     }
 })

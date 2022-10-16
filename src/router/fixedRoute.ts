@@ -1,4 +1,3 @@
-import { Layout } from '@/layout/index'
 import Settings from '@/settings'
 import { AppRouteRecordRaw } from '#/router'
 
@@ -10,7 +9,7 @@ export const fixedRoute: AppRouteRecordRaw[] = [
     {
         path: '/',
         name: 'root',
-        component: Layout,
+        component: () => import('@/layout/index.vue'),
         redirect: Settings.homePath,
         children: []
     },
@@ -19,14 +18,13 @@ export const fixedRoute: AppRouteRecordRaw[] = [
         name: 'login',
         component: () => import('@/views/login/index.vue'),
         meta: {
-            title: '登录',
-            ignoreAuth: true
+            title: '登录'
         }
     },
     {
         path: '/:NotFound(.*)*',
         name: 'NotFound',
-        component: Layout,
+        component: () => import('@/layout/index.vue'),
         children: [
             {
                 path: '/:NotFound(.*)*',

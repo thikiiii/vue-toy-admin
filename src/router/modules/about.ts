@@ -1,4 +1,3 @@
-import { RoleEnum } from '@/enums/auth'
 import { AppRouteRecordRaw } from '#/router'
 
 const about: AppRouteRecordRaw = {
@@ -6,8 +5,9 @@ const about: AppRouteRecordRaw = {
     name: 'About',
     meta: {
         title: '关于',
-        roles: [ RoleEnum.SUPER ],
+        // roles: [ RoleEnum.SUPER ],
         icon: 'lock',
+        ignoreRoleAuth: true,
         keepAlive: true,
         orderNo: 3
     },

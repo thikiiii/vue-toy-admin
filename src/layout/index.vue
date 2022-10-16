@@ -64,7 +64,7 @@ onBeforeUnmount(() => {
   height: 100vh;
 
   &-sider {
-    border-right: 1px solid @divder;
+    border-right: 1px solid @divider;
     width: @layout-sidebal-width !important;
   }
 

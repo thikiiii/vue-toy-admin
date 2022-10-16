@@ -1,4 +1,3 @@
-import { Layout } from '@/layout/index'
 import { AppRouteRecordRaw } from '#/router'
 
 // 需要权限的路由模块列表
@@ -16,7 +15,7 @@ export const authRouteList = Object.keys(authRouterModulesList).reduce<AppRouteR
 export const createRootRoute = (): AppRouteRecordRaw => ({
     path: '/',
     name: 'root',
-    component: Layout,
+    component: () => import('@/layout/index.vue'),
     children: []
 })
 
