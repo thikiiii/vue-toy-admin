@@ -11,6 +11,11 @@ export class UserApi {
     static getUserinfo = (): Service.WrapperPromiseResponses<UserService.Response.UserDetails> =>
         axiosInstance.get('/mock/getUserinfo')
 
+    // 获取用户路由
+    static getRoutes = (): Service.WrapperPromiseResponses<UserService.Response.UserRoutes[]> =>
+        axiosInstance.get('/mock/getRoutes')
+
     // 退出登录
-    static signOut = () => axiosInstance.post('/mock/signOut')
+    static signOut = (): Promise<Service.BaseResponse> =>
+        axiosInstance.get('/mock/signOut')
 }

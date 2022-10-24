@@ -1,6 +1,6 @@
 // 用户
 declare namespace UserService {
-    
+
     namespace Request {
         // 密码登录请求
         interface PasswordLogin {
@@ -10,14 +10,14 @@ declare namespace UserService {
             password: string
         }
     }
-    
+
     namespace Response {
         // 密码登录响应
         interface PasswordLogin {
             // token
             token: string
         }
-        
+
         // 用户详情
         interface UserDetails {
             // 权限
@@ -33,6 +33,18 @@ declare namespace UserService {
                 avatar: string
             }
         }
+
+        // 路由
+        interface UserRoutes {
+            // 路由路径
+            path: string
+            // 重定向
+            redirect: string
+            // 组件
+            component: string
+            // 元数据
+            meta: import('vue-router').RouteMeta
+        }
     }
-    
+
 }

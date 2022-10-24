@@ -1,15 +1,16 @@
-import { defineStore } from 'pinia'
-import { fixedRoute } from '@/router/fixedRoute'
+import {defineStore} from 'pinia'
+import {fixedRoute} from '@/router/fixedRoute'
 import useAuthStore from '@/store/modules/auth'
-import { authRouteList, createRootRoute } from '@/router/helpers'
+import {authRouteList, createRootRoute} from '@/router/helpers'
 import router from '@/router'
 import RenderIcon from '@/components/Render/icon'
 import RenderEllipsis from '@/components/Render/ellipsis'
-import { AppRouteRecordRaw } from '#/router'
-import { RouteRecordRaw } from 'vue-router'
-import { Sort } from '@/enums/common'
+import {AppRouteRecordRaw} from '#/router'
+import {RouteRecordRaw} from 'vue-router'
+import {Sort} from '@/enums/common'
 import Settings from '@/settings'
 import useTabBarStore from '@/store/modules/tabBar'
+import {UserApi} from "@/services/api/user";
 
 
 export const useRouteStore = defineStore('route', {
@@ -32,6 +33,22 @@ export const useRouteStore = defineStore('route', {
             fixedRoute.forEach(route => router.addRoute(route as RouteRecordRaw))
         },
 
+        // 获取用户路由
+        async getRoutes(): Promise<UserService.Response.UserRoutes[]> {
+            const {subCode, subMsg, data} = await UserApi.getRoutes().catch(() => {
+                this.initRouteStore()
+                return Promise.reject()
+            })
+
+            if (subCode !== 200 || !data) {
+                window.$message?.error(subMsg)
+                this.initRouteStore()
+                return Promise.reject()
+            }
+
+            return data
+        },
+
         // 过滤权限路由
         filterAuthRoutes(): AppRouteRecordRaw[] {
             const authStore = useAuthStore()
@@ -44,7 +61,7 @@ export const useRouteStore = defineStore('route', {
 
             // 处理目录
             const handleDirectory = (route: AppRouteRecordRaw): AppRouteRecordRaw | undefined => {
-                const directory: AppRouteRecordRaw = { ...route, children: [] }
+                const directory: AppRouteRecordRaw = {...route, children: []}
 
                 directory.children = route.children?.filter(route => {
                     if (route.children) return handleDirectory(route)
@@ -76,11 +93,11 @@ export const useRouteStore = defineStore('route', {
         },
 
         // 创建菜单
-        createMenu({ path, children, meta }: AppRouteRecordRaw): Store.MenuOption {
+        createMenu({path, children, meta}: AppRouteRecordRaw): Store.MenuOption {
             return {
                 key: path,
-                label: meta?.title ? () => RenderEllipsis({ content: meta.title }) : '',
-                icon: meta?.icon ? () => RenderIcon({ icon: meta.icon || '' }) : undefined,
+                label: meta?.title ? () => RenderEllipsis({content: meta.title}) : '',
+                icon: meta?.icon ? () => RenderIcon({icon: meta.icon || ''}) : undefined,
                 meta,
                 children: children as Store.MenuOption['children']
             }
@@ -131,8 +148,9 @@ export const useRouteStore = defineStore('route', {
         },
 
         // 初始化服务端路由权限
-        initServerRouteAuth() {
-
+        async initServerRouteAuth() {
+            // 获取路由
+            await this.getRoutes()
         }
     }
 })

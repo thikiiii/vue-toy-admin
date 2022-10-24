@@ -47,3 +47,4 @@ declare type AppRouteRecordRaw =
 }
 
 
+declare type RouteType = 'Layout' | 'Menu'

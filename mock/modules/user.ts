@@ -27,7 +27,7 @@ export default [
                     // 权限
                     permissions: [],
                     // 角色
-                    roles: [ 'Super' ],
+                    roles: ['Super'],
                     // 用户信息
                     userinfo: {
                         userId: 1,
@@ -42,7 +42,7 @@ export default [
     },
     {
         url: '/mock/signOut',
-        method: 'post',
+        method: 'get',
         timeout: 0,
         response: () => {
             return {
@@ -55,7 +55,7 @@ export default [
     },
     {
         url: '/mock/getRoutes',
-        method: 'post',
+        method: 'get',
         timeout: 0,
         response: () => {
             return {
@@ -64,7 +64,6 @@ export default [
                 data: [
                     {
                         path: '/system',
-                        name: 'system',
                         component: 'Layout',
                         redirect: '/system/user',
                         meta: {
@@ -75,7 +74,6 @@ export default [
                         children: [
                             {
                                 path: '/system/user',
-                                name: '/system_user',
                                 meta: {
                                     title: '用户'
                                 },
@@ -83,7 +81,6 @@ export default [
                             },
                             {
                                 path: '/system/role',
-                                name: 'system_role',
                                 meta: {
                                     title: '角色'
                                 },
@@ -91,7 +88,6 @@ export default [
                             },
                             {
                                 path: '/system/menu',
-                                name: 'system_menu',
                                 meta: {
                                     title: '菜单'
                                 },
@@ -99,7 +95,6 @@ export default [
                             },
                             {
                                 path: '/system/test',
-                                name: '/system_test',
                                 component: 'Layout',
                                 meta: {
                                     title: '测试测试测试测试测试测试测试测试测试'
@@ -107,8 +102,6 @@ export default [
                                 children: [
                                     {
                                         path: '/system/test/menu',
-                                        name: 'system_test_menu',
-
                                         meta: {
                                             title: '测试菜单'
                                         },

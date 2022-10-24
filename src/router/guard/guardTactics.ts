@@ -10,9 +10,6 @@ import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const { isLogin, isAuth, initUserStore, getUserinfo } = useAuthStore()
     const { initRouteStore, initFrontRouteAuth, routeAuthMode, hasInitAuthRoute } = useRouteStore()
-    console.log(to)
-    // 是否忽略权限
-    // const ignoreAuth = Boolean(to.meta.ignoreAuth)
 
     // 处理路由鉴权模式
     const handleRouteAuthMode = () => {
@@ -24,6 +21,8 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
                 break
             // 服务端路由鉴权模式
             case RouteAuthMode.SERVER:
+                next()
+                break
         }
     }
     // 策略守卫
@@ -49,7 +48,6 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
         [
             !isAuth,
             async () => {
-                console.log(88)
                 // 初始化路由
                 initRouteStore()
                 // 获取用户信息
@@ -67,7 +65,6 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
         [
             !hasInitAuthRoute,
             () => {
-                console.log(99)
                 initRouteStore()
                 handleRouteAuthMode()
                 next({ ...to, replace: true })

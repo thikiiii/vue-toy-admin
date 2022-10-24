@@ -22,6 +22,9 @@ const dashboard: AppRouteRecordRaw = {
                 roles: [ RoleEnum.SUPER ],
                 affix: true,
                 ignoreRoleAuth: true
+
+
+                
             },
             component: () => import('@/views/dashboard/analysis/index.vue')
         }
