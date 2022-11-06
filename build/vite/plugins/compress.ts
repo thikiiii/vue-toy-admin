@@ -1,6 +1,6 @@
 import compressPlugin from 'vite-plugin-compression'
 // 压缩
-export const setupCompress = (viteEnv: ViteEnv) => {
+export const setupCompress = (viteEnv: ImportMetaEnv) => {
     const { VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv
     switch (VITE_BUILD_COMPRESS) {
         case 'gzip':

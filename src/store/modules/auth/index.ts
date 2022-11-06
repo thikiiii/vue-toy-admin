@@ -1,11 +1,11 @@
-import {defineStore} from 'pinia'
-import {AuthCookie} from '@/storage/auth'
-import {UserApi} from '@/services/api/user'
+import { defineStore } from 'pinia'
+import { AuthCookie } from '@/storage/auth'
+import { UserApi } from '@/services/api/user'
 import router from '@/router'
 import Settings from '@/settings'
-import {LoginMethod} from "@/enums/common";
-import {useRouteStore} from "@/store/modules/route";
-import {RouteAuthMode} from "@/enums/auth";
+import { LoginMethod } from '@/enums/common'
+import { useRouteStore } from '@/store/modules/route'
+import { RouteAuthMode } from '@/enums/auth'
 
 // 鉴权
 const useAuthStore = defineStore('auth', {
@@ -27,7 +27,7 @@ const useAuthStore = defineStore('auth', {
         // 密码登录
         async passwordLogin(form: UserService.Request.PasswordLogin) {
             this.loginLoading = true
-            const {subCode, subMsg, token} = await UserApi.passwordLogin(form).catch(() => {
+            const { subCode, subMsg, token } = await UserApi.passwordLogin(form).catch(() => {
                 this.loginLoading = false
                 return Promise.reject()
             })
@@ -44,7 +44,7 @@ const useAuthStore = defineStore('auth', {
 
         // 获取用户信息
         async getUserinfo() {
-            const {subCode, data, subMsg} = await UserApi.getUserinfo().catch(() => {
+            const { subCode, data, subMsg } = await UserApi.getUserinfo().catch(() => {
                 this.initUserStore()
                 return Promise.reject()
             })
@@ -55,7 +55,7 @@ const useAuthStore = defineStore('auth', {
                 return Promise.reject()
             }
 
-            this.roles = data.roles;
+            this.roles = data.roles
             this.permissions = data.permissions
             this.userinfo = data.userinfo
         },
@@ -70,7 +70,7 @@ const useAuthStore = defineStore('auth', {
             }
             await this.getUserinfo()
 
-            const routeStore = useRouteStore();
+            const routeStore = useRouteStore()
 
             switch (routeStore.routeAuthMode) {
                 case RouteAuthMode.FRONT:
@@ -82,7 +82,7 @@ const useAuthStore = defineStore('auth', {
 
             window.$notification?.success({
                 title: '登录成功',
-                content: `欢迎回来，${this.userinfo?.username}！`
+                content: `欢迎回来，${ this.userinfo?.username }！`
             })
             this.loginLoading = false
 
@@ -94,6 +94,7 @@ const useAuthStore = defineStore('auth', {
         async signOut() {
             await UserApi.signOut().finally(() => {
                 this.initUserStore()
+                useRouteStore().initRouteStore()
                 window.$message?.success('退出登录成功!')
                 router.currentRoute.value.path !== '/login' && router.push({
                     path: '/login',

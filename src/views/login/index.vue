@@ -29,12 +29,12 @@ onBeforeUnmount(() => {
       </transition>
     </div>
     <div class="login-card">
-      <theme-switch class="login-card-theme"/>
+      <theme-switch class="login-card-theme" />
       <transition appear name="right-slide-fade">
         <h1 class="login-card-title">Thik Admin</h1>
       </transition>
       <div class="login-card-form">
-        <component :is="loginType"/>
+        <component :is="loginType" />
       </div>
     </div>
   </div>

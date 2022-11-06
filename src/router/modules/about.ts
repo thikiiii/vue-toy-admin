@@ -1,16 +1,13 @@
-import { AppRouteRecordRaw } from '#/router'
-
-const about: AppRouteRecordRaw = {
+const about: Route.RouteRecordRaw = {
     path: '/about',
-    name: 'About',
+    name: 'about',
     meta: {
         title: '关于',
         // roles: [ RoleEnum.SUPER ],
         icon: 'lock',
-        ignoreRoleAuth: true,
         keepAlive: true,
         orderNo: 3
     },
-    component: () => import('@/views/about/index.vue')
+    component: 'View'
 }
 export default about

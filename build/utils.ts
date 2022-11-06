@@ -1,5 +1,5 @@
 // 包装 env
-export const wrapperEnv = (envConfig: Recordable): ViteEnv => {
+export const wrapperEnv = (envConfig: Recordable): ImportMetaEnv => {
     return Object.keys(envConfig).reduce((env, envKey) => {
         let envValue = envConfig[envKey]
         // 判断是否是布尔类型
@@ -9,5 +9,5 @@ export const wrapperEnv = (envConfig: Recordable): ViteEnv => {
         env[envKey] = envValue
         process.env[envKey] = envValue
         return env
-    }, {} as ViteEnv)
+    }, {} as ImportMetaEnv)
 }

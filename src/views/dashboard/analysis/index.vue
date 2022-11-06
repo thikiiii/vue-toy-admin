@@ -3,7 +3,9 @@
 </script>
 
 <template>
-    <div>sss</div>
+  <div>sssdddddd
+    <button>test</button>
+  </div>
 </template>
 
 <style scoped>

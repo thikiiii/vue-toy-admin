@@ -1,17 +1,17 @@
 // 系统管理
 import { RoleEnum } from '@/enums/auth'
-import { AppRouteRecordRaw } from '#/router'
 
 
-const system: AppRouteRecordRaw = {
+const system: Route.RouteRecordRaw = {
     path: '/system',
     name: 'system',
-    component: () => import('@/layout/index.vue'),
+    component: 'Layout',
     redirect: '/system/user',
     meta: {
         title: '系统管理',
         icon: 'lock',
-        orderNo: 2
+        orderNo: 2,
+        roles: [ RoleEnum.TEST ]
     },
     children: [
         {
@@ -21,30 +21,30 @@ const system: AppRouteRecordRaw = {
                 title: '用户',
                 roles: [ RoleEnum.SUPER ]
             },
-            component: () => import('@/views/system/user/User.vue')
+            component: 'View'
         },
         {
             path: '/system/role',
             name: 'system_role',
             meta: {
                 title: '角色',
-                roles: [ RoleEnum.SUPER ]
+                roles: [ RoleEnum.TEST ]
             },
-            component: () => import('@/views/system/role/index.vue')
+            component: 'View'
         },
         {
             path: '/system/menu',
             name: 'system_menu',
             meta: {
-                roles: [ RoleEnum.SUPER ],
+                roles: [ RoleEnum.TEST ],
                 title: '菜单'
             },
-            component: () => import('@/views/system/menu/index.vue')
+            component: 'View'
         },
         {
             path: '/system/test',
             name: '/system_test',
-            component: () => import('@/layout/index.vue'),
+            component: 'View',
             meta: {
                 title: '测试测试测试测试测试测试测试测试测试'
             },
@@ -56,7 +56,7 @@ const system: AppRouteRecordRaw = {
                         title: '测试菜单',
                         roles: [ RoleEnum.SUPER ]
                     },
-                    component: () => import('@/views/system/menu/index.vue')
+                    component: 'View'
                 }
             ]
         }

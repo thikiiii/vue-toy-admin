@@ -1,10 +1,10 @@
-import useAuthStore from "@/store/modules/auth";
-import { useRouteStore } from "@/store/modules/route";
-import { LOGIN_PATH } from "@/router/fixedRoute";
-import { AuthCookie } from "@/storage/auth";
-import { RouteAuthMode } from "@/enums/auth";
-import { runTacticsAction } from "@/utils";
-import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
+import useAuthStore from '@/store/modules/auth'
+import { useRouteStore } from '@/store/modules/route'
+import { LOGIN_PATH } from '@/router/constRoutes'
+import { AuthCookie } from '@/storage/auth'
+import { RouteAuthMode } from '@/enums/auth'
+import { runTacticsAction } from '@/utils'
+import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 
 // 守卫策略
 const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
@@ -31,6 +31,7 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
         [
             !isLogin,
             () => {
+                console.log('GUARD-------1')
                 to.path === LOGIN_PATH ? next() : next(LOGIN_PATH)
             }
         ],
@@ -38,6 +39,7 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
         [
             !Boolean(AuthCookie.getToken()),
             () => {
+                console.log('GUARD-------2')
                 window.$message?.warning('令牌已失效，请重新登录！')
                 initUserStore()
                 initRouteStore()
@@ -48,6 +50,7 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
         [
             !isAuth,
             async () => {
+                console.log('GUARD-------3')
                 // 初始化路由
                 initRouteStore()
                 // 获取用户信息
@@ -58,13 +61,14 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
                 })
                 /* -- 获取到了用户信息和角色 -- */
                 handleRouteAuthMode()
-                next({ ...to, replace: true })
+                next({ path: to.path, query: to.query, replace: true })
             }
         ],
         // 没有初始化鉴权路由
         [
             !hasInitAuthRoute,
             () => {
+                console.log('GUARD-------4')
                 initRouteStore()
                 handleRouteAuthMode()
                 next({ ...to, replace: true })
@@ -73,16 +77,22 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
         // 登录情况下不能到登录页面
         [
             to.path === LOGIN_PATH,
-            () => next(from.fullPath)
+            () => {
+                console.log('GUARD-------5')
+                next(from.fullPath)
+            }
         ],
         // 走到这步直接通过（走到这步就表示已经登录、有权限、有路由了）
         [
             true,
-            () => next()
+            () => {
+                console.log('GUARD-------6')
+                next()
+            }
         ]
-    ];
+    ]
 
-    runTacticsAction(guardTacticsAction);
+    runTacticsAction(guardTacticsAction)
 }
 
 export default guardTactics

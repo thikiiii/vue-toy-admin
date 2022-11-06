@@ -37,7 +37,7 @@ export const lighten = (color: string, amount: number) => {
 }
 
 // 包装 env
-export const wrapperEnv = (): ViteEnv => {
+export const wrapperEnv = (): ImportMetaEnv => {
     const envConfig = import.meta.env
     return Object.keys(envConfig).reduce((env, envKey) => {
         let envValue = envConfig[envKey]
@@ -47,7 +47,7 @@ export const wrapperEnv = (): ViteEnv => {
         if (!isNaN(parseInt(envValue))) envValue = Number(envValue)
         env[envKey] = envValue
         return env
-    }, {} as ViteEnv)
+    }, {} as ImportMetaEnv)
 }
 
 // 执行策略模式

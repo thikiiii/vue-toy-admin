@@ -1,8 +1,8 @@
-declare interface ViteEnv {
+declare interface ImportMetaEnv {
     // 端口
     readonly  VITE_PORT: number
 
-    //  网站标题
+    // 网站标题
     readonly VITE_GLOB_APP_TITLE: string
 
     // 资源公共路径
@@ -16,7 +16,7 @@ declare interface ViteEnv {
 
     // API 接口地址
     readonly  VITE_GLOB_API_URL: string
-    
+
     // 接口前缀
     readonly  VITE_GLOB_API_URL_PREFIX: string
 
@@ -31,4 +31,8 @@ declare interface ViteEnv {
 
     // 是否兼容旧版浏览器。开启后打包时间会慢一倍左右。会多打出旧浏览器兼容包,且会根据浏览器兼容性自动使用相应的版本
     readonly  VITE_LEGACY: boolean
+}
+
+interface ImportMeta {
+    readonly env: ImportMetaEnv;
 }

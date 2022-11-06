@@ -1,6 +1,6 @@
 import { createHtmlPlugin } from 'vite-plugin-html'
 
-export const setupHtml = (viteEnv:ViteEnv,isBuild:boolean) => createHtmlPlugin({
+export const setupHtml = (viteEnv: ImportMetaEnv, isBuild: boolean) => createHtmlPlugin({
     // 生产环境压缩
     minify: isBuild,
     inject: {

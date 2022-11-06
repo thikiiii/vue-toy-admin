@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Logo, MenuContent } from '@/layout/index.ts'
+import { Logo, MenuContent } from '@/layout/components'
 import { useLayoutStore } from '@/store/modules/layout'
 import { AppSearch, Breadcrumb, FullScreen, Github, MenuCollapsed } from '@/layout/components/Header/components'
 import { provide } from 'vue'

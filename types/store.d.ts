@@ -78,7 +78,7 @@ declare namespace Store {
         customize: ThemeModeConfig<CustomizeThemeConfig>
     }
 
-    type TabBar = Pick<import('#/router').AppRouteRecordRaw, 'path' | 'meta' | 'name'>
+    type TabBar = Pick<Route.RouteRecordRaw, 'path' | 'meta' | 'name'>
 
     // 标签栏 Store
     interface TabBarStore {
@@ -86,7 +86,7 @@ declare namespace Store {
         tabBar: TabBar[]
 
         // 缓存菜单
-        cacheMenus: (string | symbol)[]
+        cacheMenus: string[]
 
         // 固定标签
         affixTabs: TabBar[]

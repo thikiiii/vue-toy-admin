@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 
 defineOptions({
-  name: 'About'
+  name: 'about'
 })
 const count = ref(0)
 

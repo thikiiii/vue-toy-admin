@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { AppRouteRecordRaw } from '#/router'
 import router from '@/router'
 import { RouteRecordName } from 'vue-router'
 import { nextTick } from 'vue'
@@ -32,7 +31,7 @@ const useTabBarStore = defineStore('tabBar', {
             // 不存在就 push
             !this.isExist(tab.path) && this.tabBar.push(tab)
             // name 为真，且 name 不存在就push
-            tab.name && !this.cacheMenus.some(name => name === tab.name) && this.cacheMenus.push(tab.name)
+            tab.name && !this.cacheMenus.some(name => name === tab.name) && this.cacheMenus.push(tab.name as string)
         },
 
         // 关闭
@@ -77,9 +76,9 @@ const useTabBarStore = defineStore('tabBar', {
         },
 
         // 筛选固定标签
-        filterAffixTabs(authRoutes: AppRouteRecordRaw[]): Store.TabBar[] {
+        filterAffixTabs(authRoutes: Route.RouteRecordRaw[]): Store.TabBar[] {
             const tabs: Store.TabBar[] = []
-            const filter = (authRoutes: AppRouteRecordRaw[]) => {
+            const filter = (authRoutes: Route.RouteRecordRaw[]) => {
                 authRoutes.forEach(route => {
                     if (route.meta?.affix) tabs.push({
                         path: route.path,
@@ -93,7 +92,7 @@ const useTabBarStore = defineStore('tabBar', {
         },
 
         // 设置固定标签
-        setAffixTabs(authRoutes: AppRouteRecordRaw[]) {
+        setAffixTabs(authRoutes: Route.RouteRecordRaw[]) {
             const affixTabs = this.filterAffixTabs(authRoutes)
             this.tabBar = [ ...affixTabs ]
             this.affixTabs = [ ...affixTabs ]
