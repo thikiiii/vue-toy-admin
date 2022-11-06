@@ -10,8 +10,7 @@ const system: Route.RouteRecordRaw = {
     meta: {
         title: '系统管理',
         icon: 'lock',
-        orderNo: 2,
-        roles: [ RoleEnum.TEST ]
+        orderNo: 2
     },
     children: [
         {
@@ -44,7 +43,7 @@ const system: Route.RouteRecordRaw = {
         {
             path: '/system/test',
             name: '/system_test',
-            component: 'View',
+            component: 'Layout',
             meta: {
                 title: '测试测试测试测试测试测试测试测试测试'
             },

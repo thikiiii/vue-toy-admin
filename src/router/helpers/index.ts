@@ -103,4 +103,14 @@ export class RouterHelpers {
             return 0
         })
     }
+
+    // 删除空 Layout
+    static removeEmptyLayout(routes: Route.RouteRecordRaw[]) {
+        return routes.reduce<Route.RouteRecordRaw[]>((routes, route) => {
+            if (route.children?.length) route.children = this.removeEmptyLayout(route.children)
+            if (route.component === 'Layout' && !route.children?.length) return routes
+            routes.push(route)
+            return routes
+        }, [])
+    }
 }

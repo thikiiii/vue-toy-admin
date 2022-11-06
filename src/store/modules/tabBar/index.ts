@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import router from '@/router'
-import { RouteRecordName } from 'vue-router'
 import { nextTick } from 'vue'
 
 
@@ -50,7 +49,7 @@ const useTabBarStore = defineStore('tabBar', {
             this.closeTab({
                 path: route.path,
                 meta: route.meta,
-                name: route.name as RouteRecordName
+                name: route.name as string
             })
         },
 
@@ -82,7 +81,8 @@ const useTabBarStore = defineStore('tabBar', {
                 authRoutes.forEach(route => {
                     if (route.meta?.affix) tabs.push({
                         path: route.path,
-                        meta: route.meta
+                        meta: route.meta,
+                        name: route.name
                     })
                     if (route.children) filter(route.children)
                 })

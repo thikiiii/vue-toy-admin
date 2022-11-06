@@ -79,14 +79,12 @@ export const useRouteStore = defineStore('route', {
         // 初始化前端路由权限
         initFrontRouteAuth() {
             // 过滤本地权限路由
-            const routes = this.filterAuthRoutes(RouterHelpers.routeList)
+            const routes = RouterHelpers.removeEmptyLayout(this.filterAuthRoutes(RouterHelpers.routeList))
             // 升序
             RouterHelpers.sortRoutes(routes, Sort.Ascending)
             // 自定义路由转 Vue 路由，并包装路由后添加到 router 中
             RouterHelpers
-                // 自定义路由转 Vue 路由
                 .transformCustomRoutesToVueRoutes(RouterHelpers.useLayoutWrapperSingleViewRoute(routes))
-                // 包装路由后添加到 router 中
                 .forEach(route => router.addRoute(route))
             // 设置菜单
             this.menus = RouterHelpers.transformRoutesToMenus(routes)
