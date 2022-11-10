@@ -35,16 +35,7 @@ declare namespace UserService {
         }
 
         // 路由
-        interface UserRoutes {
-            // 路由路径
-            path: string
-            // 重定向
-            redirect: string
-            // 组件
-            component: string
-            // 元数据
-            meta: import('vue-router').RouteMeta
-        }
+        type UserRoutes = Route.RouteRecordRaw[]
     }
 
 }

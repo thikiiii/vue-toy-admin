@@ -6,7 +6,7 @@ import { MenuModeEnum } from '@/enums/layout'
 // 全局配置
 export default class Settings {
     // 路由鉴权模式
-    static readonly routeAuthMode = RouteAuthMode.FRONT
+    static readonly routeAuthMode = RouteAuthMode.SERVER
 
     // 菜单模式
     static readonly menuMode = LayoutStorage.getMenuMode() || MenuModeEnum.SIDE

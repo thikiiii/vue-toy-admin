@@ -65,17 +65,6 @@ export const useRouteStore = defineStore('route', {
             }, [])
         },
 
-
-        // 排序权限路由, 默认升序
-        sortAuthRoutes(authRoutes: Route.RouteRecordRaw[], type: Sort) {
-            authRoutes.sort((a, b) => {
-                if (type === Sort.Ascending) return Number(a.meta?.orderNo) - Number(b.meta?.orderNo)
-                if (type === Sort.Descending) return Number(b.meta?.orderNo) - Number(a.meta?.orderNo)
-                return 0
-            })
-        },
-
-
         // 初始化前端路由权限
         initFrontRouteAuth() {
             // 过滤本地权限路由
@@ -96,7 +85,15 @@ export const useRouteStore = defineStore('route', {
         // 初始化服务端路由权限
         async initServerRouteAuth() {
             // 获取路由
-            await this.getRoutes()
+            const routes = await this.getRoutes().catch(() => Promise.reject()) as Route.RouteRecordRaw[]
+            RouterHelpers
+                .transformCustomRoutesToVueRoutes(RouterHelpers.useLayoutWrapperSingleViewRoute(routes))
+                .forEach(route => router.addRoute(route))
+            // 设置菜单
+            this.menus = RouterHelpers.transformRoutesToMenus(routes)
+            // 设置固定标签
+            useTabBarStore().setAffixTabs(routes)
+            this.hasInitAuthRoute = true
         }
     }
 })

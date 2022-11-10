@@ -6,7 +6,7 @@
       :size="size">
     <svg
         :viewBox="`0 0 ${ iconLibrary?.width } ${ iconLibrary?.height }`"
-        v-html="iconLibrary?.icons[icon]?.body"/>
+        v-html="iconLibrary?.icons[icon]?.body" />
   </NIcon>
 </template>
 
@@ -15,7 +15,7 @@ import { Depth } from 'naive-ui/es/icon/src/Icon'
 import { icons as mdi } from '@iconify-json/mdi'
 import { toRefs } from 'vue'
 
-export type IconLibrary = 'mdi' | string
+type IconLibrary = 'mdi' | string
 
 // 图标库
 const icons = {

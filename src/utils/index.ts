@@ -56,6 +56,7 @@ export const runTacticsAction = (tacticsAction: TacticsAction[]) => tacticsActio
     return flag
 })
 
+
 // 跳转到新标签
 export const jumpToNewTab = (src: string) => {
     const aTag = document.createElement('a')

@@ -77,6 +77,7 @@ const useAuthStore = defineStore('auth', {
                     routeStore.initFrontRouteAuth()
                     break
                 case RouteAuthMode.SERVER:
+                    await routeStore.initServerRouteAuth()
                     break
             }
 

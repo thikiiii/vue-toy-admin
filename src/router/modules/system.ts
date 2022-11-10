@@ -27,7 +27,7 @@ const system: Route.RouteRecordRaw = {
             name: 'system_role',
             meta: {
                 title: '角色',
-                roles: [ RoleEnum.TEST ]
+                roles: [ RoleEnum.SUPER ]
             },
             component: 'View'
         },
@@ -35,7 +35,7 @@ const system: Route.RouteRecordRaw = {
             path: '/system/menu',
             name: 'system_menu',
             meta: {
-                roles: [ RoleEnum.TEST ],
+                roles: [ RoleEnum.SUPER ],
                 title: '菜单'
             },
             component: 'View'

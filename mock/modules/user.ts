@@ -27,7 +27,7 @@ export default [
                     // 权限
                     permissions: [],
                     // 角色
-                    roles: ['Super'],
+                    roles: [ 'Super' ],
                     // 用户信息
                     userinfo: {
                         userId: 1,
@@ -64,6 +64,7 @@ export default [
                 data: [
                     {
                         path: '/system',
+                        name: 'system',
                         component: 'Layout',
                         redirect: '/system/user',
                         meta: {
@@ -74,27 +75,31 @@ export default [
                         children: [
                             {
                                 path: '/system/user',
+                                name: '/system_user',
                                 meta: {
-                                    title: '用户'
+                                    title: '用户',
                                 },
-                                component: '/system/user/User'
+                                component: 'View'
                             },
                             {
                                 path: '/system/role',
+                                name: 'system_role',
                                 meta: {
-                                    title: '角色'
+                                    title: '角色',
                                 },
-                                component: '/system/role/index'
+                                component: 'View'
                             },
                             {
                                 path: '/system/menu',
+                                name: 'system_menu',
                                 meta: {
                                     title: '菜单'
                                 },
-                                component: '/system/menu/index'
+                                component: 'View'
                             },
                             {
                                 path: '/system/test',
+                                name: '/system_test',
                                 component: 'Layout',
                                 meta: {
                                     title: '测试测试测试测试测试测试测试测试测试'
@@ -102,14 +107,48 @@ export default [
                                 children: [
                                     {
                                         path: '/system/test/menu',
+                                        name: 'system_test_menu',
                                         meta: {
-                                            title: '测试菜单'
+                                            title: '测试菜单',
                                         },
-                                        component: '/system/test/menu/index'
+                                        component: 'View'
                                     }
                                 ]
                             }
                         ]
+                    },
+                    {
+                        path: '/dashboard',
+                        name: 'dashboard',
+                        component: 'Layout',
+                        redirect: '/dashboard/analysis',
+                        meta: {
+                            title: '控制台',
+                            icon: 'lock',
+                            orderNo: 1
+                        },
+                        children: [
+                            {
+                                path: '/dashboard/analysis',
+                                name: 'dashboard_analysis',
+                                meta: {
+                                    title: '分析页',
+                                    affix: true
+                                },
+                                component: 'View'
+                            }
+                        ]
+                    },
+                    {
+                        path: '/about',
+                        name: 'about',
+                        meta: {
+                            title: '关于',
+                            icon: 'lock',
+                            keepAlive: true,
+                            orderNo: 3
+                        },
+                        component: 'View'
                     }
                 ],
                 subCode: 200,

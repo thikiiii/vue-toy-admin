@@ -9,10 +9,10 @@ import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 // 守卫策略
 const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const { isLogin, isAuth, initUserStore, getUserinfo } = useAuthStore()
-    const { initRouteStore, initFrontRouteAuth, routeAuthMode, hasInitAuthRoute } = useRouteStore()
-
+    const { initRouteStore, initFrontRouteAuth, initServerRouteAuth, routeAuthMode, hasInitAuthRoute } = useRouteStore()
+    console.log('isSU', hasInitAuthRoute)
     // 处理路由鉴权模式
-    const handleRouteAuthMode = () => {
+    const handleRouteAuthMode = async () => {
         switch (routeAuthMode) {
             // 前端路由鉴权模式
             case RouteAuthMode.FRONT:
@@ -21,7 +21,7 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
                 break
             // 服务端路由鉴权模式
             case RouteAuthMode.SERVER:
-                next()
+                await initServerRouteAuth()
                 break
         }
     }
@@ -60,17 +60,17 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
                     return Promise.reject()
                 })
                 /* -- 获取到了用户信息和角色 -- */
-                handleRouteAuthMode()
+                await handleRouteAuthMode()
                 next({ path: to.path, query: to.query, replace: true })
             }
         ],
         // 没有初始化鉴权路由
         [
             !hasInitAuthRoute,
-            () => {
+            async () => {
                 console.log('GUARD-------4')
                 initRouteStore()
-                handleRouteAuthMode()
+                await handleRouteAuthMode()
                 next({ ...to, replace: true })
             }
         ],
