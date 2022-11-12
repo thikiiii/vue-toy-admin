@@ -1,11 +1,7 @@
-<script lang="ts" setup>
-import { inject } from 'vue'
-
-const size = inject<string>('size')
-</script>
+<script lang="ts" setup></script>
 
 <template>
-    <icon :size="size" icon="github"></icon>
+  <icon icon="github"></icon>
 </template>
 
 <style scoped>

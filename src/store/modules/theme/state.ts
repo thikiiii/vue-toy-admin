@@ -39,7 +39,7 @@ const darkThemeConfig: Store.CustomizeThemeConfig = {
 }
 
 
-const naiveConfg = (
+const naiveConfig = (
     {
         mainTextColor,
         subTextColor,
@@ -88,7 +88,7 @@ export const themeState: Store.ThemeStore = {
         dark: darkThemeConfig
     },
     naive: {
-        light: naiveConfg(lightThemeConfig),
-        dark: naiveConfg(darkThemeConfig)
+        light: naiveConfig(lightThemeConfig),
+        dark: naiveConfig(darkThemeConfig)
     }
 }

@@ -119,7 +119,8 @@ declare namespace Store {
 
         icon?: (() => import('vue').VNodeChild)
 
-        key: string | number
+        // 路由
+        key: string
 
         children?: MenuOption[]
     }

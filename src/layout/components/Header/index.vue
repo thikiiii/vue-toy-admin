@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { Logo, MenuContent } from '@/layout/components'
-import { useLayoutStore } from '@/store/modules/layout'
-import { AppSearch, Breadcrumb, FullScreen, Github, MenuCollapsed } from '@/layout/components/Header/components'
-import { provide } from 'vue'
+import {Logo, MenuContent} from '@/layout/components'
+import {useLayoutStore} from '@/store/modules/layout'
 import Avatar from '@/layout/components/Header/components/Avatar.vue'
+import MenuCollapsed from '@/layout/components/Header/components/MenuCollapsed.vue'
+import Breadcrumb from '@/layout/components/Header/components/Breadcrumb.vue'
+import AppSearch from '@/layout/components/Header/components/AppSearch.vue'
+import Github from '@/layout/components/Header/components/Github.vue'
+import FullScreen from '@/layout/components/Header/components/FullScreen.vue'
 
 const layoutStore = useLayoutStore()
-
-// TODO: 优化 size
-provide('size', '22')
 </script>
 <template>
   <div class="headerContent">

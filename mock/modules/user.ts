@@ -27,7 +27,7 @@ export default [
                     // 权限
                     permissions: [],
                     // 角色
-                    roles: [ 'Super' ],
+                    roles: ['Super'],
                     // 用户信息
                     userinfo: {
                         userId: 1,
@@ -75,7 +75,7 @@ export default [
                         children: [
                             {
                                 path: '/system/user',
-                                name: '/system_user',
+                                name: 'system_user',
                                 meta: {
                                     title: '用户',
                                 },
@@ -99,7 +99,7 @@ export default [
                             },
                             {
                                 path: '/system/test',
-                                name: '/system_test',
+                                name: 'system_test',
                                 component: 'Layout',
                                 meta: {
                                     title: '测试测试测试测试测试测试测试测试测试'
