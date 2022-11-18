@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Password from '@/views/login/Password/index.vue'
+import Password from '@/views/login/password/index.vue'
 import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
 
 const isMobile = ref(true)
@@ -26,6 +26,7 @@ onBeforeUnmount(() => {
     <div v-if="!isMobile" class="login-bg">
       <transition appear name="right-slide-fade">
         <img alt="" src="../../assets/svg/login.svg">
+        
       </transition>
     </div>
     <div class="login-card">

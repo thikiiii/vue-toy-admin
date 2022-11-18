@@ -5,18 +5,18 @@ import { onMounted, ref, watch } from 'vue'
 interface Breadcrumb {
   key: string
   label: string
-  children?: Breadcrumb[]
+  children?: index[]
 }
 
 const route = useRoute()
 const router = useRouter()
-const breadcrumb = ref<Breadcrumb[]>([])
+const breadcrumb = ref<index[]>([])
 
 const onSelect = (path) => {
   router.push(path)
 }
 
-const RouteMatchedToBreadcrumb = (routeMatched: RouteLocationMatched[]): Breadcrumb[] => routeMatched.map(item => {
+const RouteMatchedToBreadcrumb = (routeMatched: RouteLocationMatched[]): index[] => routeMatched.map(item => {
   return {
     key: item.path,
     label: item.meta.title,

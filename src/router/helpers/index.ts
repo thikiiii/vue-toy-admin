@@ -1,6 +1,6 @@
 // 需要权限的路由模块列表
 import { RouteRecordRaw } from 'vue-router'
-import { Layout } from '@/layout/components'
+import Layout from '@/layout/index.vue'
 import RenderEllipsis from '@/components/Render/ellipsis'
 import RenderIcon from '@/components/Render/icon'
 import { ROOT_ROUTE } from '@/router/constRoutes'
@@ -84,7 +84,7 @@ export class RouterHelpers {
     static useLayoutWrapperSingleViewRoute(authRoutes: Route.RouteRecordRaw[]) {
         return authRoutes.map((route) => {
             if (route.children) return route
-            const root: Route.RouteRecordRaw = { ...ROOT_ROUTE }
+            const root: Route.RouteRecordRaw = { ...ROOT_ROUTE,name:route.name }
             root.children = [ route ]
             return root
         })

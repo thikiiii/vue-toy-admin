@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 
 defineOptions({
-  name: 'about'
+  name: 'About'
 })
 const count = ref(0)
 
@@ -12,6 +12,7 @@ const count = ref(0)
   <div>
     about
     <p>{{ count }}</p>
+    <icon></icon>
     <button @click="count++">测试</button>
   </div>
 </template>

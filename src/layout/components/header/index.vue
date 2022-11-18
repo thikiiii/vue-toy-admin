@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-import {Logo, MenuContent} from '@/layout/components'
-import {useLayoutStore} from '@/store/modules/layout'
-import Avatar from '@/layout/components/Header/components/Avatar.vue'
-import MenuCollapsed from '@/layout/components/Header/components/MenuCollapsed.vue'
-import Breadcrumb from '@/layout/components/Header/components/Breadcrumb.vue'
-import AppSearch from '@/layout/components/Header/components/AppSearch.vue'
-import Github from '@/layout/components/Header/components/Github.vue'
-import FullScreen from '@/layout/components/Header/components/FullScreen.vue'
+import Logo from '@/layout/components/Logo/index.vue'
+import LayoutMenu from '@/layout/components/Menu/index.vue'
+import { useLayoutStore } from '@/store/modules/layout'
+import Avatar from './components/Avatar/index.vue'
+import MenuCollapsed from './components/MenuCollapsed/index.vue'
+import Breadcrumb from './components/Breadcrumb/index.vue'
+import GlobalSearch from './components/AppSearch/index.vue'
+import Github from './components/Github/index.vue'
+import FullScreen from './components/FullScreen/index.vue'
 
 const layoutStore = useLayoutStore()
 </script>
@@ -15,32 +16,32 @@ const layoutStore = useLayoutStore()
     <div class="headerContent-left">
       <template v-if="layoutStore.menuMode==='side'||layoutStore.isMobile">
         <!-- 菜单折叠 -->
-        <menu-collapsed/>
+        <menu-collapsed />
         <!-- 面包屑 -->
-        <breadcrumb/>
+        <breadcrumb />
       </template>
       <template v-if="layoutStore.menuMode==='top'&&!layoutStore.isMobile">
         <!-- LOGO -->
         <div class="headerContent-left-logo-container">
-          <logo/>
+          <logo />
         </div>
         <!-- 水平菜单 -->
         <n-scrollbar x-scrollable>
-          <menu-content collapsed mode="horizontal"/>
+          <layout-menu collapsed mode="horizontal" />
         </n-scrollbar>
       </template>
     </div>
     <div class="headerContent-right">
       <!-- 搜索 -->
-      <app-search/>
+      <global-search />
       <!-- GITHUB -->
-      <github/>
+      <github />
       <!-- 全屏 -->
-      <full-screen/>
+      <full-screen />
       <!-- 主题切换 -->
-      <theme-switch/>
+      <theme-switch />
       <!-- 头像和昵称 -->
-      <avatar/>
+      <avatar />
     </div>
   </div>
 </template>

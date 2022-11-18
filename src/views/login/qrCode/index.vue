@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Component, inject, Ref } from 'vue'
-import Password from '@/views/login/Password/index.vue'
+import Password from '@/views/login/password/index.vue'
 
 const loginType = inject('loginType') as Ref<Component>
 const set = () => {

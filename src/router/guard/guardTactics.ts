@@ -91,7 +91,6 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
             }
         ]
     ]
-
     runTacticsAction(guardTacticsAction)
 }
 

@@ -18,6 +18,7 @@ const dashboard: Route.RouteRecordRaw = {
             meta: {
                 title: '分析页',
                 roles: [ RoleEnum.SUPER ],
+                keepAlive: true,
                 affix: true
             },
             component: 'View'

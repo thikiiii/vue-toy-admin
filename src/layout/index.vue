@@ -1,8 +1,12 @@
 <script lang="ts" setup>
-import { HeaderContent, Logo, MainContent, MenuContent, TabBar } from '@/layout/components'
 import { useLayoutStore } from '@/store/modules/layout'
 import { onBeforeUnmount, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
+import LayoutMenu from '@/layout/components/Menu/index.vue'
+import LayoutHeader from '@/layout/components/Header/index.vue'
+import LayoutMain from '@/layout/components/Main/index.vue'
+import TabBar from '@/layout/components/TabBar/index.vue'
+import Logo from '@/layout/components/Logo/index.vue'
 
 const layoutStore = useLayoutStore()
 const {
@@ -36,24 +40,24 @@ onBeforeUnmount(() => {
         @collapse="layoutStore.setCollapsed(true)"
         @expand="layoutStore.setCollapsed(false)">
       <logo />
-      <menu-content :collapsed="collapsed" />
+      <layout-menu :collapsed="collapsed" />
     </n-layout-sider>
     <!-- 移动端侧边栏 -->
     <n-modal v-model:show="mobileMenuVisible">
       <n-layout-sider class="layout-mobileMenu">
         <logo />
-        <menu-content inverted />
+        <layout-menu inverted />
       </n-layout-sider>
     </n-modal>
     <n-layout>
       <!-- 头部 -->
       <n-layout-header class="layout-header">
-        <header-content />
+        <layout-header />
       </n-layout-header>
       <tab-bar class="layout-tab-bar" />
       <!-- 内容 -->
       <n-layout-content class="layout-main">
-        <main-content />
+        <layout-main />
       </n-layout-content>
     </n-layout>
   </n-layout>

@@ -30,7 +30,9 @@ const useTabBarStore = defineStore('tabBar', {
             // 不存在就 push
             !this.isExist(tab.path) && this.tabBar.push(tab)
             // name 为真，且 name 不存在就push
-            tab.name && !this.cacheMenus.some(name => name === tab.name) && this.cacheMenus.push(tab.name as string)
+            tab.name
+            && !this.cacheMenus.some(name => name === tab.name)
+            && this.cacheMenus.push(tab.name)
         },
 
         // 关闭

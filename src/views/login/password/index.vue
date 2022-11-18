@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { inject, reactive, Ref, ref } from 'vue'
-import QrCode from '@/views/login/QrCode/index.vue'
+import QrCode from '@/views/login/qrCode/index.vue'
 import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
 import { LoginMethod } from "@/enums/common";

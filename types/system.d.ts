@@ -1,8 +1,8 @@
 declare namespace System {
-    // 搜索历史记录
-    interface AppMenuSearch {
+    // 菜单搜索历史记录
+    interface AppMenuSearchHistoryRecord {
         icon: string
-        menuList: string[],
+        menuNameList: string[],
         path: string
     }
 }

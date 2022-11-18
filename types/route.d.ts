@@ -37,7 +37,7 @@ declare namespace Route {
         // 是否固定在tab上
         affix?: boolean
 
-        // tab上的图标
+        // 图标，只对目录和
         icon?: string
 
         // 内部嵌套地址

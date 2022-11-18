@@ -9,7 +9,7 @@ const system: Route.RouteRecordRaw = {
     redirect: '/system/user',
     meta: {
         title: '系统管理',
-        icon: 'lock',
+        icon: 'alert-decagram-outline',
         orderNo: 2
     },
     children: [
@@ -50,23 +50,23 @@ const system: Route.RouteRecordRaw = {
             component: 'Layout',
             children: [
                 {
-                    path: '/system/role1',
-                    name: 'system_role1',
+                    path: '/system/role3',
+                    name: 'system_role3',
                     meta: {
-                        title: '角色1',
+                        title: '角色3',
                         roles: [ RoleEnum.SUPER ]
                     },
                     component: 'View'
                 },
                 {
-                    path: '/system/role1',
-                    name: 'system_role1',
+                    path: '/system/role4',
+                    name: 'system_role4',
                     meta: {
-                        title: '角色1',
+                        title: '角色4',
                         roles: [ RoleEnum.SUPER ]
                     },
                     component: 'View'
-                },
+                }
             ]
         },
         {

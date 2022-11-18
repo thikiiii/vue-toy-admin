@@ -4,7 +4,7 @@ const about: Route.RouteRecordRaw = {
     meta: {
         title: '关于',
         // roles: [ RoleEnum.SUPER ],
-        icon: 'lock',
+        icon: 'account-arrow-down-outline',
         keepAlive: true,
         orderNo: 3
     },
