@@ -8,12 +8,13 @@ import Breadcrumb from './components/Breadcrumb/index.vue'
 import GlobalSearch from './components/AppSearch/index.vue'
 import Github from './components/Github/index.vue'
 import FullScreen from './components/FullScreen/index.vue'
+import ThemeSwitch from './components/ThemeSwitch/index.vue'
 
 const layoutStore = useLayoutStore()
 </script>
 <template>
-  <div class="headerContent">
-    <div class="headerContent-left">
+  <div class="layoutHeader">
+    <div class="layoutHeader-left">
       <template v-if="layoutStore.menuMode==='side'||layoutStore.isMobile">
         <!-- 菜单折叠 -->
         <menu-collapsed />
@@ -22,7 +23,7 @@ const layoutStore = useLayoutStore()
       </template>
       <template v-if="layoutStore.menuMode==='top'&&!layoutStore.isMobile">
         <!-- LOGO -->
-        <div class="headerContent-left-logo-container">
+        <div class="layoutHeader-left-logo-container">
           <logo />
         </div>
         <!-- 水平菜单 -->
@@ -31,7 +32,7 @@ const layoutStore = useLayoutStore()
         </n-scrollbar>
       </template>
     </div>
-    <div class="headerContent-right">
+    <div class="layoutHeader-right">
       <!-- 搜索 -->
       <global-search />
       <!-- GITHUB -->
@@ -46,7 +47,7 @@ const layoutStore = useLayoutStore()
   </div>
 </template>
 <style lang="less" scoped>
-.headerContent {
+.layoutHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,7 +58,7 @@ const layoutStore = useLayoutStore()
 
   &-left, &-right {
     display: flex;
-    gap: 20px;
+    gap: 5px;
     align-items: center;
   }
 
@@ -89,6 +90,7 @@ const layoutStore = useLayoutStore()
   }
 
   &-right {
+    height: 100%;
     justify-content: flex-end;
   }
 }

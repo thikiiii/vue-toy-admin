@@ -1,8 +1,8 @@
-import {LayoutStorage} from '@/storage/layout'
-import {getSystemTheme} from '@/utils'
-import {RouteAuthMode} from '@/enums/auth'
-import {ThemeStorage} from '@/storage/theme'
-import {MenuModeEnum} from '@/enums/layout'
+import { LayoutStorage } from '@/storage/layout'
+import { getSystemTheme } from '@/utils'
+import { RouteAuthMode } from '@/enums/auth'
+import { ThemeStorage } from '@/storage/theme'
+import { MenuModeEnum } from '@/enums/layout'
 // 全局配置
 export default class Settings {
     // 路由鉴权模式

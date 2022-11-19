@@ -11,8 +11,7 @@
       :root-indent="24"
       :value="activeMenu"
       accordion
-      class="menu"
-      @update:value="selectMenu"/>
+      @update:value="selectMenu" />
 </template>
 
 <script lang="ts" setup>

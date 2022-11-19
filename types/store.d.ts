@@ -34,6 +34,9 @@ declare namespace Store {
         // hover字体颜色
         hoverTextColor: string
 
+        // hover激活的字体颜色
+        hoverActiveTextColor: string
+
         // 反字体颜色
         invertTextColor: string
 
@@ -46,6 +49,9 @@ declare namespace Store {
         // hover背景颜色
         hoverBackgroundColor: string
 
+        // hover激活的背景颜色
+        hoverActiveBackgroundColor: string
+
         // 反背景颜色
         invertBackgroundColor: string
 
@@ -56,7 +62,7 @@ declare namespace Store {
         divider: string
 
         // 滚动条
-        scroll: string
+        scrollColor: string
     }
 
     type ThemeModeConfig<T> = {

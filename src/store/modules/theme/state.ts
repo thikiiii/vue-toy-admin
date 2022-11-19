@@ -14,13 +14,15 @@ const lightThemeConfig: Store.CustomizeThemeConfig = {
     subTextColor: '#65748b',
     invertTextColor: '#d1d5db',
     hoverTextColor: '#d1d5db',
+    hoverActiveTextColor: '',
     mainBackgroundColor: '#f9fafc',
     subBackgroundColor: '#FFFFFF',
     invertBackgroundColor: '#111827',
-    hoverBackgroundColor: '',
+    hoverBackgroundColor: 'rgb(243, 243, 245)',
+    hoverActiveBackgroundColor: '',
     borderColor: '#212B36',
     divider: 'rgba(145,158,171,0.24)',
-    scroll: '#b4bcc3'
+    scrollColor: '#b4bcc3'
 }
 
 const darkThemeConfig: Store.CustomizeThemeConfig = {
@@ -29,13 +31,15 @@ const darkThemeConfig: Store.CustomizeThemeConfig = {
     subTextColor: '#a0aec0',
     invertTextColor: '#d1d5db',
     hoverTextColor: '',
+    hoverActiveTextColor: '',
     mainBackgroundColor: '#0b0f19',
     subBackgroundColor: '#191e2c',
     invertBackgroundColor: '#191e2c',
-    hoverBackgroundColor: '',
+    hoverBackgroundColor: 'rgba(255, 255, 255, 0.09)',
+    hoverActiveBackgroundColor: '',
     borderColor: '#212B36',
     divider: 'rgb(45,55,72)',
-    scroll: '#3a4651'
+    scrollColor: '#3a4651'
 }
 
 

@@ -74,7 +74,7 @@ onBeforeUnmount(() => {
 
   &-header {
     height: @layout-header-height;
-    padding: 0 10px;
+    padding-right: 10px;
   }
 
   &-main {

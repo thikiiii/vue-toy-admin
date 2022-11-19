@@ -74,6 +74,7 @@ const handleKeyboardEvents = (event: KeyboardEvent) => {
 watch(() => state.searchText, useThrottleFn(() => {
   const text = state.searchText
   state.searchResults = !text ? SystemStorage.getSearchHistory() || [] : handleResult(searchMenus(text, routeStore.menus))
+  state.active = 0
 }, 200))
 
 watch(visible, () => {

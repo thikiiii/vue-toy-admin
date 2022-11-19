@@ -9,7 +9,7 @@ const cacheMenus = computed(() => tabBarStore.cacheMenus.map(name => startCase(n
 </script>
 
 <template>
-  <div class="main">
+  <div class="layoutMain">
     <router-view v-if="tabBarStore.mainVisible" v-slot="{Component,route}">
       <transition appear mode="out-in" name="zoom-fade">
         <keep-alive :include="cacheMenus">
@@ -21,7 +21,7 @@ const cacheMenus = computed(() => tabBarStore.cacheMenus.map(name => startCase(n
 </template>
 
 <style lang="less" scoped>
-.main {
+.layoutMain {
   width: 100%;
   height: 100%;
   padding: 0 10px;

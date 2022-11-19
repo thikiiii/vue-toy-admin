@@ -1,14 +1,20 @@
 <script lang="ts" setup>
 import { useFullscreen } from '@vueuse/core'
+import { computed } from 'vue'
+import IconHoverContainer from '../IconHoverContainer/index.vue'
+
+defineOptions({ name: 'FullScreen' })
 
 const { isFullscreen, enter, exit } = useFullscreen()
 
+const iconName = computed(() => isFullscreen.value ? 'arrow-collapse-all' : 'arrow-expand-all')
 
 </script>
 
 <template>
-  <icon v-if="!isFullscreen" icon="arrow-expand-all" @click="enter" />
-  <icon v-else icon="arrow-collapse-all" @click="exit" />
+  <icon-hover-container content="全屏" @click="isFullscreen? exit():enter()">
+    <icon :icon="iconName" />
+  </icon-hover-container>
 </template>
 
 <style scoped>

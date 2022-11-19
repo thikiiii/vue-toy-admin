@@ -26,11 +26,10 @@ onBeforeUnmount(() => {
     <div v-if="!isMobile" class="login-bg">
       <transition appear name="right-slide-fade">
         <img alt="" src="../../assets/svg/login.svg">
-        
+
       </transition>
     </div>
     <div class="login-card">
-      <theme-switch class="login-card-theme" />
       <transition appear name="right-slide-fade">
         <h1 class="login-card-title">Thik Admin</h1>
       </transition>
@@ -98,13 +97,6 @@ onBeforeUnmount(() => {
         font-weight: 500;
         color: @mainTextColor;
       }
-    }
-
-
-    &-theme {
-      position: absolute;
-      right: 15px;
-      top: 15px;
     }
   }
 }
