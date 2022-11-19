@@ -89,10 +89,9 @@ const onScroll = (type: 'left' | 'right') => {
   })
 }
 
-// 定位到激活位置
-const locateToActiveLocation = (activePath: string) => {
+// 滚动到激活位置
+const scrollToActivePosition = (activePath: string) => {
   const index = tabBarStore.getIndex(activePath)
-  // TODO: scrollBtnVisible 首次为真的时候，滚动不到激活位置
   nextTick(() => {
     tabContainer.value?.scrollTo({
       left: (tabContainer.value?.children[index] as HTMLElement).offsetLeft,
@@ -111,10 +110,13 @@ onMounted(() => {
   addTabStore()
 })
 
+// 滚动到指定位置 防抖
+const scrollToActivePositionDebounce = useDebounceFn(() => scrollToActivePosition(route.path), 300)
+
 // 监听路由变化
 watch(() => route.path, () => {
   addTabStore()
-  locateToActiveLocation(route.path)
+  scrollToActivePositionDebounce()
 })
 
 // 监听 tabBar变化
