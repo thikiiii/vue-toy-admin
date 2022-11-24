@@ -2,7 +2,7 @@ import Settings from '@/settings'
 import Cookies from 'js-cookie'
 
 export class AuthCookie {
-    static readonly token = 'Thik_TOKEN'
+    static readonly token = 'Toy_TOKEN'
 
     // 设置 token
     static setToken = (token: string) => Cookies.set(this.token, token, { expires: Settings.tokenExpirationTime })

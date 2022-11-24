@@ -3,7 +3,7 @@ import { nextTick, onMounted, reactive, ref, watch } from 'vue'
 import useTabBarStore from '@/store/modules/tabBar'
 import { useRoute, useRouter } from 'vue-router'
 import { useDebounceFn, useEventListener } from '@vueuse/core'
-import ContextMenu from './ContextMenu/index.vue'
+import ContextMenu from './components/ContextMenu/index.vue'
 
 interface ContextMenuConfig {
   // tab 上下文菜单可见

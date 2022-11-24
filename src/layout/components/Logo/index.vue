@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    <h3 class="title">Thik Admin</h3>
+    <h3 class="title">Toy Admin</h3>
   </div>
 </template>
 

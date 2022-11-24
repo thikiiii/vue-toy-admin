@@ -1,11 +1,11 @@
 {
-  "name": "thik-admin",
+  "name": "toy-admin",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "bootstrap": "pnpm install",
-    "serve": "vite",
-    "serve:open": "vite --open",
+    "dev": "vite",
+    "dev:open": "vite --open",
     "build": "vue-tsc --noEmit && vite build",
     "build:noCheck": "vite build",
     "typecheck": "vue-tsc --noEmit",

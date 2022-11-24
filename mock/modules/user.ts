@@ -9,7 +9,7 @@ export default [
                 code: 200,
                 subCode: 200,
                 subMsg: '登录成功',
-                token: 'by Thik admin'
+                token: 'by Toy admin'
             }
         }
     },
@@ -27,7 +27,7 @@ export default [
                     // 权限
                     permissions: [],
                     // 角色
-                    roles: ['Super'],
+                    roles: [ 'Super' ],
                     // 用户信息
                     userinfo: {
                         userId: 1,
