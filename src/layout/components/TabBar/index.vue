@@ -2,16 +2,10 @@
 import { nextTick, onMounted, reactive, ref, watch } from 'vue'
 import useTabBarStore from '@/store/modules/tabBar'
 import { useRoute, useRouter } from 'vue-router'
-import { useDebounceFn, useEventListener } from '@vueuse/core'
+import { useDebounceFn, useEventListener, useToggle } from '@vueuse/core'
 import ContextMenu from './components/ContextMenu/index.vue'
 
 interface ContextMenuConfig {
-  // tab 上下文菜单可见
-  tabVisible: boolean
-
-  // 全局 上下文菜单可见
-  globalVisible: boolean
-
   // 点击Tab的路径
   tabPath: string
 
@@ -28,13 +22,17 @@ const tabBarStore = useTabBarStore()
 const route = useRoute()
 const router = useRouter()
 
+// tab 上下文菜单可见
+const [ tabVisible ] = useToggle()
+// 全局 上下文菜单可见
+const [ globalVisible ] = useToggle()
 // 滚动按钮是否可见
-const scrollBtnVisible = ref(false)
+const [ scrollBtnVisible ] = useToggle()
+
+
 const tabContainer = ref<HTMLDivElement | null>(null)
 
 const contextMenuConfig: ContextMenuConfig = reactive({
-  tabVisible: false,
-  globalVisible: false,
   tabPath: '',
   x: undefined,
   y: undefined
@@ -84,19 +82,15 @@ const resize = useDebounceFn(() => {
 // 显示 tab 上下文菜单
 const showTabContextMenu = (e: MouseEvent, tab: Store.TabBar) => {
   const { clientX, clientY } = e
-  contextMenuConfig.tabVisible = false
+  tabVisible.value = false
   nextTick(() => {
     contextMenuConfig.x = clientX
     contextMenuConfig.y = clientY
     contextMenuConfig.tabPath = tab.path
-    contextMenuConfig.tabVisible = true
+    tabVisible.value = true
   })
 }
 
-// 显示全局上下文菜单
-const showGlobalContextMenu = () => {
-  contextMenuConfig.globalVisible = true
-}
 
 // 滚动到指定位置 防抖
 const scrollToActivePositionDebounce = useDebounceFn(() => scrollToActivePosition(route.path), 300)
@@ -143,15 +137,15 @@ watch(tabBarStore.tabBar, () => {
       <icon icon="chevron-right" />
     </div>
     <context-menu
-        v-model:visible="contextMenuConfig.globalVisible"
+        v-model:visible="globalVisible"
         :is-right-click="false">
-      <div class="tabBar-action-tab" @click="showGlobalContextMenu">
+      <div class="tabBar-action-tab" @click="globalVisible=true">
         <icon icon="chevron-down" />
       </div>
     </context-menu>
   </div>
   <context-menu
-      v-model:visible="contextMenuConfig.tabVisible"
+      v-model:visible="tabVisible"
       :route-path="contextMenuConfig.tabPath"
       :x="contextMenuConfig.x"
       :y="contextMenuConfig.y"

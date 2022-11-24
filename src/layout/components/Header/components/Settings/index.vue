@@ -2,6 +2,7 @@
 import IconHoverContainer from '../IconHoverContainer/index.vue'
 
 defineOptions({ name: 'Settings' })
+
 </script>
 
 <template>

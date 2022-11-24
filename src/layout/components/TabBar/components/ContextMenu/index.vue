@@ -4,6 +4,7 @@ import RenderIcon from '@/components/Render/icon'
 import useTabBarStore from '@/store/modules/tabBar'
 import { useRoute } from 'vue-router'
 import { DropdownOption } from 'naive-ui'
+import { useVModel } from '@vueuse/core'
 
 interface Props {
   // 可见
@@ -43,6 +44,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const tabBarStore = useTabBarStore()
 const route = useRoute()
+const visible = useVModel(props, 'visible', emits)
+
 const trigger = ref(props.isRightClick ? 'manual' : 'click')
 
 const x = computed(() => props.isRightClick ? props.x : undefined)
@@ -122,14 +125,6 @@ const contextMenuOption: ContextMenu[] = reactive([
   }
 ])
 
-const visible = computed({
-  get() {
-    return props.visible
-  },
-  set(newValue) {
-    emits('update:visible', newValue)
-  }
-})
 
 // 关闭上下文菜单
 const closeContextMenu = () => {

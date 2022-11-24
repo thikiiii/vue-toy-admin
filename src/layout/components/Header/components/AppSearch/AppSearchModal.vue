@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useRouteStore } from '@/store/modules/route'
-import { computed, reactive, toRefs, watch } from 'vue'
+import { reactive, toRefs, watch } from 'vue'
 import { SystemStorage } from '@/storage/system'
 import { appSearchkeyPrompt, handleResult, searchMenus } from './utils'
 import { useRouter } from 'vue-router'
-import { useThrottleFn } from '@vueuse/core'
+import { useThrottleFn, useVModel } from '@vueuse/core'
 
 interface Props {
   // 可见
@@ -33,20 +33,22 @@ const emit = defineEmits<Emits>()
 const router = useRouter()
 const routeStore = useRouteStore()
 
+const visible = useVModel(props, 'visible', emit)
+
 const state: State = reactive({
   searchText: '',
   searchResults: [],
   active: 0
 })
 
-const visible = computed({
-  get() {
-    return props.visible
-  },
-  set(newValue: boolean) {
-    emit('update:visible', newValue)
-  }
-})
+// const visible = computed({
+//   get() {
+//     return props.visible
+//   },
+//   set(newValue: boolean) {
+//     emit('update:visible', newValue)
+//   }
+// })
 
 
 // 跳转到菜单
