@@ -6,6 +6,15 @@ import { appSearchkeyPrompt, handleResult, searchMenus } from './utils'
 import { useRouter } from 'vue-router'
 import { useThrottleFn } from '@vueuse/core'
 
+interface Props {
+  // 可见
+  visible: boolean
+}
+
+interface Emits {
+  (e: 'update:visible', isShow: boolean): void
+}
+
 interface State {
   // 搜索内容
   searchText: string,
@@ -16,10 +25,10 @@ interface State {
 }
 
 defineOptions({ name: 'AppSearchModal' })
-const props = defineProps<{ visible: boolean }>()
-const emit = defineEmits<{
-  (e: 'update:visible', isShow: boolean): void
-}>()
+const props = withDefaults(defineProps<Props>(), {
+  visible: false
+})
+const emit = defineEmits<Emits>()
 
 const router = useRouter()
 const routeStore = useRouteStore()
@@ -103,7 +112,7 @@ const { searchText, searchResults, active } = toRefs(state)
 
       <n-input v-model:value.trim="searchText" clearable placeholder="搜索菜单..." size="large">
         <template #suffix>
-          <icon icon="magnify" size="22" />
+          <icon icon="magnify" />
         </template>
       </n-input>
       <div class="appSearch-list">
@@ -117,7 +126,7 @@ const { searchText, searchResults, active } = toRefs(state)
             @mouseenter="state.active = i">
           <div class="appSearch-list-item">
             <div class="appSearch-list-item-name">
-              <icon :icon="item.icon" class="appSearch-list-item-icon" size="22" />
+              <icon :icon="item.icon" class="appSearch-list-item-icon" />
               <span v-for="(title,index) in item.menuNameList" :key="title">
                 {{ title }}
                 <icon v-if="index!==item.menuNameList.length-1" icon="chevron-right" size="20" />

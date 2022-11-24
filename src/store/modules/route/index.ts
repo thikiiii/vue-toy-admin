@@ -1,11 +1,11 @@
-import {defineStore} from 'pinia'
+import { defineStore } from 'pinia'
 import useAuthStore from '@/store/modules/auth'
-import {RouterHelpers} from '@/router/helpers'
+import { RouterHelpers } from '@/router/helpers'
 import router from '@/router'
-import {Sort} from '@/enums/common'
+import { Sort } from '@/enums/common'
 import Settings from '@/settings'
 import useTabBarStore from '@/store/modules/tabBar'
-import {UserApi} from '@/services/api/user'
+import { UserApi } from '@/services/api/user'
 
 export const useRouteStore = defineStore('route', {
     state: (): Store.RouteStore => ({
@@ -21,7 +21,7 @@ export const useRouteStore = defineStore('route', {
 
         // 获取用户路由
         async getRoutes(): Promise<UserService.Response.UserRoutes[]> {
-            const {subCode, subMsg, data} = await UserApi.getRoutes().catch(() => {
+            const { subCode, subMsg, data } = await UserApi.getRoutes().catch(() => {
                 this.initRouteStore()
                 return Promise.reject()
             })

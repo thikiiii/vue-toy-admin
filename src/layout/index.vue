@@ -2,11 +2,11 @@
 import { useLayoutStore } from '@/store/modules/layout'
 import { onBeforeUnmount, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import LayoutMenu from '@/layout/components/Menu/index.vue'
-import LayoutHeader from '@/layout/components/Header/index.vue'
-import LayoutMain from '@/layout/components/Main/index.vue'
-import TabBar from '@/layout/components/TabBar/index.vue'
-import Logo from '@/layout/components/Logo/index.vue'
+import LayoutMenu from '@/layout/Menu/index.vue'
+import LayoutHeader from '@/layout/Header/index.vue'
+import LayoutMain from '@/layout/Main/index.vue'
+import TabBar from '@/layout/TabBar/index.vue'
+import Logo from '@/layout/Logo/index.vue'
 
 const layoutStore = useLayoutStore()
 const {
@@ -54,7 +54,7 @@ onBeforeUnmount(() => {
       <n-layout-header class="layout-header">
         <layout-header />
       </n-layout-header>
-      <tab-bar class="layout-tab-bar" />
+      <tab-bar />
       <!-- 内容 -->
       <n-layout-content class="layout-main">
         <layout-main />
@@ -74,7 +74,6 @@ onBeforeUnmount(() => {
 
   &-header {
     height: @layout-header-height;
-    padding-right: 10px;
   }
 
   &-main {

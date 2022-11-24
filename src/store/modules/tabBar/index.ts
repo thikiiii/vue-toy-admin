@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import router from '@/router'
 import { nextTick } from 'vue'
+import { RouterHelpers } from '@/router/helpers'
 
 
 const useTabBarStore = defineStore('tabBar', {
@@ -11,8 +12,9 @@ const useTabBarStore = defineStore('tabBar', {
         mainVisible: true
     }),
     actions: {
-        isActive(tab: Store.TabBar) {
-            return router.currentRoute.value.path === tab.path
+        // 是否激活
+        isActive(path: string) {
+            return router.currentRoute.value.path === path
         },
 
         // 是否存在
@@ -25,8 +27,8 @@ const useTabBarStore = defineStore('tabBar', {
             return this.tabBar.findIndex(item => item.path === path)
         },
 
-        // push tabBar
-        push(tab: Store.TabBar) {
+        // 添加 tabBar
+        addTab(tab: Store.TabBar) {
             // 不存在就 push
             !this.isExist(tab.path) && this.tabBar.push(tab)
             // name 为真，且 name 不存在就push
@@ -40,22 +42,12 @@ const useTabBarStore = defineStore('tabBar', {
             const index = this.getIndex(tab.path)
             this.tabBar.splice(index, 1)
             // 激活状态 跳转到上一个标签
-            this.isActive(tab) && router.push(this.tabBar[index - 1].path)
+            this.isActive(tab.path) && router.push(this.tabBar[index - 1].path)
             if (!tab.meta?.keepAlive) return
             this.cacheMenus.splice(this.cacheMenus.findIndex(name => name === tab.name), 1)
         },
 
-        // 关闭当前
-        closeCurrent() {
-            const route = router.currentRoute.value
-            this.closeTab({
-                path: route.path,
-                meta: route.meta,
-                name: route.name as string
-            })
-        },
-
-        // 刷新当前
+        // 刷新当前激活的路由
         refreshCurrent() {
             this.mainVisible = false
             void nextTick(() => {
@@ -63,17 +55,44 @@ const useTabBarStore = defineStore('tabBar', {
             })
         },
 
+        // 关闭左侧
+        closeLeft(path: string) {
+            const index = this.getIndex(path)
+            if (index === 0 || index === -1) return
+            const tabs = this.tabBar.slice(index)
+            this.tabBar = [ ...this.affixTabs, ...tabs ]
+            this.setCacheMenus()
+            this.routeNotMatchedRedirectHome()
+        },
+
+        // 关闭右侧
+        closeRight(path: string) {
+            const index = this.getIndex(path)
+            if (index === this.tabBar.length - 1 || index === -1) return
+            const tabs = this.tabBar.slice(0, index + 1)
+            this.tabBar = [ ...this.affixTabs, ...tabs.filter(item => !item.meta?.affix) ]
+            this.setCacheMenus()
+            this.routeNotMatchedRedirectHome()
+        },
+
         // 关闭其他
         closeOther(path: string) {
-            const i = this.tabBar.findIndex(item => item.path === path)
+            const i = this.getIndex(path)
             if (i === -1) return
-            this.tabBar = [ ...this.affixTabs, this.tabBar[i] ]
+            const tabs = [ ...this.affixTabs ]
+            const tab = this.tabBar[i]
+            if (!tab.meta?.affix) tabs.push(tab)
+            this.tabBar = tabs
+            this.setCacheMenus()
+            this.routeNotMatchedRedirectHome()
         },
 
         // 关闭全部
         closeAll() {
             this.tabBar = [ ...this.affixTabs ]
-            router.push(this.tabBar[0].path)
+            this.setCacheMenus()
+            // 重定向到首页
+            RouterHelpers.redirectToHomepage()
         },
 
         // 筛选固定标签
@@ -93,11 +112,24 @@ const useTabBarStore = defineStore('tabBar', {
             return tabs
         },
 
+        // 设置缓存菜单
+        setCacheMenus() {
+            this.cacheMenus = this.tabBar.reduce<string[]>((cacheMenus, item) => {
+                item.meta?.keepAlive && cacheMenus.push(item.name as string)
+                return cacheMenus
+            }, [])
+        },
+
+        // 匹配不到当前路由重定向到首页
+        routeNotMatchedRedirectHome() {
+            if (!this.isExist(router.currentRoute.value.path)) RouterHelpers.redirectToHomepage()
+        },
         // 设置固定标签
         setAffixTabs(authRoutes: Route.RouteRecordRaw[]) {
             const affixTabs = this.filterAffixTabs(authRoutes)
             this.tabBar = [ ...affixTabs ]
             this.affixTabs = [ ...affixTabs ]
+            this.setCacheMenus()
         }
     }
 })

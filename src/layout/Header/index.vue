@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-import Logo from '@/layout/components/Logo/index.vue'
-import LayoutMenu from '@/layout/components/Menu/index.vue'
+import Logo from '@/layout/Logo/index.vue'
+import LayoutMenu from '@/layout/Menu/index.vue'
 import { useLayoutStore } from '@/store/modules/layout'
-import Avatar from './components/Avatar/index.vue'
-import MenuCollapsed from './components/MenuCollapsed/index.vue'
-import Breadcrumb from './components/Breadcrumb/index.vue'
-import GlobalSearch from './components/AppSearch/index.vue'
-import Github from './components/Github/index.vue'
-import FullScreen from './components/FullScreen/index.vue'
-import ThemeSwitch from './components/ThemeSwitch/index.vue'
+import Avatar from './Avatar/index.vue'
+import MenuCollapsed from './MenuCollapsed/index.vue'
+import Breadcrumb from './Breadcrumb/index.vue'
+import GlobalSearch from './AppSearch/index.vue'
+import Github from './Github/index.vue'
+import FullScreen from './FullScreen/index.vue'
+import ThemeSwitch from './ThemeSwitch/index.vue'
+import Settings from './Settings/index.vue'
 
 const layoutStore = useLayoutStore()
 </script>
@@ -43,6 +44,8 @@ const layoutStore = useLayoutStore()
       <theme-switch />
       <!-- 头像和昵称 -->
       <avatar />
+      <!-- 设置 -->
+      <settings />
     </div>
   </div>
 </template>
@@ -74,7 +77,6 @@ const layoutStore = useLayoutStore()
     }
 
     :deep(.n-scrollbar-content) {
-      height: 100%;
       height: 100%;
       display: flex;
       align-items: center;

@@ -41,7 +41,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   library: 'mdi',
   pointer: true,
-  size: '22'
+  size: '18'
 })
 const { icon, color, size, depth } = toRefs(props)
 const iconLibrary = icons[props.library]

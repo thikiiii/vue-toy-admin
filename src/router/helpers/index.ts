@@ -5,6 +5,8 @@ import RenderEllipsis from '@/components/Render/ellipsis'
 import RenderIcon from '@/components/Render/icon'
 import { ROOT_ROUTE } from '@/router/constRoutes'
 import { Sort } from '@/enums/common'
+import router from '@/router'
+import Settings from '@/settings'
 
 export class RouterHelpers {
     // 前端路由模块列表
@@ -84,7 +86,7 @@ export class RouterHelpers {
     static useLayoutWrapperSingleViewRoute(authRoutes: Route.RouteRecordRaw[]) {
         return authRoutes.map((route) => {
             if (route.children) return route
-            const root: Route.RouteRecordRaw = { ...ROOT_ROUTE,name:route.name }
+            const root: Route.RouteRecordRaw = { ...ROOT_ROUTE, name: route.name }
             root.children = [ route ]
             return root
         })
@@ -112,5 +114,10 @@ export class RouterHelpers {
             routes.push(route)
             return routes
         }, [])
+    }
+
+    // 重定向到首页
+    static redirectToHomepage() {
+        router.push(Settings.homePath)
     }
 }

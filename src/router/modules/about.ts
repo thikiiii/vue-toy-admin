@@ -6,7 +6,8 @@ const about: Route.RouteRecordRaw = {
         // roles: [ RoleEnum.SUPER ],
         icon: 'account-arrow-down-outline',
         keepAlive: true,
-        orderNo: 3
+        orderNo: 3,
+        affix: true
     },
     component: 'View'
 }

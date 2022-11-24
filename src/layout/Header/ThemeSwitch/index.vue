@@ -11,9 +11,9 @@ const themeStore = useThemeStore()
 const iconName = computed(() => {
   switch (themeStore.themeMode) {
     case ThemeModeEnum.LIGHT:
-      return 'white-balance-sunny'
+      return 'brightness-6'
     case ThemeModeEnum.DARK:
-      return 'weather-night'
+      return 'brightness-4'
     default:
       return 'white-balance-sunny'
   }

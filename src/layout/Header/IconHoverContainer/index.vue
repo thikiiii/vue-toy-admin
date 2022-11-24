@@ -10,7 +10,9 @@ const props = defineProps<{
   <div class="iconHoverContainer">
     <n-popover :delay="300" trigger="hover">
       <template #trigger>
-        <slot></slot>
+        <div class="iconHoverContainer-iconFull">
+          <slot></slot>
+        </div>
       </template>
       <span>{{ props.content }}</span>
     </n-popover>
@@ -21,14 +23,19 @@ const props = defineProps<{
 .iconHoverContainer {
   transition: .1s;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
   cursor: pointer;
 
   &:hover {
     background: @hoverBackgroundColor;
+  }
+
+  &-iconFull {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

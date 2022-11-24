@@ -1,50 +1,44 @@
 <script lang="ts" setup>
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
-import RenderIcon from '@/components/Render/icon'
+import { nextTick, onMounted, reactive, ref, watch } from 'vue'
 import useTabBarStore from '@/store/modules/tabBar'
 import { useRoute, useRouter } from 'vue-router'
 import { useDebounceFn, useEventListener } from '@vueuse/core'
+import ContextMenu from './ContextMenu/index.vue'
+
+interface ContextMenuConfig {
+  // tab 上下文菜单可见
+  tabVisible: boolean
+
+  // 全局 上下文菜单可见
+  globalVisible: boolean
+
+  // 点击Tab的路径
+  tabPath: string
+
+  // X轴
+  x: undefined | number
+
+  // Y轴
+  y: undefined | number
+}
+
+defineOptions({ name: 'TabBar' })
 
 const tabBarStore = useTabBarStore()
 const route = useRoute()
 const router = useRouter()
 
+// 滚动按钮是否可见
 const scrollBtnVisible = ref(false)
 const tabContainer = ref<HTMLDivElement | null>(null)
-const dropdownOption = reactive([
-  {
-    label: '刷新当前',
-    key: 'refresh',
-    icon: () => RenderIcon({ icon: 'restore' })
-  },
-  {
-    label: '关闭当前',
-    key: 'closeCurrent',
-    icon: () => RenderIcon({ icon: 'close' }),
-    // 当前激活标签是固定标签时禁用
-    disabled: computed(() => Boolean(route.meta?.affix))
-  },
-  {
-    label: '关闭其他',
-    key: 'closeOther',
-    icon: () => RenderIcon({ icon: 'swap-horizontal' }),
-    // 只有一个不固定标签，且当前激活标签是不固定时禁用
-    disabled: computed(() => !(tabBarStore.tabBar.length && tabBarStore.tabBar.some(tab => {
-          return !tab.meta?.affix && route.path !== tab.path
-        }))
-    )
-  },
-  {
-    label: '关闭全部',
-    key: 'closeAll',
-    icon: () => RenderIcon({ icon: 'minus' }),
-    // 没有不固定标签时，禁用
-    disabled: computed(() => !(tabBarStore.tabBar.length && tabBarStore.tabBar.some(tab => {
-      return !tab.meta?.affix
-    })))
-  }
-])
 
+const contextMenuConfig: ContextMenuConfig = reactive({
+  tabVisible: false,
+  globalVisible: false,
+  tabPath: '',
+  x: undefined,
+  y: undefined
+})
 
 const isScroll = (): boolean => {
   if (!tabContainer.value) return false
@@ -57,26 +51,9 @@ const isScroll = (): boolean => {
 }
 
 
-const onSelect = (key) => {
-  switch (key) {
-    case 'refresh':
-      tabBarStore.refreshCurrent()
-      break
-    case 'closeCurrent':
-      tabBarStore.closeCurrent()
-      break
-    case 'closeOther':
-      tabBarStore.closeOther(route.path)
-      break
-    case 'closeAll':
-      tabBarStore.closeAll()
-      break
-  }
-}
-
 const addTabStore = () => {
   const { meta, path } = route
-  tabBarStore.push({ meta, path, name: route.name as string })
+  tabBarStore.addTab({ meta, path, name: route.name as string })
 }
 
 
@@ -104,14 +81,31 @@ const resize = useDebounceFn(() => {
   scrollBtnVisible.value = isScroll()
 }, 200)
 
+// 显示 tab 上下文菜单
+const showTabContextMenu = (e: MouseEvent, tab: Store.TabBar) => {
+  const { clientX, clientY } = e
+  contextMenuConfig.tabVisible = false
+  nextTick(() => {
+    contextMenuConfig.x = clientX
+    contextMenuConfig.y = clientY
+    contextMenuConfig.tabPath = tab.path
+    contextMenuConfig.tabVisible = true
+  })
+}
+
+// 显示全局上下文菜单
+const showGlobalContextMenu = () => {
+  contextMenuConfig.globalVisible = true
+}
+
+// 滚动到指定位置 防抖
+const scrollToActivePositionDebounce = useDebounceFn(() => scrollToActivePosition(route.path), 300)
+
 useEventListener(window, 'resize', resize)
 
 onMounted(() => {
   addTabStore()
 })
-
-// 滚动到指定位置 防抖
-const scrollToActivePositionDebounce = useDebounceFn(() => scrollToActivePosition(route.path), 300)
 
 // 监听路由变化
 watch(() => route.path, () => {
@@ -128,33 +122,41 @@ watch(tabBarStore.tabBar, () => {
 <template>
   <div class="tabBar">
     <div v-show="scrollBtnVisible" class="tabBar-action-tab" @click="onScroll('left')">
-      <icon icon="chevron-left" size="22" />
+      <icon icon="chevron-left" />
     </div>
     <div ref="tabContainer" class="tabBar-tabContainer">
       <div
-          v-for="(item) in tabBarStore.tabBar"
-          :key="item.path"
-          :class="route.path===item.path?'active':undefined"
+          v-for="(tab) in tabBarStore.tabBar"
+          :key="tab.path"
+          :class="route.path===tab.path?'active':undefined"
           class="tabBar-tabContainer-tab"
-          @click="router.push(item.path)"
+          @click="router.push(tab.path)"
+          @contextmenu.prevent="showTabContextMenu($event,tab)"
       >
-        {{ item.meta?.title }}
+        {{ tab.meta?.title }}
         <icon
-            v-if="!item.meta?.affix" class="tabBar-tabContainer-tab-close" icon="close" size="12"
-            @click.stop="tabBarStore.closeTab(item)" />
+            v-if="!tab.meta?.affix" class="tabBar-tabContainer-tab-close" icon="close" size="12"
+            @click.stop="tabBarStore.closeTab(tab)" />
       </div>
     </div>
     <div v-show="scrollBtnVisible" class="tabBar-action-tab" @click="onScroll('right')">
       <icon icon="chevron-right" />
     </div>
-    <n-dropdown :options="dropdownOption" @select="onSelect">
-      <div class="tabBar-action-tab">
+    <context-menu
+        v-model:visible="contextMenuConfig.globalVisible"
+        :is-right-click="false">
+      <div class="tabBar-action-tab" @click="showGlobalContextMenu">
         <icon icon="chevron-down" />
       </div>
-    </n-dropdown>
+    </context-menu>
   </div>
+  <context-menu
+      v-model:visible="contextMenuConfig.tabVisible"
+      :route-path="contextMenuConfig.tabPath"
+      :x="contextMenuConfig.x"
+      :y="contextMenuConfig.y"
+      is-right-click />
 </template>
-
 
 <style lang="less" scoped>
 .tabBar {
@@ -214,11 +216,11 @@ watch(tabBarStore.tabBar, () => {
       }
 
       &.active {
-        color: white;
-        background: @theme;
+        color: @theme;
+        //background: @theme;
 
         i {
-          color: white;
+          color: @subTextColor;
         }
       }
     }
