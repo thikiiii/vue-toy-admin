@@ -41,16 +41,6 @@ const state: State = reactive({
   active: 0
 })
 
-// const visible = computed({
-//   get() {
-//     return props.visible
-//   },
-//   set(newValue: boolean) {
-//     emit('update:visible', newValue)
-//   }
-// })
-
-
 // 跳转到菜单
 const jumpToMenu = (resultItem: System.AppMenuSearchHistoryRecord) => {
   router.push(resultItem.path)

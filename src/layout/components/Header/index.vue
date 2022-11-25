@@ -9,7 +9,7 @@ import GlobalSearch from './components/AppSearch/index.vue'
 import Github from './components/Github/index.vue'
 import FullScreen from './components/FullScreen/index.vue'
 import ThemeSwitch from './components/ThemeSwitch/index.vue'
-import Settings from './components/Settings/index.vue'
+import SystemConfig from './components/SystemConfig/index.vue'
 
 const layoutStore = useLayoutStore()
 </script>
@@ -45,7 +45,7 @@ const layoutStore = useLayoutStore()
       <!-- 头像和昵称 -->
       <avatar />
       <!-- 设置 -->
-      <settings />
+      <system-config />
     </div>
   </div>
 </template>
