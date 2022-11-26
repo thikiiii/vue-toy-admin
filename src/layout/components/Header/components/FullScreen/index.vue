@@ -7,7 +7,7 @@ defineOptions({ name: 'FullScreen' })
 
 const { isFullscreen, enter, exit } = useFullscreen()
 
-const iconName = computed(() => isFullscreen.value ? 'arrow-collapse-all' : 'arrow-expand-all')
+const iconName = computed(() => isFullscreen.value ? 'ri:fullscreen-exit-fill' : 'ri:fullscreen-fill')
 
 </script>
 

@@ -8,7 +8,7 @@ const dashboard: Route.RouteRecordRaw = {
     redirect: '/dashboard/analysis',
     meta: {
         title: '控制台',
-        icon: 'lock',
+        icon: 'mdi:lock',
         orderNo: 1
     },
     children: [

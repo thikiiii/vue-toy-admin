@@ -9,7 +9,7 @@ defineOptions({ name: 'MenuCollapsed' })
 const layoutStore = useLayoutStore()
 const isCollapsed = computed(() => layoutStore.isMobile ? layoutStore.mobileMenuVisible : layoutStore.collapsed)
 
-const iconName = computed(() => isCollapsed.value ? 'format-indent-increase' : 'format-indent-decrease')
+const iconName = computed(() => isCollapsed.value ? 'bi:text-indent-left' : 'bi:text-indent-right')
 
 // 菜单icon 处理
 const collapsedHandle = (status: boolean) => {

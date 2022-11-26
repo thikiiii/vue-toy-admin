@@ -116,7 +116,7 @@ watch(tabBarStore.tabBar, () => {
 <template>
   <div class="tabBar">
     <div v-show="scrollBtnVisible" class="tabBar-action-tab" @click="onScroll('left')">
-      <icon icon="chevron-left" />
+      <icon icon="mdi:chevron-left" />
     </div>
     <div ref="tabContainer" class="tabBar-tabContainer">
       <div
@@ -129,7 +129,7 @@ watch(tabBarStore.tabBar, () => {
       >
         {{ tab.meta?.title }}
         <icon
-            v-if="!tab.meta?.affix" class="tabBar-tabContainer-tab-close" icon="close" size="12"
+            v-if="!tab.meta?.affix" class="tabBar-tabContainer-tab-close" icon="mdi:close" size="12px"
             @click.stop="tabBarStore.closeTab(tab)" />
       </div>
     </div>
@@ -140,7 +140,7 @@ watch(tabBarStore.tabBar, () => {
         v-model:visible="globalVisible"
         :is-right-click="false">
       <div class="tabBar-action-tab" @click="globalVisible=true">
-        <icon icon="chevron-down" />
+        <icon icon="mdi:chevron-down" />
       </div>
     </context-menu>
   </div>

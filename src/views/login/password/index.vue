@@ -49,7 +49,7 @@ const handleLogin = () => {
         <n-form-item key="1" path="username" required>
           <n-input v-model:value="form.username" placeholder="请输入用户名" size="large">
             <template #prefix>
-              <icon icon="account"/>
+              <icon icon="mdi:account"/>
             </template>
           </n-input>
         </n-form-item>
@@ -59,7 +59,7 @@ const handleLogin = () => {
               size="large"
               type="password">
             <template #prefix>
-              <icon icon="lock"/>
+              <icon icon="mdi:lock"/>
             </template>
           </n-input>
         </n-form-item>

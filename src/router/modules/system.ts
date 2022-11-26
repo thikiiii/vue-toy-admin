@@ -9,7 +9,7 @@ const system: Route.RouteRecordRaw = {
     redirect: '/system/user',
     meta: {
         title: '系统管理',
-        icon: 'alert-decagram-outline',
+        icon: 'mdi:alert-decagram-outline',
         orderNo: 2
     },
     children: [

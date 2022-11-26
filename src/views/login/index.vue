@@ -25,8 +25,7 @@ onBeforeUnmount(() => {
   <div class="login">
     <div v-if="!isMobile" class="login-bg">
       <transition appear name="right-slide-fade">
-        <img alt="" src="../../assets/svg/login.svg">
-
+        <icon local-icon="login" size="50%"></icon>
       </transition>
     </div>
     <div class="login-card">
@@ -53,10 +52,6 @@ onBeforeUnmount(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    img {
-      height: 50%;
-    }
   }
 
   &-card {

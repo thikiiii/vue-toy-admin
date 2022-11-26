@@ -7,7 +7,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Icon: typeof import('./../src/components/Icon/icon.vue')['default']
+    Icon: typeof import('./../src/components/Icon/index.vue')['default']
+    IconLocalAvatar: typeof import('~icons/ic/on-local-avatar')['default']
     NaiveTool: typeof import('./../src/components/NaiveTool/index.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
@@ -23,9 +24,6 @@ declare module '@vue/runtime-core' {
     NDropdown: typeof import('naive-ui')['NDropdown']
     NEmpty: typeof import('naive-ui')['NEmpty']
     NFormItem: typeof import('naive-ui')['NFormItem']
-    NGi: typeof import('naive-ui')['NGi']
-    NGrid: typeof import('naive-ui')['NGrid']
-    NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
     NLayout: typeof import('naive-ui')['NLayout']
     NLayoutContent: typeof import('naive-ui')['NLayoutContent']

@@ -7,7 +7,7 @@ defineOptions({ name: 'Github' })
 </script>
 <template>
   <icon-hover-container content="Github" @click="jumpToNewTab('https://github.com/thikiiii/vue-thik-admin')">
-    <icon icon="github"></icon>
+    <icon icon="mdi:github"></icon>
   </icon-hover-container>
 </template>
 

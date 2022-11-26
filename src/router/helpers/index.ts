@@ -1,12 +1,12 @@
 // 需要权限的路由模块列表
 import { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import RenderEllipsis from '@/components/Render/ellipsis'
-import RenderIcon from '@/components/Render/icon'
 import { ROOT_ROUTE } from '@/router/constRoutes'
 import { Sort } from '@/enums/common'
 import router from '@/router'
 import Settings from '@/settings'
+import useRenderEllipsis from '@/hooks/components/useRenderEllipsis'
+import useRenderIcon from '@/hooks/components/useRenderIcon'
 
 export class RouterHelpers {
     // 前端路由模块列表
@@ -62,10 +62,12 @@ export class RouterHelpers {
 
     // 路由转菜单
     static transformRouteToMenu({ path, meta, children }: Route.RouteRecordRaw): Store.MenuOption {
+        const renderEllipsis = useRenderEllipsis()
+        const renderIcon = useRenderIcon()
         return {
             key: path,
-            label: meta?.title ? () => RenderEllipsis({ content: meta.title }) : '',
-            icon: meta?.icon ? () => RenderIcon({ icon: meta.icon || '' }) : undefined,
+            label: meta?.title ? renderEllipsis({ content: meta.title }) : '',
+            icon: meta?.icon ? renderIcon({ icon: meta.icon || '' }) : undefined,
             meta,
             children: children as Store.MenuOption['children']
         }

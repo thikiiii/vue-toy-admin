@@ -2,6 +2,10 @@ declare interface ImportMetaEnv {
     // 端口
     readonly  VITE_PORT: number
 
+    // 本地SVG图标作为组件的前缀
+    // 格式 {VITE_ICON_PREFIX}-{本地图标集合名称} 例如:icon-local-login
+    readonly VITE_ICON_LOCAL_PREFIX: string
+
     // 网站标题
     readonly VITE_GLOB_APP_TITLE: string
 

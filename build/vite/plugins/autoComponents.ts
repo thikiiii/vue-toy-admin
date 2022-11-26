@@ -16,8 +16,7 @@ export const setupAutoComponents = () => Components({
         // icon
         IconsResolver({
             // 不要前缀
-            prefix: false,
-            // 限制 icon 为mdi
-            enabledCollections: [ 'mdi' ]
-        }) ]
+            prefix: false
+        })
+    ]
 })

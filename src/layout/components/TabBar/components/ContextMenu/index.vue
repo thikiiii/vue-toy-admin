@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue'
-import RenderIcon from '@/components/Render/icon'
+import { computed, reactive } from 'vue'
 import useTabBarStore from '@/store/modules/tabBar'
 import { useRoute } from 'vue-router'
 import { DropdownOption } from 'naive-ui'
 import { useVModel } from '@vueuse/core'
+import useRenderIcon from '@/hooks/components/useRenderIcon'
 
 interface Props {
   // 可见
@@ -46,8 +46,6 @@ const tabBarStore = useTabBarStore()
 const route = useRoute()
 const visible = useVModel(props, 'visible', emits)
 
-const trigger = ref(props.isRightClick ? 'manual' : 'click')
-
 const x = computed(() => props.isRightClick ? props.x : undefined)
 const y = computed(() => props.isRightClick ? props.y : undefined)
 
@@ -79,48 +77,49 @@ const isDisabledCloseRight = computed(() => {
 })
 
 // 是否禁用关闭其他
-const isDisabledCloseOrther = computed(() => {
+const isDisabledCloseOther = computed(() => {
   return !tabBarStore.tabBar.some(item => item.path !== routePath.value && !item.meta?.affix)
 })
 
 // 是否禁用可以关闭全部
 const isDisabledCloseAll = computed(() => !tabBarStore.tabBar.some(item => !item.meta?.affix))
+const renderIcon = useRenderIcon({ size: '18px' })
 
 const contextMenuOption: ContextMenu[] = reactive([
   {
     label: '刷新',
     key: 'refresh',
-    icon: () => RenderIcon({ icon: 'restore' }),
+    icon: renderIcon({ icon: 'mdi:restore' }),
     disabled: isDisabledRefresh
   },
   {
     label: '关闭',
     key: 'close',
-    icon: () => RenderIcon({ icon: 'close' }),
+    icon: renderIcon({ icon: 'mdi:close' }),
     disabled: isDisabledClose
   },
   {
     label: '关闭左边',
     key: 'closeLeft',
-    icon: () => RenderIcon({ icon: 'format-horizontal-align-left' }),
+    icon: renderIcon({ icon: 'mdi:format-horizontal-align-left' }),
     disabled: isDisabledCloseLeft
   },
   {
     label: '关闭右边',
     key: 'closeRight',
-    icon: () => RenderIcon({ icon: 'format-horizontal-align-right' }),
+    icon: renderIcon({ icon: 'mdi:format-horizontal-align-right' }),
     disabled: isDisabledCloseRight
   },
   {
     label: '关闭其他',
     key: 'closeOther',
-    icon: () => RenderIcon({ icon: 'swap-horizontal' }),
-    disabled: isDisabledCloseOrther
+    icon: renderIcon({ icon: 'mdi:swap-horizontal' }),
+    disabled: isDisabledCloseOther
   },
   {
     label: '关闭全部',
     key: 'closeAll',
-    icon: () => RenderIcon({ icon: 'minus' }),
+    icon: renderIcon({ icon: 'mdi:minus' }),
     disabled: isDisabledCloseAll
   }
 ])
@@ -161,7 +160,7 @@ const handleSelect = (key: ContextMenuKey) => {
   <n-dropdown
       :options="contextMenuOption"
       :show="visible"
-      :trigger="trigger"
+      :trigger="props.isRightClick ? 'manual' : 'click'"
       :x="x"
       :y="y"
       placement="bottom-start"

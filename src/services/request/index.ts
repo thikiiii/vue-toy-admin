@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { wrapperEnv } from '@/utils'
 import { handleResponseStatusError, hanldeInterceptorError } from '@/services/request/error'
+import useMetaEnv from '@/hooks/common/useMetaEnv'
 
-const { VITE_GLOB_API_URL } = wrapperEnv()
+const { VITE_GLOB_API_URL } = useMetaEnv()
 const axiosInstance = axios.create({
     baseURL: VITE_GLOB_API_URL,
     timeout: 10000

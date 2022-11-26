@@ -1,33 +1,14 @@
-export const appSearchkeyPrompt = [
+export const appSearchKeyPrompt = [
     {
-        icons: [
-            {
-                name: 'arrow-left-bottom',
-                iconLibrary: 'mdi'
-            }
-        ],
+        icons: [ 'mdi:arrow-left-bottom' ],
         prompt: '回车'
     },
     {
-        icons: [
-            {
-                name: 'arrow-up-thin',
-                iconLibrary: 'mdi'
-            },
-            {
-                name: 'arrow-down-thin',
-                iconLibrary: 'mdi'
-            }
-        ],
+        icons: [ 'mdi:arrow-up-thin', 'mdi:arrow-down-thin' ],
         prompt: '切换'
     },
     {
-        icons: [
-            {
-                name: 'keyboard-esc',
-                iconLibrary: 'mdi'
-            }
-        ],
+        icons: [ 'mdi:keyboard-esc'],
         prompt: '关闭'
     }
 ]

@@ -11,11 +11,11 @@ const themeStore = useThemeStore()
 const iconName = computed(() => {
   switch (themeStore.themeMode) {
     case ThemeModeEnum.LIGHT:
-      return 'brightness-6'
+      return 'ic:outline-wb-sunny'
     case ThemeModeEnum.DARK:
-      return 'brightness-4'
+      return 'ic:outline-dark-mode'
     default:
-      return 'white-balance-sunny'
+      return 'mdi:white-balance-sunny'
   }
 })
 </script>

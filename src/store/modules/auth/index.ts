@@ -94,15 +94,15 @@ const useAuthStore = defineStore('auth', {
         // 退出登录
         async signOut() {
             await UserApi.signOut().finally(() => {
-                this.initUserStore()
-                useRouteStore().initRouteStore()
-                window.$message?.success('退出登录成功!')
-                router.currentRoute.value.path !== '/login' && router.push({
+                router.push({
                     path: '/login',
                     query: {
                         redirect: router.currentRoute.value.path
                     }
                 })
+                this.initUserStore()
+                useRouteStore().initRouteStore()
+                window.$message?.success('退出登录成功!')
             })
         },
 

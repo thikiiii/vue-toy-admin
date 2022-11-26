@@ -12,7 +12,7 @@ const [ visibleModal ] = useToggle()
 <template>
   <!-- App搜索 -->
   <icon-hover-container content="搜索" @click="visibleModal = true">
-    <icon icon="magnify" pointer />
+    <icon icon="mdi:magnify" pointer />
   </icon-hover-container>
   <app-search-modal v-model:visible="visibleModal" />
 </template>
