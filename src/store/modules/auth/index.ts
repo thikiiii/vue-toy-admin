@@ -93,17 +93,12 @@ const useAuthStore = defineStore('auth', {
 
         // 退出登录
         async signOut() {
-            await UserApi.signOut().finally(() => {
-                router.push({
-                    path: '/login',
-                    query: {
-                        redirect: router.currentRoute.value.path
-                    }
-                })
-                this.initUserStore()
-                useRouteStore().initRouteStore()
-                window.$message?.success('退出登录成功!')
-            })
+            const { subCode, subMsg } = await UserApi.signOut()
+            if (subCode !== 200) {
+                window.$message?.error(subMsg)
+                return Promise.reject()
+            }
+            return Promise.resolve()
         },
 
         // 初始化

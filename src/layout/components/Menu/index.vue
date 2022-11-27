@@ -16,12 +16,11 @@
 
 <script lang="ts" setup>
 import { useLayoutStore } from '@/store/modules/layout'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useRouteStore } from '@/store/modules/route'
 import { computed, ref, watch } from 'vue'
 import { MenuInst, MenuOption } from 'naive-ui'
-import { jumpToNewTab } from '@/utils'
-import { matchUrl } from '@/utils/regularCheck'
+import { RouterHelpers } from '@/router/helpers'
 
 interface Props {
   // 模式
@@ -40,7 +39,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const layoutStore = useLayoutStore()
 const routeStore = useRouteStore()
-const router = useRouter()
 const route = useRoute()
 
 const menuRef = ref<MenuInst | null>(null)
@@ -51,8 +49,7 @@ const menus = computed(() => routeStore.menus as unknown as MenuOption[])
 const activeMenu = computed(() => route.path)
 
 const selectMenu = (key: string) => {
-  if (matchUrl.test(key)) return jumpToNewTab(key)
-  router.push(key)
+  RouterHelpers.handleClickMenu(key)
 }
 
 watch(activeMenu, (newActiveMenu) => {

@@ -5,6 +5,7 @@ import { SystemStorage } from '@/storage/system'
 import { appSearchKeyPrompt, handleResult, searchMenus } from './utils'
 import { useRouter } from 'vue-router'
 import { useDebounceFn, useVModel } from '@vueuse/core'
+import { RouterHelpers } from '@/router/helpers'
 
 interface Props {
   // 可见
@@ -43,8 +44,8 @@ const state: State = reactive({
 
 // 跳转到菜单
 const jumpToMenu = (resultItem: System.AppMenuSearchHistoryRecord) => {
-  // TODO: 处理菜单外联
-  router.push(resultItem.path)
+  // 如果是外链就打开外链，不是就跳转路由
+  RouterHelpers.isExternalLink(resultItem.path) ? RouterHelpers.openTheLink(resultItem.path) : router.push(resultItem.path)
   SystemStorage.addSearchHistory(resultItem)
   emit('update:visible', false)
 }

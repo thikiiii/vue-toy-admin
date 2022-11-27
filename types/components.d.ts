@@ -8,7 +8,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Icon: typeof import('./../src/components/Icon/index.vue')['default']
-    IconLocalAvatar: typeof import('~icons/ic/on-local-avatar')['default']
     NaiveTool: typeof import('./../src/components/NaiveTool/index.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']

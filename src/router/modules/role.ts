@@ -1,6 +1,6 @@
 const about: Route.RouteRecordRaw = {
-    path: '/role',
-    name: 'role',
+    path: 'https://www.baidu.com',
+    name: 'role11',
     meta: {
         title: '角色3',
         // roles: [ RoleEnum.SUPER ],

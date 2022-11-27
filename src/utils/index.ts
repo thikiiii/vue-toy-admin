@@ -1,5 +1,6 @@
 import { ThemeModeEnum } from '@/enums/theme'
 
+// TODO:抽离出去
 /**
  * 获取当前操作系统的主题
  * @return 'light' | 'dark'
@@ -42,12 +43,3 @@ export const runTacticsAction = (tacticsAction: TacticsAction[]) => tacticsActio
     flag && action()
     return flag
 })
-
-
-// 跳转到新标签
-export const jumpToNewTab = (src: string) => {
-    const aTag = document.createElement('a')
-    aTag.target = '_blank'
-    aTag.href = src
-    aTag.click()
-}

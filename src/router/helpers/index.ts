@@ -7,6 +7,7 @@ import router from '@/router'
 import Settings from '@/settings'
 import useRenderEllipsis from '@/hooks/components/useRenderEllipsis'
 import useRenderIcon from '@/hooks/components/useRenderIcon'
+import { matchUrl } from '@/utils/regularCheck'
 
 export class RouterHelpers {
     // 前端路由模块列表
@@ -24,19 +25,23 @@ export class RouterHelpers {
     }, [])
 
     // 获取页面组件
-    static getViewComponent(name: string) {
-        const viewComponent = Object.keys(this.VIEW_COMPONENTS).find(path => path === this.transformRouteNameToComponentPath(name))
-        if (!viewComponent) console.warn('没有找到组件：', name)
+    static getViewComponent(route: Route.RouteRecordRaw) {
+        // 组件路径
+        const componentPath = this.transformRouteNameToComponentPath(route.name)
+        const viewComponent = Object.keys(this.VIEW_COMPONENTS).find(path => path === componentPath)
+        if (!viewComponent) console.warn('没有找到组件：', componentPath)
         return this.VIEW_COMPONENTS[viewComponent as string]
     }
 
     // 自定义路由转 vue 路由
     static transformCustomRouteToVueRoute(route: Route.RouteRecordRaw) {
+        // 如果是外链就不转vue路由
+        if (this.isExternalLink(route.path)) return undefined
         const vueRoute = { ...route, component: undefined } as RouteRecordRaw
         switch (route.component) {
             // 本身就是页面
             case 'Self':
-                vueRoute.component = this.getViewComponent(route.name)
+                vueRoute.component = this.getViewComponent(route)
                 break
             // 布局
             case 'Layout':
@@ -44,20 +49,21 @@ export class RouterHelpers {
                 break
             // 菜单页面
             case 'View':
-                vueRoute.component = this.getViewComponent(route.name)
+                vueRoute.component = this.getViewComponent(route)
                 break
         }
         return vueRoute
     }
 
     static transformCustomRoutesToVueRoutes(routes: Route.RouteRecordRaw[]) {
-        return routes.map(route => {
+        return routes.reduce<RouteRecordRaw[]>((vueRoutes, route) => {
             const vueRoute = this.transformCustomRouteToVueRoute(route)
-            if (route.children?.length) {
+            if (route.children?.length && vueRoute) {
                 vueRoute.children = this.transformCustomRoutesToVueRoutes(route.children)
             }
-            return vueRoute
-        })
+            vueRoute && vueRoutes.push(vueRoute)
+            return vueRoutes
+        }, [])
     }
 
     // 路由转菜单
@@ -121,5 +127,23 @@ export class RouterHelpers {
     // 重定向到首页
     static redirectToHomepage() {
         router.push(Settings.homePath)
+    }
+
+    // 处理点击菜单
+    static handleClickMenu(path: string) {
+        // 跳转外链
+        if (matchUrl.test(path)) return this.openTheLink(path)
+        router.push(path)
+    }
+
+    // 是否外链
+    static isExternalLink(url) {
+        return matchUrl.test(url)
+    }
+
+    // 打开外链
+    static openTheLink(url: string) {
+        const open = window.open('_blank')
+        if (open) open.location = url
     }
 }
