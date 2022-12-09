@@ -10,7 +10,6 @@ import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const { isLogin, isAuth, initUserStore, getUserinfo } = useAuthStore()
     const { initRouteStore, initFrontRouteAuth, initServerRouteAuth, routeAuthMode, hasInitAuthRoute } = useRouteStore()
-    console.log('isSU', hasInitAuthRoute)
     // 处理路由鉴权模式
     const handleRouteAuthMode = async () => {
         switch (routeAuthMode) {

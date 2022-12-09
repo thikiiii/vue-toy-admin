@@ -11,8 +11,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: @layout-header-height;
+  height: @headerHeight;
   width: 100%;
+  flex-shrink: 0;
 
   .title {
     text-align: center;

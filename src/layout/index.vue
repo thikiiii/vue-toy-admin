@@ -2,19 +2,25 @@
 import { useLayoutStore } from '@/store/modules/layout'
 import { onBeforeUnmount, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import LayoutMenu from '@/layout/components/Menu/index.vue'
-import LayoutHeader from '@/layout/components/Header/index.vue'
-import LayoutMain from '@/layout/components/Main/index.vue'
-import TabBar from '@/layout/components/TabBar/index.vue'
-import Logo from '@/layout/components/Logo/index.vue'
+import LayoutHeader from '@/layout/header/index.vue'
+import LayoutMain from '@/layout/main/index.vue'
+import LayoutSidebar from '@/layout/sidebar/index.vue'
+import LayoutTabBar from '@/layout/tabBar/index.vue'
+import LayoutFooter from '@/layout/footer/index.vue'
+
+defineOptions({ name: 'Layout' })
 
 const layoutStore = useLayoutStore()
+
 const {
-  collapsed,
+  isCollapsedSidebar,
   isMobile,
   mobileMenuVisible,
   menuMode,
-  collapsedWidth
+  collapsedSidebarWidth,
+  footerVisible,
+  isFixedFooter,
+  tabBarVisible
 } = storeToRefs(layoutStore)
 
 onMounted(() => {
@@ -28,69 +34,34 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <n-layout class="layout" has-sider position="absolute">
-    <!-- PC 侧边栏 -->
-    <n-layout-sider
-        v-if="!isMobile && menuMode==='side'"
-        :collapsed="collapsed"
-        :collapsed-width="collapsedWidth"
-        class="layout-sider"
-        collapse-mode="width"
-        show-trigger="bar"
-        @collapse="layoutStore.setCollapsed(true)"
-        @expand="layoutStore.setCollapsed(false)">
-      <logo />
-      <layout-menu :collapsed="collapsed" />
-    </n-layout-sider>
-    <!-- 移动端侧边栏 -->
-    <n-modal v-model:show="mobileMenuVisible">
-      <n-layout-sider class="layout-mobileMenu">
-        <logo />
-        <layout-menu inverted />
-      </n-layout-sider>
-    </n-modal>
-    <n-layout>
-      <!-- 头部 -->
-      <n-layout-header class="layout-header">
+  <n-layout>
+    <div class="layout">
+      <layout-sidebar />
+      <div class="layout-scroll">
         <layout-header />
-      </n-layout-header>
-      <tab-bar />
-      <!-- 内容 -->
-      <n-layout-content class="layout-main">
+        <layout-tab-bar v-if="tabBarVisible" />
         <layout-main />
-      </n-layout-content>
-    </n-layout>
+        <layout-footer v-if="footerVisible" />
+      </div>
+    </div>
   </n-layout>
 </template>
 
 <style lang="less" scoped>
 .layout {
+  width: 100vw;
   height: 100vh;
+  display: flex;
+  overflow: hidden;
 
-  &-sider {
-    border-right: 1px solid @divider;
-    width: @layout-sidebal-width !important;
+  &-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
-  &-header {
-    height: @layout-header-height;
-  }
-
-  &-main {
-    height: calc(100% - @layout-header-height - @layout-tab-bar-height);
-    padding-bottom: 10px;
-    overflow: hidden;
-  }
-
-  &-mobileMenu {
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    width: @layout-sidebal-width !important;
-
-    :deep(.n-layout-sider-scroll-container) {
-      min-width: @layout-sidebal-width !important;
-    }
-  }
 }
 </style>

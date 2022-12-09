@@ -2,14 +2,20 @@
 import useTabBarStore from '@/store/modules/tabBar'
 import { computed } from 'vue'
 import { startCase } from 'lodash'
+import { useLayoutStore } from '@/store/modules/layout'
+
+defineOptions({ name: 'LayoutMain' })
 
 const tabBarStore = useTabBarStore()
+const layoutStore = useLayoutStore()
 // 缓存菜单，转成大驼峰
 const cacheMenus = computed(() => tabBarStore.cacheMenus.map(name => startCase(name).replace(' ', '')))
+
+const layoutMainClass = computed(() => layoutStore.footerVisible && layoutStore.isFixedFooter ? 'reserveFooter' : undefined)
 </script>
 
 <template>
-  <div class="layoutMain">
+  <div class="layoutMain" :class="layoutMainClass">
     <router-view v-if="tabBarStore.mainVisible" v-slot="{Component,route}">
       <transition appear mode="out-in" name="zoom-fade">
         <keep-alive :include="cacheMenus">
@@ -22,10 +28,12 @@ const cacheMenus = computed(() => tabBarStore.cacheMenus.map(name => startCase(n
 
 <style lang="less" scoped>
 .layoutMain {
-  width: 100%;
-  height: 100%;
-  padding: 0 10px;
+  padding: 5px 10px;
   position: relative;
-  overflow: hidden;
+  flex: 1;
+
+  &.reserveFooter {
+    padding-bottom: calc(@footerHeight + 5px);
+  }
 }
 </style>

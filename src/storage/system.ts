@@ -1,6 +1,5 @@
 import store from 'store2'
 
-
 // 系统
 export class SystemStorage {
     // 是否自动登录

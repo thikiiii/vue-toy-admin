@@ -2,21 +2,19 @@
   <!-- iconify 图标 -->
   <icon
       v-if="!localIcon"
-      :color="color"
       :height="size"
       :icon="iconName"
-      :style="{cursor:pointer? 'pointer':undefined}"
+      :style="{cursor:pointer? 'pointer':undefined,color}"
       :width="size"
-      class="n-icon"
   />
   <!-- 本地图标 -->
   <svg
       v-else
       :height="size"
-      :style="{cursor:pointer? 'pointer':undefined,color:color}"
+      :style="{cursor:pointer? 'pointer':undefined,color}"
       :width="size"
       aria-hidden="true"
-      class="n-icon">
+      class="icon">
     <use :xlink:href="iconName" />
   </svg>
 
@@ -27,7 +25,6 @@ import { Icon } from '@iconify/vue'
 import { computed } from 'vue'
 import useMetaEnv from '@/hooks/common/useMetaEnv'
 
-// TODO: 报错原因：webstorm bug
 export interface IconProps {
   // 图标地址：https://icones.js.org/collection/all
   // 图标名称 例如：mdi:account | mdi-account
@@ -56,3 +53,9 @@ const props = withDefaults(defineProps<IconProps>(), {
 const metaEnv = useMetaEnv()
 const iconName = computed(() => props.localIcon ? `#${ metaEnv.VITE_ICON_LOCAL_PREFIX }-${ props.localIcon }` : props.icon)
 </script>
+
+<style lang="less" scoped>
+.icon {
+  color: @mainTextColor;
+}
+</style>

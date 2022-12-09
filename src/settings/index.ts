@@ -1,15 +1,13 @@
-import { LayoutStorage } from '@/storage/layout'
 import { getSystemTheme } from '@/utils'
 import { RouteAuthMode } from '@/enums/auth'
 import { ThemeStorage } from '@/storage/theme'
-import { MenuModeEnum } from '@/enums/layout'
-// 全局配置
-export default class Settings {
+// 系统设置
+export default class AppSettings {
     // 路由鉴权模式
     static readonly routeAuthMode = RouteAuthMode.FRONT
 
     // 菜单模式
-    static readonly menuMode = LayoutStorage.getMenuMode() || MenuModeEnum.SIDE
+    // static readonly menuMode = || MenuModeEnum.SIDE
 
     // 主题模式
     static readonly themeMode = ThemeStorage.getTheme() || getSystemTheme()

@@ -1,10 +1,35 @@
 declare namespace Store {
     // 布局 Store
     interface LayoutStore {
-        // 折叠宽度
-        collapsedWidth: number
-        // 侧边栏是否折叠
-        collapsed: boolean
+        //  css 变量
+        cssVariable: {
+            // 头部高度
+            headerHeight: string
+
+            // 侧边栏宽度
+            sidebarWidth: string
+
+            // 底部高度
+            footerHeight: string
+
+            // 标签栏高度
+            tabBarHeight: string
+
+            // 混合菜单宽度
+            mixedMenuWidth: string
+
+            // 混合菜单折叠宽度
+            collapsedMixedMenuWidth: string
+        }
+
+        // 折叠侧边栏的宽度
+        collapsedSidebarWidth: number
+
+        // 顶部进度条
+        topProgressBarVisible: boolean
+
+        // 是否折叠侧边栏
+        isCollapsedSidebar: boolean
 
         // 移动端触发宽度
         mobileTriggerWidth: number
@@ -15,15 +40,46 @@ declare namespace Store {
         // 移动端 menu 可见
         mobileMenuVisible: boolean
 
-        // 菜单模式
-        menuMode: MenuMode
-    }
+        // 底部可见
+        footerVisible: boolean
 
+        // 标签栏可见
+        tabBarVisible: boolean
+
+        // 菜单模式
+        menuMode: import('@/enums/layout').MenuModeEnum
+
+        // 是否固定头部和标签栏
+        isFixedHeaderAndTabBar: boolean
+
+        // 顶部菜单位置
+        topMenuPosition: import('@/enums/theme').TopMenuPositionEnum
+
+        // 是否开启标签栏
+        isTabBar: boolean
+
+        // 是否开启面包屑
+        isBreadCrumbs: boolean
+
+        // 页面缓存
+        isPageCache: boolean
+
+        // 固定底部
+        isFixedFooter: boolean
+
+        // 是否开启页面切换动画
+        isPageSwitchAnimation: boolean
+
+        // 页面动画
+        pageAnimation: import('@/enums/theme').PageAnimationEnum
+    }
 
     // 自定义主题配置
     interface CustomizeThemeConfig {
         // 主题颜色
         theme: string
+        //  淡化的主题色
+        fadedThemeColor: string
 
         // 主字体颜色
         mainTextColor: string
@@ -33,9 +89,6 @@ declare namespace Store {
 
         // hover字体颜色
         hoverTextColor: string
-
-        // hover激活的字体颜色
-        hoverActiveTextColor: string
 
         // 反字体颜色
         invertTextColor: string
@@ -49,9 +102,6 @@ declare namespace Store {
         // hover背景颜色
         hoverBackgroundColor: string
 
-        // hover激活的背景颜色
-        hoverActiveBackgroundColor: string
-
         // 反背景颜色
         invertBackgroundColor: string
 
@@ -63,6 +113,12 @@ declare namespace Store {
 
         // 滚动条
         scrollColor: string
+
+        // 主题色阴影
+        themeShadow: string
+
+        // 阴影
+        shadow: string
     }
 
     type ThemeModeConfig<T> = {

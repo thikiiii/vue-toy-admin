@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Logo from '@/layout/components/Logo/index.vue'
-import LayoutMenu from '@/layout/components/Menu/index.vue'
+import Menu from '@/layout/components/Menu/index.vue'
 import { useLayoutStore } from '@/store/modules/layout'
 import Avatar from './components/Avatar/index.vue'
 import MenuCollapsed from './components/MenuCollapsed/index.vue'
@@ -10,26 +10,32 @@ import Github from './components/Github/index.vue'
 import FullScreen from './components/FullScreen/index.vue'
 import ThemeSwitch from './components/ThemeSwitch/index.vue'
 import SystemConfig from './components/SystemConfig/index.vue'
+import { computed } from 'vue'
+import { MenuModeEnum } from '@/enums/layout'
+import { useRouteStore } from '@/store/modules/route'
 
+defineOptions({ name: 'LayoutHeader' })
 const layoutStore = useLayoutStore()
+const routeStore = useRouteStore()
+const layoutHeaderClass = computed(() => layoutStore.isFixedHeaderAndTabBar ? 'fixed' : undefined)
 </script>
 <template>
-  <div class="layoutHeader">
+  <div :class="layoutHeaderClass" class="layoutHeader">
     <div class="layoutHeader-left">
-      <template v-if="layoutStore.menuMode==='side'||layoutStore.isMobile">
+      <template v-if="layoutStore.menuMode!==MenuModeEnum.TOP||layoutStore.isMobile">
         <!-- 菜单折叠 -->
-        <menu-collapsed />
+        <menu-collapsed v-if="layoutStore.menuMode!==MenuModeEnum.SIDE_MIX" />
         <!-- 面包屑 -->
-        <breadcrumb />
+        <breadcrumb :style="{marginLeft:layoutStore.menuMode===MenuModeEnum.SIDE_MIX?'10px':undefined}" />
       </template>
-      <template v-if="layoutStore.menuMode==='top'&&!layoutStore.isMobile">
+      <template v-if="layoutStore.menuMode===MenuModeEnum.TOP&&!layoutStore.isMobile">
         <!-- LOGO -->
         <div class="layoutHeader-left-logo-container">
           <logo />
         </div>
         <!-- 水平菜单 -->
         <n-scrollbar x-scrollable>
-          <layout-menu collapsed mode="horizontal" />
+          <Menu :menus="routeStore.menus" :mode="MenuModeEnum.TOP" collapsed />
         </n-scrollbar>
       </template>
     </div>
@@ -55,9 +61,18 @@ const layoutStore = useLayoutStore()
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: @headerHeight;
   border-bottom: 1px solid @divider;
   gap: 10px;
+  background: @subBackgroundColor;
+  flex-shrink: 0;
+
+  &.fixed {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
 
   &-left, &-right {
     display: flex;
@@ -72,7 +87,7 @@ const layoutStore = useLayoutStore()
 
     &-logo-container {
       height: 100%;
-      width: @layout-sidebal-width;
+      width: @sidebarWidth;
       flex-shrink: 0;
     }
 

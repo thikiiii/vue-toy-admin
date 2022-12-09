@@ -1,10 +1,9 @@
 // 需要权限的路由模块列表
-import { RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw, useRouter } from 'vue-router'
 import Layout from '@/layout/index.vue'
 import { ROOT_ROUTE } from '@/router/constRoutes'
 import { Sort } from '@/enums/common'
-import router from '@/router'
-import Settings from '@/settings'
+import AppSettings from '@/settings'
 import useRenderEllipsis from '@/hooks/components/useRenderEllipsis'
 import useRenderIcon from '@/hooks/components/useRenderIcon'
 import { matchUrl } from '@/utils/regularCheck'
@@ -73,7 +72,7 @@ export class RouterHelpers {
         return {
             key: path,
             label: meta?.title ? renderEllipsis({ content: meta.title }) : '',
-            icon: meta?.icon ? renderIcon({ icon: meta.icon || '' }) : undefined,
+            icon: meta?.icon ? renderIcon({ icon: meta.icon || '', size: 20 }) : undefined,
             meta,
             children: children as Store.MenuOption['children']
         }
@@ -126,11 +125,13 @@ export class RouterHelpers {
 
     // 重定向到首页
     static redirectToHomepage() {
-        router.push(Settings.homePath)
+        const router = useRouter()
+        router.push(AppSettings.homePath)
     }
 
     // 处理点击菜单
     static handleClickMenu(path: string) {
+        const router = useRouter()
         // 跳转外链
         if (matchUrl.test(path)) return this.openTheLink(path)
         router.push(path)

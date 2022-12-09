@@ -1,12 +1,12 @@
 <template>
   <n-menu
       ref="menuRef"
-      :collapsed="props.collapsed && props.mode==='vertical'"
-      :collapsed-width="layoutStore.collapsedWidth"
+      :collapsed="isCollapsed"
+      :collapsed-width="collapsedWidth"
       :default-value="route.path"
       :indent="30"
-      :inverted="false"
-      :mode="props.mode"
+      :inverted="inverted"
+      :mode="nMenuMode"
       :options="menus"
       :root-indent="24"
       :value="activeMenu"
@@ -15,38 +15,48 @@
 </template>
 
 <script lang="ts" setup>
-import { useLayoutStore } from '@/store/modules/layout'
 import { useRoute } from 'vue-router'
-import { useRouteStore } from '@/store/modules/route'
 import { computed, ref, watch } from 'vue'
 import { MenuInst, MenuOption } from 'naive-ui'
 import { RouterHelpers } from '@/router/helpers'
+import { MenuModeEnum } from '@/enums/layout'
 
 interface Props {
   // 模式
-  mode?: 'vertical' | 'horizontal'
+  mode: MenuModeEnum
+
   // 折叠
   collapsed?: boolean
-  // 对比
+
+  // 对比色
   inverted?: boolean
+
+  // 手风琴
+  accordion?: boolean
+
+  // 折叠后的菜单宽度
+  collapsedWidth?: number
+
+  // 菜单列表
+  menus: MenuOption[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  mode: 'vertical',
   collapsed: false,
   inverted: false
 })
 
-const layoutStore = useLayoutStore()
-const routeStore = useRouteStore()
 const route = useRoute()
 
 const menuRef = ref<MenuInst | null>(null)
 
-// 菜单列表
-const menus = computed(() => routeStore.menus as unknown as MenuOption[])
+
 // 激活菜单
 const activeMenu = computed(() => route.path)
+// 是否折叠
+const isCollapsed = computed(() => props.collapsed && (props.mode === MenuModeEnum.SIDE || props.mode === MenuModeEnum.SIDE_MIX))
+// n 组件菜单模式
+const nMenuMode = computed(() => props.mode === MenuModeEnum.TOP ? 'horizontal' : 'vertical')
 
 const selectMenu = (key: string) => {
   RouterHelpers.handleClickMenu(key)
@@ -57,3 +67,10 @@ watch(activeMenu, (newActiveMenu) => {
   menuRef.value?.showOption(newActiveMenu)
 })
 </script>
+
+<style lang="less" scoped>
+// 解决 icon 与 标题不对齐的问题
+:global(.n-menu .n-menu-item-content .n-menu-item-content__icon) {
+  //align-items: normal;
+}
+</style>

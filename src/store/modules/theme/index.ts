@@ -1,17 +1,18 @@
 import { defineStore } from 'pinia'
 import { darkTheme } from 'naive-ui'
-import { themeState } from '@/store/modules/theme/state'
-
+import { initThemeState } from '@/store/modules/theme/theme'
 import { ThemeStorage } from '@/storage/theme'
 import { ThemeModeEnum } from '@/enums/theme'
+import { setCSSVariable } from '@/utils'
 
 
 // 主题
 export const useThemeStore = defineStore('theme', {
-    state: (): Store.ThemeStore => themeState,
+    state: (): Store.ThemeStore => initThemeState,
     getters: {
         // 当前主题覆盖
         currentThemeOverrides: (themeStore) => themeStore.naive[themeStore.themeMode],
+
         // 组件库主题类型
         naiveThemeType: (themeStore) => themeStore.themeMode === 'dark' ? darkTheme : null
     },
@@ -28,16 +29,15 @@ export const useThemeStore = defineStore('theme', {
         },
         // 设置主题
         setTheme(themeType: ThemeModeEnum) {
-            const bodyElement = document.querySelector('html')
-            if (!bodyElement) return false
+            const body = document.body
+            // 去除过渡效果
+            body.classList.add('noTransition')
             this.themeMode = themeType
             // 在 storage 中存储主题类型
             ThemeStorage.setTheme(themeType)
             const theme = this.customize[themeType]
-            Object.keys(theme).forEach(key => {
-                // 设置系统主题
-                bodyElement.style.setProperty(`--${ key }`, theme[key])
-            })
+            setCSSVariable(theme)
+            setTimeout(() => body.classList.remove('noTransition'))
         }
     }
 })

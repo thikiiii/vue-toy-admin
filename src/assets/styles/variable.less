@@ -13,11 +13,12 @@ theme: Settings.theme,
     borderColor: '#212B36',
     divider: 'rgba(145,158,171,0.24)',
     scrollColor: '#b4bcc3'
-
 */
 
 // 主题颜色
 @theme: var(--theme, red);
+
+@fadedThemeColor: var(--fadedThemeColor, red);
 
 // 字体颜色
 @mainTextColor: var(--mainTextColor, #333333);
@@ -55,15 +56,32 @@ theme: Settings.theme,
 // 滚动条颜色
 @scrollColor: var(--scrollColor, #b4bcc3);
 
-// 侧边栏宽度
-@layout-sidebal-width: 220px;
+// 主题阴影
+@themeShadow: var(--themeShadow, #b4bcc3);
 
-// 折叠侧边栏
-@layout-collapsed-width: var(--layout-collapsed-width, 64px);
-
+// 阴影
+@shadow: var(--shadow, #b4bcc3);
 // 头部高度
-@layout-header-height: 56px;
+@headerHeight: var(--headerHeight, 56px);
+
+// 侧边栏宽度
+@sidebarWidth: var(--sidebarWidth, 220px);
+
+// 底部高度
+@footerHeight: var(--footerHeight, 30px);
 
 // 标签栏高度
-@layout-tab-bar-height: 44px;
+@tabBarHeight: var(--tabBarHeight, 44px);
+
+// 折叠侧边栏宽度
+@collapsedSidebarWidth: var(--collapsedSidebarWidth, 64px);
+
+// 混合菜单宽度
+@mixedMenuWidth: var(--mixedMenuWidth, 94px);
+
+// 折叠混合菜单宽度
+@collapsedMixedMenuWidth: var(--collapsedMixedMenuWidth, 64px);
+
+
+
 

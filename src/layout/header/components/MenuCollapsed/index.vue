@@ -7,9 +7,15 @@ import { useLayoutStore } from '@/store/modules/layout'
 defineOptions({ name: 'MenuCollapsed' })
 
 const layoutStore = useLayoutStore()
-const isCollapsed = computed(() => layoutStore.isMobile ? layoutStore.mobileMenuVisible : layoutStore.collapsed)
 
-const iconName = computed(() => isCollapsed.value ? 'bi:text-indent-left' : 'bi:text-indent-right')
+const isCollapsed = computed(() => layoutStore.isMobile ? layoutStore.mobileMenuVisible : layoutStore.isCollapsedSidebar)
+const iconName = computed(() => {
+  if (!layoutStore.isMobile) {
+    return isCollapsed.value ? 'bi:text-indent-left' : 'bi:text-indent-right'
+  } else {
+    return isCollapsed.value ? 'bi:text-indent-right' : 'bi:text-indent-left'
+  }
+})
 
 // 菜单icon 处理
 const collapsedHandle = (status: boolean) => {

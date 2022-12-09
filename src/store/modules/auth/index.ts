@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { AuthCookie } from '@/storage/auth'
 import { UserApi } from '@/services/api/user'
 import router from '@/router'
-import Settings from '@/settings'
+import AppSettings from '@/settings'
 import { LoginMethod } from '@/enums/common'
 import { useRouteStore } from '@/store/modules/route'
 import { RouteAuthMode } from '@/enums/auth'
@@ -88,7 +88,7 @@ const useAuthStore = defineStore('auth', {
             this.loginLoading = false
 
             const redirect = router.currentRoute.value.query.redirect
-            await router.replace(redirect as string || Settings.homePath)
+            await router.replace(redirect as string || AppSettings.homePath)
         },
 
         // 退出登录

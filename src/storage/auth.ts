@@ -1,11 +1,11 @@
-import Settings from '@/settings'
+import AppSettings from '@/settings'
 import Cookies from 'js-cookie'
 
 export class AuthCookie {
     static readonly token = 'Toy_TOKEN'
 
     // 设置 token
-    static setToken = (token: string) => Cookies.set(this.token, token, { expires: Settings.tokenExpirationTime })
+    static setToken = (token: string) => Cookies.set(this.token, token, { expires: AppSettings.tokenExpirationTime })
 
     // 获取 token
     static getToken = (): string | undefined => Cookies.get(this.token)

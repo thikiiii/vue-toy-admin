@@ -3,7 +3,7 @@ import { inject, reactive, Ref, ref } from 'vue'
 import QrCode from '@/views/login/qrCode/index.vue'
 import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
-import { LoginMethod } from "@/enums/common";
+import { LoginMethod } from '@/enums/common'
 
 const authStore = useAuthStore()
 const formRef = ref<InstanceType<typeof NForm> | null>()
@@ -48,9 +48,6 @@ const handleLogin = () => {
       <transition-group appear name="right-slide-fade">
         <n-form-item key="1" path="username" required>
           <n-input v-model:value="form.username" placeholder="请输入用户名" size="large">
-            <template #prefix>
-              <icon icon="mdi:account"/>
-            </template>
           </n-input>
         </n-form-item>
         <n-form-item key="2" path="password" required style="transition-delay: .1s">
@@ -58,9 +55,6 @@ const handleLogin = () => {
               v-model:value="form.password" placeholder="请输入密码" show-password-on="mousedown"
               size="large"
               type="password">
-            <template #prefix>
-              <icon icon="mdi:lock"/>
-            </template>
           </n-input>
         </n-form-item>
         <n-form-item key="3" style="transition-delay: .25s">

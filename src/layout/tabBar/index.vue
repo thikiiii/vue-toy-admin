@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { nextTick, onMounted, reactive, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
 import useTabBarStore from '@/store/modules/tabBar'
 import { useRoute, useRouter } from 'vue-router'
 import { useDebounceFn, useEventListener, useToggle } from '@vueuse/core'
 import ContextMenu from './components/ContextMenu/index.vue'
+import { useLayoutStore } from '@/store/modules/layout'
 
 interface ContextMenuConfig {
   // 点击Tab的路径
@@ -16,12 +17,12 @@ interface ContextMenuConfig {
   y: undefined | number
 }
 
-defineOptions({ name: 'TabBar' })
+defineOptions({ name: 'LayoutTabBar' })
 
 const tabBarStore = useTabBarStore()
 const route = useRoute()
 const router = useRouter()
-
+const layoutStore = useLayoutStore()
 // tab 上下文菜单可见
 const [ tabVisible ] = useToggle()
 // 全局 上下文菜单可见
@@ -37,6 +38,9 @@ const contextMenuConfig: ContextMenuConfig = reactive({
   x: undefined,
   y: undefined
 })
+
+const layoutTabBarClass = computed(() => layoutStore.isFixedHeaderAndTabBar ? 'fixed' : undefined)
+
 
 const isScroll = (): boolean => {
   if (!tabContainer.value) return false
@@ -114,7 +118,7 @@ watch(tabBarStore.tabBar, () => {
 </script>
 
 <template>
-  <div class="tabBar">
+  <div :class="layoutTabBarClass" class="tabBar">
     <div v-show="scrollBtnVisible" class="tabBar-action-tab" @click="onScroll('left')">
       <icon icon="mdi:chevron-left" />
     </div>
@@ -134,7 +138,7 @@ watch(tabBarStore.tabBar, () => {
       </div>
     </div>
     <div v-show="scrollBtnVisible" class="tabBar-action-tab" @click="onScroll('right')">
-      <icon icon="chevron-right" />
+      <icon icon="mdi:chevron-right" />
     </div>
     <context-menu
         v-model:visible="globalVisible"
@@ -156,11 +160,20 @@ watch(tabBarStore.tabBar, () => {
 .tabBar {
   width: 100%;
   padding: 0 10px;
-  height: @layout-tab-bar-height;
+  height: @tabBarHeight;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 15px;
+  background: @mainBackgroundColor;
+  flex-shrink: 0;
+
+  &.fixed {
+    position: sticky;
+    top: @headerHeight;
+    left: 0;
+    z-index: 2;
+  }
 
   &-action-tab {
     background: @subBackgroundColor;
@@ -168,18 +181,19 @@ watch(tabBarStore.tabBar, () => {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: calc(@layout-tab-bar-height - 15px);
-    height: calc(@layout-tab-bar-height - 15px);
-    box-shadow: 0 0 5px @divider;
+    width: calc(@tabBarHeight - 15px);
+    height: calc(@tabBarHeight - 15px);
+    box-shadow: 2px 2px 8px @shadow;
   }
 
   &-tabContainer {
     flex: 1;
     display: flex;
     gap: 15px;
-    overflow: hidden;
-    padding: 2px 0;
+    overflow-y: hidden;
     position: relative;
+    height: 100%;
+    align-items: center;
 
     &-tab {
       background: @subBackgroundColor;
@@ -188,12 +202,13 @@ watch(tabBarStore.tabBar, () => {
       justify-content: center;
       cursor: pointer;
       color: @mainTextColor;
-      box-shadow: 0 0 5px @divider;
+      box-shadow: 2px 2px 8px @shadow;
       align-items: center;
       border-radius: 4px;
-      height: calc(@layout-tab-bar-height - 15px);
+      height: calc(@tabBarHeight - 15px);
       padding: 0 15px;
       gap: 5px;
+      font-size: 14px;
 
       &:hover {
         color: @mainTextColor;
@@ -210,11 +225,12 @@ watch(tabBarStore.tabBar, () => {
       }
 
       &.active {
-        color: @theme;
-        //background: @theme;
+        color: white;
+        background: @theme;
+        box-shadow: 0 0 10px @themeShadow;
 
-        i {
-          color: @subTextColor;
+        svg {
+          color: white;
         }
       }
     }
