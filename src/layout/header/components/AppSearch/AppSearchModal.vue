@@ -1,11 +1,18 @@
 <script lang="ts" setup>
 import { useRouteStore } from '@/store/modules/route'
 import { reactive, toRefs, watch } from 'vue'
-import { SystemStorage } from '@/storage/system'
+import { AppStorage } from '@/storage/app'
 import { appSearchKeyPrompt, handleResult, searchMenus } from './utils'
 import { useRouter } from 'vue-router'
 import { useDebounceFn, useVModel } from '@vueuse/core'
 import { RouterHelpers } from '@/router/helpers'
+
+// 菜单搜索历史记录
+export interface AppMenuSearchHistoryRecord {
+  icon: string
+  menuNameList: string[]
+  path: string
+}
 
 interface Props {
   // 可见
@@ -20,7 +27,7 @@ interface State {
   // 搜索内容
   searchText: string,
   // 搜索结果
-  searchResults: System.AppMenuSearchHistoryRecord[]
+  searchResults: AppMenuSearchHistoryRecord[]
   // 激活（默认激活索引0）
   active: number
 }
@@ -43,16 +50,16 @@ const state: State = reactive({
 })
 
 // 跳转到菜单
-const jumpToMenu = (resultItem: System.AppMenuSearchHistoryRecord) => {
+const jumpToMenu = (resultItem: AppMenuSearchHistoryRecord) => {
   // 如果是外链就打开外链，不是就跳转路由
   RouterHelpers.isExternalLink(resultItem.path) ? RouterHelpers.openTheLink(resultItem.path) : router.push(resultItem.path)
-  SystemStorage.addSearchHistory(resultItem)
+  AppStorage.addSearchHistory(resultItem)
   emit('update:visible', false)
 }
 
 // 清空历史记录
 const clearSearchHistory = () => {
-  SystemStorage.clearSearchHistory()
+  AppStorage.clearSearchHistory()
   if (state.searchText.length && state.searchResults.length) return
   else state.searchResults = []
 }
@@ -76,13 +83,13 @@ const handleKeyboardEvents = (event: KeyboardEvent) => {
 
 watch(() => state.searchText, useDebounceFn(() => {
   const text = state.searchText
-  state.searchResults = !text ? SystemStorage.getSearchHistory() || [] : handleResult(searchMenus(text, routeStore.menus))
+  state.searchResults = !text ? AppStorage.getSearchHistory() || [] : handleResult(searchMenus(text, routeStore.menus))
   state.active = 0
 }, 200))
 
 watch(visible, () => {
   if (!visible.value) return
-  state.searchResults = SystemStorage.getSearchHistory()
+  state.searchResults = AppStorage.getSearchHistory()
   state.searchText = ''
   state.active = 0
   visible.value ?

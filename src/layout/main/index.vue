@@ -8,14 +8,15 @@ defineOptions({ name: 'LayoutMain' })
 
 const tabBarStore = useTabBarStore()
 const layoutStore = useLayoutStore()
+const { footer } = layoutStore.$state
 // 缓存菜单，转成大驼峰
 const cacheMenus = computed(() => tabBarStore.cacheMenus.map(name => startCase(name).replace(' ', '')))
 
-const layoutMainClass = computed(() => layoutStore.footerVisible && layoutStore.isFixedFooter ? 'reserveFooter' : undefined)
+const layoutMainClass = computed(() => footer.footerVisible && footer.isFixedFooter ? 'reserveFooter' : undefined)
 </script>
 
 <template>
-  <div class="layoutMain" :class="layoutMainClass">
+  <div :class="layoutMainClass" class="layoutMain">
     <router-view v-if="tabBarStore.mainVisible" v-slot="{Component,route}">
       <transition appear mode="out-in" name="zoom-fade">
         <keep-alive :include="cacheMenus">

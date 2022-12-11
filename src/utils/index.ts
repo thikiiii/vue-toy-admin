@@ -1,13 +1,11 @@
-import { ThemeModeEnum } from '@/enums/theme'
-
 // TODO:抽离出去
 /**
  * 获取当前操作系统的主题
  * @return 'light' | 'dark'
  * */
-export const getSystemTheme = (): ThemeModeEnum => {
+export const getSystemTheme = (): Store.ThemeMode => {
     const themeMedia = window.matchMedia('(prefers-color-scheme: light)')
-    return themeMedia.matches ? ThemeModeEnum.LIGHT : ThemeModeEnum.DARK
+    return themeMedia.matches ? 'light' : 'dark'
 }
 
 /**

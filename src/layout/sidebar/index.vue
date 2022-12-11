@@ -3,37 +3,42 @@ import Logo from '@/layout/components/Logo/index.vue'
 import Menu from '@/layout/components/Menu/index.vue'
 import { useLayoutStore } from '@/store/modules/layout'
 import { useRouteStore } from '@/store/modules/route'
-import { MenuModeEnum } from '@/enums/layout'
 import { computed } from 'vue'
-import MobileMenu from './mobileMenu/index.vue'
-import MixedMenu from './mixedMenu/index.vue'
+import MobileSidebar from './mobileSidebar/index.vue'
+import MixedSidebar from './mixedSidebar/index.vue'
 
 defineOptions({ name: 'LayoutSidebar' })
 const layoutStore = useLayoutStore()
+const {
+  sidebar,
+  app,
+  mobile
+} = layoutStore.$state
 const routeStore = useRouteStore()
-const width = computed(() => layoutStore.isCollapsedSidebar ? `${ layoutStore.collapsedSidebarWidth }px` : layoutStore.cssVariable.sidebarWidth)
+const width = computed(() => sidebar.isCollapsedSidebar ? `${ sidebar.collapsedWidth }px` : sidebar.sidebarWidth)
 </script>
 
 <template>
   <transition name="slideIn">
     <div
-        v-if="!layoutStore.isMobile&&layoutStore.menuMode===MenuModeEnum.SIDE"
+        v-if="!mobile.isMobile&&app.menuMode==='Side'"
         :style="{width}"
-        class="layoutSidebar">
+        class="layoutSidebar inverted">
       <logo></logo>
       <div class="layoutSidebar-scroll">
         <Menu
-            :collapsed="layoutStore.isCollapsedSidebar"
-            :collapsed-width="layoutStore.collapsedSidebarWidth"
+            :collapsed="sidebar.isCollapsedSidebar"
+            :collapsed-width="sidebar.collapsedWidth"
             :menus="routeStore.menus"
-            :mode="MenuModeEnum.SIDE" />
+            inverted
+            mode="Side" />
       </div>
     </div>
   </transition>
   <!-- 移动端菜单 -->
-  <mobile-menu v-if="layoutStore.isMobile" />
+  <mobile-sidebar v-if="mobile.isMobile" />
   <!--  混合菜单-->
-  <mixed-menu v-if="layoutStore.menuMode===MenuModeEnum.SIDE_MIX" />
+  <mixed-sidebar v-if="!mobile.isMobile&&app.menuMode==='SideMix'" />
 </template>
 
 <style lang="less" scoped>
@@ -43,6 +48,10 @@ const width = computed(() => layoutStore.isCollapsedSidebar ? `${ layoutStore.co
   flex-direction: column;
   transition: .3s;
   border-right: 1px solid @divider;
+
+  &.inverted {
+    background: @invertBackgroundColor;
+  }
 
   &-scroll {
     flex: 1;

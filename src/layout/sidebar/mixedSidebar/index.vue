@@ -3,22 +3,25 @@ import Logo from '@/layout/components/Logo/index.vue'
 import Menu from '@/layout/components/Menu/index.vue'
 import { useRouteStore } from '@/store/modules/route'
 import { computed, reactive } from 'vue'
-import { MenuModeEnum } from '@/enums/layout'
 import { useToggle } from '@vueuse/core'
-import { RouterHelpers } from '@/router/helpers'
 import { useRoute } from 'vue-router'
+import { MenuOption } from 'naive-ui'
+import { useLayoutStore } from '@/store/modules/layout'
 
 interface State {
   // 二级菜单
-  secondaryMenus: Store.MenuOption[]
+  secondaryMenus: MenuOption[]
   // 当前点击的 index
   currentIndex: number | undefined
 }
 
-defineOptions({ name: 'MixedMenu' })
+defineOptions({ name: 'MixedSidebar' })
 
 const routeStore = useRouteStore()
+const layoutStore = useLayoutStore()
+const { sidebar } = layoutStore.$state
 const [ sidebarVisible ] = useToggle()
+// TODO:使用 useLayoutStore 中的 Fixed 、Collapsed
 const [ isFixed, toggleFixed ] = useToggle()
 const [ isCollapsed, toggleCollapsed ] = useToggle()
 const route = useRoute()
@@ -29,7 +32,6 @@ const state: State = reactive({
 
 const mixedMenuClass = computed(() => {
   const className: string[] = []
-
   if (isFixed.value) className.push(isCollapsed.value ? 'collapsedExtend' : 'extend')
   if (isCollapsed.value && !isFixed.value) className.push('collapsed')
   return className.join(' ')
@@ -40,17 +42,16 @@ const thumbtackIcon = computed(() => isFixed.value ? 'mdi:pin-off' : 'mdi:pin')
 const collapsedIcon = computed(() => isCollapsed.value ? 'mdi:chevron-triple-right' : 'mdi:chevron-triple-left')
 const handleMenu = (menu: Store.MenuOption, index: number) => {
   if (menu.children) {
-    state.secondaryMenus = menu.children
+    state.secondaryMenus = menu.children as MenuOption[]
     sidebarVisible.value = true
   } else {
-    RouterHelpers.handleClickMenu(menu.key)
+    routeStore.handleClickMenu(menu.key)
     if (!isFixed.value) sidebarVisible.value = false
     state.secondaryMenus = []
     // isFixed.value = false
   }
   state.currentIndex = index
 }
-
 const isExists = (menus: Store.MenuOption[], key: string) => {
   return menus.some(menu => {
     if (menu.key === key) return true
@@ -58,7 +59,7 @@ const isExists = (menus: Store.MenuOption[], key: string) => {
   })
 }
 
-const isActive = (menu: Store.MenuOption, index: number) => {
+const isActive = (index: number) => {
   return index === state.currentIndex ? 'active' : undefined
 }
 
@@ -82,13 +83,14 @@ state.currentIndex = findActiveIndex()
 
 <template>
   <div :class="mixedMenuClass" class="mixedMenu" @mouseleave="onMouseLeave">
-    <div :class="collapsedClass" class="mixedMenu-main">
+    <!-- TODO:暗黑模式下去除 inverted -->
+    <div :class="collapsedClass" class="mixedMenu-main inverted">
       <logo />
       <div class="mixedMenu-main-scroll">
         <div
             v-for="(menu,i) in routeStore.menus"
             :key="menu.key"
-            :class="isActive(menu,i)"
+            :class="isActive(i)"
             class="mixedMenu-main-scroll-menu"
             @click="handleMenu(menu,i)">
           <n-popover :disabled="!isCollapsed" trigger="hover">
@@ -105,13 +107,13 @@ state.currentIndex = findActiveIndex()
       </div>
     </div>
     <transition name="slideIn">
-      <div v-show="sidebarVisible" :class="collapsedClass" class="mixedMenu-sidebar">
+      <div v-show="sidebarVisible" :class="collapsedClass" class="mixedMenu-sidebar inverted">
         <div class="mixedMenu-sidebar-header">
           <logo />
           <icon :icon="thumbtackIcon" pointer @click="toggleFixed()" />
         </div>
         <div class="mixedMenu-sidebar-scroll">
-          <Menu :menus="state.secondaryMenus" :mode="MenuModeEnum.SIDE" />
+          <Menu :menus="state.secondaryMenus" inverted mode="Side" />
         </div>
       </div>
     </transition>
@@ -123,7 +125,7 @@ state.currentIndex = findActiveIndex()
   display: flex;
   height: 100%;
   position: relative;
-  transition: all .3s;
+  transition: .2s ease-out;
   width: @mixedMenuWidth;
 
   &.extend {
@@ -147,8 +149,28 @@ state.currentIndex = findActiveIndex()
     flex-direction: column;
     position: relative;
     z-index: 10;
-    transition: all .3s;
+    transition: .2s ease-out;
     box-shadow: 0 0 5px @shadow;
+
+    &.inverted {
+      background: @invertBackgroundColor;
+
+      .mixedMenu-main-scroll {
+        &-menu {
+          color: @invertTextColor;
+
+          &.active {
+            background: @fadedThemeColor;
+            color: @theme;
+          }
+
+          &:hover:not(.active) {
+            color: @theme;
+            background: @hoverInvertBackgroundColor;
+          }
+        }
+      }
+    }
 
     &.collapsed {
       width: @collapsedMixedMenuWidth;
@@ -176,7 +198,7 @@ state.currentIndex = findActiveIndex()
         padding: 10px;
         border-radius: 10px;
 
-        &:hover {
+        &:hover:not(.active) {
           color: @theme;
           background: @hoverBackgroundColor;
         }
@@ -221,7 +243,11 @@ state.currentIndex = findActiveIndex()
     flex-direction: column;
     opacity: 1;
     z-index: 3;
-    transition: .3s;
+    transition: .2s ease-out;
+
+    &.inverted {
+      background: @invertBackgroundColor;
+    }
 
     &.collapsed {
       margin-left: @collapsedMixedMenuWidth;
@@ -245,7 +271,7 @@ state.currentIndex = findActiveIndex()
 
 .slideIn-enter-active,
 .slideIn-leave-active {
-  transition: .3s ease-in;
+  transition: .2s ease-out;
 }
 
 .slideIn-enter-from,

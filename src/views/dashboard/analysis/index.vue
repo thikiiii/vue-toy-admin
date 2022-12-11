@@ -3,17 +3,16 @@ defineOptions({ name: 'DashboardAnalysis' })
 </script>
 
 <template>
-  <div>
-    <div class="card">
-      dasd
-    </div>
+  <div class="card">
+    dasd
   </div>
 </template>
 
 <style lang="less" scoped>
 .card {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
+  background: red;
   box-shadow: 3px 10px 5px @shadow;
 }
 </style>

@@ -1,14 +1,25 @@
 import { defineStore } from 'pinia'
 import { darkTheme } from 'naive-ui'
-import { initThemeState } from '@/store/modules/theme/theme'
 import { ThemeStorage } from '@/storage/theme'
-import { ThemeModeEnum } from '@/enums/theme'
 import { setCSSVariable } from '@/utils'
+import { darkThemeConfig, lightThemeConfig, naiveThemeConfig } from '@/settings/theme'
+import { appSettings } from '@/settings/app'
 
 
 // 主题
 export const useThemeStore = defineStore('theme', {
-    state: (): Store.ThemeStore => initThemeState,
+    state: (): Store.ThemeStore => ({
+        theme: appSettings.theme,
+        themeMode: appSettings.themeMode,
+        customize: {
+            light: lightThemeConfig,
+            dark: darkThemeConfig
+        },
+        naive: {
+            light: naiveThemeConfig(lightThemeConfig),
+            dark: naiveThemeConfig(darkThemeConfig)
+        }
+    }),
     getters: {
         // 当前主题覆盖
         currentThemeOverrides: (themeStore) => themeStore.naive[themeStore.themeMode],
@@ -21,14 +32,14 @@ export const useThemeStore = defineStore('theme', {
         initTheme() {
             this.setTheme(ThemeStorage.getTheme() || this.themeMode)
         },
-        // 切换主题
-        toggleTheme() {
-            const type = this.themeMode === ThemeModeEnum.LIGHT ? ThemeModeEnum.DARK : ThemeModeEnum.LIGHT
+        // 切换明亮或者暗黑主题
+        toggleLightOrDarkTheme() {
+            const type = this.themeMode === 'light' ? 'dark' : 'light'
             this.themeMode = type
             this.setTheme(type)
         },
         // 设置主题
-        setTheme(themeType: ThemeModeEnum) {
+        setTheme(themeType: Store.ThemeMode) {
             const body = document.body
             // 去除过渡效果
             body.classList.add('noTransition')

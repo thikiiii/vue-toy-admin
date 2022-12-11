@@ -4,7 +4,8 @@ import { useLayoutStore } from '@/store/modules/layout'
 
 defineOptions({ name: 'LayoutFooter' })
 const layoutStore = useLayoutStore()
-const layoutFooterClass = computed(() => layoutStore.isFixedFooter ? 'fixed' : undefined)
+const { footer } = layoutStore.$state
+const layoutFooterClass = computed(() => footer.isFixedFooter ? 'fixed' : undefined)
 </script>
 
 <template>

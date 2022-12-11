@@ -23,6 +23,7 @@ const tabBarStore = useTabBarStore()
 const route = useRoute()
 const router = useRouter()
 const layoutStore = useLayoutStore()
+const { header } = layoutStore.$state
 // tab 上下文菜单可见
 const [ tabVisible ] = useToggle()
 // 全局 上下文菜单可见
@@ -39,7 +40,7 @@ const contextMenuConfig: ContextMenuConfig = reactive({
   y: undefined
 })
 
-const layoutTabBarClass = computed(() => layoutStore.isFixedHeaderAndTabBar ? 'fixed' : undefined)
+const layoutTabBarClass = computed(() => header.isFixedHeaderAndTabBar ? 'fixed' : undefined)
 
 
 const isScroll = (): boolean => {

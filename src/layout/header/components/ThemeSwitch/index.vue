@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useThemeStore } from '@/store/modules/theme'
-import { ThemeModeEnum } from '@/enums/theme'
 import { computed } from 'vue'
 import IconHoverContainer from '../IconHoverContainer/index.vue'
 
@@ -10,9 +9,9 @@ const themeStore = useThemeStore()
 
 const iconName = computed(() => {
   switch (themeStore.themeMode) {
-    case ThemeModeEnum.LIGHT:
+    case 'light':
       return 'ic:outline-wb-sunny'
-    case ThemeModeEnum.DARK:
+    case 'dark':
       return 'ic:outline-dark-mode'
     default:
       return 'mdi:white-balance-sunny'
@@ -21,7 +20,7 @@ const iconName = computed(() => {
 </script>
 
 <template>
-  <icon-hover-container content="主题切换" @click="themeStore.toggleTheme()">
+  <icon-hover-container content="主题切换" @click="themeStore.toggleLightOrDarkTheme()">
     <icon :icon="iconName" />
   </icon-hover-container>
 </template>

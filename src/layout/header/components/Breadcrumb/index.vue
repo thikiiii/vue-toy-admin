@@ -38,7 +38,7 @@ watch(() => route.path, () => {
 </script>
 
 <template>
-  <n-breadcrumb>
+  <n-breadcrumb class="inverted">
     <n-breadcrumb-item v-for="menu in breadcrumb" :key="menu.key">
       <n-dropdown :options="menu.children" :value="route.path" @select="onSelect">
         <span>
@@ -48,3 +48,20 @@ watch(() => route.path, () => {
     </n-breadcrumb-item>
   </n-breadcrumb>
 </template>
+
+<style lang="less" scoped>
+.inverted {
+  :deep(.n-breadcrumb-item:last-child .n-breadcrumb-item__link) {
+    color: @invertTextColor;
+  }
+
+  :deep( .n-breadcrumb-item .n-breadcrumb-item__link) {
+    color: #a0aec0;
+  }
+
+  :deep( .n-breadcrumb-item .n-breadcrumb-item__separator) {
+    color: #a0aec0;
+  }
+}
+
+</style>

@@ -1,3 +1,6 @@
+// @ts-ignore
+import { AppMenuSearchHistoryRecord } from '@/layout/header/components/AppSearch/AppSearchModal.vue'
+
 export const appSearchKeyPrompt = [
     {
         icons: [ 'mdi:arrow-left-bottom' ],
@@ -8,7 +11,7 @@ export const appSearchKeyPrompt = [
         prompt: '切换'
     },
     {
-        icons: [ 'mdi:keyboard-esc'],
+        icons: [ 'mdi:keyboard-esc' ],
         prompt: '关闭'
     }
 ]
@@ -30,8 +33,8 @@ export const searchMenus = (menuName: string, menus: Store.MenuOption[]): Store.
 }
 
 // 处理结果
-export const handleResult = (result: Store.MenuOption[]): System.AppMenuSearchHistoryRecord[] => {
-    const menuList: System.AppMenuSearchHistoryRecord[] = []
+export const handleResult = (result: Store.MenuOption[]): AppMenuSearchHistoryRecord[] => {
+    const menuList: AppMenuSearchHistoryRecord[] = []
     const handle = (menus: Store.MenuOption[], iconName?: string | undefined, menuNameList?: string[]) => {
         menus.forEach((menu) => {
             const icon = iconName || menu.meta?.icon

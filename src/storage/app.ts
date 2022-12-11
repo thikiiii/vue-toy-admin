@@ -1,7 +1,9 @@
 import store from 'store2'
+// @ts-ignore
+import { AppMenuSearchHistoryRecord } from '@/layout/header/components/AppSearch/AppSearchModal.vue'
 
 // 系统
-export class SystemStorage {
+export class AppStorage {
     // 是否自动登录
     public static readonly autoLogin = 'AUTO_LOGIN'
 
@@ -15,10 +17,10 @@ export class SystemStorage {
     static removeAutoLogin = () => store.remove(this.autoLogin)
 
     // 获取搜索记录
-    static getSearchHistory = (): System.AppMenuSearchHistoryRecord[] => store.get(this.searchHistory) || []
+    static getSearchHistory = (): AppMenuSearchHistoryRecord[] => store.get(this.searchHistory) || []
 
     // 设置搜索记录
-    static addSearchHistory = (searchHistoryItem: System.AppMenuSearchHistoryRecord) => {
+    static addSearchHistory = (searchHistoryItem: AppMenuSearchHistoryRecord) => {
         const searchHistory = this.getSearchHistory()
         const index = searchHistory.findIndex(item => item.path === searchHistoryItem.path)
         // 如果存在就删除原来的

@@ -3,18 +3,17 @@ import Logo from '@/layout/components/Logo/index.vue'
 import Menu from '@/layout/components/Menu/index.vue'
 import { useLayoutStore } from '@/store/modules/layout'
 import { useRouteStore } from '@/store/modules/route'
-import { MenuModeEnum } from '@/enums/layout'
 
-defineOptions({ name: 'MobileMenu' })
-console.log(1)
+defineOptions({ name: 'MobileSidebar' })
 const layoutStore = useLayoutStore()
+const { mobile, sidebar } = layoutStore.$state
 const routeStore = useRouteStore()
 </script>
 
 <template>
-  <n-drawer v-model:show="layoutStore.mobileMenuVisible" :width="layoutStore.cssVariable.sidebarWidth" placement="left">
+  <n-drawer v-model:show="mobile.mobileMenuVisible" :width="sidebar.sidebarWidth" placement="left">
     <logo />
-    <Menu :menus="routeStore.menus" :mode="MenuModeEnum.SIDE" />
+    <Menu :menus="routeStore.menus" inverted mode="Side" />
   </n-drawer>
 </template>
 

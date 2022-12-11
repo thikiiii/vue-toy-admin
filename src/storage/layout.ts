@@ -1,6 +1,5 @@
 // 布局
 import store from 'store2'
-import { MenuModeEnum } from '@/enums/layout'
 
 
 export class LayoutStorage {
@@ -8,9 +7,8 @@ export class LayoutStorage {
     public static readonly menuMode = 'MENU_MODE'
 
     // 设置菜单模式
-    static setMenuMode = (menuMode: MenuModeEnum) => store.set(this.menuMode, menuMode)
+    static setMenuMode = (menuMode: Store.MenuMode) => store.set(this.menuMode, menuMode)
 
     // 获取菜单模式
-    static getMenuMode = (): MenuModeEnum | undefined => store.get(this.menuMode)
-
+    static getMenuMode = (): Store.MenuMode | undefined => store.get(this.menuMode)
 }

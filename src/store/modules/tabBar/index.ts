@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import router from '@/router'
 import { nextTick } from 'vue'
-import { RouterHelpers } from '@/router/helpers'
+import { useRouteStore } from '@/store/modules/route'
 
 
 const useTabBarStore = defineStore('tabBar', {
@@ -92,7 +92,8 @@ const useTabBarStore = defineStore('tabBar', {
             this.tabBar = [ ...this.affixTabs ]
             this.setCacheMenus()
             // 重定向到首页
-            RouterHelpers.redirectToHomepage()
+            const routeStore = useRouteStore()
+            routeStore.redirectToHomepage()
         },
 
         // 筛选固定标签
@@ -122,7 +123,8 @@ const useTabBarStore = defineStore('tabBar', {
 
         // 匹配不到当前路由重定向到首页
         routeNotMatchedRedirectHome() {
-            if (!this.isExist(router.currentRoute.value.path)) RouterHelpers.redirectToHomepage()
+            const routeStore = useRouteStore()
+            if (!this.isExist(router.currentRoute.value.path)) routeStore.redirectToHomepage()
         },
         // 设置固定标签
         setAffixTabs(authRoutes: Route.RouteRecordRaw[]) {

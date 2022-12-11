@@ -1,15 +1,19 @@
 <script lang="ts" setup>
 import ConfigMenu from '../ConfigMenu/index.vue'
+import { useToggle } from '@vueuse/core'
 
 defineOptions({ name: 'ThemeMode' })
 const railStyle = () => ({ background: '#464e62' })
+
+const [ isDark, toggleDark ] = useToggle()
+
 </script>
 
 <template>
   <n-divider title-placement="center">主题模式</n-divider>
   <n-space size="large" vertical>
     <config-menu label="深色主题">
-      <n-switch :rail-style="railStyle">
+      <n-switch v-model:value="isDark" :rail-style="railStyle">
         <template #checked>
           <icon color="#ffb948" icon="line-md:sunny-filled-loop-to-moon-filled-loop-transition" />
         </template>

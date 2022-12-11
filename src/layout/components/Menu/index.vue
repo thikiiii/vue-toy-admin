@@ -18,12 +18,11 @@
 import { useRoute } from 'vue-router'
 import { computed, ref, watch } from 'vue'
 import { MenuInst, MenuOption } from 'naive-ui'
-import { RouterHelpers } from '@/router/helpers'
-import { MenuModeEnum } from '@/enums/layout'
+import { useRouteStore } from '@/store/modules/route'
 
 interface Props {
   // 模式
-  mode: MenuModeEnum
+  mode: Store.MenuMode
 
   // 折叠
   collapsed?: boolean
@@ -47,19 +46,19 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const route = useRoute()
-
+const routeStore = useRouteStore()
 const menuRef = ref<MenuInst | null>(null)
 
 
 // 激活菜单
 const activeMenu = computed(() => route.path)
 // 是否折叠
-const isCollapsed = computed(() => props.collapsed && (props.mode === MenuModeEnum.SIDE || props.mode === MenuModeEnum.SIDE_MIX))
+const isCollapsed = computed(() => props.collapsed && (props.mode === 'Side' || props.mode === 'SideMix'))
 // n 组件菜单模式
-const nMenuMode = computed(() => props.mode === MenuModeEnum.TOP ? 'horizontal' : 'vertical')
+const nMenuMode = computed(() => props.mode === 'Top' ? 'horizontal' : 'vertical')
 
 const selectMenu = (key: string) => {
-  RouterHelpers.handleClickMenu(key)
+  routeStore.handleClickMenu(key)
 }
 
 watch(activeMenu, (newActiveMenu) => {

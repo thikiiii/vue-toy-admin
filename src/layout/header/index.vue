@@ -11,31 +11,31 @@ import FullScreen from './components/FullScreen/index.vue'
 import ThemeSwitch from './components/ThemeSwitch/index.vue'
 import SystemConfig from './components/SystemConfig/index.vue'
 import { computed } from 'vue'
-import { MenuModeEnum } from '@/enums/layout'
 import { useRouteStore } from '@/store/modules/route'
 
 defineOptions({ name: 'LayoutHeader' })
 const layoutStore = useLayoutStore()
+const { header, app, mobile } = layoutStore.$state
 const routeStore = useRouteStore()
-const layoutHeaderClass = computed(() => layoutStore.isFixedHeaderAndTabBar ? 'fixed' : undefined)
+const layoutHeaderClass = computed(() => header.isFixedHeaderAndTabBar ? 'fixed' : undefined)
 </script>
 <template>
-  <div :class="layoutHeaderClass" class="layoutHeader">
+  <div :class="layoutHeaderClass" class="layoutHeader inverted">
     <div class="layoutHeader-left">
-      <template v-if="layoutStore.menuMode!==MenuModeEnum.TOP||layoutStore.isMobile">
+      <template v-if="app.menuMode!=='Top'||mobile.isMobile">
         <!-- 菜单折叠 -->
-        <menu-collapsed v-if="layoutStore.menuMode!==MenuModeEnum.SIDE_MIX" />
+        <menu-collapsed v-if="mobile.isMobile||app.menuMode!=='SideMix'" />
         <!-- 面包屑 -->
-        <breadcrumb :style="{marginLeft:layoutStore.menuMode===MenuModeEnum.SIDE_MIX?'10px':undefined}" />
+        <breadcrumb :style="{marginLeft:app.menuMode==='SideMix'?'10px':undefined}" />
       </template>
-      <template v-if="layoutStore.menuMode===MenuModeEnum.TOP&&!layoutStore.isMobile">
+      <template v-if="app.menuMode==='Top'&&!mobile.isMobile">
         <!-- LOGO -->
         <div class="layoutHeader-left-logo-container">
           <logo />
         </div>
         <!-- 水平菜单 -->
         <n-scrollbar x-scrollable>
-          <Menu :menus="routeStore.menus" :mode="MenuModeEnum.TOP" collapsed />
+          <Menu :menus="routeStore.menus" collapsed inverted mode="Top" />
         </n-scrollbar>
       </template>
     </div>
@@ -66,6 +66,11 @@ const layoutHeaderClass = computed(() => layoutStore.isFixedHeaderAndTabBar ? 'f
   gap: 10px;
   background: @subBackgroundColor;
   flex-shrink: 0;
+
+  &.inverted {
+    background: @invertBackgroundColor;
+    color: @invertTextColor;
+  }
 
   &.fixed {
     position: sticky;

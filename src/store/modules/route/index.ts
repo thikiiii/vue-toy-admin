@@ -6,6 +6,7 @@ import { Sort } from '@/enums/common'
 import AppSettings from '@/settings'
 import useTabBarStore from '@/store/modules/tabBar'
 import { UserApi } from '@/services/api/user'
+import { matchUrl } from '@/utils/regularCheck'
 
 export const useRouteStore = defineStore('route', {
     state: (): Store.RouteStore => ({
@@ -35,6 +36,17 @@ export const useRouteStore = defineStore('route', {
             return data
         },
 
+        // 重定向到首页
+        redirectToHomepage() {
+            router.push(AppSettings.homePath)
+        },
+
+        // 处理点击菜单
+        handleClickMenu(path: string) {
+            // 跳转外链
+            if (matchUrl.test(path)) return RouterHelpers.openTheLink(path)
+            router.push(path)
+        },
         // 过滤本地权限路由
         filterAuthRoutes(routeList: Route.RouteRecordRaw[]): Route.RouteRecordRaw[] {
             const authStore = useAuthStore()

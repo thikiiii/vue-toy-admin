@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useLayoutStore } from '@/store/modules/layout'
 import { onBeforeUnmount, onMounted } from 'vue'
-import { storeToRefs } from 'pinia'
 import LayoutHeader from '@/layout/header/index.vue'
 import LayoutMain from '@/layout/main/index.vue'
 import LayoutSidebar from '@/layout/sidebar/index.vue'
@@ -12,36 +11,34 @@ defineOptions({ name: 'Layout' })
 
 const layoutStore = useLayoutStore()
 
-const {
-  isCollapsedSidebar,
-  isMobile,
-  mobileMenuVisible,
-  menuMode,
-  collapsedSidebarWidth,
-  footerVisible,
-  isFixedFooter,
-  tabBarVisible
-} = storeToRefs(layoutStore)
+const { header, footer, mobile } = layoutStore.$state
+
+const handleResize = () => {
+// 判断是否是移动端
+  mobile.isMobile = document.body.offsetWidth <= mobile.mobileTriggerWidth
+}
 
 onMounted(() => {
   // 监听判断是否是移动端
-  window.addEventListener('resize', layoutStore.judgeMobile)
+  window.addEventListener('resize', handleResize)
 })
+
 onBeforeUnmount(() => {
   // 取消监听
-  window.removeEventListener('resize', layoutStore.judgeMobile)
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 
 <template>
+  <!-- n-layout 的作用是让子元素继承 n-layout 的字体颜色 -->
   <n-layout>
     <div class="layout">
       <layout-sidebar />
       <div class="layout-scroll">
         <layout-header />
-        <layout-tab-bar v-if="tabBarVisible" />
+        <layout-tab-bar v-if="header.tabBarVisible" />
         <layout-main />
-        <layout-footer v-if="footerVisible" />
+        <layout-footer v-if="footer.footerVisible" />
       </div>
     </div>
   </n-layout>
