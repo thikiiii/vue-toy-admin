@@ -178,6 +178,9 @@ declare namespace Store {
         // 当前主题模式
         themeMode: ThemeMode
 
+        // 跟随系统
+        followSystem: boolean
+
         // naive 主题
         naive: ThemeModeConfig<import('naive-ui').GlobalThemeOverrides>
 
@@ -217,6 +220,9 @@ declare namespace Store {
 
         // 登录 loading
         loginLoading: boolean
+
+        // 退出登录 loading
+        signOutLoading: boolean
     }
 
     interface MenuOption {
@@ -238,7 +244,7 @@ declare namespace Store {
         menus: MenuOption[]
 
         // 路由鉴权模式
-        routeAuthMode: import('@/enums/auth').RouteAuthMode
+        routeAuthMode: import('@/enums/auth').RouteAuthModeEnum
 
         // 是否初始化过权限路由
         hasInitAuthRoute: boolean

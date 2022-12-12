@@ -1,6 +1,10 @@
-export const appSettings: AppSettings = {
+import { AppStorage } from "@/storage/app";
+
+// setting 初始值
+const appSettingsInitial: AppSettings = {
     theme: '#6675ff',
-    themeMode: 'dark',
+    themeMode: 'light',
+    followSystem: true,
     sidebar: {
         // 侧边栏宽度
         sidebarWidth: '220px',
@@ -65,9 +69,11 @@ export const appSettings: AppSettings = {
         topProgressBarVisible: true,
 
         // 菜单模式
-        menuMode: 'Top',
+        menuMode: 'SideMix',
 
         // 页面缓存
         isPageCache: true
     }
 }
+
+export const appSettings = AppStorage.getSettings() || appSettingsInitial

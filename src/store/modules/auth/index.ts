@@ -2,10 +2,10 @@ import { defineStore } from 'pinia'
 import { AuthCookie } from '@/storage/auth'
 import { UserApi } from '@/services/api/user'
 import router from '@/router'
-import AppSettings from '@/settings'
 import { LoginMethod } from '@/enums/common'
 import { useRouteStore } from '@/store/modules/route'
-import { RouteAuthMode } from '@/enums/auth'
+import { RouteAuthModeEnum } from '@/enums/auth'
+import { Settings } from "@/settings";
 
 // 鉴权
 const useAuthStore = defineStore('auth', {
@@ -14,7 +14,8 @@ const useAuthStore = defineStore('auth', {
         loginLoading: false,
         token: AuthCookie.getToken() || null,
         roles: [],
-        permissions: []
+        permissions: [],
+        signOutLoading: false
     }),
     getters: {
         // 是否登录
@@ -73,32 +74,49 @@ const useAuthStore = defineStore('auth', {
             const routeStore = useRouteStore()
 
             switch (routeStore.routeAuthMode) {
-                case RouteAuthMode.FRONT:
+                case RouteAuthModeEnum.FRONT:
                     routeStore.initFrontRouteAuth()
                     break
-                case RouteAuthMode.SERVER:
+                case RouteAuthModeEnum.SERVER:
                     await routeStore.initServerRouteAuth()
                     break
             }
 
+
+            const redirect = router.currentRoute.value.query.redirect
+            await router.replace(redirect as string || Settings.homePath)
             window.$notification?.success({
                 title: '登录成功',
                 content: `欢迎回来，${ this.userinfo?.username }！`
             })
             this.loginLoading = false
-
-            const redirect = router.currentRoute.value.query.redirect
-            await router.replace(redirect as string || AppSettings.homePath)
         },
 
         // 退出登录
         async signOut() {
-            const { subCode, subMsg } = await UserApi.signOut()
+            const { subCode, subMsg } = await UserApi.signOut().catch(() => {
+                this.handleSignOut()
+                return Promise.reject()
+            });
             if (subCode !== 200) {
                 window.$message?.error(subMsg)
-                return Promise.reject()
             }
-            return Promise.resolve()
+            await this.handleSignOut()
+        },
+
+        async handleSignOut() {
+            this.signOutLoading = true
+            await router.replace({
+                path: '/login',
+                query: {
+                    redirect: router.currentRoute.value.path
+                }
+            })
+            const routeStore = useRouteStore();
+            this.initUserStore()
+            routeStore.initRouteStore()
+            window.$message?.success('退出登录成功!')
+            this.signOutLoading = false
         },
 
         // 初始化

@@ -1,17 +1,17 @@
 // 减轻主题色
 import { colorHexToRgb, lightenColor } from '@/utils'
-import AppSettings from '@/settings/index'
+import { appSettings } from '@/settings/app'
 import { GlobalThemeOverrides } from 'naive-ui'
 
-const lightenThemeColor = lightenColor(AppSettings.theme, 10)
+const lightenThemeColor = lightenColor(appSettings.theme, 10)
 // 淡化的主题色
-const fadedThemeColor = colorHexToRgb(AppSettings.theme, 0.1)
+const fadedThemeColor = colorHexToRgb(appSettings.theme, 0.1)
 // 阴影主题色
-const shadowThemeColor = colorHexToRgb(AppSettings.theme, 0.5)
+const shadowThemeColor = colorHexToRgb(appSettings.theme, 0.5)
 
 // 明亮主题配置
 export const lightThemeConfig: Store.CustomizeThemeConfig = {
-    theme: AppSettings.theme,
+    theme: appSettings.theme,
     fadedThemeColor: fadedThemeColor,
     mainTextColor: '#121828',
     subTextColor: '#65748b',
@@ -31,7 +31,7 @@ export const lightThemeConfig: Store.CustomizeThemeConfig = {
 
 // 暗黑主题配置
 export const darkThemeConfig: Store.CustomizeThemeConfig = {
-    theme: AppSettings.theme,
+    theme: appSettings.theme,
     fadedThemeColor: fadedThemeColor,
     mainTextColor: '#edf2f7',
     subTextColor: '#a0aec0',
@@ -66,7 +66,7 @@ export const naiveThemeConfig = (themeConfig: Store.CustomizeThemeConfig): Globa
         invertedColor: themeConfig.invertBackgroundColor,
         // 弹出框背景
         popoverColor: themeConfig.subBackgroundColor,
-        primaryColor: AppSettings.theme,
+        primaryColor: appSettings.theme,
         primaryColorHover: lightenThemeColor,
         primaryColorPressed: lightenThemeColor,
         primaryColorSuppl: lightenThemeColor

@@ -21,9 +21,7 @@ const routeStore = useRouteStore()
 const layoutStore = useLayoutStore()
 const { sidebar } = layoutStore.$state
 const [ sidebarVisible ] = useToggle()
-// TODO:使用 useLayoutStore 中的 Fixed 、Collapsed
-const [ isFixed, toggleFixed ] = useToggle()
-const [ isCollapsed, toggleCollapsed ] = useToggle()
+
 const route = useRoute()
 const state: State = reactive({
   secondaryMenus: [],
@@ -32,21 +30,21 @@ const state: State = reactive({
 
 const mixedMenuClass = computed(() => {
   const className: string[] = []
-  if (isFixed.value) className.push(isCollapsed.value ? 'collapsedExtend' : 'extend')
-  if (isCollapsed.value && !isFixed.value) className.push('collapsed')
+  if (sidebar.isFixedMixedSidebar) className.push(sidebar.isCollapsedMixedSidebar ? 'collapsedExtend' : 'extend')
+  if (sidebar.isCollapsedMixedSidebar && !sidebar.isFixedMixedSidebar) className.push('collapsed')
   return className.join(' ')
 })
 
-const collapsedClass = computed(() => isCollapsed.value ? 'collapsed' : undefined)
-const thumbtackIcon = computed(() => isFixed.value ? 'mdi:pin-off' : 'mdi:pin')
-const collapsedIcon = computed(() => isCollapsed.value ? 'mdi:chevron-triple-right' : 'mdi:chevron-triple-left')
+const collapsedClass = computed(() => sidebar.isCollapsedMixedSidebar ? 'collapsed' : undefined)
+const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off' : 'mdi:pin')
+const collapsedIcon = computed(() => sidebar.isCollapsedMixedSidebar ? 'mdi:chevron-triple-right' : 'mdi:chevron-triple-left')
 const handleMenu = (menu: Store.MenuOption, index: number) => {
   if (menu.children) {
     state.secondaryMenus = menu.children as MenuOption[]
     sidebarVisible.value = true
   } else {
     routeStore.handleClickMenu(menu.key)
-    if (!isFixed.value) sidebarVisible.value = false
+    if (!sidebar.isFixedMixedSidebar) sidebarVisible.value = false
     state.secondaryMenus = []
     // isFixed.value = false
   }
@@ -74,7 +72,7 @@ const findActiveIndex = () => {
 }
 
 const onMouseLeave = () => {
-  if (!isFixed.value) sidebarVisible.value = false
+  if (!sidebar.isFixedMixedSidebar) sidebarVisible.value = false
   state.currentIndex = findActiveIndex()
 }
 // 设置默认激活index
@@ -85,7 +83,7 @@ state.currentIndex = findActiveIndex()
   <div :class="mixedMenuClass" class="mixedMenu" @mouseleave="onMouseLeave">
     <!-- TODO:暗黑模式下去除 inverted -->
     <div :class="collapsedClass" class="mixedMenu-main inverted">
-      <logo />
+      <logo/>
       <div class="mixedMenu-main-scroll">
         <div
             v-for="(menu,i) in routeStore.menus"
@@ -93,27 +91,29 @@ state.currentIndex = findActiveIndex()
             :class="isActive(i)"
             class="mixedMenu-main-scroll-menu"
             @click="handleMenu(menu,i)">
-          <n-popover :disabled="!isCollapsed" trigger="hover">
+          <n-popover :disabled="!sidebar.isCollapsedMixedSidebar" trigger="hover">
             <template #trigger>
-              <span><icon :icon="menu?.meta?.icon" size="24" /></span>
+              <span><icon :icon="menu?.meta?.icon" size="24"/></span>
             </template>
             <span>{{ menu?.meta?.title }}</span>
           </n-popover>
-          <n-ellipsis v-if="!isCollapsed" class="mixedMenu-main-scroll-menu-name">{{ menu?.meta?.title }}</n-ellipsis>
+          <n-ellipsis v-if="!sidebar.isCollapsedMixedSidebar" class="mixedMenu-main-scroll-menu-name">
+            {{ menu?.meta?.title }}
+          </n-ellipsis>
         </div>
       </div>
-      <div class="mixedMenu-main-collapsedContainer" @click="toggleCollapsed()">
-        <icon :icon="collapsedIcon" pointer size="22" />
+      <div class="mixedMenu-main-collapsedContainer" @click="layoutStore.toggleCollapsedMixedSidebar()">
+        <icon :icon="collapsedIcon" pointer size="22"/>
       </div>
     </div>
     <transition name="slideIn">
       <div v-show="sidebarVisible" :class="collapsedClass" class="mixedMenu-sidebar inverted">
         <div class="mixedMenu-sidebar-header">
-          <logo />
-          <icon :icon="thumbtackIcon" pointer @click="toggleFixed()" />
+          <logo/>
+          <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
         </div>
         <div class="mixedMenu-sidebar-scroll">
-          <Menu :menus="state.secondaryMenus" inverted mode="Side" />
+          <Menu :menus="state.secondaryMenus" inverted mode="Side"/>
         </div>
       </div>
     </transition>

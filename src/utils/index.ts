@@ -1,13 +1,3 @@
-// TODO:抽离出去
-/**
- * 获取当前操作系统的主题
- * @return 'light' | 'dark'
- * */
-export const getSystemTheme = (): Store.ThemeMode => {
-    const themeMedia = window.matchMedia('(prefers-color-scheme: light)')
-    return themeMedia.matches ? 'light' : 'dark'
-}
-
 /**
  * 将通过的百分比与 HEX 颜色的 R、G 或 B 相加
  * @param {string} color 要改变的颜色

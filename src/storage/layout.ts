@@ -1,7 +1,6 @@
 // 布局
 import store from 'store2'
 
-
 export class LayoutStorage {
     // 菜单模式
     public static readonly menuMode = 'MENU_MODE'
@@ -12,3 +11,4 @@ export class LayoutStorage {
     // 获取菜单模式
     static getMenuMode = (): Store.MenuMode | undefined => store.get(this.menuMode)
 }
+

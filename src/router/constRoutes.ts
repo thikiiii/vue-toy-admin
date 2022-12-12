@@ -1,4 +1,4 @@
-import AppSettings from '@/settings'
+import { Settings } from "@/settings";
 
 // 登录路由路径
 export const LOGIN_PATH = '/login'
@@ -8,7 +8,7 @@ export const ROOT_ROUTE: Route.RouteRecordRaw = {
     path: '/',
     name: 'root',
     component: 'Layout',
-    redirect: AppSettings.homePath
+    redirect: Settings.homePath
 }
 
 // 固定路由

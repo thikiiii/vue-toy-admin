@@ -24,11 +24,21 @@ export const useLayoutStore = defineStore('layout', {
     getters: {},
     actions: {
         // 切换折叠
-        toggleCollapsed(collapsed: boolean) {
+        toggleCollapsed(collapsed?: boolean) {
             this.sidebar.isCollapsedSidebar = collapsed || !this.sidebar.isCollapsedSidebar
         },
 
-        toggleMobileMenuVisible(mobileMenuVisible) {
+        // 切换折叠混合侧边栏
+        toggleFixedMixedSidebar(fixed?: boolean) {
+            this.sidebar.isFixedMixedSidebar = fixed || !this.sidebar.isFixedMixedSidebar
+        },
+
+        // 切换固定混合侧边栏
+        toggleCollapsedMixedSidebar(collapsed?: boolean) {
+            this.sidebar.isCollapsedMixedSidebar = collapsed || !this.sidebar.isCollapsedMixedSidebar
+        },
+
+        toggleMobileMenuVisible(mobileMenuVisible?: boolean) {
             this.mobile.mobileMenuVisible = mobileMenuVisible || !this.mobile.mobileMenuVisible
         }
     }

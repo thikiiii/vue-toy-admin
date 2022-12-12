@@ -17,6 +17,5 @@ interface Window {
 declare type TacticsAction = [ boolean, () => void ]
 
 
-// 设置
-declare type AppSettings = Omit<Store.LayoutStore, 'mobile'> & Pick<Store.ThemeStore, 'theme' | 'themeMode'>
+
 

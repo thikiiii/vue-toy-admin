@@ -10,6 +10,9 @@ export class AppStorage {
     // App搜索记录
     public static readonly searchHistory = 'SEARCH_HISTORY'
 
+    // settings
+    public static readonly settings = 'TOY_SETTINGS'
+
     // 设置自动登录
     static setAutoLogin = (isLogin: boolean) => store.set(this.autoLogin, isLogin)
 
@@ -31,4 +34,13 @@ export class AppStorage {
 
     // 清空搜索记录
     static clearSearchHistory = () => store.remove(this.searchHistory)
+
+    // 设置 settings
+    static setSettings = (setting: AppSettings) => store.set(this.settings, setting)
+
+    // 获取 settings
+    static getSettings = (): AppSettings | undefined => store.get(this.settings)
+
+    // 删除 settings
+    static removeSettings = () => store.remove(this.settings)
 }

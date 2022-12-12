@@ -2,24 +2,24 @@ import useAuthStore from '@/store/modules/auth'
 import { useRouteStore } from '@/store/modules/route'
 import { LOGIN_PATH } from '@/router/constRoutes'
 import { AuthCookie } from '@/storage/auth'
-import { RouteAuthMode } from '@/enums/auth'
+import { RouteAuthModeEnum } from '@/enums/auth'
 import { runTacticsAction } from '@/utils'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 
 // 守卫策略
 const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-    const { isLogin, isAuth, initUserStore, getUserinfo } = useAuthStore()
+    const { isLogin, isAuth, initUserStore, getUserinfo, signOutLoading } = useAuthStore()
     const { initRouteStore, initFrontRouteAuth, initServerRouteAuth, routeAuthMode, hasInitAuthRoute } = useRouteStore()
     // 处理路由鉴权模式
     const handleRouteAuthMode = async () => {
         switch (routeAuthMode) {
             // 前端路由鉴权模式
-            case RouteAuthMode.FRONT:
+            case RouteAuthModeEnum.FRONT:
                 // 初始化路由
                 initFrontRouteAuth()
                 break
             // 服务端路由鉴权模式
-            case RouteAuthMode.SERVER:
+            case RouteAuthModeEnum.SERVER:
                 await initServerRouteAuth()
                 break
         }
@@ -75,7 +75,7 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
         ],
         // 登录情况下不能到登录页面
         [
-            to.path === LOGIN_PATH,
+            to.path === LOGIN_PATH && !signOutLoading,
             () => {
                 console.log('GUARD-------5')
                 next(from.fullPath)
