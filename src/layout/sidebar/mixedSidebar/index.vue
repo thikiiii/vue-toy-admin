@@ -2,7 +2,7 @@
 import Logo from '@/layout/components/Logo/index.vue'
 import Menu from '@/layout/components/Menu/index.vue'
 import { useRouteStore } from '@/store/modules/route'
-import { computed, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { useToggle } from '@vueuse/core'
 import { useRoute } from 'vue-router'
 import { MenuOption } from 'naive-ui'
@@ -20,7 +20,7 @@ defineOptions({ name: 'MixedSidebar' })
 const routeStore = useRouteStore()
 const layoutStore = useLayoutStore()
 const { sidebar } = layoutStore.$state
-const [ sidebarVisible ] = useToggle()
+const [ sidebarVisible ] = useToggle(sidebar.isFixedMixedSidebar)
 
 const route = useRoute()
 const state: State = reactive({
@@ -75,15 +75,21 @@ const onMouseLeave = () => {
   if (!sidebar.isFixedMixedSidebar) sidebarVisible.value = false
   state.currentIndex = findActiveIndex()
 }
-// 设置默认激活index
-state.currentIndex = findActiveIndex()
+
+onMounted(() => {
+  const index = findActiveIndex()
+  // 设置默认激活index
+  state.currentIndex = index
+  state.secondaryMenus = routeStore.menus[index].children || []
+})
+
 </script>
 
 <template>
   <div :class="mixedMenuClass" class="mixedMenu" @mouseleave="onMouseLeave">
     <!-- TODO:暗黑模式下去除 inverted -->
     <div :class="collapsedClass" class="mixedMenu-main inverted">
-      <logo/>
+      <logo />
       <div class="mixedMenu-main-scroll">
         <div
             v-for="(menu,i) in routeStore.menus"
@@ -93,7 +99,7 @@ state.currentIndex = findActiveIndex()
             @click="handleMenu(menu,i)">
           <n-popover :disabled="!sidebar.isCollapsedMixedSidebar" trigger="hover">
             <template #trigger>
-              <span><icon :icon="menu?.meta?.icon" size="24"/></span>
+              <span><icon :icon="menu?.meta?.icon" size="24" /></span>
             </template>
             <span>{{ menu?.meta?.title }}</span>
           </n-popover>
@@ -103,17 +109,17 @@ state.currentIndex = findActiveIndex()
         </div>
       </div>
       <div class="mixedMenu-main-collapsedContainer" @click="layoutStore.toggleCollapsedMixedSidebar()">
-        <icon :icon="collapsedIcon" pointer size="22"/>
+        <icon :icon="collapsedIcon" pointer size="22" />
       </div>
     </div>
     <transition name="slideIn">
       <div v-show="sidebarVisible" :class="collapsedClass" class="mixedMenu-sidebar inverted">
         <div class="mixedMenu-sidebar-header">
-          <logo/>
-          <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
+          <logo />
+          <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()" />
         </div>
         <div class="mixedMenu-sidebar-scroll">
-          <Menu :menus="state.secondaryMenus" inverted mode="Side"/>
+          <Menu :menus="state.secondaryMenus" inverted mode="Side" />
         </div>
       </div>
     </transition>

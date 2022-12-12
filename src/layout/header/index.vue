@@ -22,11 +22,11 @@ const layoutHeaderClass = computed(() => header.isFixedHeaderAndTabBar ? 'fixed'
 <template>
   <div :class="layoutHeaderClass" class="layoutHeader inverted">
     <div class="layoutHeader-left">
-      <template v-if="app.menuMode!=='Top'||mobile.isMobile">
+      <template v-if="app.menuMode!=='Top'">
         <!-- 菜单折叠 -->
         <menu-collapsed v-if="mobile.isMobile||app.menuMode!=='SideMix'" />
         <!-- 面包屑 -->
-        <breadcrumb :style="{marginLeft:app.menuMode==='SideMix'?'10px':undefined}" />
+        <breadcrumb v-if="!mobile.isMobile" :style="{marginLeft:app.menuMode==='SideMix'?'10px':undefined}" />
       </template>
       <template v-if="app.menuMode==='Top'&&!mobile.isMobile">
         <!-- LOGO -->

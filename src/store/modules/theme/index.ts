@@ -34,7 +34,7 @@ export const useThemeStore = defineStore('theme', {
                 this.setTheme(this.getSystemThemeMode())
                 this.onSystemThemeChange()
             } else {
-                this.setTheme(ThemeStorage.getTheme() || this.themeMode);
+                this.setTheme(ThemeStorage.getTheme() || this.themeMode)
             }
         },
         // 切换明亮或者暗黑主题
@@ -42,6 +42,14 @@ export const useThemeStore = defineStore('theme', {
             const type = this.themeMode === 'light' ? 'dark' : 'light'
             this.themeMode = type
             this.setTheme(type)
+        },
+        // 设置主题颜色
+        setThemeColor(color: string) {
+            /*
+            * TODO: 使用useEventListener
+            * */
+            this.theme = color
+            setCSSVariable({ theme: color })
         },
         // 设置主题
         setTheme(themeType: Store.ThemeMode) {
@@ -67,13 +75,13 @@ export const useThemeStore = defineStore('theme', {
         onSystemThemeChange() {
             const matchMedia = window.matchMedia('(prefers-color-scheme:dark)')
             // 监听主题变更
-            matchMedia.addEventListener('change', this.systemThemeChange);
+            matchMedia.addEventListener('change', this.systemThemeChange)
         },
         // 删除监听系统主题变化
         removeSystemThemeChange() {
             const matchMedia = window.matchMedia('(prefers-color-scheme:dark)')
             // 监听主题变更
-            matchMedia.removeEventListener('change', this.systemThemeChange);
+            matchMedia.removeEventListener('change', this.systemThemeChange)
         }
     }
 })

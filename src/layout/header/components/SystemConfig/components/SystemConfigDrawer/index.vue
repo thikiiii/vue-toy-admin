@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useVModel } from '@vueuse/core'
 import ThemeMode from './components/ThemeMode/index.vue'
+import SystemTheme from './components/SystemTheme/index.vue'
 
 defineOptions({ name: 'SystemConfigDrawer' })
 
@@ -24,6 +25,7 @@ const visible = useVModel(props, 'visible', emits)
   <n-drawer v-model:show="visible" placement="right" width="330">
     <n-drawer-content title="系统配置">
       <theme-mode />
+      <system-theme />
     </n-drawer-content>
   </n-drawer>
 </template>

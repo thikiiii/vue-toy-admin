@@ -26,7 +26,7 @@ onBeforeUnmount(() => {
     <div v-if="!isMobile" class="login-bg">
       <transition appear name="right-slide-fade">
         <div class="login-bg-svg">
-          <icon local-icon="login" size="100%" />
+          <icon color="red" local-icon="login" size="100%" />
         </div>
       </transition>
     </div>

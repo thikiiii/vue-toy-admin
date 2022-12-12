@@ -82,3 +82,16 @@ export const naiveThemeConfig = (themeConfig: Store.CustomizeThemeConfig): Globa
         colorInverted: themeConfig.invertBackgroundColor
     }
 })
+
+// 系统主题色
+export const systemThemes = [
+    appSettings.theme,
+    '#E74C3C',
+    '#8E44AD',
+    '#3498DB',
+    '#16A085',
+    '#2ECC71',
+    '#F1C40F',
+    '#F39C12',
+    '#D35400'
+]
