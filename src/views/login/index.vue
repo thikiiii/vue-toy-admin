@@ -1,32 +1,21 @@
 <script lang="ts" setup>
 import Password from '@/views/login/password/index.vue'
-import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
+import {provide, shallowRef} from 'vue'
+import {useLayoutStore} from "@/store/modules/layout";
 
-const isMobile = ref(true)
+const layoutStore = useLayoutStore();
+const {mobile} = layoutStore
 const loginType = shallowRef(Password)
 
 provide('loginType', loginType)
-
-const resize = () => {
-  isMobile.value = document.body.offsetWidth <= 1000
-}
-
-onMounted(() => {
-  resize()
-  window.addEventListener('resize', resize)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', resize)
-})
 </script>
 
 <template>
   <div class="login">
-    <div v-if="!isMobile" class="login-bg">
+    <div v-if="!mobile.isMobile" class="login-bg">
       <transition appear name="right-slide-fade">
         <div class="login-bg-svg">
-          <icon color="red" local-icon="login" size="100%" />
+          <icon color="red" local-icon="login" size="100%"/>
         </div>
       </transition>
     </div>
@@ -35,7 +24,7 @@ onBeforeUnmount(() => {
         <h1 class="login-card-title">Toy Admin</h1>
       </transition>
       <div class="login-card-form">
-        <component :is="loginType" />
+        <component :is="loginType"/>
       </div>
     </div>
   </div>

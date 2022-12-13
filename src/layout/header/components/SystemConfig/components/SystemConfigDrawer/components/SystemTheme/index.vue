@@ -5,7 +5,6 @@ import { useThemeStore } from '@/store/modules/theme'
 defineOptions({ name: 'SystemTheme' })
 
 const themeStore = useThemeStore()
-
 </script>
 
 <template>
@@ -29,6 +28,8 @@ const themeStore = useThemeStore()
     width: 20px;
     height: 20px;
     cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 5px 5px 5px @shadow;
   }
 }
 </style>

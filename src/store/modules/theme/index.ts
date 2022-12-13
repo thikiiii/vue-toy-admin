@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
-import { darkTheme } from 'naive-ui'
 import { ThemeStorage } from '@/storage/theme'
 import { setCSSVariable } from '@/utils'
 import { darkThemeConfig, lightThemeConfig, naiveThemeConfig } from '@/settings/theme'
 import { appSettings } from '@/settings/app'
+
+const lightTheme = lightThemeConfig(appSettings.theme)
+const darkTheme = darkThemeConfig(appSettings.theme)
 
 // 主题
 export const useThemeStore = defineStore('theme', {
@@ -12,12 +14,12 @@ export const useThemeStore = defineStore('theme', {
         themeMode: appSettings.themeMode,
         followSystem: appSettings.followSystem,
         customize: {
-            light: lightThemeConfig,
-            dark: darkThemeConfig
+            light: lightTheme,
+            dark: darkTheme
         },
         naive: {
-            light: naiveThemeConfig(lightThemeConfig),
-            dark: naiveThemeConfig(darkThemeConfig)
+            light: naiveThemeConfig(lightTheme),
+            dark: naiveThemeConfig(darkTheme)
         }
     }),
     getters: {
@@ -45,23 +47,38 @@ export const useThemeStore = defineStore('theme', {
         },
         // 设置主题颜色
         setThemeColor(color: string) {
-            /*
-            * TODO: 使用useEventListener
-            * */
-            this.theme = color
-            setCSSVariable({ theme: color })
+            this.noTransition(() => {
+                this.theme = color
+                Object.keys(this.customize).forEach((key: Store.ThemeMode) => {
+                    switch (key) {
+                        case "light":
+                            this.customize[key] = lightThemeConfig(color)
+                            break
+                        case "dark":
+                            this.customize[key] = darkThemeConfig(color)
+                            break
+                    }
+                })
+                Object.keys(this.naive).forEach(key => this.naive[key] = naiveThemeConfig(this.customize[key]))
+                setCSSVariable(this.customize[this.themeMode])
+            });
         },
-        // 设置主题
-        setTheme(themeType: Store.ThemeMode) {
+        noTransition(callback: () => void) {
             const body = document.body
             // 去除过渡效果
             body.classList.add('noTransition')
-            this.themeMode = themeType
-            // 在 storage 中存储主题类型
-            ThemeStorage.setTheme(themeType)
-            const theme = this.customize[themeType]
-            setCSSVariable(theme)
+            callback()
             setTimeout(() => body.classList.remove('noTransition'))
+        },
+        // 设置主题
+        setTheme(themeType: Store.ThemeMode) {
+            this.noTransition(() => {
+                this.themeMode = themeType
+                // 在 storage 中存储主题类型
+                ThemeStorage.setTheme(themeType)
+                const theme = this.customize[themeType]
+                setCSSVariable(theme)
+            });
         },
         // 获取系统主题模式
         getSystemThemeMode(): Store.ThemeMode {

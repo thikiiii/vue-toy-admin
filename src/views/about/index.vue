@@ -9,6 +9,7 @@ const count = ref(0)
 
 <template>
   <div>
+    <n-button type="primary">Caswe</n-button>
     about
     <p v-for="item in 100" :key="item">{{ count }}</p>
     <button @click="count++">测试</button>

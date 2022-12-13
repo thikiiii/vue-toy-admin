@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { useRouteStore } from '@/store/modules/route'
-import { reactive, toRefs, watch } from 'vue'
-import { AppStorage } from '@/storage/app'
-import { appSearchKeyPrompt, handleResult, searchMenus } from './utils'
-import { useRouter } from 'vue-router'
-import { useDebounceFn, useVModel } from '@vueuse/core'
-import { RouterHelpers } from '@/router/helpers'
+import {useRouteStore} from '@/store/modules/route'
+import {reactive, toRefs, watch} from 'vue'
+import {AppStorage} from '@/storage/app'
+import {appSearchKeyPrompt, handleResult, searchMenus} from './utils'
+import {useRouter} from 'vue-router'
+import {useDebounceFn, useEventListener, useVModel} from '@vueuse/core'
+import {RouterHelpers} from '@/router/helpers'
 
 // 菜单搜索历史记录
 export interface AppMenuSearchHistoryRecord {
@@ -32,7 +32,7 @@ interface State {
   active: number
 }
 
-defineOptions({ name: 'AppSearchModal' })
+defineOptions({name: 'AppSearchModal'})
 const props = withDefaults(defineProps<Props>(), {
   visible: false
 })
@@ -92,13 +92,11 @@ watch(visible, () => {
   state.searchResults = AppStorage.getSearchHistory()
   state.searchText = ''
   state.active = 0
-  visible.value ?
-      window.addEventListener('keyup', handleKeyboardEvents) :
-      window.removeEventListener('keyup', handleKeyboardEvents)
+  useEventListener(window, 'keyup', handleKeyboardEvents);
 })
 
 
-const { searchText, searchResults, active } = toRefs(state)
+const {searchText, searchResults, active} = toRefs(state)
 </script>
 <template>
   <n-modal v-model:show="visible">
@@ -113,7 +111,7 @@ const { searchText, searchResults, active } = toRefs(state)
 
       <n-input v-model:value.trim="searchText" clearable placeholder="搜索菜单..." size="large">
         <template #suffix>
-          <icon icon="mdi:magnify" />
+          <icon icon="mdi:magnify"/>
         </template>
       </n-input>
       <div class="appSearch-list">
@@ -127,19 +125,19 @@ const { searchText, searchResults, active } = toRefs(state)
             @mouseenter="state.active = i">
           <div class="appSearch-list-item">
             <div class="appSearch-list-item-name">
-              <icon :icon="item.icon" class="appSearch-list-item-icon" />
+              <icon :icon="item.icon" class="appSearch-list-item-icon"/>
               <span v-for="(title,index) in item.menuNameList" :key="title">
                 {{ title }}
-                <icon v-if="index!==item.menuNameList.length-1" icon="mdi:chevron-right" size="20" />
+                <icon v-if="index!==item.menuNameList.length-1" icon="mdi:chevron-right" size="20"/>
               </span>
             </div>
             <div class="appSearch-list-item-other">
-              <icon icon="mdi:arrow-left-bottom" size="20" />
+              <icon icon="mdi:arrow-left-bottom" size="20"/>
             </div>
           </div>
         </n-card>
       </div>
-      <n-empty v-if="!searchResults.length" description="空空如也" />
+      <n-empty v-if="!searchResults.length" description="空空如也"/>
       <template #footer>
         <div class="appSearch-footer">
           <div class="appSearch-footer-prompt">
@@ -150,13 +148,13 @@ const { searchText, searchResults, active } = toRefs(state)
                   :icon="icon"
                   :pointer="false"
                   class="appSearch-footer-prompt-key-icon"
-                  size="16" />
+                  size="16"/>
               {{ item.prompt }}
             </div>
           </div>
           <n-button quaternary size="small" @click="clearSearchHistory">
             <template #icon>
-              <icon icon="mdi:delete-empty-outline" />
+              <icon icon="mdi:delete-empty-outline"/>
             </template>
             清空搜索历史
           </n-button>

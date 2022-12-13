@@ -22,7 +22,7 @@ specifiers:
   lodash: ^4.17.21
   mockjs: ^1.1.0
   naive-ui: ^2.33.5
-  pinia: ^2.0.16
+  pinia: ^2.0.28
   store2: ^2.13.2
   typescript: ^4.7.4
   unplugin-icons: ^0.14.3
@@ -44,7 +44,7 @@ dependencies:
   axios: 0.27.2
   js-cookie: 3.0.1
   lodash: 4.17.21
-  pinia: 2.0.26_mgnvym7yiazkylwwogi5r767ue
+  pinia: 2.0.28_mgnvym7yiazkylwwogi5r767ue
   store2: 2.14.2
   vue: 3.2.45
   vue-router: 4.1.6_vue@3.2.45
@@ -3329,8 +3329,8 @@ packages:
     dev: true
     optional: true
 
-  /pinia/2.0.26_mgnvym7yiazkylwwogi5r767ue:
-    resolution: {integrity: sha512-tSxZNUcMGxQOvKZRjPKXxd2+/2NZhRF/CoYVE/+K6uE/Z3v1Oi4fcQFpxu5nMB1dCchjXUZ+lz0tBxV5ntwmQQ==}
+  /pinia/2.0.28_mgnvym7yiazkylwwogi5r767ue:
+    resolution: {integrity: sha512-YClq9DkqCblq9rlyUual7ezMu/iICWdBtfJrDt4oWU9Zxpijyz7xB2xTwx57DaBQ96UGvvTMORzALr+iO5PVMw==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'

@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia'
-import { appSettings } from '@/settings/app'
+import {defineStore} from 'pinia'
+import {appSettings} from '@/settings/app'
 
-const { sidebar, header, footer, app } = appSettings
+const {sidebar, header, footer, app} = appSettings
 
-const mobileTriggerWidth = 600
+const mobileTriggerWidth = 800
 export const useLayoutStore = defineStore('layout', {
     state: (): Store.LayoutStore => ({
         sidebar,

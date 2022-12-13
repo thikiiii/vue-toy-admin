@@ -1,12 +1,12 @@
 <template>
-  <n-config-provider :theme="themeStore.naiveThemeType" :theme-overrides="themeStore.currentThemeOverrides">
+  <n-config-provider :theme="themeStore.naiveThemeType" :theme-overrides="themeStore.currentThemeOverrides" abstract>
     <n-loading-bar-provider>
       <n-dialog-provider>
         <n-notification-provider>
           <n-message-provider>
-            <naive-tool />
+            <naive-tool/>
             <n-theme-editor>
-              <router-view />
+              <router-view/>
             </n-theme-editor>
           </n-message-provider>
         </n-notification-provider>
@@ -18,31 +18,19 @@
 <script lang="ts" setup>
 import NaiveTool from '@/components/NaiveTool/index.vue'
 import { NConfigProvider, NThemeEditor } from 'naive-ui'
-import { useThemeStore } from '@/store/modules/theme'
-import { onBeforeMount, onMounted } from 'vue'
-import { useLayoutStore } from '@/store/modules/layout'
-import { AppStorage } from '@/storage/app'
+import { useGlobalEvents } from "@/hooks/effect/useGlobalEvents";
+import { useGlobalInitialize } from "@/hooks/effect/useGlobalInitialize";
+import { useThemeStore } from "@/store/modules/theme";
+import { setupGlobalSubscribe } from "@/store/subscribe";
 
-const themeStore = useThemeStore()
-const layoutStore = useLayoutStore()
+const themeStore = useThemeStore();
 
-const setSettings = () => {
-  const { theme, themeMode, followSystem } = themeStore.$state
-  const { header, sidebar, footer, app } = layoutStore.$state
-  AppStorage.setSettings({ theme, themeMode, followSystem, header, sidebar, footer, app })
-}
-
-// 组件库主题类型
-onMounted(() => {
-  // dom加载完成后 初始化主题
-  themeStore.initTheme()
-  // 监听页面关闭
-  window.addEventListener('unload', setSettings)
-})
-
-onBeforeMount(() => {
-  window.removeEventListener('unload', setSettings)
-})
+// 全局事件
+useGlobalEvents()
+// 全局初始化
+useGlobalInitialize()
+// 全局订阅
+setupGlobalSubscribe()
 </script>
 
 <style lang="less" scoped>

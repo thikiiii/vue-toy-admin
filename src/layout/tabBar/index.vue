@@ -121,7 +121,7 @@ watch(tabBarStore.tabBar, () => {
 <template>
   <div :class="layoutTabBarClass" class="tabBar">
     <div v-show="scrollBtnVisible" class="tabBar-action-tab" @click="onScroll('left')">
-      <icon icon="mdi:chevron-left" />
+      <icon icon="mdi:chevron-left"/>
     </div>
     <div ref="tabContainer" class="tabBar-tabContainer">
       <div
@@ -135,17 +135,17 @@ watch(tabBarStore.tabBar, () => {
         {{ tab.meta?.title }}
         <icon
             v-if="!tab.meta?.affix" class="tabBar-tabContainer-tab-close" icon="mdi:close" size="12px"
-            @click.stop="tabBarStore.closeTab(tab)" />
+            @click.stop="tabBarStore.closeTab(tab)"/>
       </div>
     </div>
     <div v-show="scrollBtnVisible" class="tabBar-action-tab" @click="onScroll('right')">
-      <icon icon="mdi:chevron-right" />
+      <icon icon="mdi:chevron-right"/>
     </div>
     <context-menu
         v-model:visible="globalVisible"
         :is-right-click="false">
       <div class="tabBar-action-tab" @click="globalVisible=true">
-        <icon icon="mdi:chevron-down" />
+        <icon icon="mdi:chevron-down"/>
       </div>
     </context-menu>
   </div>
@@ -154,7 +154,7 @@ watch(tabBarStore.tabBar, () => {
       :route-path="contextMenuConfig.tabPath"
       :x="contextMenuConfig.x"
       :y="contextMenuConfig.y"
-      is-right-click />
+      is-right-click/>
 </template>
 
 <style lang="less" scoped>
@@ -184,7 +184,7 @@ watch(tabBarStore.tabBar, () => {
     cursor: pointer;
     width: calc(@tabBarHeight - 15px);
     height: calc(@tabBarHeight - 15px);
-    box-shadow: 2px 2px 8px @shadow;
+    box-shadow: 5px 5px 5px @shadow;
   }
 
   &-tabContainer {
@@ -228,7 +228,7 @@ watch(tabBarStore.tabBar, () => {
       &.active {
         color: white;
         background: @theme;
-        box-shadow: 0 0 10px @themeShadow;
+        box-shadow: 5px 5px 5px @themeShadow;
 
         svg {
           color: white;
