@@ -23,14 +23,13 @@ const width = computed(() => sidebar.isCollapsedSidebar ? `${ sidebar.collapsedW
     <div
         v-if="!mobile.isMobile&&app.menuMode==='Side'"
         :style="{width}"
-        class="layoutSidebar inverted">
+        class="layoutSidebar ">
       <logo></logo>
       <div class="layoutSidebar-scroll">
         <Menu
             :collapsed="sidebar.isCollapsedSidebar"
             :collapsed-width="sidebar.collapsedWidth"
             :menus="routeStore.menus"
-            inverted
             mode="Side" />
       </div>
     </div>

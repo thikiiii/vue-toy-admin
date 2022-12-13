@@ -38,7 +38,7 @@ watch(() => route.path, () => {
 </script>
 
 <template>
-  <n-breadcrumb class="inverted">
+  <n-breadcrumb>
     <n-breadcrumb-item v-for="menu in breadcrumb" :key="menu.key">
       <n-dropdown :options="menu.children" :value="route.path" @select="onSelect">
         <span>

@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import ConfigMenu from '../ConfigMenu/index.vue'
-import { useThemeStore } from "@/store/modules/theme";
-import { computed } from "vue";
+import { useThemeStore } from '@/store/modules/theme'
+import { ref } from 'vue'
 
 defineOptions({ name: 'ThemeMode' })
 const railStyle = () => ({ background: '#464e62' })
 
-const themeStore = useThemeStore();
-const isDark = computed(() => themeStore.themeMode === 'dark')
+const themeStore = useThemeStore()
+const isDark = ref(themeStore.themeMode === 'dark')
 const followSystemChange = (isFollowSystem) => {
   if (isFollowSystem) {
     themeStore.setTheme(themeStore.getSystemThemeMode())
@@ -24,20 +24,20 @@ const followSystemChange = (isFollowSystem) => {
     <config-menu label="深色主题">
       <n-switch v-model:value="isDark" :rail-style="railStyle" @update:value="themeStore.toggleLightOrDarkTheme()">
         <template #checked>
-          <icon color="#ffb948" icon="line-md:sunny-filled-loop-to-moon-filled-loop-transition"/>
+          <icon color="#ffb948" icon="line-md:sunny-filled-loop-to-moon-filled-loop-transition" />
         </template>
         <template #unchecked>
-          <icon color="#ffb948" icon="line-md:sunny-filled-loop"/>
+          <icon color="#ffb948" icon="line-md:sunny-filled-loop" />
         </template>
       </n-switch>
     </config-menu>
     <config-menu label="跟随系统">
       <n-switch v-model:value="themeStore.followSystem" :rail-style="railStyle" @update:value="followSystemChange">
         <template #checked>
-          <icon icon="ic:round-hdr-auto"/>
+          <icon icon="ic:round-hdr-auto" />
         </template>
         <template #unchecked>
-          <icon icon="ic:baseline-do-disturb-on"/>
+          <icon icon="ic:baseline-do-disturb-on" />
         </template>
       </n-switch>
     </config-menu>
@@ -45,5 +45,11 @@ const followSystemChange = (isFollowSystem) => {
 </template>
 
 <style lang="less" scoped>
-
+:global(.n-switch .n-switch__rail .n-switch__button) {
+  transition: background-color .3s var(--n-bezier),
+  left .3s var(--n-bezier),
+  opacity .3s var(--n-bezier),
+  max-width .3s var(--n-bezier),
+  box-shadow .3s var(--n-bezier) !important;
+}
 </style>

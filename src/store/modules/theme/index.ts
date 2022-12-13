@@ -3,23 +3,27 @@ import { ThemeStorage } from '@/storage/theme'
 import { setCSSVariable } from '@/utils'
 import { darkThemeConfig, lightThemeConfig, naiveThemeConfig } from '@/settings/theme'
 import { appSettings } from '@/settings/app'
+import { darkTheme } from 'naive-ui'
 
-const lightTheme = lightThemeConfig(appSettings.theme)
-const darkTheme = darkThemeConfig(appSettings.theme)
-
+const { theme, themeMode, followSystem } = appSettings
+/*
+* TODo:1.混合菜单重新封装
+* TODo:2.删除less布局变量
+* TODo:3.settingStorage
+* */
 // 主题
 export const useThemeStore = defineStore('theme', {
     state: (): Store.ThemeStore => ({
-        theme: appSettings.theme,
-        themeMode: appSettings.themeMode,
-        followSystem: appSettings.followSystem,
+        theme,
+        themeMode,
+        followSystem,
         customize: {
-            light: lightTheme,
-            dark: darkTheme
+            light: lightThemeConfig(theme),
+            dark: darkThemeConfig(theme)
         },
         naive: {
-            light: naiveThemeConfig(lightTheme),
-            dark: naiveThemeConfig(darkTheme)
+            light: naiveThemeConfig(lightThemeConfig(theme)),
+            dark: naiveThemeConfig(darkThemeConfig(theme))
         }
     }),
     getters: {
@@ -51,17 +55,17 @@ export const useThemeStore = defineStore('theme', {
                 this.theme = color
                 Object.keys(this.customize).forEach((key: Store.ThemeMode) => {
                     switch (key) {
-                        case "light":
+                        case 'light':
                             this.customize[key] = lightThemeConfig(color)
                             break
-                        case "dark":
+                        case 'dark':
                             this.customize[key] = darkThemeConfig(color)
                             break
                     }
                 })
                 Object.keys(this.naive).forEach(key => this.naive[key] = naiveThemeConfig(this.customize[key]))
                 setCSSVariable(this.customize[this.themeMode])
-            });
+            })
         },
         noTransition(callback: () => void) {
             const body = document.body
@@ -78,7 +82,7 @@ export const useThemeStore = defineStore('theme', {
                 ThemeStorage.setTheme(themeType)
                 const theme = this.customize[themeType]
                 setCSSVariable(theme)
-            });
+            })
         },
         // 获取系统主题模式
         getSystemThemeMode(): Store.ThemeMode {

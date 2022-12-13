@@ -13,7 +13,7 @@ const routeStore = useRouteStore()
 <template>
   <n-drawer v-model:show="mobile.mobileMenuVisible" :width="sidebar.sidebarWidth" placement="left">
     <logo />
-    <Menu :menus="routeStore.menus" inverted mode="Side" />
+    <Menu :menus="routeStore.menus" mode="Side" />
   </n-drawer>
 </template>
 

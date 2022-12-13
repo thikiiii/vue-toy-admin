@@ -88,7 +88,7 @@ onMounted(() => {
 <template>
   <div :class="mixedMenuClass" class="mixedMenu" @mouseleave="onMouseLeave">
     <!-- TODO:暗黑模式下去除 inverted -->
-    <div :class="collapsedClass" class="mixedMenu-main inverted">
+    <div :class="collapsedClass" class="mixedMenu-main ">
       <logo />
       <div class="mixedMenu-main-scroll">
         <div
@@ -119,7 +119,7 @@ onMounted(() => {
           <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()" />
         </div>
         <div class="mixedMenu-sidebar-scroll">
-          <Menu :menus="state.secondaryMenus" inverted mode="Side" />
+          <Menu :menus="state.secondaryMenus" mode="Side" />
         </div>
       </div>
     </transition>

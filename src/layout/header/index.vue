@@ -20,7 +20,7 @@ const routeStore = useRouteStore()
 const layoutHeaderClass = computed(() => header.isFixedHeaderAndTabBar ? 'fixed' : undefined)
 </script>
 <template>
-  <div :class="layoutHeaderClass" class="layoutHeader inverted">
+  <div :class="layoutHeaderClass" class="layoutHeader ">
     <div class="layoutHeader-left">
       <template v-if="app.menuMode!=='Top'">
         <!-- 菜单折叠 -->
