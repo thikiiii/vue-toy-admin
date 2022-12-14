@@ -28,7 +28,7 @@ const setMenuMode = (mode: Store.MenuMode) => {
     </n-popover>
     <n-popover placement="bottom" trigger="hover">
       <template #trigger>
-        <div :class="isActive('SideMix')" class="menuMode-card sideMixMode" @click="setMenuMode('SideMix')">
+        <div :class="isActive('MixSide')" class="menuMode-card sideMixMode" @click="setMenuMode('MixSide')">
           <div class="sideMixMode-sideMix">
             <div></div>
             <div></div>

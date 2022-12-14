@@ -1,11 +1,8 @@
 <script lang="ts" setup>
-import Logo from '@/layout/components/Logo/index.vue'
-import Menu from '@/layout/components/Menu/index.vue'
 import { useLayoutStore } from '@/store/modules/layout'
-import { useRouteStore } from '@/store/modules/route'
 import { computed } from 'vue'
-import MobileSidebar from './mobileSidebar/index.vue'
-import MixedSidebar from './mixedSidebar/index.vue'
+import SideMode from './sideMode/index.vue'
+import MixSideMode from './mixSideMode/index.vue'
 
 defineOptions({ name: 'LayoutSidebar' })
 const layoutStore = useLayoutStore()
@@ -14,30 +11,28 @@ const {
   app,
   mobile
 } = layoutStore.$state
-const routeStore = useRouteStore()
-const width = computed(() => sidebar.isCollapsedSidebar ? `${ sidebar.collapsedWidth }px` : sidebar.sidebarWidth)
+
+const width = computed(() => {
+  switch (app.menuMode) {
+    case 'Side':
+      return sidebar.isCollapsedSidebar ? `${ sidebar.collapsedWidth }px` : sidebar.sidebarWidth
+    case 'MixSide':
+      return sidebar.isCollapsedMixedSidebar ? sidebar.collapsedMixedMenuWidth : sidebar.mixedMenuWidth
+  }
+})
+
+const onMouseLeave = () => {
+  // if (!sidebar.isFixedMixedSidebar) sidebar.
+}
 </script>
 
 <template>
   <transition name="slideIn">
-    <div
-        v-if="!mobile.isMobile&&app.menuMode==='Side'"
-        :style="{width}"
-        class="layoutSidebar ">
-      <logo></logo>
-      <div class="layoutSidebar-scroll">
-        <Menu
-            :collapsed="sidebar.isCollapsedSidebar"
-            :collapsed-width="sidebar.collapsedWidth"
-            :menus="routeStore.menus"
-            mode="Side" />
-      </div>
+    <div v-if="app.menuMode!=='Top'||mobile.isMobile" :style="{width}" class="layoutSidebar" @mouseleave="onMouseLeave">
+      <side-mode v-if="app.menuMode==='Side'"/>
+      <mix-side-mode v-if="app.menuMode==='MixSide'"/>
     </div>
   </transition>
-  <!-- 移动端菜单 -->
-  <mobile-sidebar v-if="mobile.isMobile" />
-  <!--  混合菜单-->
-  <mixed-sidebar v-if="!mobile.isMobile&&app.menuMode==='SideMix'" />
 </template>
 
 <style lang="less" scoped>
@@ -47,20 +42,17 @@ const width = computed(() => sidebar.isCollapsedSidebar ? `${ sidebar.collapsedW
   flex-direction: column;
   transition: .3s;
   border-right: 1px solid @divider;
+  position: relative;
+  z-index: 101;
 
   &.inverted {
     background: @invertBackgroundColor;
   }
 
-  &-scroll {
+  :deep(&-scroll) {
     flex: 1;
-    //height: 100px;
     overflow: auto;
-
-    :deep(.n-menu.n-menu--collapsed .n-menu-item-content .n-menu-item-content__icon svg) {
-      width: 24px;
-      height: 24px;
-    }
+    position: relative;
   }
 }
 

@@ -6,7 +6,7 @@ declare namespace Store {
     type PageAnimationMode = ''
 
     // 菜单模式：侧边 | 混合侧边 | 顶部
-    type MenuMode = 'Side' | 'SideMix' | 'Top'
+    type MenuMode = 'Side' | 'MixSide' | 'Top'
 
     // 侧边栏
     interface LayoutSidebar {
@@ -24,6 +24,9 @@ declare namespace Store {
 
         // 是否固定混合侧边栏
         isFixedMixedSidebar: boolean
+
+        // 混合侧边栏抽屉是否可见
+        mixedSidebarDrawerVisible: boolean
 
         // 混合菜单宽度
         mixedMenuWidth: string

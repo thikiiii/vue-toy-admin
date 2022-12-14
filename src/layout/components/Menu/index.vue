@@ -11,7 +11,7 @@
       :root-indent="24"
       :value="activeMenu"
       accordion
-      @update:value="selectMenu" />
+      @update:value="selectMenu"/>
 </template>
 
 <script lang="ts" setup>
@@ -53,7 +53,7 @@ const menuRef = ref<MenuInst | null>(null)
 // 激活菜单
 const activeMenu = computed(() => route.path)
 // 是否折叠
-const isCollapsed = computed(() => props.collapsed && (props.mode === 'Side' || props.mode === 'SideMix'))
+const isCollapsed = computed(() => props.collapsed && (props.mode === 'Side' || props.mode === 'MixSide'))
 // n 组件菜单模式
 const nMenuMode = computed(() => props.mode === 'Top' ? 'horizontal' : 'vertical')
 

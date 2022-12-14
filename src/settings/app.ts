@@ -1,4 +1,4 @@
-import { AppStorage } from "@/storage/app";
+import { AppStorage } from '@/storage/app'
 
 // setting 初始值
 const appSettingsInitial: AppSettings = {
@@ -21,6 +21,8 @@ const appSettingsInitial: AppSettings = {
         // 是否固定混合侧边栏
         isFixedMixedSidebar: false,
 
+        mixedSidebarDrawerVisible: false,
+        
         // 混合菜单宽度
         mixedMenuWidth: '94px',
 
@@ -69,7 +71,7 @@ const appSettingsInitial: AppSettings = {
         topProgressBarVisible: true,
 
         // 菜单模式
-        menuMode: 'SideMix',
+        menuMode: 'MixSide',
 
         // 页面缓存
         isPageCache: true

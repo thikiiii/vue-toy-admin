@@ -2,7 +2,7 @@
 import { systemThemes } from '@/settings/theme'
 import { useThemeStore } from '@/store/modules/theme'
 
-defineOptions({ name: 'SystemTheme' })
+defineOptions({ name: 'systemTheme' })
 
 const themeStore = useThemeStore()
 </script>

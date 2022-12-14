@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useVModel } from '@vueuse/core'
-import ThemeMode from './components/ThemeMode/index.vue'
-import SystemTheme from './components/SystemTheme/index.vue'
-import MenuMode from './components/MenuMode/index.vue'
+import ThemeMode from './themeMode/index.vue'
+import SystemTheme from './systemTheme/index.vue'
+import MenuMode from './menuMode/index.vue'
 
 defineOptions({ name: 'SystemConfigDrawer' })
 

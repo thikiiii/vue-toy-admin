@@ -5,7 +5,7 @@ import router from '@/router'
 import { LoginMethod } from '@/enums/common'
 import { useRouteStore } from '@/store/modules/route'
 import { RouteAuthModeEnum } from '@/enums/auth'
-import { Settings } from "@/settings";
+import { Settings } from '@/settings'
 
 // 鉴权
 const useAuthStore = defineStore('auth', {
@@ -97,7 +97,7 @@ const useAuthStore = defineStore('auth', {
             const { subCode, subMsg } = await UserApi.signOut().catch(() => {
                 this.handleSignOut()
                 return Promise.reject()
-            });
+            })
             if (subCode !== 200) {
                 window.$message?.error(subMsg)
             }
@@ -112,7 +112,7 @@ const useAuthStore = defineStore('auth', {
                     redirect: router.currentRoute.value.path
                 }
             })
-            const routeStore = useRouteStore();
+            const routeStore = useRouteStore()
             this.initUserStore()
             routeStore.initRouteStore()
             window.$message?.success('退出登录成功!')

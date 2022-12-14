@@ -60,6 +60,7 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
                 })
                 /* -- 获取到了用户信息和角色 -- */
                 await handleRouteAuthMode()
+                console.log(to)
                 next({ path: to.path, query: to.query, replace: true })
             }
         ],
@@ -86,6 +87,7 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
             true,
             () => {
                 console.log('GUARD-------6')
+                console.log(to)
                 next()
             }
         ]
