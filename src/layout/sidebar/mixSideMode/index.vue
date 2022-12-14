@@ -2,7 +2,6 @@
 import Logo from '@/layout/components/Logo/index.vue'
 import MixSideMenu from './mixSideMenu/index.vue'
 import MixSideDrawer from './mixSideDrawer/index.vue'
-import { useToggle } from '@vueuse/core'
 import { reactive } from 'vue'
 import { MenuOption } from 'naive-ui'
 import { useRouteStore } from '@/store/modules/route'
@@ -14,8 +13,7 @@ interface State {
   secondaryMenus: MenuOption[]
 }
 
-
-const [ visible ] = useToggle()
+defineOptions({ name: 'MixSideMode' })
 const routeStore = useRouteStore()
 const layoutStore = useLayoutStore()
 const { sidebar } = layoutStore.$state
@@ -26,10 +24,10 @@ const state: State = reactive({
 const handleMenu = (menu: Store.MenuOption) => {
   if (menu.children) {
     state.secondaryMenus = menu.children as MenuOption[]
-    visible.value = true
+    sidebar.mixedSidebarDrawerVisible = true
   } else {
     routeStore.handleClickMenu(menu.key)
-    if (!sidebar.isFixedMixedSidebar) visible.value = false
+    if (!sidebar.isFixedMixedSidebar) sidebar.mixedSidebarDrawerVisible = false
     state.secondaryMenus = []
     // isFixed.value = false
   }
@@ -37,14 +35,23 @@ const handleMenu = (menu: Store.MenuOption) => {
 
 </script>
 <template>
-  <logo></logo>
-  <div class="layoutSidebar-scroll">
-    <mix-side-menu @handle-menu="handleMenu"/>
+  <div class="mixSideMode">
+    <logo></logo>
+    <div class="layoutSidebar-scroll">
+      <mix-side-menu @handle-menu="handleMenu" />
+    </div>
+    <mix-side-drawer :menus="state.secondaryMenus" />
   </div>
-  <mix-side-drawer v-model:visible="visible" :menus="state.secondaryMenus"/>
 </template>
 
 
-<style scoped>
-
+<style lang="less" scoped>
+.mixSideMode {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: .2s ease-in-out;
+  border-right: 1px solid @divider;
+  position: relative;
+}
 </style>

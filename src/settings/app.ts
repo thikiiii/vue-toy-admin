@@ -10,7 +10,7 @@ const appSettingsInitial: AppSettings = {
         sidebarWidth: '220px',
 
         // 折叠侧边栏的宽度
-        collapsedWidth: 64,
+        collapsedWidth: '64px',
 
         // 是否折叠侧边栏
         isCollapsedSidebar: false,
@@ -22,7 +22,7 @@ const appSettingsInitial: AppSettings = {
         isFixedMixedSidebar: false,
 
         mixedSidebarDrawerVisible: false,
-        
+
         // 混合菜单宽度
         mixedMenuWidth: '94px',
 
@@ -78,4 +78,4 @@ const appSettingsInitial: AppSettings = {
     }
 }
 
-export const appSettings = AppStorage.getSettings() || appSettingsInitial
+export const appSettings = appSettingsInitial || AppStorage.getSettings()

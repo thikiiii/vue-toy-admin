@@ -14,7 +14,7 @@ declare namespace Store {
         sidebarWidth: string
 
         // 折叠侧边栏的宽度
-        collapsedWidth: number
+        collapsedWidth: string
 
         // 是否折叠侧边栏
         isCollapsedSidebar: boolean

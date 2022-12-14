@@ -11,7 +11,7 @@
       :root-indent="24"
       :value="activeMenu"
       accordion
-      @update:value="selectMenu"/>
+      @update:value="selectMenu" />
 </template>
 
 <script lang="ts" setup>
@@ -34,12 +34,13 @@ interface Props {
   accordion?: boolean
 
   // 折叠后的菜单宽度
-  collapsedWidth?: number
+  collapsedWidth?: string
 
   // 菜单列表
   menus: MenuOption[]
 }
 
+defineOptions({ name: 'Menu' })
 const props = withDefaults(defineProps<Props>(), {
   collapsed: false,
   inverted: false
@@ -50,6 +51,7 @@ const routeStore = useRouteStore()
 const menuRef = ref<MenuInst | null>(null)
 
 
+const collapsedWidth = computed(() => props.collapsedWidth ? parseInt(props.collapsedWidth) : undefined)
 // 激活菜单
 const activeMenu = computed(() => route.path)
 // 是否折叠

@@ -1,7 +1,7 @@
-import {defineStore} from 'pinia'
-import {appSettings} from '@/settings/app'
+import { defineStore } from 'pinia'
+import { appSettings } from '@/settings/app'
 
-const {sidebar, header, footer, app} = appSettings
+const { sidebar, header, footer, app } = appSettings
 
 const mobileTriggerWidth = 800
 export const useLayoutStore = defineStore('layout', {
@@ -21,7 +21,13 @@ export const useLayoutStore = defineStore('layout', {
         },
         app
     }),
-    getters: {},
+    getters: {
+        // 侧边模式宽度
+        sideModeWidth: (state) => {
+            const { sidebar } = state
+            return sidebar.isCollapsedSidebar ? sidebar.collapsedWidth : sidebar.sidebarWidth
+        }
+    },
     actions: {
         // 切换折叠
         toggleCollapsed(collapsed?: boolean) {

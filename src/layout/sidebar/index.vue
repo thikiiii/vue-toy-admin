@@ -11,28 +11,30 @@ const {
   app,
   mobile
 } = layoutStore.$state
-
 const width = computed(() => {
   switch (app.menuMode) {
     case 'Side':
-      return sidebar.isCollapsedSidebar ? `${ sidebar.collapsedWidth }px` : sidebar.sidebarWidth
+      return layoutStore.sideModeWidth
     case 'MixSide':
-      return sidebar.isCollapsedMixedSidebar ? sidebar.collapsedMixedMenuWidth : sidebar.mixedMenuWidth
+      let width = sidebar.isCollapsedMixedSidebar ? sidebar.collapsedMixedMenuWidth : sidebar.mixedMenuWidth
+      return sidebar.isFixedMixedSidebar ? `${ parseInt(width) + parseInt(sidebar.sidebarWidth) }px` : width
   }
 })
-
 const onMouseLeave = () => {
-  // if (!sidebar.isFixedMixedSidebar) sidebar.
+  if (!sidebar.isFixedMixedSidebar) sidebar.mixedSidebarDrawerVisible = false
 }
+
 </script>
 
 <template>
-  <transition name="slideIn">
-    <div v-if="app.menuMode!=='Top'||mobile.isMobile" :style="{width}" class="layoutSidebar" @mouseleave="onMouseLeave">
-      <side-mode v-if="app.menuMode==='Side'"/>
-      <mix-side-mode v-if="app.menuMode==='MixSide'"/>
-    </div>
-  </transition>
+  <div
+      v-if="app.menuMode!=='Top'||mobile.isMobile"
+      :style="{width}"
+      class="layoutSidebar"
+      @mouseleave="onMouseLeave">
+    <side-mode v-if="app.menuMode==='Side'" />
+    <mix-side-mode v-if="app.menuMode==='MixSide'" />
+  </div>
 </template>
 
 <style lang="less" scoped>
@@ -40,30 +42,12 @@ const onMouseLeave = () => {
   background: @subBackgroundColor;
   display: flex;
   flex-direction: column;
-  transition: .3s;
-  border-right: 1px solid @divider;
+  transition: .2s ease-in-out;
   position: relative;
   z-index: 101;
 
   &.inverted {
     background: @invertBackgroundColor;
   }
-
-  :deep(&-scroll) {
-    flex: 1;
-    overflow: auto;
-    position: relative;
-  }
-}
-
-
-.slideIn-enter-active,
-.slideIn-leave-active {
-  transition: .3s ease-in-out;
-}
-
-.slideIn-enter-from,
-.slideIn-leave-to {
-  margin-left: calc(0px - @sidebarWidth);
 }
 </style>

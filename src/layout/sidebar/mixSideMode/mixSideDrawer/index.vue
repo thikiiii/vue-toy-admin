@@ -2,29 +2,24 @@
 import { useLayoutStore } from '@/store/modules/layout'
 import Menu from '@/layout/components/Menu/index.vue'
 import { computed, ref, watch } from 'vue'
-import { TransitionPresets, useTransition, useVModel } from '@vueuse/core'
+import { TransitionPresets, useTransition } from '@vueuse/core'
+import { MenuOption } from 'naive-ui'
 
 interface Props {
-  menus: Store.MenuOption[]
-  visible: boolean
-}
-
-interface Emits {
-  (e: 'update:visible', visible: boolean): void
+  menus: MenuOption[]
 }
 
 defineOptions({ name: 'MixSideDrawer' })
-const props = defineProps<Props>()
-const emits = defineEmits<Emits>()
-const visible = useVModel(props, 'visible', emits)
+defineProps<Props>()
+
 const layoutStore = useLayoutStore()
 const { sidebar, header } = layoutStore.$state
-const sourceWidth = ref(0)
+const sourceWidth = ref(sidebar.mixedSidebarDrawerVisible ? parseInt(sidebar.sidebarWidth) : 0)
 const width = useTransition(sourceWidth, {
-  duration: 300,
+  duration: 200,
   transition: TransitionPresets.easeInOutCubic
 })
-watch(visible, (value) => {
+watch(() => sidebar.mixedSidebarDrawerVisible, (value) => {
   sourceWidth.value = value ? parseInt(sidebar.sidebarWidth) : 0
 })
 
@@ -35,7 +30,7 @@ const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off'
   <div :style="{width:`${width}px`}" class="mixedMenuDrawer">
     <div :style="{height:header.headerHeight,width:sidebar.sidebarWidth}" class="mixedMenuDrawer-header">
       <h1>toy admin</h1>
-      <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
+      <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()" />
     </div>
     <div :style="{width:sidebar.sidebarWidth}" class="mixedMenuDrawer-scroll">
       <Menu :menus="menus" mode="Side"></Menu>
@@ -51,7 +46,7 @@ const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off'
   right: 0;
   top: 0;
   background: @subBackgroundColor;
-  border-right: 1px solid @divider;
+  border-left: 1px solid @divider;
   height: 100%;
   transform: translateX(100%);
   z-index: 100;
