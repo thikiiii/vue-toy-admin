@@ -1,4 +1,5 @@
 import { AppStorage } from '@/storage/app'
+import { TopMenuPositionEnum } from '@/enums/settings'
 
 // setting 初始值
 const appSettingsInitial: AppSettings = {
@@ -10,7 +11,7 @@ const appSettingsInitial: AppSettings = {
         sidebarWidth: '220px',
 
         // 折叠侧边栏的宽度
-        collapsedWidth: '64px',
+        collapsedSidebarWidth: '64px',
 
         // 是否折叠侧边栏
         isCollapsedSidebar: false,
@@ -24,10 +25,10 @@ const appSettingsInitial: AppSettings = {
         mixedSidebarDrawerVisible: false,
 
         // 混合菜单宽度
-        mixedMenuWidth: '94px',
+        mixedSidebarWidth: '94px',
 
         // 混合菜单折叠宽度
-        collapsedMixedMenuWidth: '64px'
+        collapsedMixedSidebarWidth: '64px'
     },
 
     header: {
@@ -41,7 +42,7 @@ const appSettingsInitial: AppSettings = {
         tabBarHeight: '44px',
 
         // 顶部菜单位置
-        topMenuPosition: 'Left',
+        topMenuPosition: TopMenuPositionEnum.LEFT,
 
         // 标签栏可见
         tabBarVisible: true,
@@ -71,11 +72,16 @@ const appSettingsInitial: AppSettings = {
         topProgressBarVisible: true,
 
         // 菜单模式
-        menuMode: 'MixSide',
+        menuMode: 'Side',
 
         // 页面缓存
         isPageCache: true
     }
 }
 
+const { sidebar } = appSettingsInitial
+if (sidebar.isFixedMixedSidebar) {
+    sidebar.mixedSidebarDrawerVisible = true
+}
 export const appSettings = appSettingsInitial || AppStorage.getSettings()
+

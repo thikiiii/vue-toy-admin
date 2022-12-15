@@ -89,7 +89,7 @@ onMounted(() => {
   <div :class="mixedMenuClass" class="mixedMenu" @mouseleave="onMouseLeave">
     <!-- TODO:暗黑模式下去除 inverted -->
     <div :class="collapsedClass" class="mixedMenu-main ">
-      <logo />
+      <logo/>
       <div class="mixedMenu-main-scroll">
         <div
             v-for="(menu,i) in routeStore.menus"
@@ -99,7 +99,7 @@ onMounted(() => {
             @click="handleMenu(menu,i)">
           <n-popover :disabled="!sidebar.isCollapsedMixedSidebar" trigger="hover">
             <template #trigger>
-              <span><icon :icon="menu?.meta?.icon" size="24" /></span>
+              <span><icon :icon="menu?.meta?.icon" size="24"/></span>
             </template>
             <span>{{ menu?.meta?.title }}</span>
           </n-popover>
@@ -109,17 +109,17 @@ onMounted(() => {
         </div>
       </div>
       <div class="mixedMenu-main-collapsedContainer" @click="layoutStore.toggleCollapsedMixedSidebar()">
-        <icon :icon="collapsedIcon" pointer size="22" />
+        <icon :icon="collapsedIcon" pointer size="22"/>
       </div>
     </div>
     <transition name="slideIn">
       <div v-show="sidebarVisible" :class="collapsedClass" class="mixedMenu-sidebar inverted">
         <div class="mixedMenu-sidebar-header">
-          <logo />
-          <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()" />
+          <logo/>
+          <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
         </div>
         <div class="mixedMenu-sidebar-scroll">
-          <Menu :menus="state.secondaryMenus" mode="Side" />
+          <Menu :menus="state.secondaryMenus" mode="Side"/>
         </div>
       </div>
     </transition>
@@ -132,23 +132,23 @@ onMounted(() => {
   height: 100%;
   position: relative;
   transition: .2s ease-out;
-  width: @mixedMenuWidth;
+  width: @mixedSidebarWidth;
 
   &.extend {
-    width: calc(@mixedMenuWidth + @sidebarWidth);
+    width: calc(@mixedSidebarWidth + @sidebarWidth);
   }
 
   &.collapsedExtend {
-    width: calc(@collapsedMixedMenuWidth + @sidebarWidth);
+    width: calc(@collapsedMixedSidebarWidth + @sidebarWidth);
   }
 
   &.collapsed {
-    width: @collapsedMixedMenuWidth;
+    width: @collapsedMixedSidebarWidth;
   }
 
 
   &-main {
-    width: @mixedMenuWidth;
+    width: @mixedSidebarWidth;
     height: 100%;
     background: @subBackgroundColor;
     display: flex;
@@ -179,7 +179,7 @@ onMounted(() => {
     }
 
     &.collapsed {
-      width: @collapsedMixedMenuWidth;
+      width: @collapsedMixedSidebarWidth;
 
       svg {
         width: 22px;
@@ -239,7 +239,7 @@ onMounted(() => {
     position: absolute;
     left: 0;
     top: 0;
-    margin-left: @mixedMenuWidth;
+    margin-left: @mixedSidebarWidth;
     width: @sidebarWidth;
     height: 100%;
     background: @subBackgroundColor;
@@ -256,7 +256,7 @@ onMounted(() => {
     }
 
     &.collapsed {
-      margin-left: @collapsedMixedMenuWidth;
+      margin-left: @collapsedMixedSidebarWidth;
     }
 
     &-header {

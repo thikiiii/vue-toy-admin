@@ -24,9 +24,9 @@ const layoutHeaderClass = computed(() => header.isFixedHeaderAndTabBar ? 'fixed'
     <div class="layoutHeader-left">
       <template v-if="app.menuMode!=='Top'">
         <!-- 菜单折叠 -->
-        <menu-collapsed v-if="mobile.isMobile||app.menuMode!=='SideMix'" />
+        <menu-collapsed v-if="mobile.isMobile||app.menuMode!=='MixSide'" />
         <!-- 面包屑 -->
-        <breadcrumb v-if="!mobile.isMobile" :style="{marginLeft:app.menuMode==='SideMix'?'10px':undefined}" />
+        <breadcrumb v-if="!mobile.isMobile" :style="{marginLeft:app.menuMode==='MixSide'?'10px':undefined}" />
       </template>
       <template v-if="app.menuMode==='Top'&&!mobile.isMobile">
         <!-- LOGO -->

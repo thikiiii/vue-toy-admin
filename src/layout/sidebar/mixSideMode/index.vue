@@ -2,24 +2,20 @@
 import Logo from '@/layout/components/Logo/index.vue'
 import MixSideMenu from './mixSideMenu/index.vue'
 import MixSideDrawer from './mixSideDrawer/index.vue'
-import { reactive } from 'vue'
+import { computed } from 'vue'
 import { MenuOption } from 'naive-ui'
 import { useRouteStore } from '@/store/modules/route'
 import { useLayoutStore } from '@/store/modules/layout'
-
-
-interface State {
-  // 二级菜单
-  secondaryMenus: MenuOption[]
-}
+import { useMixSide } from '@/layout/sidebar/mixSideMode/useMixSide'
 
 defineOptions({ name: 'MixSideMode' })
 const routeStore = useRouteStore()
 const layoutStore = useLayoutStore()
 const { sidebar } = layoutStore.$state
-const state: State = reactive({
-  secondaryMenus: []
-})
+const { state } = useMixSide()
+
+const collapsedIcon = computed(() => sidebar.isCollapsedMixedSidebar ? 'mdi:chevron-triple-right' : 'mdi:chevron-triple-left')
+const mixSideModeClass = computed(() => sidebar.isCollapsedMixedSidebar ? 'collapsed' : undefined)
 
 const handleMenu = (menu: Store.MenuOption) => {
   if (menu.children) {
@@ -29,19 +25,28 @@ const handleMenu = (menu: Store.MenuOption) => {
     routeStore.handleClickMenu(menu.key)
     if (!sidebar.isFixedMixedSidebar) sidebar.mixedSidebarDrawerVisible = false
     state.secondaryMenus = []
-    // isFixed.value = false
   }
+}
+
+const onMouseLeave = () => {
+  state.isLeave = true
+  if (!sidebar.isFixedMixedSidebar) sidebar.mixedSidebarDrawerVisible = false
 }
 
 </script>
 <template>
-  <div class="mixSideMode">
-    <logo></logo>
-    <div class="layoutSidebar-scroll">
-      <mix-side-menu @handle-menu="handleMenu" />
+  <transition :name="sidebar.isFixedMixedSidebar?'fixed':'full'" appear>
+    <div @mouseleave="onMouseLeave" @mouseenter="state.isLeave=false" :class="mixSideModeClass" class="mixSideMode">
+      <logo></logo>
+      <div class="mixSideMode-scroll">
+        <mix-side-menu @handle-menu="handleMenu"/>
+      </div>
+      <div @click="layoutStore.toggleCollapsedMixedSidebar()" class="mixSideMode-collapsed">
+        <icon :icon="collapsedIcon" pointer size="22"/>
+      </div>
+      <mix-side-drawer :menus="state.secondaryMenus"/>
     </div>
-    <mix-side-drawer :menus="state.secondaryMenus" />
-  </div>
+  </transition>
 </template>
 
 
@@ -51,7 +56,55 @@ const handleMenu = (menu: Store.MenuOption) => {
   display: flex;
   flex-direction: column;
   transition: .2s ease-in-out;
-  border-right: 1px solid @divider;
+  align-items: center;
   position: relative;
+  width: @mixedSidebarWidth;
+  border-right: 1px solid @divider;
+
+  &.collapsed {
+    width: @collapsedMixedSidebarWidth;
+  }
+
+  &-scroll {
+    flex: 1;
+    overflow: auto;
+  }
+
+  &-collapsed {
+    height: @footerHeight;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+
+    &:hover {
+      color: @theme;
+    }
+  }
 }
+
+.fixed-enter-active,
+.fixed-leave-active {
+  transition: .2s ease-in-out;
+}
+
+.fixed-enter-from,
+.fixed-leave-to {
+  opacity: .5;
+  transform: scale(.9);
+}
+
+.full-enter-active,
+.full-leave-active {
+  transition: .2s ease-in-out;
+}
+
+.full-enter-from,
+.full-leave-to {
+  width: 100%!important;
+  opacity: 0;
+  transform: scale(.9);
+}
+
 </style>

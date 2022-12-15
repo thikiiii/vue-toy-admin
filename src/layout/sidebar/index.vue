@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useLayoutStore } from '@/store/modules/layout'
-import { computed } from 'vue'
 import SideMode from './sideMode/index.vue'
 import MixSideMode from './mixSideMode/index.vue'
+import { computed } from 'vue'
 
 defineOptions({ name: 'LayoutSidebar' })
 const layoutStore = useLayoutStore()
@@ -11,31 +11,36 @@ const {
   app,
   mobile
 } = layoutStore.$state
-const width = computed(() => {
+
+const sidebarClass = computed(() => {
   switch (app.menuMode) {
     case 'Side':
-      return layoutStore.sideModeWidth
+      return sidebar.isCollapsedSidebar ? 'collapsed' : undefined
     case 'MixSide':
-      let width = sidebar.isCollapsedMixedSidebar ? sidebar.collapsedMixedMenuWidth : sidebar.mixedMenuWidth
-      return sidebar.isFixedMixedSidebar ? `${ parseInt(width) + parseInt(sidebar.sidebarWidth) }px` : width
+      if (sidebar.isFixedMixedSidebar) {
+        return sidebar.isCollapsedMixedSidebar ? 'mixSideCollapsedFixedWidth' : 'mixSideFixedWidth'
+      }
+      return sidebar.isCollapsedMixedSidebar ? 'collapsedMixSide' : 'mixSide'
+    default :
+      return undefined
   }
 })
-const onMouseLeave = () => {
-  if (!sidebar.isFixedMixedSidebar) sidebar.mixedSidebarDrawerVisible = false
-}
 
 </script>
 
 <template>
-  <div
-      v-if="app.menuMode!=='Top'||mobile.isMobile"
-      :style="{width}"
-      class="layoutSidebar"
-      @mouseleave="onMouseLeave">
-    <side-mode v-if="app.menuMode==='Side'" />
-    <mix-side-mode v-if="app.menuMode==='MixSide'" />
-  </div>
+  <transition name="slideIn">
+    <div
+        v-if="app.menuMode!=='Top'||mobile.isMobile"
+        :class="sidebarClass"
+        class="layoutSidebar"
+       >
+      <side-mode v-if="app.menuMode==='Side'"/>
+      <mix-side-mode v-if="app.menuMode==='MixSide'"/>
+    </div>
+  </transition>
 </template>
+
 
 <style lang="less" scoped>
 .layoutSidebar {
@@ -45,9 +50,47 @@ const onMouseLeave = () => {
   transition: .2s ease-in-out;
   position: relative;
   z-index: 101;
+  width: @sidebarWidth;
+
+  &.collapsed {
+    width: @collapsedSidebarWidth;
+  }
+
+  &.mixSide {
+    width: @mixedSidebarWidth;
+  }
+
+  &.mixSide {
+    width: @mixedSidebarWidth;
+  }
+
+  &.collapsedMixSide {
+    width: @collapsedMixedSidebarWidth;
+  }
+
+  &.mixSideFixedWidth {
+    width: calc(@mixedSidebarWidth + @sidebarWidth);
+  }
+
+  &.mixSideCollapsedFixedWidth {
+    width: calc(@collapsedMixedSidebarWidth + @sidebarWidth);
+  }
 
   &.inverted {
     background: @invertBackgroundColor;
   }
+}
+
+.slideIn-enter-active,
+.slideIn-leave-active {
+  transition: .2s ease-out;
+  overflow: hidden;
+}
+
+.slideIn-enter-from,
+.slideIn-leave-to {
+  width: 0!important;
+  opacity: 0;
+  transform: scale(.95);
 }
 </style>

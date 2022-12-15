@@ -1,15 +1,16 @@
 <script lang="ts" setup>
 // 菜单模式
 import { useLayoutStore } from '@/store/modules/layout'
+import { MenuModeEnum } from '@/enums/settings'
 
 defineOptions({ name: 'MenuMode' })
 const layoutStore = useLayoutStore()
 const { app } = layoutStore.$state
 
-const isActive = (mode: Store.MenuMode) => {
+const isActive = (mode: MenuModeEnum) => {
   return app.menuMode === mode ? 'active' : undefined
 }
-const setMenuMode = (mode: Store.MenuMode) => {
+const setMenuMode = (mode: MenuModeEnum) => {
   app.menuMode = mode
 }
 </script>

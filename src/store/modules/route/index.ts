@@ -6,7 +6,7 @@ import { Sort } from '@/enums/common'
 import useTabBarStore from '@/store/modules/tabBar'
 import { UserApi } from '@/services/api/user'
 import { matchUrl } from '@/utils/regularCheck'
-import { Settings } from "@/settings";
+import { Settings } from '@/settings'
 
 export const useRouteStore = defineStore('route', {
     state: (): Store.RouteStore => ({
@@ -87,6 +87,7 @@ export const useRouteStore = defineStore('route', {
             RouterHelpers
                 .transformCustomRoutesToVueRoutes(RouterHelpers.useLayoutWrapperSingleViewRoute(routes))
                 .forEach(route => router.addRoute(route))
+            console.log(router.getRoutes())
             // 设置菜单
             this.menus = RouterHelpers.transformRoutesToMenus(routes)
             // 设置固定标签
