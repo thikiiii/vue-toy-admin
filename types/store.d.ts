@@ -1,4 +1,13 @@
 declare namespace Store {
+    // 顶部菜单位置
+    type TopMenuPosition = 'Left' | 'Center' | 'Right'
+
+    // 页面切换动画
+    type PageAnimationMode = ''
+
+    // 菜单模式：侧边 | 混合侧边 | 顶部
+    type MenuMode = 'Side' | 'MixSide' | 'Top'
+
     // 侧边栏
     interface LayoutSidebar {
         // 侧边栏宽度
@@ -38,7 +47,7 @@ declare namespace Store {
         tabBarHeight: string
 
         // 顶部菜单位置
-        topMenuPosition: import('@/enums/settings').TopMenuPositionEnum
+        topMenuPosition: TopMenuPosition
 
         // 标签栏可见
         tabBarVisible: boolean
@@ -75,13 +84,13 @@ declare namespace Store {
         isPageStartAnimation: boolean
 
         // 页面动画
-        pageAnimationMode: import('@/enums/settings').PageAnimationEnum
+        pageAnimationMode: PageAnimationMode
 
         // 顶部进度条
         topProgressBarVisible: boolean
 
         // 菜单模式
-        menuMode: import('@/enums/settings').MenuModeEnum
+        menuMode: MenuMode
 
         // 页面缓存
         isPageCache: boolean
@@ -161,7 +170,7 @@ declare namespace Store {
     type ThemeMode = 'light' | 'dark'
 
     type ThemeModeConfig<T> = {
-        [themeMode in import('@/enums/settings').ThemeModeEnum]: T
+        [themeMode in ThemeMode]: T
     }
 
     // 主题 state

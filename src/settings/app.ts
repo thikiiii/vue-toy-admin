@@ -1,5 +1,4 @@
 import { AppStorage } from '@/storage/app'
-import { TopMenuPositionEnum } from '@/enums/settings'
 
 // setting 初始值
 const appSettingsInitial: AppSettings = {
@@ -42,7 +41,7 @@ const appSettingsInitial: AppSettings = {
         tabBarHeight: '44px',
 
         // 顶部菜单位置
-        topMenuPosition: TopMenuPositionEnum.LEFT,
+        topMenuPosition: 'Left',
 
         // 标签栏可见
         tabBarVisible: true,
@@ -84,4 +83,3 @@ if (sidebar.isFixedMixedSidebar) {
     sidebar.mixedSidebarDrawerVisible = true
 }
 export const appSettings = appSettingsInitial || AppStorage.getSettings()
-

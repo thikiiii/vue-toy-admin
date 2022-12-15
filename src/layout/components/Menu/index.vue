@@ -19,11 +19,10 @@ import { useRoute } from 'vue-router'
 import { computed, ref, watch } from 'vue'
 import { MenuInst, MenuOption } from 'naive-ui'
 import { useRouteStore } from '@/store/modules/route'
-import { MenuModeEnum } from '@/enums/settings'
 
 interface Props {
   // 模式
-  mode: MenuModeEnum
+  mode: Store.MenuMode
 
   // 折叠
   collapsed?: boolean
