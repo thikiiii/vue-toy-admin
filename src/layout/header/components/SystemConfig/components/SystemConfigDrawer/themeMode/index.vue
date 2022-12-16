@@ -1,13 +1,16 @@
 <script lang="ts" setup>
 import ConfigMenu from '../components/ConfigMenu/index.vue'
 import { useThemeStore } from '@/store/modules/theme'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 defineOptions({ name: 'ThemeMode' })
 const railStyle = () => ({ background: '#464e62' })
 
 const themeStore = useThemeStore()
 const isDark = ref(themeStore.themeMode === 'dark')
+watch(() => themeStore.themeMode, () => {
+  isDark.value = themeStore.themeMode === 'dark'
+})
 const followSystemChange = (isFollowSystem) => {
   if (isFollowSystem) {
     themeStore.setTheme(themeStore.getSystemThemeMode())

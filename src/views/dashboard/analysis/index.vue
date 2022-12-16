@@ -1,9 +1,13 @@
 <script lang="ts" setup>
+import { useLayoutStore } from '@/store/modules/layout'
+
 defineOptions({ name: 'DashboardAnalysis' })
+const layoutStore = useLayoutStore()
 </script>
 
 <template>
   <div class="card">
+    <n-button type="primary" @click="layoutStore.sidebar.sidebarWidth = 300">测试</n-button>
   </div>
 </template>
 

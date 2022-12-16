@@ -34,7 +34,7 @@ interface Props {
   accordion?: boolean
 
   // 折叠后的菜单宽度
-  collapsedWidth?: string
+  collapsedWidth?: number
 
   // 菜单列表
   menus: MenuOption[]
@@ -51,7 +51,6 @@ const routeStore = useRouteStore()
 const menuRef = ref<MenuInst | null>(null)
 
 
-const collapsedWidth = computed(() => props.collapsedWidth ? parseInt(props.collapsedWidth) : undefined)
 // 激活菜单
 const activeMenu = computed(() => route.path)
 // 是否折叠

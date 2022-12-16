@@ -2,7 +2,7 @@
 import { useLayoutStore } from '@/store/modules/layout'
 import { useRouteStore } from '@/store/modules/route'
 import { onMounted, watch } from 'vue'
-import { useMixSide } from '@/layout/sidebar/mixSideMode/useMixSide'
+import { useMixSide } from '@/layout/sidebar/mixSideMode/hooks/useMixSide'
 
 defineOptions({ name: 'MixedMenu' })
 

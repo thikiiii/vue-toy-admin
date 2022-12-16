@@ -7,10 +7,10 @@ const appSettingsInitial: AppSettings = {
     followSystem: true,
     sidebar: {
         // 侧边栏宽度
-        sidebarWidth: '220px',
+        sidebarWidth: 220,
 
         // 折叠侧边栏的宽度
-        collapsedSidebarWidth: '64px',
+        collapsedSidebarWidth: 64,
 
         // 是否折叠侧边栏
         isCollapsedSidebar: false,
@@ -24,21 +24,21 @@ const appSettingsInitial: AppSettings = {
         mixedSidebarDrawerVisible: false,
 
         // 混合菜单宽度
-        mixedSidebarWidth: '94px',
+        mixedSidebarWidth: 94,
 
         // 混合菜单折叠宽度
-        collapsedMixedSidebarWidth: '64px'
+        collapsedMixedSidebarWidth: 64
     },
 
     header: {
         // 头部高度
-        headerHeight: '56px',
+        headerHeight: 56,
 
         // 是否开启面包屑
         isBreadCrumbs: true,
 
         // 标签栏高度
-        tabBarHeight: '44px',
+        tabBarHeight: 44,
 
         // 顶部菜单位置
         topMenuPosition: 'Left',
@@ -52,7 +52,7 @@ const appSettingsInitial: AppSettings = {
 
     footer: {
         // 底部高度
-        footerHeight: '30px',
+        footerHeight: 30,
 
         // 底部可见
         footerVisible: true,

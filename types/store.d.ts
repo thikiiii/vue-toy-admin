@@ -11,10 +11,10 @@ declare namespace Store {
     // 侧边栏
     interface LayoutSidebar {
         // 侧边栏宽度
-        sidebarWidth: string
+        sidebarWidth: number
 
         // 折叠侧边栏的宽度
-        collapsedSidebarWidth: string
+        collapsedSidebarWidth: number
 
         // 是否折叠侧边栏
         isCollapsedSidebar: boolean
@@ -29,22 +29,22 @@ declare namespace Store {
         mixedSidebarDrawerVisible: boolean
 
         // 混合侧边栏宽度
-        mixedSidebarWidth: string
+        mixedSidebarWidth: number
 
         // 混合菜单折叠宽度
-        collapsedMixedSidebarWidth: string
+        collapsedMixedSidebarWidth: number
     }
 
     // 头部
     interface LayoutHeader {
         // 头部高度
-        headerHeight: string
+        headerHeight: number
 
         // 是否开启面包屑
         isBreadCrumbs: boolean
 
         // 标签栏高度
-        tabBarHeight: string
+        tabBarHeight: number
 
         // 顶部菜单位置
         topMenuPosition: TopMenuPosition
@@ -58,7 +58,7 @@ declare namespace Store {
 
     interface LayoutFooter {
         // 底部高度
-        footerHeight: string
+        footerHeight: number
 
         // 底部可见
         footerVisible: boolean

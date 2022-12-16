@@ -6,16 +6,16 @@ import { computed } from 'vue'
 import { MenuOption } from 'naive-ui'
 import { useRouteStore } from '@/store/modules/route'
 import { useLayoutStore } from '@/store/modules/layout'
-import { useMixSide } from '@/layout/sidebar/mixSideMode/useMixSide'
+import { useMixSide } from '@/layout/sidebar/mixSideMode/hooks/useMixSide'
+import { useSidebarStyle } from '@/layout/sidebar/hooks/useSidebar'
 
 defineOptions({ name: 'MixSideMode' })
 const routeStore = useRouteStore()
 const layoutStore = useLayoutStore()
 const { sidebar } = layoutStore.$state
 const { state } = useMixSide()
-
+const { mixSideModeWidth } = useSidebarStyle()
 const collapsedIcon = computed(() => sidebar.isCollapsedMixedSidebar ? 'mdi:chevron-triple-right' : 'mdi:chevron-triple-left')
-const mixSideModeClass = computed(() => sidebar.isCollapsedMixedSidebar ? 'collapsed' : undefined)
 
 const handleMenu = (menu: Store.MenuOption) => {
   if (menu.children) {
@@ -36,7 +36,8 @@ const onMouseLeave = () => {
 </script>
 <template>
   <transition :name="sidebar.isFixedMixedSidebar?'fixed':'full'" appear>
-    <div @mouseleave="onMouseLeave" @mouseenter="state.isLeave=false" :class="mixSideModeClass" class="mixSideMode">
+    <div @mouseleave="onMouseLeave" @mouseenter="state.isLeave=false" :style="{width:mixSideModeWidth}"
+         class="mixSideMode">
       <logo></logo>
       <div class="mixSideMode-scroll">
         <mix-side-menu @handle-menu="handleMenu"/>
@@ -58,12 +59,7 @@ const onMouseLeave = () => {
   transition: .2s ease-in-out;
   align-items: center;
   position: relative;
-  width: @mixedSidebarWidth;
   border-right: 1px solid @divider;
-
-  &.collapsed {
-    width: @collapsedMixedSidebarWidth;
-  }
 
   &-scroll {
     flex: 1;
@@ -77,6 +73,7 @@ const onMouseLeave = () => {
     align-items: center;
     cursor: pointer;
     transition: .2s ease-in-out;
+    width: 100%;
 
     &:hover {
       color: @theme;
@@ -102,7 +99,7 @@ const onMouseLeave = () => {
 
 .full-enter-from,
 .full-leave-to {
-  width: 100%!important;
+  width: 100% !important;
   opacity: 0;
   transform: scale(.9);
 }

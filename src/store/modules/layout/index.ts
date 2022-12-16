@@ -29,6 +29,9 @@ export const useLayoutStore = defineStore('layout', {
         }
     },
     actions: {
+        initCssVariable() {
+
+        },
         // 切换折叠
         toggleCollapsed(collapsed?: boolean) {
             this.sidebar.isCollapsedSidebar = collapsed || !this.sidebar.isCollapsedSidebar

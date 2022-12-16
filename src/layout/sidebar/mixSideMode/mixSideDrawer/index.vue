@@ -3,6 +3,7 @@ import { useLayoutStore } from '@/store/modules/layout'
 import Menu from '@/layout/components/Menu/index.vue'
 import { computed } from 'vue'
 import { MenuOption } from 'naive-ui'
+import { useSidebarStyle } from '@/layout/sidebar/hooks/useSidebar'
 
 interface Props {
   menus: MenuOption[]
@@ -12,22 +13,23 @@ defineOptions({ name: 'MixSideDrawer' })
 defineProps<Props>()
 
 const layoutStore = useLayoutStore()
-const { sidebar } = layoutStore.$state
+const { sidebar, header } = layoutStore.$state
+const { sideModeWidth } = useSidebarStyle()
 
 const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off' : 'mdi:pin')
 </script>
 
 <template>
   <transition name="slideIn">
-  <div v-if="sidebar.mixedSidebarDrawerVisible" class="mixedMenuDrawer">
-    <div class="mixedMenuDrawer-header">
-      <h1/>
-      <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
+    <div v-if="sidebar.mixedSidebarDrawerVisible" :style="{width:sideModeWidth}" class="mixedMenuDrawer">
+      <div class="mixedMenuDrawer-header">
+        <h1/>
+        <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
+      </div>
+      <div class="mixedMenuDrawer-scroll" :style="{height:`${header.headerHeight}px`}">
+        <Menu :menus="menus" mode="Side"/>
+      </div>
     </div>
-    <div  class="mixedMenuDrawer-scroll">
-      <Menu :menus="menus" mode="Side"/>
-    </div>
-  </div>
   </transition>
 </template>
 
@@ -41,20 +43,17 @@ const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off'
   background: @subBackgroundColor;
   border-left: 1px solid @divider;
   border-right: 1px solid @divider;
-
   height: 100%;
   transform: translateX(100%);
   z-index: 100;
   overflow: hidden;
-  width: @sidebarWidth;
 
   &-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    width: @sidebarWidth;
-    height: @headerHeight;
+    width: 100%;
   }
 
   &-scroll {
@@ -62,6 +61,7 @@ const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off'
     flex: 1;
   }
 }
+
 .slideIn-enter-active,
 .slideIn-leave-active {
   transition: .2s ease-out;
@@ -70,7 +70,7 @@ const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off'
 
 .slideIn-enter-from,
 .slideIn-leave-to {
-  width: 0!important;
+  width: 0 !important;
   opacity: 0;
 }
 </style>

@@ -3,6 +3,7 @@ import { useLayoutStore } from '@/store/modules/layout'
 import SideMode from './sideMode/index.vue'
 import MixSideMode from './mixSideMode/index.vue'
 import { computed } from 'vue'
+import { useSidebarStyle } from '@/layout/sidebar/hooks/useSidebar'
 
 defineOptions({ name: 'LayoutSidebar' })
 const layoutStore = useLayoutStore()
@@ -12,16 +13,16 @@ const {
   mobile
 } = layoutStore.$state
 
-const sidebarClass = computed(() => {
+const { sideModeWidth, mixSideModeWidth, fixedMixSideModeWidth } = useSidebarStyle()
+
+
+const sidebarWidth = computed(() => {
   switch (app.menuMode) {
     case 'Side':
-      return sidebar.isCollapsedSidebar ? 'collapsed' : undefined
+      return sideModeWidth.value
     case 'MixSide':
-      if (sidebar.isFixedMixedSidebar) {
-        return sidebar.isCollapsedMixedSidebar ? 'mixSideCollapsedFixedWidth' : 'mixSideFixedWidth'
-      }
-      return sidebar.isCollapsedMixedSidebar ? 'collapsedMixSide' : 'mixSide'
-    default :
+      return sidebar.isFixedMixedSidebar ? fixedMixSideModeWidth.value : mixSideModeWidth.value
+    default:
       return undefined
   }
 })
@@ -32,9 +33,9 @@ const sidebarClass = computed(() => {
   <transition name="slideIn">
     <div
         v-if="app.menuMode!=='Top'||mobile.isMobile"
-        :class="sidebarClass"
+        :style="{width:sidebarWidth}"
         class="layoutSidebar"
-       >
+    >
       <side-mode v-if="app.menuMode==='Side'"/>
       <mix-side-mode v-if="app.menuMode==='MixSide'"/>
     </div>
@@ -50,31 +51,6 @@ const sidebarClass = computed(() => {
   transition: .2s ease-in-out;
   position: relative;
   z-index: 101;
-  width: @sidebarWidth;
-
-  &.collapsed {
-    width: @collapsedSidebarWidth;
-  }
-
-  &.mixSide {
-    width: @mixedSidebarWidth;
-  }
-
-  &.mixSide {
-    width: @mixedSidebarWidth;
-  }
-
-  &.collapsedMixSide {
-    width: @collapsedMixedSidebarWidth;
-  }
-
-  &.mixSideFixedWidth {
-    width: calc(@mixedSidebarWidth + @sidebarWidth);
-  }
-
-  &.mixSideCollapsedFixedWidth {
-    width: calc(@collapsedMixedSidebarWidth + @sidebarWidth);
-  }
 
   &.inverted {
     background: @invertBackgroundColor;
@@ -89,7 +65,7 @@ const sidebarClass = computed(() => {
 
 .slideIn-enter-from,
 .slideIn-leave-to {
-  width: 0!important;
+  width: 0 !important;
   opacity: 0;
   transform: scale(.95);
 }

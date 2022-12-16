@@ -58,10 +58,10 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
                     next(LOGIN_PATH)
                     return Promise.reject()
                 })
-                /* -- 获取到了用户信息和角色 -- */
                 await handleRouteAuthMode()
+
                 console.log(to)
-                next({ path: to.path, query: to.query, replace: true })
+                next({ path: to.path, query: to.query })
             }
         ],
         // 没有初始化鉴权路由

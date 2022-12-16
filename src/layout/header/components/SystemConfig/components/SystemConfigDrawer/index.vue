@@ -3,6 +3,7 @@ import { useVModel } from '@vueuse/core'
 import ThemeMode from './themeMode/index.vue'
 import SystemTheme from './systemTheme/index.vue'
 import MenuMode from './menuMode/index.vue'
+import PageFunction from './pageFunction/index.vue'
 
 defineOptions({ name: 'SystemConfigDrawer' })
 
@@ -28,6 +29,7 @@ const visible = useVModel(props, 'visible', emits)
       <theme-mode/>
       <menu-mode/>
       <system-theme/>
+      <page-function/>
     </n-drawer-content>
   </n-drawer>
 </template>

@@ -6,11 +6,7 @@ import { appSettings } from '@/settings/app'
 import { darkTheme } from 'naive-ui'
 
 const { theme, themeMode, followSystem } = appSettings
-/*
-* TODo:1.混合菜单重新封装
-* TODo:2.删除less布局变量
-* TODo:3.settingStorage
-* */
+
 // 主题
 export const useThemeStore = defineStore('theme', {
     state: (): Store.ThemeStore => ({
@@ -78,8 +74,6 @@ export const useThemeStore = defineStore('theme', {
         setTheme(themeType: Store.ThemeMode) {
             this.noTransition(() => {
                 this.themeMode = themeType
-                // 在 storage 中存储主题类型
-                ThemeStorage.setTheme(themeType)
                 const theme = this.customize[themeType]
                 setCSSVariable(theme)
             })
