@@ -33,19 +33,20 @@ const onMouseLeave = () => {
 
 </script>
 <template>
-  <transition :name="sidebar.isFixedMixedSidebar?'fixed':'full'" appear>
-    <div @mouseleave="onMouseLeave" @mouseenter="state.isLeave=false" :class="mixSideModeClass"
-         class="mixSideMode">
-      <logo></logo>
-      <div class="mixSideMode-scroll">
-        <mix-side-menu @handle-menu="handleMenu"/>
-      </div>
-      <div @click="layoutStore.toggleCollapsedMixedSidebar()" class="mixSideMode-collapsed">
-        <icon :icon="collapsedIcon" pointer size="22"/>
-      </div>
-      <mix-side-drawer :menus="state.secondaryMenus"/>
+  <div
+      :class="mixSideModeClass"
+      class="mixSideMode"
+      @mouseenter="state.isLeave=false"
+      @mouseleave="onMouseLeave">
+    <logo />
+    <div class="mixSideMode-scroll">
+      <mix-side-menu @handle-menu="handleMenu" />
     </div>
-  </transition>
+    <div class="mixSideMode-collapsed" @click="layoutStore.toggleCollapsedMixedSidebar()">
+      <icon :icon="collapsedIcon" pointer size="22" />
+    </div>
+    <mix-side-drawer :menus="state.secondaryMenus" />
+  </div>
 </template>
 
 
@@ -59,6 +60,7 @@ const onMouseLeave = () => {
   position: relative;
   border-right: 1px solid @divider;
   width: @mixedSidebarWidth;
+
   &.collapsed {
     width: @collapsedMixedSidebarWidth;
   }
@@ -77,33 +79,10 @@ const onMouseLeave = () => {
     transition: .2s ease-in-out;
     width: 100%;
 
+
     &:hover {
       color: @theme;
     }
   }
 }
-
-.fixed-enter-active,
-.fixed-leave-active {
-  transition: .2s ease-in-out;
-}
-
-.fixed-enter-from,
-.fixed-leave-to {
-  opacity: .5;
-  transform: scale(.9);
-}
-
-.full-enter-active,
-.full-leave-active {
-  transition: .2s ease-in-out;
-}
-
-.full-enter-from,
-.full-leave-to {
-  width: 100% !important;
-  opacity: 0;
-  transform: scale(.9);
-}
-
 </style>

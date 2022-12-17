@@ -21,17 +21,8 @@ export const useLayoutStore = defineStore('layout', {
         },
         app
     }),
-    getters: {
-        // 侧边模式宽度
-        sideModeWidth: (state) => {
-            const { sidebar } = state
-            return sidebar.isCollapsedSidebar ? sidebar.collapsedWidth : sidebar.sidebarWidth
-        }
-    },
+    getters: {},
     actions: {
-        initCssVariable() {
-
-        },
         // 切换折叠
         toggleCollapsed(collapsed?: boolean) {
             this.sidebar.isCollapsedSidebar = collapsed || !this.sidebar.isCollapsedSidebar

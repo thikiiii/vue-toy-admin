@@ -19,13 +19,13 @@ const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off'
 
 <template>
   <transition name="slideIn">
-    <div v-if="sidebar.mixedSidebarDrawerVisible"  class="mixedMenuDrawer">
+    <div v-if="sidebar.mixedSidebarDrawerVisible" class="mixedMenuDrawer">
       <div class="mixedMenuDrawer-header">
-        <h1/>
-        <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
+        <h1 />
+        <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()" />
       </div>
-      <div class="mixedMenuDrawer-scroll" :style="{height:`${header.headerHeight}px`}">
-        <Menu :menus="menus" mode="Side"/>
+      <div :style="{height:`${header.headerHeight}px`}" class="mixedMenuDrawer-scroll">
+        <Menu :options="menus" mode="Side" />
       </div>
     </div>
   </transition>

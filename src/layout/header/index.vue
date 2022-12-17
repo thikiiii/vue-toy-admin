@@ -35,7 +35,7 @@ const layoutHeaderClass = computed(() => header.isFixedHeaderAndTabBar ? 'fixed'
         </div>
         <!-- 水平菜单 -->
         <n-scrollbar x-scrollable>
-          <Menu :menus="routeStore.menus" collapsed inverted mode="Top" />
+          <Menu :options="routeStore.menus" mode="horizontal" />
         </n-scrollbar>
       </template>
     </div>

@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import { useLayoutStore } from '@/store/modules/layout'
 import { useRouteStore } from '@/store/modules/route'
-import { onMounted, watch } from 'vue'
 import { useMixSide } from '@/layout/sidebar/mixSideMode/hooks/useMixSide'
+import { computed } from 'vue'
 
 defineOptions({ name: 'MixedMenu' })
-
-
 
 interface Emits {
   (e: 'handleMenu', menu: Store.MenuOption): void
@@ -19,10 +17,20 @@ const routeStore = useRouteStore()
 const { state } = useMixSide()
 const { sidebar } = layoutStore.$state
 
+const mixSideMenuCardClass = computed(() => {
+  return (i: number) => {
+    const classList: string[] = []
+    sidebar.isInverted && classList.push('inverted')
+    state.activeIndex === i && classList.push('active')
+    return classList.join(' ')
+  }
+})
+
 const handleMenu = (menu: Store.MenuOption, i: number) => {
   state.activeIndex = i
   emits('handleMenu', menu)
 }
+
 
 </script>
 
@@ -33,8 +41,8 @@ const handleMenu = (menu: Store.MenuOption, i: number) => {
       :disabled="!sidebar.isCollapsedMixedSidebar"
       trigger="hover">
     <template #trigger>
-      <div :class="state.activeIndex===i ? 'active':undefined" class="mixedMenuCard" @click=" handleMenu(menu,i)">
-        <span><icon :icon="menu?.meta?.icon" size="24"/></span>
+      <div :class="mixSideMenuCardClass(i)" class="mixedMenuCard" @click=" handleMenu(menu,i)">
+        <span><icon :icon="menu?.meta?.icon" size="24" /></span>
         <n-ellipsis v-if="!sidebar.isCollapsedMixedSidebar" class="mixedMenu-main-scroll-menu-name">
           {{ menu?.meta?.title }}
         </n-ellipsis>
@@ -61,6 +69,14 @@ const handleMenu = (menu: Store.MenuOption, i: number) => {
     background: @fadedThemeColor;
   }
 
+
+  &.inverted:not(.active) {
+    color: @invertTextColor;
+
+    &:hover {
+      background: @hoverInvertBackgroundColor !important;
+    }
+  }
 
   &:hover:not(.active) {
     background: @hoverBackgroundColor;

@@ -70,7 +70,7 @@ export class RouterHelpers {
         return {
             key: path,
             label: meta?.title ? renderEllipsis({ content: meta.title }) : '',
-            icon: meta?.icon ? renderIcon({ icon: meta.icon || '', size: 22 }) : undefined,
+            icon: meta?.icon ? renderIcon({ icon: meta.icon || '', size: '100%' }) : undefined,
             meta,
             children: children as Store.MenuOption['children']
         }

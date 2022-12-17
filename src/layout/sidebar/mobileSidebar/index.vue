@@ -13,13 +13,10 @@ const routeStore = useRouteStore()
 <template>
   <n-drawer v-model:show="mobile.mobileMenuVisible" :width="sidebar.sidebarWidth" placement="left">
     <logo />
-    <Menu :menus="routeStore.menus" mode="Side" />
+    <Menu :options="routeStore.menus" mode="Side" />
   </n-drawer>
 </template>
 
 <style lang="less" scoped>
-:global(.n-menu .n-menu-item-content .n-menu-item-content__icon) {
-  width: 24px;
-  height: 24px;
-}
+
 </style>

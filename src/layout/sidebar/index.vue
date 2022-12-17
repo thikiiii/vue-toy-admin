@@ -15,17 +15,21 @@ const {
 
 
 const sidebarClass = computed(() => {
+  const classList: string[] = []
   switch (app.menuMode) {
     case 'Side':
-      return sidebar.isCollapsedSidebar ? 'collapsed' : undefined
+      sidebar.isCollapsedSidebar && classList.push('collapsed')
+      break
     case 'MixSide':
       if (sidebar.isFixedMixedSidebar) {
-        return sidebar.isCollapsedMixedSidebar ? 'mixSideCollapsedFixedWidth' : 'mixSideFixedWidth'
+        classList.push(sidebar.isCollapsedMixedSidebar ? 'mixSideCollapsedFixedWidth' : 'mixSideFixedWidth')
+      } else {
+        classList.push(sidebar.isCollapsedMixedSidebar ? 'collapsedMixSide' : 'mixSide')
       }
-      return sidebar.isCollapsedMixedSidebar ? 'collapsedMixSide' : 'mixSide'
-    default :
-      return undefined
+      break
   }
+  if (sidebar.isInverted) classList.push('inverted')
+  return classList.join(' ')
 })
 
 </script>
@@ -37,26 +41,27 @@ const sidebarClass = computed(() => {
         :class="sidebarClass"
         class="layoutSidebar"
     >
-      <side-mode v-if="app.menuMode==='Side'"/>
-      <mix-side-mode v-if="app.menuMode==='MixSide'"/>
+      <transition-group name="full">
+        <side-mode v-if="app.menuMode==='Side'" />
+        <mix-side-mode v-if="app.menuMode==='MixSide'" />
+      </transition-group>
     </div>
   </transition>
-  <mobile-sidebar v-if="mobile.isMobile"/>
+  <mobile-sidebar v-if="mobile.isMobile" />
 </template>
 
 
 <style lang="less" scoped>
 .layoutSidebar {
   background: @subBackgroundColor;
-  display: flex;
-  flex-direction: column;
   transition: .2s ease-in-out;
   position: relative;
-  z-index: 101;
   width: @sidebarWidth;
+  color: @mainTextColor;
 
   &.inverted {
     background: @invertBackgroundColor;
+    color: @invertTextColor;
   }
 
   &.collapsed {
@@ -86,7 +91,7 @@ const sidebarClass = computed(() => {
 
 .slideIn-enter-active,
 .slideIn-leave-active {
-  transition: .2s ease-out;
+  transition: .2s ease-in-out;
   overflow: hidden;
 }
 
@@ -94,6 +99,19 @@ const sidebarClass = computed(() => {
 .slideIn-leave-to {
   width: 0 !important;
   opacity: 0;
+}
+
+.full-enter-active,
+.full-leave-active {
+  transition: .3s ease-in-out;
+  position: absolute;
+}
+
+.full-enter-from,
+.full-leave-to {
+  width: 100%;
+  opacity: 0;
   transform: scale(.95);
 }
+
 </style>

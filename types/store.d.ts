@@ -10,6 +10,8 @@ declare namespace Store {
 
     // 侧边栏
     interface LayoutSidebar {
+        // 是否反转色
+        isInverted: boolean
         // 侧边栏宽度
         sidebarWidth: number
 
@@ -37,6 +39,8 @@ declare namespace Store {
 
     // 头部
     interface LayoutHeader {
+        // 是否反转色
+        isInverted: boolean
         // 头部高度
         headerHeight: number
 

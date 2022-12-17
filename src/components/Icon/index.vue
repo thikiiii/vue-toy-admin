@@ -2,10 +2,8 @@
   <!-- iconify 图标 -->
   <icon
       v-if="!localIcon"
-      :height="size"
       :icon="iconName"
-      :style="{cursor:pointer? 'pointer':undefined,color}"
-      :width="size"
+      :style="style"
   />
   <!-- 本地图标 -->
   <svg
@@ -24,6 +22,7 @@
 import { Icon } from '@iconify/vue'
 import { computed } from 'vue'
 import useMetaEnv from '@/hooks/common/useMetaEnv'
+import { isNumber } from 'lodash'
 
 export interface IconProps {
   // 图标地址：https://icones.js.org/collection/all
@@ -52,6 +51,12 @@ const props = withDefaults(defineProps<IconProps>(), {
 
 const metaEnv = useMetaEnv()
 const iconName = computed(() => props.localIcon ? `#${ metaEnv.VITE_ICON_LOCAL_PREFIX }-${ props.localIcon }` : props.icon)
+const style = computed(() => ({
+  cursor: props.pointer ? 'pointer' : undefined,
+  color: props.color,
+  width: isNumber(props.size) ? `${ props.size }px` : props.size,
+  height: isNumber(props.size) ? `${ props.size }px` : props.size
+}))
 </script>
 
 <style lang="less" scoped>

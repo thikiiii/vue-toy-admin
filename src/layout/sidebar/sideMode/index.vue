@@ -7,26 +7,29 @@ import { computed } from 'vue'
 
 defineOptions({ name: 'SideMode' })
 const layoutStore = useLayoutStore()
-const { sidebar, app } = layoutStore.$state
+const { sidebar } = layoutStore.$state
 const routeStore = useRouteStore()
-
+/*
+* TODO: SideMode组件与MixSideMode组件的根元素与logo组件抽离到 Sidebar组件中
+* TODO: 解决Menu组件 iconSize bug
+* */
 const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : undefined)
 </script>
 
 <template>
-  <transition name="full" appear>
-    <div :class="sideModeClass" class="sideMode">
-      <logo></logo>
-      <div class="sideMode-scroll">
-        <Menu
-            v-if="app.menuMode==='Side'"
-            :collapsed="sidebar.isCollapsedSidebar"
-            :collapsed-width="sidebar.collapsedSidebarWidth"
-            :menus="routeStore.menus"
-            mode="Side"/>
-      </div>
+  <div :class="sideModeClass" class="sideMode">
+    <logo></logo>
+    <div class="sideMode-scroll">
+      <Menu
+          :collapsed="sidebar.isCollapsedSidebar"
+          :collapsed-icon-size="24"
+          :collapsed-width="sidebar.collapsedSidebarWidth"
+          :icon-size="50"
+          :inverted="sidebar.isInverted"
+          :options="routeStore.menus"
+      />
     </div>
-  </transition>
+  </div>
 </template>
 
 <style lang="less" scoped>
@@ -49,20 +52,10 @@ const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : 
   }
 }
 
-:global(.n-menu.n-menu--collapsed .n-menu-item-content .n-menu-item-content__icon svg) {
-  width: 24px;
-  height: 24px;
-}
+//:global(.n-menu.n-menu--collapsed .n-menu-item-content .n-menu-item-content__icon svg) {
+//  width: 24px;
+//  height: 24px;
+//}
 
-.full-enter-active,
-.full-leave-active {
-  transition: .2s ease-in-out;
-}
 
-.full-enter-from,
-.full-leave-to {
-  width: 100%;
-  opacity: 0;
-  transform: scale(.95);
-}
 </style>

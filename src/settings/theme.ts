@@ -38,7 +38,7 @@ export const darkThemeConfig = (theme: string): Store.CustomizeThemeConfig => (
         subBackgroundColor: '#191e2c',
         invertBackgroundColor: '#191e2c',
         hoverBackgroundColor: 'rgba(255, 255, 255, 0.09)',
-        hoverInvertBackgroundColor: 'rgb(243, 243, 245)',
+        hoverInvertBackgroundColor: 'rgba(255, 255, 255, 0.09)',
         borderColor: '#212B36',
         divider: 'rgb(45,55,72)',
         scrollColor: '#3a4651',

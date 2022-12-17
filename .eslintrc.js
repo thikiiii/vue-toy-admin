@@ -24,6 +24,7 @@ module.exports = defineConfig({
         'comma-dangle': [ 'error', 'never' ],
         'vue/no-multiple-template-root': 'off',
         'vue/script-setup-uses-vars': 'error',
+        '@typescript-eslint/no-empty-interface': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-explicit-any': 'off',

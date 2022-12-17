@@ -6,6 +6,9 @@ const appSettingsInitial: AppSettings = {
     themeMode: 'light',
     followSystem: true,
     sidebar: {
+        // 反转色
+        isInverted: true,
+
         // 侧边栏宽度
         sidebarWidth: 220,
 
@@ -31,6 +34,9 @@ const appSettingsInitial: AppSettings = {
     },
 
     header: {
+        // 反转色
+        isInverted: true,
+        
         // 头部高度
         headerHeight: 56,
 
