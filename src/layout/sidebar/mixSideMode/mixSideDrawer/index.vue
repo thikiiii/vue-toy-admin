@@ -3,7 +3,6 @@ import { useLayoutStore } from '@/store/modules/layout'
 import Menu from '@/layout/components/Menu/index.vue'
 import { computed } from 'vue'
 import { MenuOption } from 'naive-ui'
-import { useSidebarStyle } from '@/layout/sidebar/hooks/useSidebar'
 
 interface Props {
   menus: MenuOption[]
@@ -14,14 +13,13 @@ defineProps<Props>()
 
 const layoutStore = useLayoutStore()
 const { sidebar, header } = layoutStore.$state
-const { sideModeWidth } = useSidebarStyle()
 
 const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off' : 'mdi:pin')
 </script>
 
 <template>
   <transition name="slideIn">
-    <div v-if="sidebar.mixedSidebarDrawerVisible" :style="{width:sideModeWidth}" class="mixedMenuDrawer">
+    <div v-if="sidebar.mixedSidebarDrawerVisible"  class="mixedMenuDrawer">
       <div class="mixedMenuDrawer-header">
         <h1/>
         <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
@@ -47,6 +45,7 @@ const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off'
   transform: translateX(100%);
   z-index: 100;
   overflow: hidden;
+  width: @sidebarWidth;
 
   &-header {
     display: flex;

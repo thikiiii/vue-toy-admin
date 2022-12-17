@@ -4,18 +4,18 @@ import Logo from '@/layout/components/Logo/index.vue'
 import { useLayoutStore } from '@/store/modules/layout'
 import { useRouteStore } from '@/store/modules/route'
 import { computed } from 'vue'
-import { useSidebarStyle } from '@/layout/sidebar/hooks/useSidebar'
 
 defineOptions({ name: 'SideMode' })
 const layoutStore = useLayoutStore()
 const { sidebar, app } = layoutStore.$state
 const routeStore = useRouteStore()
-const { sideModeWidth } = useSidebarStyle()
+
+const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : undefined)
 </script>
 
 <template>
   <transition name="full" appear>
-    <div :style="{width:sideModeWidth}" class="sideMode">
+    <div :class="sideModeClass" class="sideMode">
       <logo></logo>
       <div class="sideMode-scroll">
         <Menu
@@ -37,6 +37,11 @@ const { sideModeWidth } = useSidebarStyle()
   overflow: hidden;
   transition: .2s ease-in-out;
   border-right: 1px solid @divider;
+  width: @sidebarWidth;
+
+  &.collapsed {
+    width: @collapsedSidebarWidth;
+  }
 
   &-scroll {
     flex: 1;

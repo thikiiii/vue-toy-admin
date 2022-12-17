@@ -2,8 +2,8 @@
 import { useLayoutStore } from '@/store/modules/layout'
 import SideMode from './sideMode/index.vue'
 import MixSideMode from './mixSideMode/index.vue'
+import MobileSidebar from './mobileSidebar/index.vue'
 import { computed } from 'vue'
-import { useSidebarStyle } from '@/layout/sidebar/hooks/useSidebar'
 
 defineOptions({ name: 'LayoutSidebar' })
 const layoutStore = useLayoutStore()
@@ -13,16 +13,17 @@ const {
   mobile
 } = layoutStore.$state
 
-const { sideModeWidth, mixSideModeWidth, fixedMixSideModeWidth } = useSidebarStyle()
 
-
-const sidebarWidth = computed(() => {
+const sidebarClass = computed(() => {
   switch (app.menuMode) {
     case 'Side':
-      return sideModeWidth.value
+      return sidebar.isCollapsedSidebar ? 'collapsed' : undefined
     case 'MixSide':
-      return sidebar.isFixedMixedSidebar ? fixedMixSideModeWidth.value : mixSideModeWidth.value
-    default:
+      if (sidebar.isFixedMixedSidebar) {
+        return sidebar.isCollapsedMixedSidebar ? 'mixSideCollapsedFixedWidth' : 'mixSideFixedWidth'
+      }
+      return sidebar.isCollapsedMixedSidebar ? 'collapsedMixSide' : 'mixSide'
+    default :
       return undefined
   }
 })
@@ -32,14 +33,15 @@ const sidebarWidth = computed(() => {
 <template>
   <transition name="slideIn">
     <div
-        v-if="app.menuMode!=='Top'||mobile.isMobile"
-        :style="{width:sidebarWidth}"
+        v-if="app.menuMode!=='Top'&&!mobile.isMobile"
+        :class="sidebarClass"
         class="layoutSidebar"
     >
       <side-mode v-if="app.menuMode==='Side'"/>
       <mix-side-mode v-if="app.menuMode==='MixSide'"/>
     </div>
   </transition>
+  <mobile-sidebar v-if="mobile.isMobile"/>
 </template>
 
 
@@ -51,9 +53,34 @@ const sidebarWidth = computed(() => {
   transition: .2s ease-in-out;
   position: relative;
   z-index: 101;
+  width: @sidebarWidth;
 
   &.inverted {
     background: @invertBackgroundColor;
+  }
+
+  &.collapsed {
+    width: @collapsedSidebarWidth;
+  }
+
+  &.mixSide {
+    width: @mixedSidebarWidth;
+  }
+
+  &.mixSide {
+    width: @mixedSidebarWidth;
+  }
+
+  &.collapsedMixSide {
+    width: @collapsedMixedSidebarWidth;
+  }
+
+  &.mixSideFixedWidth {
+    width: calc(@mixedSidebarWidth + @sidebarWidth);
+  }
+
+  &.mixSideCollapsedFixedWidth {
+    width: calc(@collapsedMixedSidebarWidth + @sidebarWidth);
   }
 }
 

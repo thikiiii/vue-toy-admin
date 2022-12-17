@@ -7,16 +7,14 @@ import { MenuOption } from 'naive-ui'
 import { useRouteStore } from '@/store/modules/route'
 import { useLayoutStore } from '@/store/modules/layout'
 import { useMixSide } from '@/layout/sidebar/mixSideMode/hooks/useMixSide'
-import { useSidebarStyle } from '@/layout/sidebar/hooks/useSidebar'
 
 defineOptions({ name: 'MixSideMode' })
 const routeStore = useRouteStore()
 const layoutStore = useLayoutStore()
 const { sidebar } = layoutStore.$state
 const { state } = useMixSide()
-const { mixSideModeWidth } = useSidebarStyle()
 const collapsedIcon = computed(() => sidebar.isCollapsedMixedSidebar ? 'mdi:chevron-triple-right' : 'mdi:chevron-triple-left')
-
+const mixSideModeClass = computed(() => sidebar.isCollapsedMixedSidebar ? 'collapsed' : undefined)
 const handleMenu = (menu: Store.MenuOption) => {
   if (menu.children) {
     state.secondaryMenus = menu.children as MenuOption[]
@@ -36,7 +34,7 @@ const onMouseLeave = () => {
 </script>
 <template>
   <transition :name="sidebar.isFixedMixedSidebar?'fixed':'full'" appear>
-    <div @mouseleave="onMouseLeave" @mouseenter="state.isLeave=false" :style="{width:mixSideModeWidth}"
+    <div @mouseleave="onMouseLeave" @mouseenter="state.isLeave=false" :class="mixSideModeClass"
          class="mixSideMode">
       <logo></logo>
       <div class="mixSideMode-scroll">
@@ -60,6 +58,10 @@ const onMouseLeave = () => {
   align-items: center;
   position: relative;
   border-right: 1px solid @divider;
+  width: @mixedSidebarWidth;
+  &.collapsed {
+    width: @collapsedMixedSidebarWidth;
+  }
 
   &-scroll {
     flex: 1;
