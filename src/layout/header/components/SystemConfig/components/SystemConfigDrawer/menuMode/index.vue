@@ -94,18 +94,18 @@ const setMenuMode = (mode: Store.MenuMode) => {
 
       .sideMixMode-sideMix {
         display: flex;
-
+        border-radius: 3px;
+        overflow: hidden;
         div:nth-of-type(1) {
           width: 8px;
           height: 100%;
-          border-radius: 6px;
           background: @theme;
+          border-radius: 3px;
         }
 
         div:nth-of-type(2) {
           background: @fadedThemeColor;
           width: 12px;
-          border-radius: 6px;
           height: 100%;
         }
       }
