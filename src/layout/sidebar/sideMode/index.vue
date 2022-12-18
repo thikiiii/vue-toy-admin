@@ -19,11 +19,11 @@ const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : 
     <div class="sideMode-scroll">
       <Menu
           :collapsed="sidebar.isCollapsedSidebar"
-          :collapsed-width="sidebar.collapsedSidebarWidth"
-          :inverted="sidebar.isInverted"
-          :options="routeStore.menus"
-          :icon-size="22"
           :collapsed-icon-size="24"
+          :collapsed-width="sidebar.collapsedSidebarWidth"
+          :icon-size="22"
+          :inverted="layoutStore.sideInverted"
+          :options="routeStore.menus"
       />
     </div>
   </div>

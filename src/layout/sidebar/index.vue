@@ -4,6 +4,7 @@ import SideMode from './sideMode/index.vue'
 import MixSideMode from './mixSideMode/index.vue'
 import MobileSidebar from './mobileSidebar/index.vue'
 import { computed } from 'vue'
+import { useToggle } from '@vueuse/core'
 
 defineOptions({ name: 'LayoutSidebar' })
 const layoutStore = useLayoutStore()
@@ -12,42 +13,40 @@ const {
   app,
   mobile
 } = layoutStore.$state
+const [ isHidden ] = useToggle()
 
-
-const sidebarClass = computed(() => {
+const className = computed(() => {
   const classList: string[] = []
-  switch (app.menuMode) {
+  switch (app.layoutMode) {
     case 'Side':
       sidebar.isCollapsedSidebar && classList.push('collapsed')
       break
     case 'MixSide':
-      if (sidebar.isFixedMixedSidebar) {
-        classList.push(sidebar.isCollapsedMixedSidebar ? 'mixSideCollapsedFixedWidth' : 'mixSideFixedWidth')
-      } else {
-        classList.push(sidebar.isCollapsedMixedSidebar ? 'collapsedMixSide' : 'mixSide')
-      }
+      sidebar.isFixedMixedSidebar ?
+          classList.push(sidebar.isCollapsedMixedSidebar ? 'mixSideCollapsedFixedWidth' : 'mixSideFixedWidth') :
+          classList.push(sidebar.isCollapsedMixedSidebar ? 'collapsedMixSide' : 'mixSide')
       break
   }
-  if (sidebar.isInverted) classList.push('inverted')
+  if (layoutStore.sideInverted) classList.push('inverted')
   return classList.join(' ')
 })
-
 </script>
 
 <template>
   <transition name="slideIn">
     <div
-        v-if="app.menuMode!=='Top'&&!mobile.isMobile"
-        :class="sidebarClass"
+        v-if="app.layoutMode!=='Top'&&!mobile.isMobile"
+        :class="className"
+        :style="{overflow: isHidden?'hidden':undefined}"
         class="layoutSidebar"
     >
-      <transition-group name="full">
-        <side-mode v-if="app.menuMode==='Side'"/>
-        <mix-side-mode v-if="app.menuMode==='MixSide'"/>
+      <transition-group name="full" @after-leave="isHidden=false" @before-enter="isHidden=true">
+        <side-mode v-if="app.layoutMode==='Side'" />
+        <mix-side-mode v-if="app.layoutMode==='MixSide'" />
       </transition-group>
     </div>
   </transition>
-  <mobile-sidebar v-if="mobile.isMobile"/>
+  <mobile-sidebar v-if="mobile.isMobile" />
 </template>
 
 
@@ -58,7 +57,6 @@ const sidebarClass = computed(() => {
   position: relative;
   width: @sidebarWidth;
   color: @mainTextColor;
-  overflow: hidden;
 
   &.inverted {
     background: @invertBackgroundColor;
@@ -90,6 +88,7 @@ const sidebarClass = computed(() => {
 .slideIn-enter-active,
 .slideIn-leave-active {
   transition: .2s ease-in-out;
+  overflow: hidden;
 }
 
 .slideIn-enter-from,
@@ -99,7 +98,7 @@ const sidebarClass = computed(() => {
 
 .full-enter-active,
 .full-leave-active {
-  transition: .2s ease-in-out;
+  transition: .3s ease;
   position: absolute;
 }
 
@@ -107,7 +106,7 @@ const sidebarClass = computed(() => {
 .full-leave-to {
   width: 100%;
   opacity: 0;
-  transform: scale(.95);
+  transform: scale(.90) skew(30deg);
 }
 
 </style>

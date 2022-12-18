@@ -15,23 +15,18 @@ const layoutStore = useLayoutStore()
 const { sidebar, header } = layoutStore.$state
 
 const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off' : 'mdi:pin')
-const className = computed(() => {
-  const classList:string[] = []
-  sidebar.isInverted && classList.push('inverted')
-  sidebar.isCollapsedMixedSidebar && classList.push('collapsed')
-  return classList.join(' ')
-})
+const className = computed(() => layoutStore.sideInverted ? 'inverted' : undefined)
 </script>
 
 <template>
   <transition name="slideIn">
-    <div :class="className" v-if="sidebar.mixedSidebarDrawerVisible" class="mixedMenuDrawer">
+    <div v-if="sidebar.mixedSidebarDrawerVisible" :class="className" class="mixedMenuDrawer">
       <div class="mixedMenuDrawer-header">
         <h1>sasdasda</h1>
-        <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
+        <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()" />
       </div>
       <div :style="{height:`${header.headerHeight}px`}" class="mixedMenuDrawer-scroll">
-        <Menu :inverted="sidebar.isInverted" :options="menus" mode="Side"/>
+        <Menu :inverted="layoutStore.sideInverted" :options="menus" mode="Side" />
       </div>
     </div>
   </transition>
@@ -41,22 +36,20 @@ const className = computed(() => {
 .mixedMenuDrawer {
   display: flex;
   flex-direction: column;
-  position: fixed;
-  left: @mixedSidebarWidth;
+  position: absolute;
+  right: 0;
   top: 0;
   background: @subBackgroundColor;
   border-right: 1px solid @divider;
   height: 100%;
+  transform: translateX(100%);
   z-index: 100;
   overflow: hidden;
   width: @sidebarWidth;
   transition: .2s ease-in-out;
+
   &.inverted {
     background: @invertBackgroundColor;
-  }
-
-  &.collapsed {
-    left: @collapsedMixedSidebarWidth;
   }
 
   &-header {

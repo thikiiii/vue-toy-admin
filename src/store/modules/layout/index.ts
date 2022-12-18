@@ -21,7 +21,12 @@ export const useLayoutStore = defineStore('layout', {
         },
         app
     }),
-    getters: {},
+    getters: {
+        // 侧边颜色是否反转
+        sideInverted: (state) => ([ 'SideDark', 'SideTopDark' ] as Store.LayoutStyle[]).includes(state.app.layoutStyle),
+        // 顶部颜色是否反转
+        topInverted: (state) => state.app.layoutStyle === 'SideTopDark'
+    },
     actions: {
         // 切换折叠
         toggleCollapsed(collapsed?: boolean) {

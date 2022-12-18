@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { RouteLocationMatched, useRoute, useRouter } from 'vue-router'
 import { onMounted, ref, watch } from 'vue'
+import { useLayoutStore } from '@/store/modules/layout'
 
 defineOptions({ name: 'Breadcrumb' })
 
@@ -12,6 +13,7 @@ interface Breadcrumb {
 
 const route = useRoute()
 const router = useRouter()
+const layoutStore = useLayoutStore()
 const breadcrumb = ref<Breadcrumb[]>([])
 
 const onSelect = (path) => {
@@ -38,7 +40,7 @@ watch(() => route.path, () => {
 </script>
 
 <template>
-  <n-breadcrumb>
+  <n-breadcrumb :class="layoutStore.topInverted?'inverted':undefined">
     <n-breadcrumb-item v-for="menu in breadcrumb" :key="menu.key">
       <n-dropdown :options="menu.children" :value="route.path" @select="onSelect">
         <span>

@@ -5,13 +5,26 @@ declare namespace Store {
     // 页面切换动画
     type PageAnimationMode = ''
 
-    // 菜单模式：侧边 | 混合侧边 | 顶部
-    type MenuMode = 'Side' | 'MixSide' | 'Top'
+    // 布局模式：侧边 | 混合侧边 | 顶部
+    type LayoutMode = 'Side' | 'MixSide' | 'Top'
+
+    // 布局风格
+    type LayoutStyle = 'SideDark' | 'SideTopDark' | 'SideTopLight'
+
+    // 布局模式选项
+    type LayoutModeOption = {
+        value: LayoutMode,
+        label: string
+    }
+
+    // 布局风格选项
+    type LayoutStyleOption = {
+        value: LayoutStyle,
+        label: string
+    }
 
     // 侧边栏
     interface LayoutSidebar {
-        // 是否反转色
-        isInverted: boolean
         // 侧边栏宽度
         sidebarWidth: number
 
@@ -39,8 +52,6 @@ declare namespace Store {
 
     // 头部
     interface LayoutHeader {
-        // 是否反转色
-        isInverted: boolean
         // 头部高度
         headerHeight: number
 
@@ -93,8 +104,11 @@ declare namespace Store {
         // 顶部进度条
         topProgressBarVisible: boolean
 
-        // 菜单模式
-        menuMode: MenuMode
+        // 布局模式
+        layoutMode: LayoutMode
+
+        // 布局风格
+        layoutStyle: LayoutStyle
 
         // 页面缓存
         isPageCache: boolean

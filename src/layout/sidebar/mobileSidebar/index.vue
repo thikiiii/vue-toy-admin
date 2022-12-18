@@ -7,15 +7,15 @@ import { computed } from 'vue'
 
 defineOptions({ name: 'MobileSidebar' })
 const layoutStore = useLayoutStore()
-const { mobile, sidebar } = layoutStore.$state
+const { mobile } = layoutStore.$state
 const routeStore = useRouteStore()
-const className = computed(() => sidebar.isInverted ? 'inverted' : undefined)
+const className = computed(() => layoutStore.sideInverted ? 'inverted' : undefined)
 </script>
 
 <template>
-  <n-drawer class="mobileSidebar" :class="className" v-model:show="mobile.mobileMenuVisible" placement="left">
-    <logo/>
-    <Menu :inverted="sidebar.isInverted" :options="routeStore.menus" mode="Side"/>
+  <n-drawer v-model:show="mobile.mobileMenuVisible" :class="className" class="mobileSidebar" placement="left">
+    <logo />
+    <Menu :inverted="layoutStore.sideInverted" :options="routeStore.menus" mode="Side" />
   </n-drawer>
 </template>
 
@@ -23,7 +23,8 @@ const className = computed(() => sidebar.isInverted ? 'inverted' : undefined)
 :global(.mobileSidebar) {
   width: @sidebarWidth;
 }
-:global(.mobileSidebar.inverted){
+
+:global(.mobileSidebar.inverted) {
   background: @invertBackgroundColor;
   color: @invertTextColor;
 }

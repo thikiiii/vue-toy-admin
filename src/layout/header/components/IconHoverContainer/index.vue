@@ -1,13 +1,17 @@
 <script lang="ts" setup>
+import { useLayoutStore } from '@/store/modules/layout'
+import { computed } from 'vue'
 
 defineOptions({ name: 'IconHoverContainer' })
 const props = defineProps<{
   content: string
 }>()
+const layoutStore = useLayoutStore()
+const className = computed(() => layoutStore.topInverted ? 'inverted' : undefined)
 </script>
 
 <template>
-  <div class="iconHoverContainer">
+  <div :class="className" class="iconHoverContainer">
     <n-popover :delay="300" trigger="hover">
       <template #trigger>
         <div class="iconHoverContainer-iconFull">
@@ -24,6 +28,12 @@ const props = defineProps<{
   transition: .1s;
   height: 100%;
   cursor: pointer;
+
+  &.inverted {
+    &:hover {
+      background: @hoverInvertBackgroundColor;
+    }
+  }
 
   &:hover {
     background: @hoverBackgroundColor;

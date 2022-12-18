@@ -6,6 +6,7 @@ defineOptions({ name: 'LayoutFooter' })
 const layoutStore = useLayoutStore()
 const { footer } = layoutStore.$state
 const layoutFooterClass = computed(() => footer.isFixedFooter ? 'fixed' : undefined)
+
 </script>
 
 <template>
@@ -24,9 +25,10 @@ const layoutFooterClass = computed(() => footer.isFixedFooter ? 'fixed' : undefi
   width: 100%;
   flex-shrink: 0;
   box-shadow: 0 0 5px @shadow;
+  transition: .2s ease-in-out;
 
   &.fixed {
-    position: fixed;
+    position: sticky;
     bottom: 0;
   }
 }

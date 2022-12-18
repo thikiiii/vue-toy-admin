@@ -17,41 +17,49 @@ defineOptions({ name: 'LayoutHeader' })
 const layoutStore = useLayoutStore()
 const { header, app, mobile } = layoutStore.$state
 const routeStore = useRouteStore()
-const layoutHeaderClass = computed(() => header.isFixedHeaderAndTabBar ? 'fixed' : undefined)
+/*
+* TODO: 将header 和 tabBar 放到一个div中
+* */
+const className = computed(() => {
+  const className: string[] = []
+  header.isFixedHeaderAndTabBar && className.push('fixed')
+  layoutStore.topInverted && className.push('inverted')
+  return className.join(' ')
+})
 </script>
 <template>
-  <div :class="layoutHeaderClass" class="layoutHeader ">
+  <div :class="className" class="layoutHeader ">
     <div class="layoutHeader-left">
       <!-- 菜单折叠 -->
-      <menu-collapsed v-if="mobile.isMobile||app.menuMode==='Side'"/>
+      <menu-collapsed v-if="mobile.isMobile||app.layoutMode==='Side'" />
       <!-- 面包屑 -->
       <breadcrumb
-          v-if="!mobile.isMobile&&app.menuMode!=='Top'"
-          :style="{marginLeft:app.menuMode==='MixSide'?'10px':undefined}"/>
-      <template v-if="app.menuMode==='Top'&&!mobile.isMobile">
+          v-if="!mobile.isMobile&&app.layoutMode!=='Top'"
+          :style="{marginLeft:app.layoutMode==='MixSide'?'10px':undefined}" />
+      <template v-if="app.layoutMode==='Top'&&!mobile.isMobile">
         <!-- LOGO -->
         <div class="layoutHeader-left-logo-container">
-          <logo/>
+          <logo />
         </div>
         <!-- 水平菜单 -->
         <n-scrollbar x-scrollable>
-          <Menu :options="routeStore.menus" mode="horizontal"/>
+          <Menu :inverted="layoutStore.topInverted" :options="routeStore.menus" mode="horizontal" />
         </n-scrollbar>
       </template>
     </div>
     <div class="layoutHeader-right">
       <!-- 搜索 -->
-      <global-search/>
+      <global-search />
       <!-- GITHUB -->
-      <github/>
+      <github />
       <!-- 全屏 -->
-      <full-screen/>
+      <full-screen />
       <!-- 主题切换 -->
-      <theme-switch/>
+      <theme-switch />
       <!-- 头像和昵称 -->
-      <avatar/>
+      <avatar />
       <!-- 设置 -->
-      <system-config/>
+      <system-config />
     </div>
   </div>
 </template>

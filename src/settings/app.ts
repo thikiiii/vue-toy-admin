@@ -1,14 +1,12 @@
 import { AppStorage } from '@/storage/app'
 
+
 // setting 初始值
 const appSettingsInitial: AppSettings = {
     theme: '#6675ff',
     themeMode: 'light',
     followSystem: true,
     sidebar: {
-        // 反转色
-        isInverted: true,
-
         // 侧边栏宽度
         sidebarWidth: 220,
 
@@ -34,9 +32,6 @@ const appSettingsInitial: AppSettings = {
     },
 
     header: {
-        // 反转色
-        isInverted: true,
-        
         // 头部高度
         headerHeight: 56,
 
@@ -64,7 +59,7 @@ const appSettingsInitial: AppSettings = {
         footerVisible: true,
 
         // 固定底部
-        isFixedFooter: true
+        isFixedFooter: false
     },
     app: {
         // 是否开启页面切换动画
@@ -76,8 +71,11 @@ const appSettingsInitial: AppSettings = {
         // 顶部进度条
         topProgressBarVisible: true,
 
-        // 菜单模式
-        menuMode: 'Side',
+        // 布局模式
+        layoutMode: 'Side',
+
+        // 布局风格
+        layoutStyle: 'SideTopLight',
 
         // 页面缓存
         isPageCache: true
@@ -88,4 +86,37 @@ const { sidebar } = appSettingsInitial
 if (sidebar.isFixedMixedSidebar) {
     sidebar.mixedSidebarDrawerVisible = true
 }
+
+// 布局模式列表
+export const layoutModeList: Store.LayoutModeOption[] = [
+    {
+        value: 'Side',
+        label: '侧边菜单模式'
+    },
+    {
+        value: 'MixSide',
+        label: '侧边菜单混合模式'
+    },
+    {
+        value: 'Top',
+        label: '顶部菜单模式'
+    }
+]
+
+// 布局风格列表
+export const layoutStyleList: Store.LayoutStyleOption[] = [
+    {
+        value: 'SideDark',
+        label: '侧边暗色风格'
+    },
+    {
+        value: 'SideTopDark',
+        label: '侧边+顶部暗色风格'
+    },
+    {
+        value: 'SideTopLight',
+        label: '侧边+顶部明亮风格'
+    }
+]
+
 export const appSettings = appSettingsInitial || AppStorage.getSettings()

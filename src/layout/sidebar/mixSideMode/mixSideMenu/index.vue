@@ -20,7 +20,7 @@ const { sidebar } = layoutStore.$state
 const mixSideMenuCardClass = computed(() => {
   return (i: number) => {
     const classList: string[] = []
-    sidebar.isInverted && classList.push('inverted')
+    layoutStore.sideInverted && classList.push('inverted')
     state.activeIndex === i && classList.push('active')
     return classList.join(' ')
   }

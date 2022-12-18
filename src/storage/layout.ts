@@ -6,9 +6,9 @@ export class LayoutStorage {
     public static readonly menuMode = 'MENU_MODE'
 
     // 设置菜单模式
-    static setMenuMode = (menuMode: Store.MenuMode) => store.set(this.menuMode, menuMode)
+    static setMenuMode = (menuMode: Store.LayoutMode) => store.set(this.menuMode, menuMode)
 
     // 获取菜单模式
-    static getMenuMode = (): Store.MenuMode | undefined => store.get(this.menuMode)
+    static getMenuMode = (): Store.LayoutMode | undefined => store.get(this.menuMode)
 }
 
