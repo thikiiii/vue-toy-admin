@@ -22,36 +22,36 @@ const layoutHeaderClass = computed(() => header.isFixedHeaderAndTabBar ? 'fixed'
 <template>
   <div :class="layoutHeaderClass" class="layoutHeader ">
     <div class="layoutHeader-left">
-      <template v-if="app.menuMode!=='Top'">
-        <!-- 菜单折叠 -->
-        <menu-collapsed v-if="mobile.isMobile||app.menuMode!=='MixSide'" />
-        <!-- 面包屑 -->
-        <breadcrumb v-if="!mobile.isMobile" :style="{marginLeft:app.menuMode==='MixSide'?'10px':undefined}" />
-      </template>
+      <!-- 菜单折叠 -->
+      <menu-collapsed v-if="mobile.isMobile||app.menuMode==='Side'"/>
+      <!-- 面包屑 -->
+      <breadcrumb
+          v-if="!mobile.isMobile&&app.menuMode!=='Top'"
+          :style="{marginLeft:app.menuMode==='MixSide'?'10px':undefined}"/>
       <template v-if="app.menuMode==='Top'&&!mobile.isMobile">
         <!-- LOGO -->
         <div class="layoutHeader-left-logo-container">
-          <logo />
+          <logo/>
         </div>
         <!-- 水平菜单 -->
         <n-scrollbar x-scrollable>
-          <Menu :options="routeStore.menus" mode="horizontal" />
+          <Menu :options="routeStore.menus" mode="horizontal"/>
         </n-scrollbar>
       </template>
     </div>
     <div class="layoutHeader-right">
       <!-- 搜索 -->
-      <global-search />
+      <global-search/>
       <!-- GITHUB -->
-      <github />
+      <github/>
       <!-- 全屏 -->
-      <full-screen />
+      <full-screen/>
       <!-- 主题切换 -->
-      <theme-switch />
+      <theme-switch/>
       <!-- 头像和昵称 -->
-      <avatar />
+      <avatar/>
       <!-- 设置 -->
-      <system-config />
+      <system-config/>
     </div>
   </div>
 </template>

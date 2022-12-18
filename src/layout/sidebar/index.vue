@@ -42,12 +42,12 @@ const sidebarClass = computed(() => {
         class="layoutSidebar"
     >
       <transition-group name="full">
-        <side-mode v-if="app.menuMode==='Side'" />
-        <mix-side-mode v-if="app.menuMode==='MixSide'" />
+        <side-mode v-if="app.menuMode==='Side'"/>
+        <mix-side-mode v-if="app.menuMode==='MixSide'"/>
       </transition-group>
     </div>
   </transition>
-  <mobile-sidebar v-if="mobile.isMobile" />
+  <mobile-sidebar v-if="mobile.isMobile"/>
 </template>
 
 
@@ -58,6 +58,7 @@ const sidebarClass = computed(() => {
   position: relative;
   width: @sidebarWidth;
   color: @mainTextColor;
+  overflow: hidden;
 
   &.inverted {
     background: @invertBackgroundColor;
@@ -72,9 +73,6 @@ const sidebarClass = computed(() => {
     width: @mixedSidebarWidth;
   }
 
-  &.mixSide {
-    width: @mixedSidebarWidth;
-  }
 
   &.collapsedMixSide {
     width: @collapsedMixedSidebarWidth;
@@ -92,18 +90,16 @@ const sidebarClass = computed(() => {
 .slideIn-enter-active,
 .slideIn-leave-active {
   transition: .2s ease-in-out;
-  overflow: hidden;
 }
 
 .slideIn-enter-from,
 .slideIn-leave-to {
   width: 0 !important;
-  opacity: 0;
 }
 
 .full-enter-active,
 .full-leave-active {
-  transition: .3s ease-in-out;
+  transition: .2s ease-in-out;
   position: absolute;
 }
 

@@ -15,17 +15,23 @@ const layoutStore = useLayoutStore()
 const { sidebar, header } = layoutStore.$state
 
 const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off' : 'mdi:pin')
+const className = computed(() => {
+  const classList:string[] = []
+  sidebar.isInverted && classList.push('inverted')
+  sidebar.isCollapsedMixedSidebar && classList.push('collapsed')
+  return classList.join(' ')
+})
 </script>
 
 <template>
   <transition name="slideIn">
-    <div v-if="sidebar.mixedSidebarDrawerVisible" class="mixedMenuDrawer">
+    <div :class="className" v-if="sidebar.mixedSidebarDrawerVisible" class="mixedMenuDrawer">
       <div class="mixedMenuDrawer-header">
-        <h1 />
-        <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()" />
+        <h1>sasdasda</h1>
+        <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()"/>
       </div>
       <div :style="{height:`${header.headerHeight}px`}" class="mixedMenuDrawer-scroll">
-        <Menu :options="menus" mode="Side" />
+        <Menu :inverted="sidebar.isInverted" :options="menus" mode="Side"/>
       </div>
     </div>
   </transition>
@@ -35,17 +41,23 @@ const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off'
 .mixedMenuDrawer {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  right: 0;
+  position: fixed;
+  left: @mixedSidebarWidth;
   top: 0;
   background: @subBackgroundColor;
-  border-left: 1px solid @divider;
   border-right: 1px solid @divider;
   height: 100%;
-  transform: translateX(100%);
   z-index: 100;
   overflow: hidden;
   width: @sidebarWidth;
+  transition: .2s ease-in-out;
+  &.inverted {
+    background: @invertBackgroundColor;
+  }
+
+  &.collapsed {
+    left: @collapsedMixedSidebarWidth;
+  }
 
   &-header {
     display: flex;
@@ -53,6 +65,7 @@ const thumbtackIcon = computed(() => sidebar.isFixedMixedSidebar ? 'mdi:pin-off'
     justify-content: space-between;
     padding: 10px;
     width: 100%;
+    height: @headerHeight;
   }
 
   &-scroll {

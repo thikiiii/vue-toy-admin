@@ -9,10 +9,7 @@ defineOptions({ name: 'SideMode' })
 const layoutStore = useLayoutStore()
 const { sidebar } = layoutStore.$state
 const routeStore = useRouteStore()
-/*
-* TODO: SideMode组件与MixSideMode组件的根元素与logo组件抽离到 Sidebar组件中
-* TODO: 解决Menu组件 iconSize bug
-* */
+
 const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : undefined)
 </script>
 
@@ -22,11 +19,11 @@ const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : 
     <div class="sideMode-scroll">
       <Menu
           :collapsed="sidebar.isCollapsedSidebar"
-          :collapsed-icon-size="24"
           :collapsed-width="sidebar.collapsedSidebarWidth"
-          :icon-size="50"
           :inverted="sidebar.isInverted"
           :options="routeStore.menus"
+          :icon-size="22"
+          :collapsed-icon-size="24"
       />
     </div>
   </div>
@@ -51,11 +48,4 @@ const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : 
     overflow: auto;
   }
 }
-
-//:global(.n-menu.n-menu--collapsed .n-menu-item-content .n-menu-item-content__icon svg) {
-//  width: 24px;
-//  height: 24px;
-//}
-
-
 </style>

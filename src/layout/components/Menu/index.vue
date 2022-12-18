@@ -4,8 +4,8 @@
       :default-value="route.path"
       :indent="30"
       :root-indent="24"
-      v-bind="props"
-      @update:value="selectMenu" />
+      :value="activeMenu"
+      @update:value="selectMenu"/>
 </template>
 
 <script lang="ts" setup>
@@ -18,12 +18,10 @@ interface Props extends MenuProps {
 }
 
 defineOptions({ name: 'Menu' })
-const props = defineProps<Props>()
-console.log(props)
+defineProps<Props>()
 const route = useRoute()
 const routeStore = useRouteStore()
 const menuRef = ref<MenuInst | null>(null)
-
 
 // 激活菜单
 const activeMenu = computed(() => route.path)
