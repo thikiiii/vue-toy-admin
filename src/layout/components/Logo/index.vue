@@ -14,7 +14,7 @@
   height: @headerHeight;
   width: 100%;
   flex-shrink: 0;
-
+  transition: .2s ease-in-out;
   .title {
     text-align: center;
   }

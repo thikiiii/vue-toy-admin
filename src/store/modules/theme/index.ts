@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ThemeStorage } from '@/storage/theme'
 import { setCSSVariable } from '@/utils'
 import { darkThemeConfig, lightThemeConfig, naiveThemeConfig } from '@/settings/theme'
-import { appSettings } from '@/settings/app'
+import { appSettings } from '@/settings/system'
 import { darkTheme } from 'naive-ui'
 
 const { theme, themeMode, followSystem } = appSettings

@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
+import {  nextTick, onMounted, reactive, ref, watch } from 'vue'
 import useTabBarStore from '@/store/modules/tabBar'
 import { useRoute, useRouter } from 'vue-router'
 import { useDebounceFn, useEventListener, useToggle } from '@vueuse/core'
 import ContextMenu from './components/ContextMenu/index.vue'
-import { useLayoutStore } from '@/store/modules/layout'
 
 interface ContextMenuConfig {
   // 点击Tab的路径
@@ -22,8 +21,6 @@ defineOptions({ name: 'LayoutTabBar' })
 const tabBarStore = useTabBarStore()
 const route = useRoute()
 const router = useRouter()
-const layoutStore = useLayoutStore()
-const { header } = layoutStore.$state
 // tab 上下文菜单可见
 const [ tabVisible ] = useToggle()
 // 全局 上下文菜单可见
@@ -40,7 +37,6 @@ const contextMenuConfig: ContextMenuConfig = reactive({
   y: undefined
 })
 
-const layoutTabBarClass = computed(() => header.isFixedHeaderAndTabBar ? 'fixed' : undefined)
 
 
 const isScroll = (): boolean => {
@@ -119,7 +115,7 @@ watch(tabBarStore.tabBar, () => {
 </script>
 
 <template>
-  <div :class="layoutTabBarClass" class="tabBar">
+  <div  class="tabBar">
     <div v-show="scrollBtnVisible" class="tabBar-action-tab" @click="onScroll('left')">
       <icon icon="mdi:chevron-left"/>
     </div>
@@ -168,13 +164,7 @@ watch(tabBarStore.tabBar, () => {
   gap: 15px;
   background: @mainBackgroundColor;
   flex-shrink: 0;
-
-  &.fixed {
-    position: sticky;
-    top: @headerHeight;
-    left: 0;
-    z-index: 2;
-  }
+  transition: .2s ease-in-out;
 
   &-action-tab {
     background: @subBackgroundColor;
@@ -182,8 +172,8 @@ watch(tabBarStore.tabBar, () => {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: calc(@tabBarHeight - 15px);
-    height: calc(@tabBarHeight - 15px);
+    width: 30px;
+    height: 30px;
     box-shadow: 5px 5px 5px @shadow;
   }
 
@@ -206,7 +196,7 @@ watch(tabBarStore.tabBar, () => {
       box-shadow: 2px 2px 8px @shadow;
       align-items: center;
       border-radius: 4px;
-      height: calc(@tabBarHeight - 15px);
+      height: 30px;
       padding: 0 15px;
       gap: 5px;
       font-size: 14px;

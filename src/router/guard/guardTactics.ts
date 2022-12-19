@@ -60,7 +60,6 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
                 })
                 await handleRouteAuthMode()
 
-                console.log(to)
                 next({ path: to.path, query: to.query })
             }
         ],
@@ -87,7 +86,6 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
             true,
             () => {
                 console.log('GUARD-------6')
-                console.log(to)
                 next()
             }
         ]

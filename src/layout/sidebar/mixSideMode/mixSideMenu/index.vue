@@ -42,8 +42,8 @@ const handleMenu = (menu: Store.MenuOption, i: number) => {
       trigger="hover">
     <template #trigger>
       <div :class="mixSideMenuCardClass(i)" class="mixedMenuCard" @click=" handleMenu(menu,i)">
-        <span><icon :icon="menu?.meta?.icon" size="24" /></span>
-        <n-ellipsis v-if="!sidebar.isCollapsedMixedSidebar" class="mixedMenu-main-scroll-menu-name">
+        <span><icon :icon="menu?.meta?.icon" size="24"/></span>
+        <n-ellipsis v-if="!sidebar.isCollapsedMixedSidebar">
           {{ menu?.meta?.title }}
         </n-ellipsis>
       </div>
@@ -63,6 +63,7 @@ const handleMenu = (menu: Store.MenuOption, i: number) => {
   border-radius: 10px;
   margin: 3px;
   transition: .2s ease-in-out;
+  font-size: 12px;
 
   &.active {
     color: @theme;

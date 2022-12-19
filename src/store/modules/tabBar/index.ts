@@ -3,7 +3,6 @@ import router from '@/router'
 import { nextTick } from 'vue'
 import { useRouteStore } from '@/store/modules/route'
 
-
 const useTabBarStore = defineStore('tabBar', {
     state: (): Store.TabBarStore => ({
         tabBar: [],
@@ -96,8 +95,8 @@ const useTabBarStore = defineStore('tabBar', {
             routeStore.redirectToHomepage()
         },
 
-        // 筛选固定标签
-        filterAffixTabs(authRoutes: Route.RouteRecordRaw[]): Store.TabBar[] {
+        // 获取固定标签
+        getAffixTabs(authRoutes: Route.RouteRecordRaw[]): Store.TabBar[] {
             const tabs: Store.TabBar[] = []
             const filter = (authRoutes: Route.RouteRecordRaw[]) => {
                 authRoutes.forEach(route => {
@@ -126,9 +125,10 @@ const useTabBarStore = defineStore('tabBar', {
             const routeStore = useRouteStore()
             if (!this.isExist(router.currentRoute.value.path)) routeStore.redirectToHomepage()
         },
-        // 设置固定标签
-        setAffixTabs(authRoutes: Route.RouteRecordRaw[]) {
-            const affixTabs = this.filterAffixTabs(authRoutes)
+
+        // 初始化固定标签
+        initTabBar(authRoutes: Route.RouteRecordRaw[]) {
+            const affixTabs = this.getAffixTabs(authRoutes)
             this.tabBar = [ ...affixTabs ]
             this.affixTabs = [ ...affixTabs ]
             this.setCacheMenus()

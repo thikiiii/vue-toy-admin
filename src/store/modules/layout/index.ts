@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { appSettings } from '@/settings/app'
+import { appSettings } from '@/settings/system'
 
 const { sidebar, header, footer, app } = appSettings
 

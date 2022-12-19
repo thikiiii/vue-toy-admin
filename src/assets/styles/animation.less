@@ -5,11 +5,11 @@
 
 // 左滑动淡入淡出
 .left-slide-fade-enter-active {
-  transition: all 0.3s ease-out;
+  transition: 0.15s ease-in-out;
 }
 
 .left-slide-fade-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: 0.15s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .left-slide-fade-enter-from,
@@ -20,11 +20,12 @@
 
 // 右滑动淡入淡出
 .right-slide-fade-enter-active {
-  transition: all 0.3s ease-out;
+  transition: 0.15s ease-in-out;
+
 }
 
 .right-slide-fade-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: 0.15s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .right-slide-fade-enter-from,
@@ -33,10 +34,10 @@
   opacity: 0;
 }
 
-/* zoom-fade */
+/* 缩放淡入淡出 */
 .zoom-fade-enter-active,
 .zoom-fade-leave-active {
-  transition: 0.15s ease-out;
+  transition: 0.15s ease-in-out;
 }
 
 .zoom-fade-enter-from {

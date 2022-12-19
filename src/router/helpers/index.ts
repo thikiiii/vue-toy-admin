@@ -69,22 +69,22 @@ export class RouterHelpers {
         const renderIcon = useRenderIcon()
         return {
             key: path,
-            label: meta?.title ? renderEllipsis({ content: meta.title }) : '',
-            icon: meta?.icon ? renderIcon({ icon: meta.icon || '', size: '100%' }) : undefined,
+            label: renderEllipsis({ content: meta?.title }),
+            icon: meta?.icon ? renderIcon({ icon: meta.icon, size: '100%' }) : undefined,
             meta,
-            children: children as Store.MenuOption['children']
+            children: children as Store.MenuOption['children'],
+            show: !meta?.hideMenu
         }
     }
 
-    static transformRoutesToMenus(routes: Route.RouteRecordRaw[]) {
+    static transformRoutesToMenus(routes: Route.RouteRecordRaw[]): Store.MenuOption[] {
         const menus = routes.map((route) => {
-            if (route.meta?.hideMenu) return undefined
             if (!route.children) return this.transformRouteToMenu(route)
             const menu = this.transformRouteToMenu(route)
             menu.children = this.transformRoutesToMenus(route.children)
             return menu
         })
-        return menus.filter(menu => menu) as Store.MenuOption[]
+        return menus.filter(menu => menu)
     }
 
     // 用layout包装单页面路由，一级路由转二级路由

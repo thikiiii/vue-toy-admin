@@ -38,14 +38,14 @@ const onMouseLeave = () => {
       class="mixSideMode"
       @mouseenter="state.isLeave=false"
       @mouseleave="onMouseLeave">
-    <logo />
+    <logo/>
     <div class="mixSideMode-scroll">
-      <mix-side-menu @handle-menu="handleMenu" />
+      <mix-side-menu @handle-menu="handleMenu"/>
     </div>
     <div class="mixSideMode-collapsed" @click="layoutStore.toggleCollapsedMixedSidebar()">
-      <icon :icon="collapsedIcon" pointer size="22" />
+      <icon :icon="collapsedIcon" pointer size="22"/>
     </div>
-    <mix-side-drawer :menus="state.secondaryMenus" />
+    <mix-side-drawer :menus="state.secondaryMenus"/>
   </div>
 </template>
 
@@ -68,6 +68,7 @@ const onMouseLeave = () => {
   &-scroll {
     flex: 1;
     overflow: auto;
+    width: 100%;
   }
 
   &-collapsed {

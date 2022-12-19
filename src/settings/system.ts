@@ -1,8 +1,9 @@
 import { AppStorage } from '@/storage/app'
+import { cloneDeep } from 'lodash'
 
 
 // setting 初始值
-const appSettingsInitial: AppSettings = {
+export const appSettingsInitial: AppSettings = {
     theme: '#6675ff',
     themeMode: 'light',
     followSystem: true,
@@ -36,13 +37,10 @@ const appSettingsInitial: AppSettings = {
         headerHeight: 56,
 
         // 是否开启面包屑
-        isBreadCrumbs: true,
+        breadcrumbVisible: true,
 
         // 标签栏高度
         tabBarHeight: 44,
-
-        // 顶部菜单位置
-        topMenuPosition: 'Left',
 
         // 标签栏可见
         tabBarVisible: true,
@@ -61,30 +59,20 @@ const appSettingsInitial: AppSettings = {
         // 固定底部
         isFixedFooter: false
     },
+
     app: {
         // 是否开启页面切换动画
         isPageStartAnimation: true,
 
         // 页面动画
-        pageAnimationMode: '',
-
-        // 顶部进度条
-        topProgressBarVisible: true,
+        pageAnimationMode: 'right-slide-fade',
 
         // 布局模式
         layoutMode: 'Side',
 
         // 布局风格
-        layoutStyle: 'SideTopLight',
-
-        // 页面缓存
-        isPageCache: true
+        layoutStyle: 'SideTopLight'
     }
-}
-
-const { sidebar } = appSettingsInitial
-if (sidebar.isFixedMixedSidebar) {
-    sidebar.mixedSidebarDrawerVisible = true
 }
 
 // 布局模式列表
@@ -119,4 +107,20 @@ export const layoutStyleList: Store.LayoutStyleOption[] = [
     }
 ]
 
-export const appSettings = appSettingsInitial || AppStorage.getSettings()
+// 动画风格列表
+export const pageAnimationList: Store.PageAnimationOption[] = [
+    {
+        value: 'left-slide-fade',
+        label: '左滑淡出'
+    },
+    {
+        value: 'right-slide-fade',
+        label: '右滑淡出'
+    },
+    {
+        value: 'zoom-fade',
+        label: '缩放淡出'
+    }
+]
+
+export const appSettings = cloneDeep(appSettingsInitial) || AppStorage.getSettings()

@@ -26,7 +26,7 @@ const className = computed(() => layoutStore.sideInverted ? 'inverted' : undefin
         <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()" />
       </div>
       <div :style="{height:`${header.headerHeight}px`}" class="mixedMenuDrawer-scroll">
-        <Menu :inverted="layoutStore.sideInverted" :options="menus" mode="Side" />
+        <Menu :inverted="layoutStore.sideInverted" :options="menus" />
       </div>
     </div>
   </transition>

@@ -1,27 +1,28 @@
 declare namespace Store {
-    // 顶部菜单位置
-    type TopMenuPosition = 'Left' | 'Center' | 'Right'
-
-    // 页面切换动画
-    type PageAnimationMode = ''
+    // 页面切换动画  左滑淡出 | 右滑淡出 | 缩放淡入淡出
+    type PageAnimationMode = 'left-slide-fade' | 'right-slide-fade' | 'zoom-fade'
 
     // 布局模式：侧边 | 混合侧边 | 顶部
     type LayoutMode = 'Side' | 'MixSide' | 'Top'
 
-    // 布局风格
+    // 布局风格 侧边暗黑 | 侧边顶部暗黑 | 侧边顶部明亮
     type LayoutStyle = 'SideDark' | 'SideTopDark' | 'SideTopLight'
 
-    // 布局模式选项
-    type LayoutModeOption = {
-        value: LayoutMode,
+    type Option<T> = {
+        value: T,
         label: string
     }
 
+    // 布局模式选项
+    type LayoutModeOption = Option<LayoutMode>
+
+
     // 布局风格选项
-    type LayoutStyleOption = {
-        value: LayoutStyle,
-        label: string
-    }
+    type LayoutStyleOption = Option<LayoutStyle>
+
+
+    // 布局风格选项
+    type PageAnimationOption = Option<PageAnimationMode>
 
     // 侧边栏
     interface LayoutSidebar {
@@ -56,13 +57,10 @@ declare namespace Store {
         headerHeight: number
 
         // 是否开启面包屑
-        isBreadCrumbs: boolean
+        breadcrumbVisible: boolean
 
         // 标签栏高度
         tabBarHeight: number
-
-        // 顶部菜单位置
-        topMenuPosition: TopMenuPosition
 
         // 标签栏可见
         tabBarVisible: boolean
@@ -101,17 +99,11 @@ declare namespace Store {
         // 页面动画
         pageAnimationMode: PageAnimationMode
 
-        // 顶部进度条
-        topProgressBarVisible: boolean
-
         // 布局模式
         layoutMode: LayoutMode
 
         // 布局风格
         layoutStyle: LayoutStyle
-
-        // 页面缓存
-        isPageCache: boolean
     }
 
     // 布局 Store
@@ -246,16 +238,10 @@ declare namespace Store {
         signOutLoading: boolean
     }
 
-    interface MenuOption {
+    type NMenuOption = import('naive-ui').MenuOption
+
+    type MenuOption = NMenuOption & {
         meta?: import('vue-router').RouteMeta
-
-        label: string | (() => import('vue').VNodeChild)
-
-        icon?: (() => import('vue').VNodeChild)
-
-        // 路由
-        key: string
-
         children?: MenuOption[]
     }
 

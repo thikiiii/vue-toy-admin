@@ -3,10 +3,10 @@ import useAuthStore from '@/store/modules/auth'
 import { RouterHelpers } from '@/router/helpers'
 import router from '@/router'
 import { Sort } from '@/enums/common'
-import useTabBarStore from '@/store/modules/tabBar'
 import { UserApi } from '@/services/api/user'
 import { matchUrl } from '@/utils/regularCheck'
 import { Settings } from '@/settings'
+import useTabBarStore from '@/store/modules/tabBar'
 
 export const useRouteStore = defineStore('route', {
     state: (): Store.RouteStore => ({
@@ -89,9 +89,9 @@ export const useRouteStore = defineStore('route', {
                 .forEach(route => router.addRoute(route))
             console.log(router.getRoutes())
             // 设置菜单
+            // @ts-ignore
             this.menus = RouterHelpers.transformRoutesToMenus(routes)
-            // 设置固定标签
-            useTabBarStore().setAffixTabs(routes)
+            useTabBarStore().initTabBar(routes)
             this.hasInitAuthRoute = true
         },
 
@@ -104,8 +104,7 @@ export const useRouteStore = defineStore('route', {
                 .forEach(route => router.addRoute(route))
             // 设置菜单
             this.menus = RouterHelpers.transformRoutesToMenus(routes)
-            // 设置固定标签
-            useTabBarStore().setAffixTabs(routes)
+            useTabBarStore().initTabBar(routes)
             this.hasInitAuthRoute = true
         }
     }

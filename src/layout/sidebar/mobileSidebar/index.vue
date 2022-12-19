@@ -15,7 +15,7 @@ const className = computed(() => layoutStore.sideInverted ? 'inverted' : undefin
 <template>
   <n-drawer v-model:show="mobile.mobileMenuVisible" :class="className" class="mobileSidebar" placement="left">
     <logo />
-    <Menu :inverted="layoutStore.sideInverted" :options="routeStore.menus" mode="Side" />
+    <Menu :inverted="layoutStore.sideInverted" :options="routeStore.menus" />
   </n-drawer>
 </template>
 

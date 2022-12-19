@@ -11,7 +11,9 @@ defineProps<Props>()
 <template>
   <div class="configMenu">
     <span class="configMenu-title">{{ label }}</span>
-    <slot></slot>
+    <div class="configMenu-content">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -23,6 +25,12 @@ defineProps<Props>()
 
   &-title {
     color: @mainTextColor;
+  }
+
+  &-content {
+    width: 120px;
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>
