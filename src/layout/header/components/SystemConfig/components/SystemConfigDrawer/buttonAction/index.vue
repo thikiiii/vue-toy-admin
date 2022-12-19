@@ -1,14 +1,17 @@
 <script lang="ts" setup>
 import { useLayoutStore } from '@/store/modules/layout'
 import { useThemeStore } from '@/store/modules/theme'
-import { appSettingsInitial } from '@/settings/system'
+import { appSettingsInitial } from '@/settings/app'
 import { cloneDeep } from 'lodash'
 
 defineOptions({ name: 'ButtonAction' })
 const layoutStore = useLayoutStore()
 const themeStore = useThemeStore()
 const resetConfig = () => {
-
+  const { sidebar, header, footer, app, themeMode, theme, followSystem } = cloneDeep(appSettingsInitial)
+  layoutStore.$patch({ sidebar, header, footer, app })
+  themeStore.$patch({ theme, themeMode, followSystem })
+  themeStore.initTheme()
 }
 </script>
 

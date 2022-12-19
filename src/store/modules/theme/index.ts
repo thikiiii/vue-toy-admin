@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ThemeStorage } from '@/storage/theme'
 import { setCSSVariable } from '@/utils'
 import { darkThemeConfig, lightThemeConfig, naiveThemeConfig } from '@/settings/theme'
-import { appSettings } from '@/settings/system'
+import { appSettings } from '@/settings/app'
 import { darkTheme } from 'naive-ui'
 
 const { theme, themeMode, followSystem } = appSettings
@@ -37,6 +37,7 @@ export const useThemeStore = defineStore('theme', {
                 this.onSystemThemeChange()
             } else {
                 this.setTheme(ThemeStorage.getTheme() || this.themeMode)
+                this.removeSystemThemeChange()
             }
         },
         // 切换明亮或者暗黑主题

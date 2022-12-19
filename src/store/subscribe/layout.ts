@@ -10,7 +10,7 @@ export const subscribeLayout = () => {
     watchEffect(() => {
         const { sidebarWidth, mixedSidebarWidth, collapsedSidebarWidth, collapsedMixedSidebarWidth } = sidebar
         const { footerHeight } = footer
-        const { headerHeight,tabBarHeight } = header
+        const { headerHeight, tabBarHeight } = header
         const originalVariable = {
             sidebarWidth,
             mixedSidebarWidth,
@@ -24,7 +24,7 @@ export const subscribeLayout = () => {
             variable[key] = `${ originalVariable[key] }px`
             return variable
         }, {})
-
+        console.log(cssVariable)
         setCSSVariable(cssVariable)
     })
 }

@@ -28,6 +28,7 @@ const className = computed(() => {
       break
   }
   if (layoutStore.sideInverted) classList.push('inverted')
+  console.log(classList.join(' '))
   return classList.join(' ')
 })
 </script>
@@ -55,8 +56,8 @@ const className = computed(() => {
   background: @subBackgroundColor;
   transition: .2s ease-in-out;
   position: relative;
-  width: @sidebarWidth;
   color: @mainTextColor;
+  width: @sidebarWidth;
 
   &.inverted {
     background: @invertBackgroundColor;

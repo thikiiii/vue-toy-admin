@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import LayoutCard from '../components/LayoutCard/index.vue'
 import { useLayoutStore } from '@/store/modules/layout'
-import { layoutModeList } from '@/settings/system'
+import { layoutModeList } from '@/settings/app'
 
 defineOptions({ name: 'MenuMode' })
 const layoutStore = useLayoutStore()

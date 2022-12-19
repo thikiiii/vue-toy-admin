@@ -4,8 +4,11 @@ import { cloneDeep } from 'lodash'
 
 // setting 初始值
 export const appSettingsInitial: AppSettings = {
+    // 主题色
     theme: '#6675ff',
+    // 主题模式
     themeMode: 'light',
+    // 主题跟随系统
     followSystem: true,
     sidebar: {
         // 侧边栏宽度
@@ -31,7 +34,6 @@ export const appSettingsInitial: AppSettings = {
         // 混合菜单折叠宽度
         collapsedMixedSidebarWidth: 64
     },
-
     header: {
         // 头部高度
         headerHeight: 56,
@@ -48,7 +50,6 @@ export const appSettingsInitial: AppSettings = {
         // 是否固定头部和标签栏
         isFixedHeaderAndTabBar: true
     },
-
     footer: {
         // 底部高度
         footerHeight: 30,
@@ -59,13 +60,12 @@ export const appSettingsInitial: AppSettings = {
         // 固定底部
         isFixedFooter: false
     },
-
     app: {
         // 是否开启页面切换动画
         isPageStartAnimation: true,
 
         // 页面动画
-        pageAnimationMode: 'right-slide-fade',
+        pageAnimationMode: 'zoom-fade',
 
         // 布局模式
         layoutMode: 'Side',
@@ -123,4 +123,4 @@ export const pageAnimationList: Store.PageAnimationOption[] = [
     }
 ]
 
-export const appSettings = cloneDeep(appSettingsInitial) || AppStorage.getSettings()
+export const appSettings = AppStorage.getSettings() || cloneDeep(appSettingsInitial)

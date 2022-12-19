@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import LayoutCard from '../components/LayoutCard/index.vue'
-import { layoutStyleList } from '@/settings/system'
+import { layoutStyleList } from '@/settings/app'
 import { useLayoutStore } from '@/store/modules/layout'
 import { useThemeStore } from '@/store/modules/theme'
 
