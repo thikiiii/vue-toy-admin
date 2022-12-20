@@ -2,17 +2,11 @@
 import LayoutCard from '../components/LayoutCard/index.vue'
 import { layoutStyleList } from '@/settings/app'
 import { useLayoutStore } from '@/store/modules/layout'
-import { useThemeStore } from '@/store/modules/theme'
 
 defineOptions({ name: 'LayoutStyle' })
 const layoutStore = useLayoutStore()
-const themeStore = useThemeStore()
 const { app } = layoutStore.$state
-const handleLayoutStyle = (item) => {
-  themeStore.noTransition(() => {
-    app.layoutStyle = item.value
-  })
-}
+
 </script>
 
 <template>
@@ -23,7 +17,7 @@ const handleLayoutStyle = (item) => {
         :key="item.value"
         :active="item.value===app.layoutStyle"
         :popover-content="item.label"
-        @click-card="handleLayoutStyle(item)">
+        @click-card="app.layoutStyle = item.value">
       <div v-if="item.value==='SideDark'" class="vertical">
         <div class="side dark" />
         <div class="container">

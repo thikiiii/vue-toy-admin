@@ -48,36 +48,25 @@ export const useThemeStore = defineStore('theme', {
         },
         // 设置主题颜色
         setThemeColor(color: string) {
-            this.noTransition(() => {
-                this.theme = color
-                Object.keys(this.customize).forEach((key: Store.ThemeMode) => {
-                    switch (key) {
-                        case 'light':
-                            this.customize[key] = lightThemeConfig(color)
-                            break
-                        case 'dark':
-                            this.customize[key] = darkThemeConfig(color)
-                            break
-                    }
-                })
-                Object.keys(this.naive).forEach(key => this.naive[key] = naiveThemeConfig(this.customize[key]))
-                setCSSVariable(this.customize[this.themeMode])
+            this.theme = color
+            Object.keys(this.customize).forEach((key: Store.ThemeMode) => {
+                switch (key) {
+                    case 'light':
+                        this.customize[key] = lightThemeConfig(color)
+                        break
+                    case 'dark':
+                        this.customize[key] = darkThemeConfig(color)
+                        break
+                }
             })
-        },
-        noTransition(callback: () => void) {
-            const body = document.body
-            // 去除过渡效果
-            body.classList.add('noTransition')
-            callback()
-            setTimeout(() => body.classList.remove('noTransition'))
+            Object.keys(this.naive).forEach(key => this.naive[key] = naiveThemeConfig(this.customize[key]))
+            setCSSVariable(this.customize[this.themeMode])
         },
         // 设置主题
         setTheme(themeType: Store.ThemeMode) {
-            this.noTransition(() => {
-                this.themeMode = themeType
-                const theme = this.customize[themeType]
-                setCSSVariable(theme)
-            })
+            this.themeMode = themeType
+            const theme = this.customize[themeType]
+            setCSSVariable(theme)
         },
         // 获取系统主题模式
         getSystemThemeMode(): Store.ThemeMode {
