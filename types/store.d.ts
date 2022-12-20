@@ -174,9 +174,6 @@ declare namespace Store {
 
         // 阴影
         shadow: string
-
-        // 颜色过度
-        colorTransition:string
     }
 
     // 主题模式: 明亮 | 暗黑

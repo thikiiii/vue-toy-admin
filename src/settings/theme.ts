@@ -18,11 +18,10 @@ export const lightThemeConfig = (theme: string): Store.CustomizeThemeConfig => (
         hoverBackgroundColor: 'rgb(243, 243, 245)',
         hoverInvertBackgroundColor: 'rgba(255, 255, 255, 0.09)',
         borderColor: '#212B36',
-        divider: 'rgba(145,158,171,054)',
+        divider: 'rgba(145,158,171,0.2)',
         scrollColor: '#c2cbd3',
         themeShadow: colorHexToRgb(theme, 0.3),
-        shadow: 'rgba(0,0,0,0.1)',
-        colorTransition: 'color 5s linear,background-color 5s linear'
+        shadow: 'rgba(0,0,0,0.1)'
     }
 )
 
@@ -44,8 +43,7 @@ export const darkThemeConfig = (theme: string): Store.CustomizeThemeConfig => (
         divider: 'rgb(45,55,72)',
         scrollColor: '#3a4651',
         themeShadow: colorHexToRgb(theme, 0.3),
-        shadow: 'rgba(105,105,105,0.05)',
-        colorTransition: 'color 5s linear,background-color 5s linear'
+        shadow: 'rgba(105,105,105,0.05)'
     }
 )
 
