@@ -19,6 +19,7 @@ declare namespace Service {
     // 包装 Promise 响应数据
     type WrapperPromiseResponses<D> = Promise<WrapperResponses<D>>
 
+    
     // 分页
     interface Pagination {
         // 页数

@@ -8,14 +8,14 @@ export class UserApi {
         axiosInstance.post('/mock/passwordLogin', data)
 
     // 获取用户信息
-    static getUserinfo = (): Service.WrapperPromiseResponses<UserService.Response.UserDetails> =>
-        axiosInstance.get('/mock/getUserinfo')
+    static getUserinfo = (): Service.WrapperPromiseResponses<UserService.Response.UserDetails> => axiosInstance.get('/mock/getUserinfo')
 
     // 获取用户路由
     static getRoutes = (): Service.WrapperPromiseResponses<UserService.Response.UserRoutes[]> =>
-        axiosInstance.get('/mock/getRoutes')
+        axiosInstance.get('/mock/getRoutes', {})
 
     // 退出登录
     static signOut = (): Promise<Service.BaseResponse> =>
         axiosInstance.get('/mock/signOut')
 }
+

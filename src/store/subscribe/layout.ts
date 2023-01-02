@@ -24,7 +24,6 @@ export const subscribeLayout = () => {
             variable[key] = `${ originalVariable[key] }px`
             return variable
         }, {})
-        console.log(cssVariable)
         setCSSVariable(cssVariable)
     })
 }

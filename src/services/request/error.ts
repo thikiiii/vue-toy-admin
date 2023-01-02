@@ -64,7 +64,7 @@ export const handleResponseStatusError = (data: Service.BaseResponse) => {
 }
 
 // 处理拦截器错误
-export const hanldeInterceptorError = (axiosError: AxiosError) => {
+export const handleInterceptorError = (axiosError: AxiosError) => {
     // 提取Code
     const code = extractNumbers(axiosError.message)
     let message = NO_SIGN_OUT_STATUS_CODE.get(code)

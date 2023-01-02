@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { handleResponseStatusError, hanldeInterceptorError } from '@/services/request/error'
+import { handleInterceptorError, handleResponseStatusError } from '@/services/request/error'
 import useMetaEnv from '@/hooks/common/useMetaEnv'
 
 const { VITE_GLOB_API_URL } = useMetaEnv()
@@ -20,6 +20,6 @@ axiosInstance.interceptors.response.use(({ data }: AxiosResponse<Service.BaseRes
     window.$loadingBar?.finish()
     return data
 }, (error: AxiosError) => {
-    return hanldeInterceptorError(error)
+    return handleInterceptorError(error)
 })
 export default axiosInstance

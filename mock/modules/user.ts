@@ -17,9 +17,10 @@ export default [
         url: '/mock/getUserinfo',
         method: 'get',
         // timeout: 5000,
+        // statusCode: 500,
         response: () => {
             return {
-                code: 200,
+                code: 500,
                 msg: 'ok',
                 subCode: 200,
                 subMsg: '登录成功',
@@ -77,7 +78,7 @@ export default [
                                 path: '/system/user',
                                 name: 'system_user',
                                 meta: {
-                                    title: '用户',
+                                    title: '用户'
                                 },
                                 component: 'View'
                             },
@@ -85,7 +86,7 @@ export default [
                                 path: '/system/role',
                                 name: 'system_role',
                                 meta: {
-                                    title: '角色',
+                                    title: '角色'
                                 },
                                 component: 'View'
                             },
@@ -109,7 +110,7 @@ export default [
                                         path: '/system/test/menu',
                                         name: 'system_test_menu',
                                         meta: {
-                                            title: '测试菜单',
+                                            title: '测试菜单'
                                         },
                                         component: 'View'
                                     }
