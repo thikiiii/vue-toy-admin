@@ -12,7 +12,7 @@ export class UserApi {
 
     // 获取用户路由
     static getRoutes = (): Service.WrapperPromiseResponses<UserService.Response.UserRoutes[]> =>
-        axiosInstance.get('/mock/getRoutes', {})
+        axiosInstance.get('/mock/getRoutes', {signal:})
 
     // 退出登录
     static signOut = (): Promise<Service.BaseResponse> =>
