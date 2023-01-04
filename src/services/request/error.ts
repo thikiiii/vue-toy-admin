@@ -32,7 +32,7 @@ const MESSAGE_ERROR = new Map([
 
 // 用来解决重复错误提示
 let lastMessage: string | undefined = undefined
-const handleErrorMessage = (message: string) => {
+export const handleErrorMessage = (message: string) => {
     // 解决重复错误提示
     if (message !== lastMessage) {
         window.$message?.error(message, {
@@ -44,7 +44,7 @@ const handleErrorMessage = (message: string) => {
 }
 
 // 处理响应状态错误
-export const handleResponseStatusError = (data: Service.BaseResponse) => {
+export const handleResponseStatusError = (data: Service.BaseResponseResult) => {
     if (!data) {
         handleErrorMessage(MESSAGE_ERROR.get('theInterfaceReturnsAnException') as string)
         return Promise.reject()

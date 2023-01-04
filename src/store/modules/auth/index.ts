@@ -28,12 +28,9 @@ const useAuthStore = defineStore('auth', {
         // 密码登录
         async passwordLogin(form: UserService.Request.PasswordLogin) {
             this.loginLoading = true
-            const { subCode, subMsg, token } = await UserApi.passwordLogin(form).catch(() => {
-                this.loginLoading = false
-                return Promise.reject()
-            })
+            const [ isError, { subCode, subMsg, token } ] = await UserApi.passwordLogin(form)
 
-            if (subCode !== 200 || !token) {
+            if (isError || subCode !== 200 || !token) {
                 window.$message?.error(subMsg)
                 this.loginLoading = false
                 return Promise.reject()
@@ -45,20 +42,17 @@ const useAuthStore = defineStore('auth', {
 
         // 获取用户信息
         async getUserinfo() {
-            const { subCode, data, subMsg } = await UserApi.getUserinfo().catch(() => {
-                this.initUserStore()
-                return Promise.reject()
-            })
+            const [ isError, { subCode, subMsg, result } ] = await UserApi.getUserinfo()
 
-            if (subCode !== 200 || !data) {
+            if (isError || subCode !== 200 || !result) {
                 window.$message?.error(subMsg)
                 this.initUserStore()
                 return Promise.reject()
             }
 
-            this.roles = data.roles
-            this.permissions = data.permissions
-            this.userinfo = data.userinfo
+            this.roles = result.roles
+            this.permissions = result.permissions
+            this.userinfo = result.userinfo
         },
 
         // 处理登录

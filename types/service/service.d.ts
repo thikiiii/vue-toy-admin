@@ -1,6 +1,6 @@
 declare namespace Service {
-    // 基础响应
-    interface BaseResponse {
+    // 基础响应结果
+    interface BaseResponseResult<D = any> {
         // 系统状态
         code: number
         // 系统状态信息
@@ -9,17 +9,13 @@ declare namespace Service {
         subCode: number
         // 业务状态信息
         subMsg: string
+        // data
+        result?: D
     }
 
-    // 包装响应数据
-    interface WrapperResponses<D> extends BaseResponse {
-        data?: D
-    }
+    // 扩展基础响应结果
+    type ExpandBaseResult<D = any, T = {}> = BaseResponseResult<D> & T
 
-    // 包装 Promise 响应数据
-    type WrapperPromiseResponses<D> = Promise<WrapperResponses<D>>
-
-    
     // 分页
     interface Pagination {
         // 页数

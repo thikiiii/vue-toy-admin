@@ -15,50 +15,34 @@ export class VAxios {
         return qs.stringify(data)
     }
 
-    async request(config: Axios.Config) {
+    async request<D = any>(config: Axios.Config): Promise<[ boolean,D ]> {
         const key = this.getPendingKey(config)
-        if (!config.signal) {
-            if (this.pendingMap.has(key)) {
-                config.signal = this.pendingMap.get(key)?.signal
-            } else {
-                const controller = new AbortController()
-                config.signal = controller.signal
-                this.addPending(key, controller)
-            }
+        // 处理取消请求
+        this.handleSignal(config, key)
+        try {
+            const res = await this.instance.request<null, D>(config)
+            this.pendingMap.delete(key)
+            return [ false, res ]
+        } catch (e) {
+            this.pendingMap.delete(key)
+            return [ true, {} as D ]
         }
-        const data = await this.instance.request(config)
-        this.pendingMap.delete(key)
-        return data
     }
 
-    get<D = any>(url: string, data?: any, config?: Axios.Config): Promise<D> {
-        return this.instance.get(url, {
-            params: data,
-            ...config
-        })
+    get<D = any>(url: string, data?: any, config?: Axios.Config) {
+        return this.request<D>({ ...config, url, params: data, method: 'GET' })
     }
 
-    post<R = any, D = any>(url: string, data?: R, config?: AxiosRequestConfig): Promise<D> {
-        return this.instance.post(url, data, config)
+    post<D = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+        return this.request<D>({ ...config, url, data, method: 'POST' })
     }
 
-    put<R = any, D = any>(url: string, data?: R, config?: AxiosRequestConfig): Promise<D> {
-        return this.instance.put(url, data, config)
+    put<R = any, D = any>(url: string, data?: R, config?: AxiosRequestConfig) {
+        return this.request<D>({ ...config, url, data, method: 'PUT' })
     }
 
-    delete<R = any, D = any>(url: string, data?: R, config?: AxiosRequestConfig): Promise<D> {
-        return this.instance.delete(url, {
-            params: data,
-            ...config
-        })
-    }
-
-    addPending(key: string, abortController: AbortController) {
-        this.pendingMap.set(key, abortController)
-    }
-
-    removePending() {
-
+    delete<R = any, D = any>(url: string, data?: R, config?: AxiosRequestConfig) {
+        return this.request<D>({ ...config, url, params: data, method: 'DELETE' })
     }
 
     // 取消请求
@@ -74,5 +58,17 @@ export class VAxios {
 
     private getPendingKey({ method, url }: Axios.Config) {
         return [ method, url ].join('&')
+    }
+
+    private handleSignal(config: Axios.Config, key: string) {
+        if (!config.signal) {
+            if (this.pendingMap.has(key)) {
+                config.signal = this.pendingMap.get(key)?.signal
+            } else {
+                const controller = new AbortController()
+                config.signal = controller.signal
+                this.pendingMap.set(key, controller)
+            }
+        }
     }
 }
