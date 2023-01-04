@@ -15,12 +15,13 @@ export class VAxios {
         return qs.stringify(data)
     }
 
-    async request<D = any>(config: Axios.Config): Promise<[ boolean,D ]> {
+    async request<D = any>(config: Axios.Config): Promise<[ boolean, D ]> {
         const key = this.getPendingKey(config)
         // 处理取消请求
         this.handleSignal(config, key)
         try {
             const res = await this.instance.request<null, D>(config)
+            console.log(res)
             this.pendingMap.delete(key)
             return [ false, res ]
         } catch (e) {
@@ -48,12 +49,15 @@ export class VAxios {
     // 取消请求
     cancelRequest(key, reason?: string) {
         this.pendingMap.get(key)?.abort(reason)
-        // this.
     }
 
     // 取消全部请求
     cancelAllRequest(reason?: string) {
         this.pendingMap.forEach((value) => value.abort(reason))
+    }
+
+    transformResponse<D>(res: D): D {
+        return res
     }
 
     private getPendingKey({ method, url }: Axios.Config) {
