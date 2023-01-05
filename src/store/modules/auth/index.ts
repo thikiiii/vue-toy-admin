@@ -26,7 +26,7 @@ const useAuthStore = defineStore('auth', {
     },
     actions: {
         // 密码登录
-        async passwordLogin(form: UserService.Request.PasswordLogin) {
+        async passwordLogin(form: UserServiceRequest.PasswordLogin) {
             this.loginLoading = true
             const [ isError, { subCode, subMsg, token } ] = await UserApi.passwordLogin(form)
 
@@ -56,7 +56,7 @@ const useAuthStore = defineStore('auth', {
         },
 
         // 处理登录
-        async handleLogin(loginMethod: LoginMethod, form: UserService.Request.PasswordLogin) {
+        async handleLogin(loginMethod: LoginMethod, form: UserServiceRequest.PasswordLogin) {
             switch (loginMethod) {
                 // 密码登录
                 case LoginMethod.Password:
@@ -88,11 +88,8 @@ const useAuthStore = defineStore('auth', {
 
         // 退出登录
         async signOut() {
-            const { subCode, subMsg } = await UserApi.signOut().catch(() => {
-                this.handleSignOut()
-                return Promise.reject()
-            })
-            if (subCode !== 200) {
+            const [ isError, { subCode, subMsg } ] = await UserApi.signOut()
+            if (subCode !== 200 || isError) {
                 window.$message?.error(subMsg)
             }
             await this.handleSignOut()
