@@ -16,7 +16,7 @@ export default [
     {
         url: '/mock/getUserinfo',
         method: 'get',
-        // timeout: 5000,
+        timeout: 5000,
         // statusCode: 500,
         response: () => {
             return {

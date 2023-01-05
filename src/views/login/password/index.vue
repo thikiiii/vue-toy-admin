@@ -3,7 +3,8 @@ import { inject, reactive, Ref, ref } from 'vue'
 import QrCode from '@/views/login/qrCode/index.vue'
 import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
-import { LoginMethod } from '@/enums/common'
+import { axiosInstance } from '@/services/request'
+import { UserApi } from '@/services/api/user'
 
 const authStore = useAuthStore()
 const formRef = ref<InstanceType<typeof NForm> | null>()
@@ -36,14 +37,19 @@ const setLoginType = (component: typeof QrCode) => loginType.value = component
 const handleLogin = () => {
   formRef.value?.validate(async (errors) => {
     if (errors) return
-    await authStore.handleLogin(LoginMethod.Password, form)
+    await UserApi.getUserinfo()
+    // await authStore.handleLogin(LoginMethod.Password, form)
   })
+}
+const test = () => {
+  axiosInstance.cancelAllRequest()
 }
 </script>
 
 <template>
   <div class="passwordLogin">
     <h1 class="passwordLogin-title">登录</h1>
+    <n-button @click="test">测试</n-button>
     <n-form ref="formRef" :model="form" :rules="rules" label-placement="left">
       <transition-group appear name="right-slide-fade">
         <n-form-item key="1" path="username" required>

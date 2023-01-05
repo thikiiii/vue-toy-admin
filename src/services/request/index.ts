@@ -11,7 +11,6 @@ export const axiosInstance = new CustomizeAxios({
 })
 
 axiosInstance.axiosInstance.interceptors.request.use((config) => {
-    window.$loadingBar?.start()
     return config
 }, error => {
     return Promise.reject(error)
@@ -20,7 +19,6 @@ axiosInstance.axiosInstance.interceptors.request.use((config) => {
 axiosInstance.axiosInstance.interceptors.response.use((config: AxiosResponse<Service.BaseResponseResult>) => {
     const statusError = handleResponseStatusError(config.data)
     if (statusError) return statusError
-    window.$loadingBar?.finish()
     return config
 }, (error: AxiosError) => {
     return handleInterceptorError(error)

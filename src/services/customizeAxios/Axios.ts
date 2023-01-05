@@ -1,11 +1,10 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import qs from 'qs'
-import { AxiosResponse } from 'axios/index'
 
 export class CustomizeAxios {
     axiosInstance: AxiosInstance
 
-    pendingMap = new Map<string, AbortController>()
+    pendingRequest = new Map<string, AbortController>()
 
     defaultConfig: Axios.DefaultConfig
 
@@ -25,10 +24,10 @@ export class CustomizeAxios {
         this.handleSignal(config, key)
         try {
             const res = await this.axiosInstance.request<D>(config)
-            this.pendingMap.delete(key)
+            this.pendingRequest.delete(key)
             return [ false, res.data, res ]
         } catch (e) {
-            this.pendingMap.delete(key)
+            this.pendingRequest.delete(key)
             return [ true, {} as D, {} as AxiosResponse<D> ]
         }
     }
@@ -51,12 +50,12 @@ export class CustomizeAxios {
 
     // 取消请求
     cancelRequest(key, reason?: string) {
-        this.pendingMap.get(key)?.abort(reason)
+        this.pendingRequest.get(key)?.abort(reason)
     }
 
     // 取消全部请求
     cancelAllRequest(reason?: string) {
-        this.pendingMap.forEach((value) => value.abort(reason))
+        this.pendingRequest.forEach((value) => value.abort(reason))
     }
 
     private getPendingKey({ method, url }: Axios.Config) {
@@ -65,12 +64,12 @@ export class CustomizeAxios {
 
     private handleSignal(config: Axios.Config, key: string) {
         if (config.signal) return
-        if (this.pendingMap.has(key)) {
-            config.signal = this.pendingMap.get(key)?.signal
+        if (this.pendingRequest.has(key)) {
+            config.signal = this.pendingRequest.get(key)?.signal
         } else {
             const controller = new AbortController()
             config.signal = controller.signal
-            this.pendingMap.set(key, controller)
+            this.pendingRequest.set(key, controller)
         }
     }
 }
