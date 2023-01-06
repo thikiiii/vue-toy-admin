@@ -29,10 +29,7 @@ const useAuthStore = defineStore('auth', {
         // 密码登录
         async passwordLogin(form: UserServiceRequest.PasswordLogin) {
             this.loginLoading = true
-            const [ { subCode, subMsg, token } ] = await UserApi.passwordLogin(form).catch((e) => {
-                this.loginLoading = false
-                return Promise.reject()
-            })
+            const [isError,data,res] = await UserApi.passwordLogin(form)
             if (subCode !== 200 || !token) {
                 discreteApi.message.error(subMsg)
                 this.loginLoading = false
