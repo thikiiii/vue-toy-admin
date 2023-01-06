@@ -1,3 +1,5 @@
+import { MockMethod } from 'vite-plugin-mock'
+
 export default [
     {
         url: '/mock/passwordLogin',
@@ -6,7 +8,7 @@ export default [
         // statusCode: 400,
         response: () => {
             return {
-                code: 200,
+                code: 500,
                 subCode: 200,
                 subMsg: '登录成功',
                 token: 'by Toy admin'
@@ -16,7 +18,7 @@ export default [
     {
         url: '/mock/getUserinfo',
         method: 'get',
-        timeout: 5000,
+        // timeout: 5000,
         // statusCode: 500,
         response: () => {
             return {
@@ -24,7 +26,7 @@ export default [
                 msg: 'ok',
                 subCode: 200,
                 subMsg: '登录成功',
-                data: {
+                result: {
                     // 权限
                     permissions: [],
                     // 角色
@@ -62,7 +64,7 @@ export default [
             return {
                 code: 200,
                 msg: 'ok',
-                data: [
+                roles: [
                     {
                         path: '/system',
                         name: 'system',
@@ -157,4 +159,4 @@ export default [
             }
         }
     }
-]
+] as MockMethod[]

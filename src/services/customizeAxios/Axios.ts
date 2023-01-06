@@ -18,18 +18,12 @@ export class CustomizeAxios {
         return qs.stringify(data)
     }
 
-    async request<D = any>(config: Axios.Config): Promise<[ boolean, D, AxiosResponse<D> ]> {
+    async request<D = any>(config: Axios.Config): Promise<[ D, AxiosResponse<D> ]> {
         const key = this.getPendingKey(config)
         // 处理取消请求
         this.handleSignal(config, key)
-        try {
-            const res = await this.axiosInstance.request<D>(config)
-            this.pendingRequest.delete(key)
-            return [ false, res.data, res ]
-        } catch (e) {
-            this.pendingRequest.delete(key)
-            return [ true, {} as D, {} as AxiosResponse<D> ]
-        }
+        const res = await this.axiosInstance.request<D>(config).catch((reason) => Promise.reject(reason))
+        return [ res.data, res ]
     }
 
     get<D = any>(url: string, data?: any, config?: Axios.Config) {

@@ -6,6 +6,7 @@ import { LoginMethod } from '@/enums/common'
 import { useRouteStore } from '@/store/modules/route'
 import { RouteAuthModeEnum } from '@/enums/auth'
 import { Settings } from '@/settings'
+import { discreteApi } from '@/plugIn/naiveUi/discreteApi'
 
 // 鉴权
 const useAuthStore = defineStore('auth', {
@@ -28,10 +29,12 @@ const useAuthStore = defineStore('auth', {
         // 密码登录
         async passwordLogin(form: UserServiceRequest.PasswordLogin) {
             this.loginLoading = true
-            const [ isError, { subCode, subMsg, token } ] = await UserApi.passwordLogin(form)
-
-            if (isError || subCode !== 200 || !token) {
-                window.$message?.error(subMsg)
+            const [ { subCode, subMsg, token } ] = await UserApi.passwordLogin(form).catch((e) => {
+                this.loginLoading = false
+                return Promise.reject()
+            })
+            if (subCode !== 200 || !token) {
+                discreteApi.message.error(subMsg)
                 this.loginLoading = false
                 return Promise.reject()
             }
@@ -42,14 +45,15 @@ const useAuthStore = defineStore('auth', {
 
         // 获取用户信息
         async getUserinfo() {
-            const [ isError, { subCode, subMsg, result } ] = await UserApi.getUserinfo()
-
-            if (isError || subCode !== 200 || !result) {
-                window.$message?.error(subMsg)
+            const [ { subCode, subMsg, result } ] = await UserApi.getUserinfo().catch(() => {
+                this.initUserStore()
+                return Promise.reject()
+            })
+            if (subCode !== 200 || !result) {
+                discreteApi.message.error(subMsg)
                 this.initUserStore()
                 return Promise.reject()
             }
-
             this.roles = result.roles
             this.permissions = result.permissions
             this.userinfo = result.userinfo
@@ -60,7 +64,9 @@ const useAuthStore = defineStore('auth', {
             switch (loginMethod) {
                 // 密码登录
                 case LoginMethod.Password:
-                    await this.passwordLogin(form)
+                    await this.passwordLogin(form).catch(e => {
+                        console.log(e)
+                    })
                     break
             }
             await this.getUserinfo()
@@ -76,21 +82,21 @@ const useAuthStore = defineStore('auth', {
                     break
             }
 
-
             const redirect = router.currentRoute.value.query.redirect
             await router.replace(redirect as string || Settings.homePath)
-            window.$notification?.success({
+            discreteApi.notification.success({
                 title: '登录成功',
                 content: `欢迎回来，${ this.userinfo?.username }！`
             })
             this.loginLoading = false
+
         },
 
         // 退出登录
         async signOut() {
-            const [ isError, { subCode, subMsg } ] = await UserApi.signOut()
-            if (subCode !== 200 || isError) {
-                window.$message?.error(subMsg)
+            const [ { subCode, subMsg } ] = await UserApi.signOut()
+            if (subCode !== 200) {
+                discreteApi.message.error(subMsg)
             }
             await this.handleSignOut()
         },
@@ -106,7 +112,7 @@ const useAuthStore = defineStore('auth', {
             const routeStore = useRouteStore()
             this.initUserStore()
             routeStore.initRouteStore()
-            window.$message?.success('退出登录成功!')
+            discreteApi.message.success('退出登录成功!')
             this.signOutLoading = false
         },
 

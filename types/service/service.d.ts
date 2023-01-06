@@ -1,6 +1,6 @@
 declare namespace Service {
     // 基础响应结果
-    interface BaseResponseResult<D = any> {
+    interface BaseResponseResult<D = any>{
         // 系统状态
         code: number
         // 系统状态信息

@@ -194,7 +194,7 @@ declare namespace Store {
         // 跟随系统
         followSystem: boolean
 
-        // naive 主题
+        // naiveUi 主题
         naive: ThemeModeConfig<import('naive-ui').GlobalThemeOverrides>
 
         // 自定义主题

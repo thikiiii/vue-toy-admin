@@ -2,6 +2,7 @@
 import { AxiosError } from 'axios'
 import { extractNumbers } from '@/utils/regularCheck'
 import useAuthStore from '@/store/modules/auth'
+import { discreteApi } from '@/plugIn/naiveUi/discreteApi'
 
 const NO_SIGN_OUT_STATUS_CODE = new Map<number | string, string>([
     [ 400, '400: 请求出现语法错误 ~' ],
@@ -26,21 +27,19 @@ const SIGN_OUT_STATUS_CODE = new Map<number | string, string>([
 const MESSAGE_ERROR = new Map([
     [ 'theInterfaceReturnsAnException', '接口返回异常 ~' ],
     [ 'timeout', '网络请求超时 ~' ],
-    [ 'Network Error', '接口链接异常 ~' ]
+    [ 'Network Error', '接口连接异常 ~' ]
 ])
 
 
 // 用来解决重复错误提示
 let lastMessage: string | undefined = undefined
 export const handleErrorMessage = (message: string) => {
+    if (message === lastMessage) return
     // 解决重复错误提示
-    if (message !== lastMessage) {
-        window.$message?.error(message, {
-            onLeave: () => lastMessage = undefined
-        })
-        lastMessage = message
-    }
-    window.$loadingBar?.error()
+    discreteApi.message.error(message, {
+        onLeave: () => lastMessage = undefined
+    })
+    lastMessage = message
 }
 
 // 处理响应状态错误

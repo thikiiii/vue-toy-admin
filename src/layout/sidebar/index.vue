@@ -28,7 +28,6 @@ const className = computed(() => {
       break
   }
   if (layoutStore.sideInverted) classList.push('inverted')
-  console.log(classList.join(' '))
   return classList.join(' ')
 })
 </script>

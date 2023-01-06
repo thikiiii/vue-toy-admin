@@ -1,5 +1,5 @@
-import { onMounted } from "vue";
-import { useThemeStore } from "@/store/modules/theme";
+import { onMounted } from 'vue'
+import { useThemeStore } from '@/store/modules/theme'
 
 // 全局初始化
 export const useGlobalInitialize = () => {
@@ -9,4 +9,4 @@ export const useGlobalInitialize = () => {
         // dom加载完成后 初始化主题
         themeStore.initTheme()
     })
-};
+}

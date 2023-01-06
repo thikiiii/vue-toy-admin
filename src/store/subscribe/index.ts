@@ -1,5 +1,5 @@
 import { subscribeLayout } from '@/store/subscribe/layout'
 
-export const setupGlobalSubscribe = () => {
+export const useGlobalSubscribe = () => {
     subscribeLayout()
 };

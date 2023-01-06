@@ -19,6 +19,7 @@ axiosInstance.axiosInstance.interceptors.request.use((config) => {
 axiosInstance.axiosInstance.interceptors.response.use((config: AxiosResponse<Service.BaseResponseResult>) => {
     const statusError = handleResponseStatusError(config.data)
     if (statusError) return statusError
+    console.log(config)
     return config
 }, (error: AxiosError) => {
     return handleInterceptorError(error)

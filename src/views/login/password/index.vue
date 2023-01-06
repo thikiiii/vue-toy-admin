@@ -5,6 +5,7 @@ import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
 import { axiosInstance } from '@/services/request'
 import { UserApi } from '@/services/api/user'
+import { LoginMethod } from '@/enums/common'
 
 const authStore = useAuthStore()
 const formRef = ref<InstanceType<typeof NForm> | null>()
@@ -37,8 +38,8 @@ const setLoginType = (component: typeof QrCode) => loginType.value = component
 const handleLogin = () => {
   formRef.value?.validate(async (errors) => {
     if (errors) return
-    await UserApi.getUserinfo()
-    // await authStore.handleLogin(LoginMethod.Password, form)
+    // await UserApi.getUserinfo()
+    await authStore.handleLogin(LoginMethod.Password, form)
   })
 }
 const test = () => {

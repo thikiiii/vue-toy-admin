@@ -5,6 +5,8 @@ import { AuthCookie } from '@/storage/auth'
 import { RouteAuthModeEnum } from '@/enums/auth'
 import { runTacticsAction } from '@/utils'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+import { discreteApi } from '@/plugIn/naiveUi/discreteApi'
+
 
 // 守卫策略
 const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
@@ -39,7 +41,7 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
             !Boolean(AuthCookie.getToken()),
             () => {
                 console.log('GUARD-------2')
-                window.$message?.warning('令牌已失效，请重新登录！')
+                discreteApi.message.warning('令牌已失效，请重新登录！')
                 initUserStore()
                 initRouteStore()
                 next(LOGIN_PATH)
@@ -54,7 +56,6 @@ const guardTactics = (to: RouteLocationNormalized, from: RouteLocationNormalized
                 initRouteStore()
                 // 获取用户信息
                 await getUserinfo().catch(() => {
-                    initUserStore()
                     next(LOGIN_PATH)
                     return Promise.reject()
                 })

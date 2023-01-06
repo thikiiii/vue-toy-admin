@@ -7,6 +7,7 @@ import { UserApi } from '@/services/api/user'
 import { matchUrl } from '@/utils/regularCheck'
 import { Settings } from '@/settings'
 import useTabBarStore from '@/store/modules/tabBar'
+import { discreteApi } from '@/plugIn/naiveUi/discreteApi'
 
 export const useRouteStore = defineStore('route', {
     state: (): Store.RouteStore => ({
@@ -21,19 +22,19 @@ export const useRouteStore = defineStore('route', {
         },
 
         // 获取用户路由
-        async getRoutes(): Promise<UserService.Response.UserRoutes[]> {
-            const { subCode, subMsg, data } = await UserApi.getRoutes().catch(() => {
+        async getRoutes() {
+            const [{ subCode, subMsg, result }] = await UserApi.getRoutes().catch(() => {
                 this.initRouteStore()
                 return Promise.reject()
             })
 
-            if (subCode !== 200 || !data) {
-                window.$message?.error(subMsg)
+            if (subCode !== 200 || !result) {
+                discreteApi.message.error(subMsg)
                 this.initRouteStore()
                 return Promise.reject()
             }
 
-            return data
+            return result
         },
 
         // 重定向到首页

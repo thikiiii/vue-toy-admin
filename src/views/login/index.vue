@@ -45,7 +45,7 @@ provide('loginType', loginType)
     align-items: center;
 
     &-svg {
-      width: 50%;
+      width: 70%;
       height: 100%;
     }
   }
