@@ -4,7 +4,6 @@ import QrCode from '@/views/login/qrCode/index.vue'
 import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
 import { axiosInstance } from '@/services/request'
-import { UserApi } from '@/services/api/user'
 import { LoginMethod } from '@/enums/common'
 
 const authStore = useAuthStore()

@@ -29,13 +29,15 @@ const useAuthStore = defineStore('auth', {
         // 密码登录
         async passwordLogin(form: UserServiceRequest.PasswordLogin) {
             this.loginLoading = true
-            const [isError,data,res] = await UserApi.passwordLogin(form)
+            const [ { subCode, subMsg, token } ] = await UserApi.passwordLogin(form).catch(() => {
+                this.loginLoading = false
+                return Promise.reject()
+            })
             if (subCode !== 200 || !token) {
                 discreteApi.message.error(subMsg)
                 this.loginLoading = false
                 return Promise.reject()
             }
-
             this.setToken(token)
             return Promise.resolve()
         },
@@ -61,9 +63,7 @@ const useAuthStore = defineStore('auth', {
             switch (loginMethod) {
                 // 密码登录
                 case LoginMethod.Password:
-                    await this.passwordLogin(form).catch(e => {
-                        console.log(e)
-                    })
+                    await this.passwordLogin(form)
                     break
             }
             await this.getUserinfo()

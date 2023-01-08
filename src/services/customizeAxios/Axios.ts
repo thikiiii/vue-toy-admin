@@ -18,17 +18,15 @@ export class CustomizeAxios {
         return qs.stringify(data)
     }
 
-    async request<D = any>(config: Axios.Config) {
+    async request<D = any>(config: Axios.Config): Promise<[ D, AxiosResponse<D> ]> {
         const key = this.getPendingKey(config)
         // 处理取消请求
         this.handleSignal(config, key)
-        return await this.axiosInstance.request<D>(config)
-            .then(res => [ null, res.data, res ])
-            .catch(err => [ err, null, null ])
-            .finally(() => {
-                this.pendingRequest.delete(key)
-            })
-
+        const res = await this.axiosInstance.request<D>(config).finally(() => {
+            this.pendingRequest.delete(key)
+        })
+        console.log(res)
+        return [ res.data, res ]
     }
 
     get<D = any>(url: string, data?: any, config?: Axios.Config) {

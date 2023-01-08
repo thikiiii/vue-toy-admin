@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import Password from '@/views/login/password/index.vue'
-import {provide, shallowRef} from 'vue'
-import {useLayoutStore} from "@/store/modules/layout";
+import { provide, shallowRef } from 'vue'
+import { useLayoutStore } from '@/store/modules/layout'
 
-const layoutStore = useLayoutStore();
-const {mobile} = layoutStore
+const layoutStore = useLayoutStore()
+const { mobile } = layoutStore
 const loginType = shallowRef(Password)
 
 provide('loginType', loginType)
@@ -15,7 +15,7 @@ provide('loginType', loginType)
     <div v-if="!mobile.isMobile" class="login-bg">
       <transition appear name="right-slide-fade">
         <div class="login-bg-svg">
-          <icon color="red" local-icon="login" size="100%"/>
+          <icon color="red" local-icon="login" size="100%" />
         </div>
       </transition>
     </div>
@@ -24,7 +24,7 @@ provide('loginType', loginType)
         <h1 class="login-card-title">Toy Admin</h1>
       </transition>
       <div class="login-card-form">
-        <component :is="loginType"/>
+        <component :is="loginType" />
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@ provide('loginType', loginType)
 
     &-svg {
       width: 70%;
-      height: 100%;
+      height: 70%;
     }
   }
 
