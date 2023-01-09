@@ -43,7 +43,7 @@ export const handleErrorMessage = (message: string) => {
 }
 
 // 处理响应状态错误
-export const handleResponseStatusError = (data: Service.BaseResponseResult) => {
+export const handleResponseStatusError = (data: Service.Result) => {
     if (!data) {
         handleErrorMessage(MESSAGE_ERROR.get('theInterfaceReturnsAnException') as string)
         return Promise.reject()

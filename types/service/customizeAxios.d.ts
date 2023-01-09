@@ -1,5 +1,7 @@
-declare namespace Axios {
+declare namespace CustomizeAxios {
     type AxiosRequestConfig = import('axios').AxiosRequestConfig
+
+    type  Method = 'POST' | 'GET' | 'PUT' | 'DELETE'
 
     // 自动重试
     interface autoRetry {
@@ -18,6 +20,8 @@ declare namespace Axios {
 
         // 自动重试
         autoRetry?: autoRetry
+
+        method?:Method
     }
 
     interface DefaultConfig extends Config {

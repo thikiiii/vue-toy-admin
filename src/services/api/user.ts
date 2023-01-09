@@ -1,18 +1,27 @@
-import { axiosInstance } from '@/services/request'
+import { serve } from '@/services/request'
 
 
 // 用户相关的Api
 export abstract class UserApi {
+
+    // 密码登录Url
+    static passwordLoginUrl = '/mock/passwordLogin'
     // 密码登录
-    static passwordLogin = (data: UserServiceRequest.PasswordLogin) =>
-        axiosInstance.post<Service.ExpandBaseResult<undefined, UserServiceResponse.PasswordLogin>>('/mock/passwordLogin', data)
+    static passwordLogin = (data: UserApiRequest.PasswordLogin) =>
+        serve.post<Service.Result<null, UserApiResponse.PasswordLogin>>(this.passwordLoginUrl, data)
 
+    // 获取用户信息Url
+    static getUserinfoUrl = '/mock/getUserinfo'
     // 获取用户信息
-    static getUserinfo = () => axiosInstance.get<Service.BaseResponseResult<UserServiceResponse.UserDetails>>('/mock/getUserinfo')
+    static getUserinfo = () => serve.get<Service.Result<UserApiResponse.UserDetails>>(this.getUserinfoUrl)
 
+    // 获取用户路由Url
+    static getRoutesUrl = '/mock/getRoutes'
     // 获取用户路由
-    static getRoutes = () => axiosInstance.get<Service.BaseResponseResult<UserServiceResponse.UserRoutes[]>>('/mock/getRoutes')
+    static getRoutes = () => serve.get<Service.Result<UserApiResponse.UserRoutes[]>>(this.getRoutesUrl)
 
+    // 退出登录Url
+    static signOutUrl = '/mock/signOut'
     // 退出登录
-    static signOut = () => axiosInstance.get<Service.BaseResponseResult<Service.BaseResponseResult>>('/mock/signOut')
+    static signOut = () => serve.get<Service.Result<Service.Result>>(this.signOutUrl)
 }

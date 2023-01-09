@@ -4,11 +4,11 @@ export default [
     {
         url: '/mock/passwordLogin',
         method: 'post',
-        // timeout: 5000,
+        timeout: 5000,
         // statusCode: 400,
         response: () => {
             return {
-                code: 500,
+                code: 200,
                 subCode: 200,
                 subMsg: '登录成功',
                 token: 'by Toy admin'
@@ -22,7 +22,7 @@ export default [
         // statusCode: 500,
         response: () => {
             return {
-                code: 500,
+                code: 200,
                 msg: 'ok',
                 subCode: 200,
                 subMsg: '登录成功',

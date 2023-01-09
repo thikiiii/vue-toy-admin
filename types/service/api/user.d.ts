@@ -1,5 +1,5 @@
 // 用户请求
-declare namespace UserServiceRequest {
+declare namespace UserApiRequest {
     // 密码登录请求
     interface PasswordLogin {
         // 用户名
@@ -10,7 +10,7 @@ declare namespace UserServiceRequest {
 }
 
 // 用户响应
-declare namespace UserServiceResponse {
+declare namespace UserApiResponse {
     // 密码登录响应
     interface PasswordLogin {
         // token

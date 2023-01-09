@@ -1,6 +1,6 @@
 declare namespace Service {
     // 基础响应结果
-    interface BaseResponseResult<D = any>{
+    interface BaseResult<D = any> {
         // 系统状态
         code: number
         // 系统状态信息
@@ -13,8 +13,8 @@ declare namespace Service {
         result?: D
     }
 
-    // 扩展基础响应结果
-    type ExpandBaseResult<D = any, T = {}> = BaseResponseResult<D> & T
+    // 结果扩展
+    type Result<D = any, T = {}> = BaseResult<D> & T
 
     // 分页
     interface Pagination {
@@ -25,5 +25,5 @@ declare namespace Service {
     }
 
     // 包装 接口请求分页
-    type WrapperPageRequest<Q> = Pagination & Q
+    type WrapperPage<Q> = Pagination & Q
 }

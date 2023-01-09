@@ -1,27 +1,28 @@
-import { AxiosError, AxiosResponse } from 'axios'
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { handleInterceptorError, handleResponseStatusError } from '@/services/request/error'
 import useMetaEnv from '@/hooks/common/useMetaEnv'
-import { CustomizeAxios } from '@/services/customizeAxios/Axios'
+import { CustomizeAxios } from '@/services/customizeAxios'
 
 const { VITE_GLOB_API_URL } = useMetaEnv()
 
-export const axiosInstance = new CustomizeAxios({
+export const serve = new CustomizeAxios({
     baseURL: VITE_GLOB_API_URL,
     timeout: 10000
 })
 
-axiosInstance.axiosInstance.interceptors.request.use((config) => {
+serve.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+    console.log(config)
     return config
 }, error => {
     return Promise.reject(error)
 })
 
-axiosInstance.axiosInstance.interceptors.response.use((config: AxiosResponse<Service.BaseResponseResult>) => {
+serve.axiosInstance.interceptors.response.use((config: AxiosResponse<Service.Result>) => {
     const statusError = handleResponseStatusError(config.data)
     if (statusError) return statusError
     console.log(config)
     return config
 }, (error: AxiosError) => {
+    console.log(error)
     return handleInterceptorError(error)
 })
-

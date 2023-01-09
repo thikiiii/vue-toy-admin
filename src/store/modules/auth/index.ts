@@ -27,7 +27,7 @@ const useAuthStore = defineStore('auth', {
     },
     actions: {
         // 密码登录
-        async passwordLogin(form: UserServiceRequest.PasswordLogin) {
+        async passwordLogin(form: UserApiRequest.PasswordLogin) {
             this.loginLoading = true
             const [ { subCode, subMsg, token } ] = await UserApi.passwordLogin(form).catch(() => {
                 this.loginLoading = false
@@ -59,7 +59,7 @@ const useAuthStore = defineStore('auth', {
         },
 
         // 处理登录
-        async handleLogin(loginMethod: LoginMethod, form: UserServiceRequest.PasswordLogin) {
+        async handleLogin(loginMethod: LoginMethod, form: UserApiRequest.PasswordLogin) {
             switch (loginMethod) {
                 // 密码登录
                 case LoginMethod.Password:
