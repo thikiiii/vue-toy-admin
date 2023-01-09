@@ -10,14 +10,14 @@ export const serve = new CustomizeAxios({
     timeout: 10000
 })
 
-serve.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+serve.axios.interceptors.request.use((config: AxiosRequestConfig) => {
     console.log(config)
     return config
 }, error => {
     return Promise.reject(error)
 })
 
-serve.axiosInstance.interceptors.response.use((config: AxiosResponse<Service.Result>) => {
+serve.axios.interceptors.response.use((config: AxiosResponse<Service.Result>) => {
     const statusError = handleResponseStatusError(config.data)
     if (statusError) return statusError
     console.log(config)
