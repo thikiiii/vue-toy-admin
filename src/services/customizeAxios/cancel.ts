@@ -23,12 +23,12 @@ export class Cancel {
         return [ method, url ].join('&')
     }
 
-    generateRepeatRequestKey({ method, url, data, headers, params }: CustomizeAxios.Config) {
+    generateRepeatRequestKey({ method, url, data, headers, params }: CustomizeAxios.RequestConfig) {
         return [ method, url, JSON.stringify(data), JSON.stringify(headers), JSON.stringify([ params ]) ].join('&')
     }
 
     // 处理取消请求
-    handleCancelRequest(config: CustomizeAxios.Config) {
+    handleCancelRequest(config: CustomizeAxios.RequestConfig) {
         if (config.signal) return
         const key = this.generateAbortControllerKey(config.method?.toUpperCase() as CustomizeAxios.Method, config.url)
         const abortController = this.cancelRequestMap.get(key)
@@ -42,7 +42,7 @@ export class Cancel {
     }
 
     // 处理重复请求
-    handleRepeatRequest(config: CustomizeAxios.Config, key) {
+    handleRepeatRequest(config: CustomizeAxios.RequestConfig, key) {
         if (!config.ignoreRepeatRequest) return
 
     }

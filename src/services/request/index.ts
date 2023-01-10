@@ -7,7 +7,19 @@ const { VITE_GLOB_API_URL } = useMetaEnv()
 
 export const serve = new CustomizeAxios({
     baseURL: VITE_GLOB_API_URL,
-    timeout: 10000
+    timeout: 10000,
+    interceptor: {
+        requestInterceptor(config) {
+            return config
+        },
+        requestInterceptorCatch() {
+            return Promise.reject()
+        },
+        responseInterceptors(config: AxiosResponse<Service.Result>) {
+
+            return config
+        }
+    }
 })
 
 serve.axios.interceptors.request.use((config: AxiosRequestConfig) => {
