@@ -43,8 +43,8 @@ declare namespace CustomizeAxios {
 
     interface DefaultConfig extends RequestConfig {
         // 拦截器
-        interceptor?:Interceptor
+        interceptor?: Interceptor
     }
 
-    // type Return<T> = T extends true ? import('axios').AxiosResponse :
+    type Return<T> = T extends true ? import('axios').AxiosResponse : { test: number }
 }

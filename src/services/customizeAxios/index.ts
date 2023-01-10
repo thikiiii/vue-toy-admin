@@ -3,12 +3,11 @@ import qs from 'qs'
 import { Cancel } from '@/services/customizeAxios/cancel'
 
 export class CustomizeAxios {
-    // axios 实例
-    private readonly axios: AxiosInstance
 
     // 取消请求实例
     readonly cancel: Cancel
-
+    // axios 实例
+    private readonly axios: AxiosInstance
     private readonly defaultConfig: CustomizeAxios.DefaultConfig
 
     constructor(defaultConfig: CustomizeAxios.DefaultConfig) {
@@ -51,16 +50,11 @@ export class CustomizeAxios {
         return qs.stringify(data)
     }
 
-    async request<D = any>(config: CustomizeAxios.RequestConfig){
+    async request<D = any>(config: CustomizeAxios.RequestConfig) {
         const res = await this.axios.request<D>(config)
 
 
-
-        if (config.data) {
-            return res.data
-        } else {
-            return res
-        }
+        return this.handleResponseData(config.isSerialize as true, { t: 11 })
     }
 
     get<D = any>(url: string, data?: any, config?: CustomizeAxios.RequestConfig) {
@@ -77,6 +71,10 @@ export class CustomizeAxios {
 
     delete<D = any>(url: string, data?: any, config?: CustomizeAxios.RequestConfig) {
         return this.request<D>({ ...config, url, params: data, method: 'DELETE' })
+    }
+
+    private handleResponseData<T extends boolean>(is: T, config): CustomizeAxios.Return<T> {
+        return is === true ? config : { test: 222 }
     }
 
     // 请求拦截器
