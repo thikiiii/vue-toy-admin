@@ -29,10 +29,11 @@ const useAuthStore = defineStore('auth', {
         // 密码登录
         async passwordLogin(form: UserApiRequest.PasswordLogin) {
             this.loginLoading = true
-            const [ { subCode, subMsg, token } ] = await UserApi.passwordLogin(form).catch(() => {
+            const { subCode,token,subMsg } = await UserApi.passwordLogin(form).catch(() => {
                 this.loginLoading = false
                 return Promise.reject()
             })
+
             if (subCode !== 200 || !token) {
                 discreteApi.message.error(subMsg)
                 this.loginLoading = false
@@ -44,7 +45,7 @@ const useAuthStore = defineStore('auth', {
 
         // 获取用户信息
         async getUserinfo() {
-            const [ { subCode, subMsg, result } ] = await UserApi.getUserinfo().catch(() => {
+            const { subCode, subMsg, result } = await UserApi.getUserinfo().catch(() => {
                 this.initUserStore()
                 return Promise.reject()
             })
@@ -91,7 +92,7 @@ const useAuthStore = defineStore('auth', {
 
         // 退出登录
         async signOut() {
-            const [ { subCode, subMsg } ] = await UserApi.signOut()
+            const { subCode, subMsg } = await UserApi.signOut()
             if (subCode !== 200) {
                 discreteApi.message.error(subMsg)
             }

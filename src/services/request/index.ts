@@ -1,4 +1,4 @@
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { handleInterceptorError, handleResponseStatusError } from '@/services/request/error'
 import useMetaEnv from '@/hooks/common/useMetaEnv'
 import { CustomizeAxios } from '@/services/customizeAxios'
@@ -16,25 +16,12 @@ export const serve = new CustomizeAxios({
             return Promise.reject()
         },
         responseInterceptors(config: AxiosResponse<Service.Result>) {
-
+            const statusError = handleResponseStatusError(config.data)
+            if (statusError) return statusError
             return config
+        },
+        responseInterceptorsCatch(e) {
+            return handleInterceptorError(e)
         }
     }
-})
-
-serve.axios.interceptors.request.use((config: AxiosRequestConfig) => {
-    console.log(config)
-    return config
-}, error => {
-    return Promise.reject(error)
-})
-
-serve.axios.interceptors.response.use((config: AxiosResponse<Service.Result>) => {
-    const statusError = handleResponseStatusError(config.data)
-    if (statusError) return statusError
-    console.log(config)
-    return config
-}, (error: AxiosError) => {
-    console.log(error)
-    return handleInterceptorError(error)
 })

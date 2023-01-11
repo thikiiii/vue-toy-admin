@@ -1,4 +1,4 @@
-declare namespace CustomizeAxios {
+declare namespace Axios {
     type AxiosRequestConfig = import('axios').AxiosRequestConfig
 
     type  Method = 'POST' | 'GET' | 'PUT' | 'DELETE'
@@ -11,7 +11,6 @@ declare namespace CustomizeAxios {
         frequency: number
     }
 
-
     // 拦截器
     interface Interceptor {
         // 请求拦截器
@@ -21,7 +20,7 @@ declare namespace CustomizeAxios {
         requestInterceptorCatch?(e: Error): Promise<any>
 
         // 响应拦截器
-        responseInterceptors?(config: import('axios').AxiosResponse): import('axios').AxiosResponse
+        responseInterceptors?(config: import('axios').AxiosResponse): import('axios').AxiosResponse | Promise
 
         // 响应错误处理
         responseInterceptorsCatch?(e: any): Promise<any>
@@ -38,6 +37,9 @@ declare namespace CustomizeAxios {
         // 自动重试
         autoRetry?: autoRetry
 
+        // 是否返回axios原生响应
+        isReturnNative?: boolean
+
         method?: Method
     }
 
@@ -46,5 +48,7 @@ declare namespace CustomizeAxios {
         interceptor?: Interceptor
     }
 
-    type Return<T> = T extends true ? import('axios').AxiosResponse : { test: number }
+    type ReturnNativeOverload<Boolean=undefined> = RequestConfig & {
+        [key in keyof Pick<RequestConfig, 'isReturnNative'>]?: Boolean
+    }
 }

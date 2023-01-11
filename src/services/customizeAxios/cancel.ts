@@ -6,7 +6,7 @@ export class Cancel {
     readonly cancelRequestMap = new Map<string, AbortController>()
 
     // 取消请求
-    cancelRequest(method: CustomizeAxios.Method, url: string, reason?: string) {
+    cancelRequest(method: Axios.Method, url: string, reason?: string) {
         const key = this.generateAbortControllerKey(method, url)
         this.cancelRequestMap.get(key)?.abort(reason)
         this.cancelRequestMap.delete(key)
@@ -19,18 +19,18 @@ export class Cancel {
     }
 
     // 生成中止控制器key
-    generateAbortControllerKey(method: CustomizeAxios.Method | undefined, url: string | undefined) {
+    generateAbortControllerKey(method: Axios.Method | undefined, url: string | undefined) {
         return [ method, url ].join('&')
     }
 
-    generateRepeatRequestKey({ method, url, data, headers, params }: CustomizeAxios.RequestConfig) {
+    generateRepeatRequestKey({ method, url, data, headers, params }: Axios.RequestConfig) {
         return [ method, url, JSON.stringify(data), JSON.stringify(headers), JSON.stringify([ params ]) ].join('&')
     }
 
     // 处理取消请求
-    handleCancelRequest(config: CustomizeAxios.RequestConfig) {
+    handleCancelRequest(config: Axios.RequestConfig) {
         if (config.signal) return
-        const key = this.generateAbortControllerKey(config.method?.toUpperCase() as CustomizeAxios.Method, config.url)
+        const key = this.generateAbortControllerKey(config.method?.toUpperCase() as Axios.Method, config.url)
         const abortController = this.cancelRequestMap.get(key)
         if (abortController) {
             config.signal = abortController.signal
@@ -42,7 +42,7 @@ export class Cancel {
     }
 
     // 处理重复请求
-    handleRepeatRequest(config: CustomizeAxios.RequestConfig, key) {
+    handleRepeatRequest(config: Axios.RequestConfig, key) {
         if (!config.ignoreRepeatRequest) return
 
     }
