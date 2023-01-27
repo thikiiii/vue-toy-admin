@@ -48,7 +48,8 @@ declare namespace Axios {
         interceptor?: Interceptor
     }
 
-    type ReturnNativeOverload<Boolean=undefined> = RequestConfig & {
+
+    type RequestConfigR<Boolean = undefined> = RequestConfig & {
         [key in keyof Pick<RequestConfig, 'isReturnNative'>]?: Boolean
     }
 }

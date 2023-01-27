@@ -31,5 +31,5 @@ export abstract class UserApi {
     static getRoutes = () => serve.request<Service.Result<UserApiResponse.UserRoutes[]>>({ url: this.getRoutesUrl })
 
     // 退出登录
-    static signOut = () => serve.request<Service.Result<Service.Result>>({ url:this.signOutUrl })
+    static signOut = () => serve.request<Service.Result<Service.Result>>({ url: this.signOutUrl })
 }

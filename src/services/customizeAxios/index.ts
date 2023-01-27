@@ -25,7 +25,7 @@ export class CustomizeAxios {
 
         // 请求拦截器
         this.axios.interceptors.request.use(
-            (config: Axios.ReturnNativeOverload) => {
+            (config: Axios.RequestConfigR) => {
                 return requestInterceptor ? requestInterceptor(config) : config
             },
             (e) => {
@@ -51,16 +51,34 @@ export class CustomizeAxios {
         return qs.stringify(data)
     }
 
-    request<D>(config: Axios.ReturnNativeOverload<undefined|false>): Promise<D>
-    request<D>(config: Axios.ReturnNativeOverload<true>): Promise<AxiosResponse<D>>
+    // request<D>(config: Axios.RequestConfigR<undefined | false>): Promise<D>
+    // request<D>(config: Axios.RequestConfigR<true>): Promise<AxiosResponse<D>>
     async request<D = any>(config: Axios.RequestConfig) {
         const res = await this.axios.request<D>(config)
-        return config.isReturnNative ? res : res.data
+        if (config.isReturnNative) {
+            return this.handleRequest({ isReturnNative:true }, res)
+        } else {
+            return this.handleRequest({ isReturnNative:false }, res)
+        }
     }
+
+    handleRequest<D>(config: Axios.RequestConfigR<undefined | false>, res: AxiosResponse<D>): D
+    handleRequest<D>(config: Axios.RequestConfigR<true>, res: AxiosResponse<D>): AxiosResponse<D>
+    handleRequest<D = any>(config: Axios.RequestConfig, res: AxiosResponse<D>) {
+        if (config.isReturnNative) {
+            return res
+        } else {
+            return res.data
+        }
+    }
+
 }
 
-new CustomizeAxios({}).request<{ test: number }>({
-    isReturnNative: false
-}).then(value => {
-    value.test
+
+const config: Axios.RequestConfig = {
+    isReturnNative:true
+}
+
+const data = new CustomizeAxios({}).request<{ test: number }>(config).then(value => {
+    value
 })
