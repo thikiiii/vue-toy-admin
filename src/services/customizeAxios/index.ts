@@ -1,20 +1,21 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
-import qs from 'qs'
+import axios, { AxiosError, AxiosInstance, AxiosResponse, Method } from 'axios'
 import { Cancel } from '@/services/customizeAxios/cancel'
 
 export class CustomizeAxios {
-
-    // 取消请求实例
-    readonly cancel: Cancel
     // axios 实例
     private readonly axios: AxiosInstance
-    private readonly defaultConfig: Axios.DefaultConfig
+    private readonly defaultConfig: CAxios.DefaultConfig
 
-    constructor(defaultConfig: Axios.DefaultConfig) {
+    constructor(defaultConfig: CAxios.DefaultConfig) {
         this.axios = axios.create(defaultConfig)
         this.defaultConfig = defaultConfig
         // 取消实例
-        this.cancel = new Cancel()
+        const cancel = new Cancel()
+
+        // 取消请求
+        this.cancelRequest = cancel.cancelRequest.bind(cancel)
+        // 取消全部请求
+        this.cancelAllRequest = cancel.cancelAllRequest.bind(cancel)
 
         const {
             requestInterceptor,
@@ -25,60 +26,39 @@ export class CustomizeAxios {
 
         // 请求拦截器
         this.axios.interceptors.request.use(
-            (config: Axios.RequestConfigR) => {
+            (config: CAxios.RequestConfig) => {
+                cancel.addPending(config)
                 return requestInterceptor ? requestInterceptor(config) : config
             },
-            (e) => {
+            (e: AxiosError) => {
+                e.config && cancel.deletePending(e.config)
                 return requestInterceptorCatch ? requestInterceptorCatch(e) : Promise.reject()
             }
         )
 
         // 响应拦截器
         this.axios.interceptors.response.use(
-            (config: AxiosResponse) => {
-
-                return responseInterceptors ? responseInterceptors(config) : config
+            (response: AxiosResponse) => {
+                cancel.deletePending(response.config)
+                return responseInterceptors ? responseInterceptors(response) : response
             },
-            (e) => {
+            (e: AxiosError) => {
+                e.config && cancel.deletePending(e.config)
                 return responseInterceptorsCatch ? responseInterceptorsCatch(e) : Promise.reject()
             }
         )
     }
 
-
-    // 序列化
-    static serialization(data) {
-        return qs.stringify(data)
-    }
-
-    // request<D>(config: Axios.RequestConfigR<undefined | false>): Promise<D>
-    // request<D>(config: Axios.RequestConfigR<true>): Promise<AxiosResponse<D>>
-    async request<D = any>(config: Axios.RequestConfig) {
+    async request<D = any>(config: CAxios.RequestConfig): Promise<CAxios.Response<D>> {
         const res = await this.axios.request<D>(config)
-        if (config.isReturnNative) {
-            return this.handleRequest({ isReturnNative:true }, res)
-        } else {
-            return this.handleRequest({ isReturnNative:false }, res)
-        }
+        console.log(res.config)
+        return { ...res.data, $responseBody: res }
     }
 
-    handleRequest<D>(config: Axios.RequestConfigR<undefined | false>, res: AxiosResponse<D>): D
-    handleRequest<D>(config: Axios.RequestConfigR<true>, res: AxiosResponse<D>): AxiosResponse<D>
-    handleRequest<D = any>(config: Axios.RequestConfig, res: AxiosResponse<D>) {
-        if (config.isReturnNative) {
-            return res
-        } else {
-            return res.data
-        }
-    }
+    // 取消请求
+    cancelRequest: (method: Method, url: string, reason?: string) => void
 
+    // 取消全部请求
+    cancelAllRequest: (reason?: string) => void
 }
 
-
-const config: Axios.RequestConfig = {
-    isReturnNative:true
-}
-
-const data = new CustomizeAxios({}).request<{ test: number }>(config).then(value => {
-    value
-})

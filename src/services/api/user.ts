@@ -1,4 +1,4 @@
-import { serve } from '@/services/request'
+import { serveRequest } from '@/services/request/handleRequest'
 
 
 // 用户相关的Api
@@ -18,18 +18,28 @@ export abstract class UserApi {
 
     // 密码登录
     static passwordLogin = (data: UserApiRequest.PasswordLogin) =>
-        serve.request<Service.Result<null, UserApiResponse.PasswordLogin>>({
+        serveRequest<null, UserApiResponse.PasswordLogin>({
+            method: 'POST',
             url: this.passwordLoginUrl,
             data
         })
 
     // 获取用户信息
-    static getUserinfo = () => serve.request<Service.Result<UserApiResponse.UserDetails>>({ url: this.getUserinfoUrl })
-
+    static getUserinfo = () => serveRequest<UserApiResponse.UserDetails>({
+        method: 'GET',
+        url: this.getUserinfoUrl
+    })
 
     // 获取用户路由
-    static getRoutes = () => serve.request<Service.Result<UserApiResponse.UserRoutes[]>>({ url: this.getRoutesUrl })
+    static getRoutes = () => serveRequest<UserApiResponse.UserRoutes[]>({
+        method: 'GET',
+        url: this.getRoutesUrl
+    })
 
     // 退出登录
-    static signOut = () => serve.request<Service.Result<Service.Result>>({ url: this.signOutUrl })
+    static signOut = () => serveRequest<Service.Result>({
+        method: 'GET',
+        url: this.signOutUrl
+    })
 }
+

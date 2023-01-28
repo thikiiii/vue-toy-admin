@@ -45,7 +45,7 @@ const test = () => {
   serve.cancelAllRequest()
 }
 const test2 = () => {
-  serve.cancelRequest('GET', UserApi.passwordLoginUrl)
+  serve.cancelRequest('POST', UserApi.passwordLoginUrl)
 }
 </script>
 

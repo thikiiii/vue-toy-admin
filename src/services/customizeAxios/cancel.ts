@@ -1,49 +1,47 @@
+import { Method } from 'axios'
+
 /*
 * 1、取消请求
 * 2、取消重复请求
 * */
+
 export class Cancel {
-    readonly cancelRequestMap = new Map<string, AbortController>()
+    // 用于存放每次请求的标识和取消函数
+    readonly pendingMap = new Map<string, AbortController>()
 
-    // 取消请求
-    cancelRequest(method: Axios.Method, url: string, reason?: string) {
-        const key = this.generateAbortControllerKey(method, url)
-        this.cancelRequestMap.get(key)?.abort(reason)
-        this.cancelRequestMap.delete(key)
+    // 生成标识
+    generatePendingKey(config: CAxios.RequestConfig) {
+        return [ config.method?.toLowerCase(), config.url ].join('&')
     }
 
-    // 取消全部请求
-    cancelAllRequest(reason?: string) {
-        this.cancelRequestMap.forEach((value) => value.abort(reason))
-        this.cancelRequestMap.clear()
+    deletePending(config: CAxios.RequestConfig) {
+        const key = this.generatePendingKey(config)
+        this.pendingMap.delete(key)
     }
 
-    // 生成中止控制器key
-    generateAbortControllerKey(method: Axios.Method | undefined, url: string | undefined) {
-        return [ method, url ].join('&')
-    }
-
-    generateRepeatRequestKey({ method, url, data, headers, params }: Axios.RequestConfig) {
-        return [ method, url, JSON.stringify(data), JSON.stringify(headers), JSON.stringify([ params ]) ].join('&')
-    }
-
-    // 处理取消请求
-    handleCancelRequest(config: Axios.RequestConfig) {
+    addPending(config: CAxios.RequestConfig) {
         if (config.signal) return
-        const key = this.generateAbortControllerKey(config.method?.toUpperCase() as Axios.Method, config.url)
-        const abortController = this.cancelRequestMap.get(key)
+        const key = this.generatePendingKey(config)
+         const abortController = this.pendingMap.get(key)
         if (abortController) {
             config.signal = abortController.signal
         } else {
             const controller = new AbortController()
+            this.pendingMap.set(key, controller)
             config.signal = controller.signal
-            this.cancelRequestMap.set(key, controller)
         }
     }
 
-    // 处理重复请求
-    handleRepeatRequest(config: Axios.RequestConfig, key) {
-        if (!config.ignoreRepeatRequest) return
+    // 取消请求
+    cancelRequest(method:Method,url:string,reason?: string) {
+        const key = this.generatePendingKey({ method,url })
+        this.pendingMap.get(key)?.abort(reason)
+        this.pendingMap.delete(key)
+    }
 
+    // 取消全部请求
+    cancelAllRequest(reason?: string) {
+        this.pendingMap.forEach((value) => value.abort(reason))
+        this.pendingMap.clear()
     }
 }

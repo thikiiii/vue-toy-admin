@@ -1,7 +1,6 @@
-declare namespace Axios {
+declare namespace CAxios {
     type AxiosRequestConfig = import('axios').AxiosRequestConfig
 
-    type  Method = 'POST' | 'GET' | 'PUT' | 'DELETE'
 
     // 自动重试
     interface autoRetry {
@@ -17,13 +16,13 @@ declare namespace Axios {
         requestInterceptor?(config: RequestConfig): RequestConfig
 
         // 请求错误处理
-        requestInterceptorCatch?(e: Error): Promise<any>
+        requestInterceptorCatch?(e: import('axios').AxiosError): Promise<any>
 
         // 响应拦截器
         responseInterceptors?(config: import('axios').AxiosResponse): import('axios').AxiosResponse | Promise
 
         // 响应错误处理
-        responseInterceptorsCatch?(e: any): Promise<any>
+        responseInterceptorsCatch?(e: import('axios').AxiosError): Promise<any>
     }
 
 
@@ -36,11 +35,6 @@ declare namespace Axios {
 
         // 自动重试
         autoRetry?: autoRetry
-
-        // 是否返回axios原生响应
-        isReturnNative?: boolean
-
-        method?: Method
     }
 
     interface DefaultConfig extends RequestConfig {
@@ -48,8 +42,8 @@ declare namespace Axios {
         interceptor?: Interceptor
     }
 
-
-    type RequestConfigR<Boolean = undefined> = RequestConfig & {
-        [key in keyof Pick<RequestConfig, 'isReturnNative'>]?: Boolean
+    type Response<D> = D & {
+        // 响应体
+        $responseBody: import('axios').AxiosResponse<D>
     }
 }
