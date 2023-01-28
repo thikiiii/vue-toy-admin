@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, Method } from 'axios'
-import { Cancel } from '@/services/customizeAxios/cancel'
+import { AxiosCancel } from '@/services/customizeAxios/AxiosCancel'
 
 export class CustomizeAxios {
     // axios 实例
@@ -10,12 +10,12 @@ export class CustomizeAxios {
         this.axios = axios.create(defaultConfig)
         this.defaultConfig = defaultConfig
         // 取消实例
-        const cancel = new Cancel()
+        const axiosCancel = new AxiosCancel()
 
         // 取消请求
-        this.cancelRequest = cancel.cancelRequest.bind(cancel)
+        this.cancelRequest = axiosCancel.cancelRequest.bind(axiosCancel)
         // 取消全部请求
-        this.cancelAllRequest = cancel.cancelAllRequest.bind(cancel)
+        this.cancelAllRequest = axiosCancel.cancelAllRequest.bind(axiosCancel)
 
         const {
             requestInterceptor,
@@ -27,11 +27,10 @@ export class CustomizeAxios {
         // 请求拦截器
         this.axios.interceptors.request.use(
             (config: CAxios.RequestConfig) => {
-                cancel.addPending(config)
+                axiosCancel.addPending(config)
                 return requestInterceptor ? requestInterceptor(config) : config
             },
             (e: AxiosError) => {
-                e.config && cancel.deletePending(e.config)
                 return requestInterceptorCatch ? requestInterceptorCatch(e) : Promise.reject()
             }
         )
@@ -39,20 +38,19 @@ export class CustomizeAxios {
         // 响应拦截器
         this.axios.interceptors.response.use(
             (response: AxiosResponse) => {
-                cancel.deletePending(response.config)
+                axiosCancel.deletePending(response.config)
                 return responseInterceptors ? responseInterceptors(response) : response
             },
             (e: AxiosError) => {
-                e.config && cancel.deletePending(e.config)
+                e.config && axiosCancel.deletePending(e.config)
                 return responseInterceptorsCatch ? responseInterceptorsCatch(e) : Promise.reject()
             }
         )
     }
 
     async request<D = any>(config: CAxios.RequestConfig): Promise<CAxios.Response<D>> {
-        const res = await this.axios.request<D>(config)
-        console.log(res.config)
-        return { ...res.data, $responseBody: res }
+        const responseBody = await this.axios.request<D>(config)
+        return { ...responseBody.data, $responseBody: responseBody }
     }
 
     // 取消请求

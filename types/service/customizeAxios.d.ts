@@ -3,11 +3,16 @@ declare namespace CAxios {
 
 
     // 自动重试
-    interface autoRetry {
+    interface ErrorAutoRetry {
+        onRetry
+        // 次数
+        retries:number
+
         // 延时
-        delay: number,
-        // 重试次数
-        frequency: number
+        delay: number
+
+        // 重试条件
+        retryCondition: () => boolean
     }
 
     // 拦截器
@@ -27,14 +32,14 @@ declare namespace CAxios {
 
 
     interface RequestConfig extends AxiosRequestConfig {
-        // 忽略重复请求
-        ignoreRepeatRequest?: boolean,
+        // 忽略重复请求( 如果打开取消重复请求，则禁止取消请求，cancelRequest 函数无效)
+        // ignoreRepeatRequest?: boolean,
 
         // 是否序列话
         isSerialize?: boolean
 
         // 自动重试
-        autoRetry?: autoRetry
+        autoRetry?: ErrorAutoRetry
     }
 
     interface DefaultConfig extends RequestConfig {

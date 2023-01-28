@@ -47,6 +47,9 @@ const test = () => {
 const test2 = () => {
   serve.cancelRequest('POST', UserApi.passwordLoginUrl)
 }
+const test3 = () => {
+  UserApi.getUserinfo()
+}
 </script>
 
 <template>
@@ -54,6 +57,7 @@ const test2 = () => {
     <h1 class="passwordLogin-title">登录</h1>
     <n-button @click="test">测试</n-button>
     <n-button @click="test2">测试</n-button>
+    <n-button @click="test3">测试</n-button>
     <n-form ref="formRef" :model="form" :rules="rules" label-placement="left">
       <transition-group appear name="right-slide-fade">
         <n-form-item key="1" path="username" required>
