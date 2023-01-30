@@ -33,6 +33,9 @@ declare interface ImportMetaEnv {
     // 打包是否压缩图片
     readonly VITE_USE_IMAGEMIN: boolean
 
+    // 打包使用PWA
+    readonly VITE_USE_PWA: boolean
+
     // 是否兼容旧版浏览器。开启后打包时间会慢一倍左右。会多打出旧浏览器兼容包,且会根据浏览器兼容性自动使用相应的版本
     readonly VITE_LEGACY: boolean
 }

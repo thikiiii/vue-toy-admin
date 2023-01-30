@@ -9,12 +9,10 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
 import DefineOptions from 'unplugin-vue-define-options/vite'
 import { setupIcons } from './icons'
+import { setupPwa } from './pwa'
 
-export const createVitePlugins = (
-    viteEnv: ImportMetaEnv,
-    isBuild: boolean
-): PluginOption[] => {
-    const { VITE_USE_MOCK, VITE_LEGACY } = viteEnv
+export const createVitePlugins = (viteEnv: ImportMetaEnv, isBuild: boolean): PluginOption[] => {
+    const { VITE_USE_MOCK, VITE_LEGACY, VITE_USE_PWA } = viteEnv
     const plugins: PluginOption[] = [
         vue(),
         DefineOptions(),
@@ -32,7 +30,9 @@ export const createVitePlugins = (
 
     if (isBuild) {
         // 兼容一些旧版浏览器
-        VITE_LEGACY && plugins.push(legacy())
+        VITE_LEGACY && plugins.push(legacy({ targets: [ 'defaults', 'not IE 11' ] }))
+        // PWA
+        VITE_USE_PWA && plugins.push(setupPwa())
         plugins.push(...[ setupCompress(viteEnv) ])
     }
     return plugins
