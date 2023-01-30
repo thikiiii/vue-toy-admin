@@ -30,9 +30,6 @@ declare interface ImportMetaEnv {
     // 打包压缩是否删除源代码
     readonly VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean
 
-    // 打包是否压缩图片
-    readonly VITE_USE_IMAGEMIN: boolean
-
     // 打包使用PWA
     readonly VITE_USE_PWA: boolean
 
