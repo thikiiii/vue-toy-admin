@@ -1,5 +1,5 @@
-import type { IconProps } from '@/components/Icon/index.vue'
-import Icon from '@/components/Icon/index.vue'
+import type { IconProps } from '@/components/common/Icon/index.vue'
+import Icon from '@/components/common/Icon/index.vue'
 import { VNodeChild } from 'vue'
 
 // useRenderIcon的配置

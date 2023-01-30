@@ -1,14 +1,21 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import AppLoading from '@/components/system/AppLoading/index.vue'
 import { setupRouter } from '@/router'
 import '@/assets/index'
 import { setupStore } from '@/store'
 import { setupDiscreteApi } from '@/plugIn/naiveUi/discreteApi'
 import setupGlobalDirectives from '@/directives'
 
-const app = createApp(App)
 
 const bootStart = async() => {
+    // app loading
+    const appLoading = createApp(AppLoading)
+
+    appLoading.mount('#appLoading')
+
+    const app = createApp(App)
+
     // 挂载状态管理
     setupStore(app)
 

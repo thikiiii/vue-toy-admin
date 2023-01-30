@@ -7,8 +7,9 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Icon: typeof import('./../src/components/Icon/index.vue')['default']
-    NaiveProvider: typeof import('./../src/components/NaiveProvider/index.vue')['default']
+    AppLoading: typeof import('./../src/components/system/AppLoading/index.vue')['default']
+    Icon: typeof import('./../src/components/common/Icon/index.vue')['default']
+    NaiveProvider: typeof import('./../src/components/system/NaiveProvider/index.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
     NBreadcrumbItem: typeof import('naive-ui')['NBreadcrumbItem']

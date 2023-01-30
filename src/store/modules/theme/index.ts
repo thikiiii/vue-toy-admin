@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ThemeStorage } from '@/storage/theme'
 import { setCSSVariable } from '@/utils'
 import {
     darkThemeConfig,
@@ -8,6 +7,7 @@ import {
 } from '@/settings/theme'
 import { appSettings } from '@/settings/app'
 import { darkTheme, lightTheme } from 'naive-ui'
+import { AppStorage } from '@/storage/app'
 
 const { theme, themeMode, followSystem } = appSettings
 
@@ -40,7 +40,7 @@ export const useThemeStore = defineStore('theme', {
                 this.setTheme(this.getSystemThemeMode())
                 this.onSystemThemeChange()
             } else {
-                this.setTheme(ThemeStorage.getTheme() || this.themeMode)
+                this.setTheme(AppStorage.getSettings()?.themeMode || this.themeMode)
                 this.removeSystemThemeChange()
             }
         },
