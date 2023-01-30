@@ -12,7 +12,15 @@ export const useGlobalEvents = () => {
     // 监听窗口关闭
     useEventListener(window, 'unload', () => {
         const { theme, themeMode, followSystem } = themeStore.$state
-        AppStorage.setSettings({ theme, themeMode, followSystem, header, sidebar, footer, app })
+        AppStorage.setSettings({
+            theme,
+            themeMode,
+            followSystem,
+            header,
+            sidebar,
+            footer,
+            app
+        })
     })
 
     // 监听窗口大小变化

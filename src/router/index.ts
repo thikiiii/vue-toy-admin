@@ -9,13 +9,10 @@ const router = createRouter({
     routes: RouterHelpers.transformCustomRoutesToVueRoutes(constRoutes)
 })
 
-export const setupRouter = async (app: App<Element>) => {
+export const setupRouter = async(app: App<Element>) => {
     app.use(router)
     createGuard(router)
     await router.isReady()
 }
 
 export default router
-
-
-

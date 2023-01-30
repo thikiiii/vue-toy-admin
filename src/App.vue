@@ -2,7 +2,8 @@
   <n-config-provider
       :theme="themeStore.naiveThemeType"
       :theme-overrides="themeStore.currentThemeOverrides"
-      abstract>
+      abstract
+  >
     <naive-provider>
       <router-view/>
     </naive-provider>
@@ -15,6 +16,7 @@ import { useGlobalInitialize } from '@/hooks/effect/useGlobalInitialize'
 import { useThemeStore } from '@/store/modules/theme'
 import { useGlobalSubscribe } from '@/store/subscribe'
 
+defineOptions({ name: 'App' })
 const themeStore = useThemeStore()
 
 // 全局事件

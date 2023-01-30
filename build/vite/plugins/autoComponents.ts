@@ -11,7 +11,7 @@ export const setupAutoComponents = () => Components({
     // allow auto import and register components used in markdown
     include: [ /\.vue$/, /\.vue\?vue/, /\.md$/ ],
     resolvers: [
-        // naice 组件
+        // naive 组件
         NaiveUiResolver(),
         // icon
         IconsResolver({

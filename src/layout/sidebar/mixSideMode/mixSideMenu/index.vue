@@ -18,38 +18,41 @@ const { state } = useMixSide()
 const { sidebar } = layoutStore.$state
 
 const mixSideMenuCardClass = computed(() => {
-  return (i: number) => {
-    const classList: string[] = []
-    layoutStore.sideInverted && classList.push('inverted')
-    state.activeIndex === i && classList.push('active')
-    return classList.join(' ')
-  }
+    return (i: number) => {
+        const classList: string[] = []
+        layoutStore.sideInverted && classList.push('inverted')
+        state.activeIndex === i && classList.push('active')
+        return classList.join(' ')
+    }
 })
 
 const handleMenu = (menu: Store.MenuOption, i: number) => {
-  state.activeIndex = i
-  emits('handleMenu', menu)
+    state.activeIndex = i
+    emits('handleMenu', menu)
 }
-
-
 </script>
 
 <template>
-  <n-popover
-      v-for="(menu,i) in routeStore.menus"
-      :key="menu.key"
-      :disabled="!sidebar.isCollapsedMixedSidebar"
-      trigger="hover">
-    <template #trigger>
-      <div :class="mixSideMenuCardClass(i)" class="mixedMenuCard" @click=" handleMenu(menu,i)">
-        <span><icon :icon="menu?.meta?.icon" size="24"/></span>
-        <n-ellipsis v-if="!sidebar.isCollapsedMixedSidebar">
-          {{ menu?.meta?.title }}
-        </n-ellipsis>
-      </div>
-    </template>
-    <span>{{ menu?.meta?.title }}</span>
-  </n-popover>
+    <n-popover
+        v-for="(menu, i) in routeStore.menus"
+        :key="menu.key"
+        :disabled="!sidebar.isCollapsedMixedSidebar"
+        trigger="hover"
+    >
+        <template #trigger>
+            <div
+                :class="mixSideMenuCardClass(i)"
+                class="mixedMenuCard"
+                @click="handleMenu(menu, i)"
+            >
+                <span><icon :icon="menu?.meta?.icon" size="24" /></span>
+                <n-ellipsis v-if="!sidebar.isCollapsedMixedSidebar">
+                    {{ menu?.meta?.title }}
+                </n-ellipsis>
+            </div>
+        </template>
+        <span>{{ menu?.meta?.title }}</span>
+    </n-popover>
 </template>
 
 <style lang="less" scoped>
@@ -62,14 +65,13 @@ const handleMenu = (menu: Store.MenuOption, i: number) => {
   cursor: pointer;
   border-radius: 10px;
   margin: 3px;
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
   font-size: 12px;
 
   &.active {
     color: @theme;
     background: @fadedThemeColor;
   }
-
 
   &.inverted:not(.active) {
     color: @invertTextColor;

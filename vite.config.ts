@@ -32,15 +32,11 @@ export default defineConfig(({ command, mode }) => {
                 less: {
                     modifyVars: {},
                     javascriptEnabled: true,
-                    additionalData: `@import "src/assets/styles/variable.less";`
+                    additionalData: '@import "src/assets/styles/variable.less";'
                 }
             }
         },
-        build: {
-            target: 'es2015'
-        },
-        esbuild: {
-            pure: VITE_DELETE_CONSOLE ? [ 'console.log', 'debugger' ] : []
-        }
+        build: { target: 'es2015' },
+        esbuild: { pure: VITE_DELETE_CONSOLE ? [ 'console.log', 'debugger' ] : [] }
     }
 })

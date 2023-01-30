@@ -6,13 +6,12 @@ defineOptions({ name: 'LayoutFooter' })
 const layoutStore = useLayoutStore()
 const { footer } = layoutStore.$state
 const layoutFooterClass = computed(() => footer.isFixedFooter ? 'fixed' : undefined)
-
 </script>
 
 <template>
-  <div :class="layoutFooterClass" class="layoutFooter">
-    Copyright ©2022 Toy Admin
-  </div>
+    <div :class="layoutFooterClass" class="layoutFooter">
+        Copyright ©2022 Toy Admin
+    </div>
 </template>
 
 <style lang="less" scoped>
@@ -25,7 +24,7 @@ const layoutFooterClass = computed(() => footer.isFixedFooter ? 'fixed' : undefi
   width: 100%;
   flex-shrink: 0;
   box-shadow: 0 0 5px @shadow;
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
 
   &.fixed {
     position: sticky;

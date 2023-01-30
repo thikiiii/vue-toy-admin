@@ -4,14 +4,12 @@ import Password from '@/views/login/password/index.vue'
 
 const loginType = inject('loginType') as Ref<Component>
 const set = () => {
-  loginType.value = Password
+    loginType.value = Password
 }
 </script>
 
 <template>
-  <p @click="set">二维码</p>
+    <p @click="set">二维码</p>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

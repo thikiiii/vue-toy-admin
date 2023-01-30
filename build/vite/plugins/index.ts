@@ -10,7 +10,10 @@ import legacy from '@vitejs/plugin-legacy'
 import DefineOptions from 'unplugin-vue-define-options/vite'
 import { setupIcons } from './icons'
 
-export const createVitePlugins = (viteEnv: ImportMetaEnv, isBuild: boolean): PluginOption[] => {
+export const createVitePlugins = (
+    viteEnv: ImportMetaEnv,
+    isBuild: boolean
+): PluginOption[] => {
     const { VITE_USE_MOCK, VITE_LEGACY } = viteEnv
     const plugins: PluginOption[] = [
         vue(),
@@ -30,9 +33,7 @@ export const createVitePlugins = (viteEnv: ImportMetaEnv, isBuild: boolean): Plu
     if (isBuild) {
         // 兼容一些旧版浏览器
         VITE_LEGACY && plugins.push(legacy())
-        plugins.push(...[
-            setupCompress(viteEnv)
-        ])
+        plugins.push(...[ setupCompress(viteEnv) ])
     }
     return plugins
 }

@@ -6,41 +6,41 @@ import { useLayoutStore } from '@/store/modules/layout'
 defineOptions({ name: 'LayoutStyle' })
 const layoutStore = useLayoutStore()
 const { app } = layoutStore.$state
-
 </script>
 
 <template>
-  <n-divider title-placement="center">布局风格</n-divider>
-  <div class="layoutStyle">
-    <layout-card
-        v-for="item in layoutStyleList"
-        :key="item.value"
-        :active="item.value===app.layoutStyle"
-        :popover-content="item.label"
-        @click-card="app.layoutStyle = item.value">
-      <div v-if="item.value==='SideDark'" class="vertical">
-        <div class="side dark" />
-        <div class="container">
-          <div class="header" />
-          <div class="main" />
-        </div>
-      </div>
-      <div v-if="item.value==='SideTopDark'" class="vertical">
-        <div class="side dark" />
-        <div class="container">
-          <div class="header dark" />
-          <div class="main" />
-        </div>
-      </div>
-      <div v-if="item.value==='SideTopLight'" class="vertical">
-        <div class="side light" />
-        <div class="container">
-          <div class="header light" />
-          <div class="main" />
-        </div>
-      </div>
-    </layout-card>
-  </div>
+    <n-divider title-placement="center">布局风格</n-divider>
+    <div class="layoutStyle">
+        <layout-card
+            v-for="item in layoutStyleList"
+            :key="item.value"
+            :active="item.value === app.layoutStyle"
+            :popover-content="item.label"
+            @click-card="app.layoutStyle = item.value"
+        >
+            <div v-if="item.value === 'SideDark'" class="vertical">
+                <div class="side dark" />
+                <div class="container">
+                    <div class="header" />
+                    <div class="main" />
+                </div>
+            </div>
+            <div v-if="item.value === 'SideTopDark'" class="vertical">
+                <div class="side dark" />
+                <div class="container">
+                    <div class="header dark" />
+                    <div class="main" />
+                </div>
+            </div>
+            <div v-if="item.value === 'SideTopLight'" class="vertical">
+                <div class="side light" />
+                <div class="container">
+                    <div class="header light" />
+                    <div class="main" />
+                </div>
+            </div>
+        </layout-card>
+    </div>
 </template>
 
 <style lang="less" scoped>
@@ -58,7 +58,9 @@ const { app } = layoutStore.$state
     gap: 3px;
   }
 
-  .header, .side, .main {
+  .header,
+  .side,
+  .main {
     border-radius: 2px;
     background: @fadedThemeColor;
   }
@@ -66,7 +68,6 @@ const { app } = layoutStore.$state
   .header {
     height: 10px;
   }
-
 
   .side {
     width: 13px;

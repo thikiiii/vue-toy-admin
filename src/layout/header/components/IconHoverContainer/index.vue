@@ -11,21 +11,21 @@ const className = computed(() => layoutStore.topInverted ? 'inverted' : undefine
 </script>
 
 <template>
-  <div :class="className" class="iconHoverContainer">
-    <n-popover :delay="300" trigger="hover">
-      <template #trigger>
-        <div class="iconHoverContainer-iconFull">
-          <slot></slot>
-        </div>
-      </template>
-      <span>{{ props.content }}</span>
-    </n-popover>
-  </div>
+    <div :class="className" class="iconHoverContainer">
+        <n-popover :delay="300" trigger="hover">
+            <template #trigger>
+                <div class="iconHoverContainer-iconFull">
+                    <slot></slot>
+                </div>
+            </template>
+            <span>{{ props.content }}</span>
+        </n-popover>
+    </div>
 </template>
 
 <style lang="less" scoped>
 .iconHoverContainer {
-  transition: .1s;
+  transition: 0.1s;
   height: 100%;
   cursor: pointer;
 

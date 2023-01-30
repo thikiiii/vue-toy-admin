@@ -14,20 +14,22 @@ const { header, footer } = layoutStore.$state
 </script>
 
 <template>
-  <!-- n-layout 的作用是让子元素继承 n-layout 的字体颜色 -->
-  <n-layout>
-    <div class="layout">
-      <layout-sidebar/>
-      <div class="layout-scroll">
-        <div :class="header.isFixedHeaderAndTabBar?'fixed':undefined">
-          <layout-header/>
-          <layout-tab-bar v-if="header.tabBarVisible"/>
+    <!-- n-layout 的作用是让子元素继承 n-layout 的字体颜色 -->
+    <n-layout>
+        <div class="layout">
+            <layout-sidebar />
+            <div class="layout-scroll">
+                <div
+                    :class="header.isFixedHeaderAndTabBar ? 'fixed' : undefined"
+                >
+                    <layout-header />
+                    <layout-tab-bar v-if="header.tabBarVisible" />
+                </div>
+                <layout-main />
+                <layout-footer v-if="footer.footerVisible" />
+            </div>
         </div>
-        <layout-main/>
-        <layout-footer v-if="footer.footerVisible"/>
-      </div>
-    </div>
-  </n-layout>
+    </n-layout>
 </template>
 
 <style lang="less" scoped>

@@ -12,26 +12,34 @@ const message = useMessage()
 const layoutStore = useLayoutStore()
 const themeStore = useThemeStore()
 const resetConfig = () => {
-  const { sidebar, header, footer, app, themeMode, theme, followSystem } = cloneDeep(appSettingsInitial)
-  layoutStore.$patch({ sidebar, header, footer, app })
-  themeStore.$patch({ theme, themeMode, followSystem })
-  themeStore.initTheme()
+    const { sidebar, header, footer, app, themeMode, theme, followSystem } = cloneDeep(appSettingsInitial)
+    layoutStore.$patch({ sidebar, header, footer, app })
+    themeStore.$patch({ theme, themeMode, followSystem })
+    themeStore.initTheme()
 }
 const copyConfig = () => {
-  const { sidebar, footer, app, header } = layoutStore.$state
-  const { followSystem, theme, themeMode } = themeStore.$state
+    const { sidebar, footer, app, header } = layoutStore.$state
+    const { followSystem, theme, themeMode } = themeStore.$state
 
-  const settings = { sidebar, footer, app, header, followSystem, theme, themeMode }
-  clipboard.copy(JSON.stringify(settings, null, 4))
-  message.success('复制成功，请粘贴到 src/settings/app.ts 文件中')
+    const settings = {
+        sidebar,
+        footer,
+        app,
+        header,
+        followSystem,
+        theme,
+        themeMode
+    }
+    clipboard.copy(JSON.stringify(settings, null, 4))
+    message.success('复制成功，请粘贴到 src/settings/app.ts 文件中')
 }
 </script>
 
 <template>
-  <div class="buttonAction">
-    <n-button type="primary" @click="copyConfig">拷贝当前配置</n-button>
-    <n-button type="warning" @click="resetConfig">重置当前配置</n-button>
-  </div>
+    <div class="buttonAction">
+        <n-button type="primary" @click="copyConfig">拷贝当前配置</n-button>
+        <n-button type="warning" @click="resetConfig">重置当前配置</n-button>
+    </div>
 </template>
 
 <style lang="less" scoped>

@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import { Settings } from "@/settings";
+import { Settings } from '@/settings'
 
 export class AuthCookie {
     static readonly token = 'Toy_TOKEN'

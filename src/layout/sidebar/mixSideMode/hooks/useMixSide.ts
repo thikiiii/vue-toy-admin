@@ -5,7 +5,7 @@ import { MenuOption } from 'naive-ui'
 
 interface State {
     secondaryMenus: MenuOption[]
-    activeIndex: number,
+    activeIndex: number
     isLeave: boolean
 }
 
@@ -32,11 +32,12 @@ export const useMixSide = () => {
         state.secondaryMenus = routeStore.menus[state.activeIndex].children || []
     })
 
-    watch(() => state.isLeave, (isLeave) => {
-        if (isLeave) {
-            state.activeIndex = findActiveIndex(routeStore.menus)
+    watch(
+        () => state.isLeave,
+        isLeave => {
+            if (isLeave) state.activeIndex = findActiveIndex(routeStore.menus)
         }
-    })
+    )
 
     return { state, findActiveIndex }
 }

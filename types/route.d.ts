@@ -7,8 +7,11 @@ declare namespace Route {
      * */
     type RouteComponentType = 'Self' | 'Layout' | 'View'
 
-
-    interface RouteRecordRaw extends Omit<import('vue-router').RouteRecordRaw, 'component' | 'components' | 'children' | 'name'> {
+    interface RouteRecordRaw
+        extends Omit<
+            import('vue-router').RouteRecordRaw,
+            'component' | 'components' | 'children' | 'name'
+        > {
         // 组件类型
         component: RouteComponentType
 
@@ -18,7 +21,6 @@ declare namespace Route {
 
         name: string
     }
-
 
     // 路由元数据
     interface Meta {

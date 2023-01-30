@@ -1,4 +1,4 @@
-import { Settings } from "@/settings";
+import { Settings } from '@/settings'
 
 // 登录路由路径
 export const LOGIN_PATH = '/login'
@@ -12,22 +12,16 @@ export const ROOT_ROUTE: Route.RouteRecordRaw = {
 }
 
 // 固定路由
-export const constRoutes: Route.RouteRecordRaw[] = [
-    ROOT_ROUTE,
+export const constRoutes: Route.RouteRecordRaw[] = [ ROOT_ROUTE,
     {
         path: LOGIN_PATH,
         name: 'login',
         component: 'Self',
-        meta: {
-            title: '登录'
-        }
+        meta: { title: '登录' }
     },
     {
         path: '/:NotFound(.*)*',
         name: 'notFound',
         component: 'Self',
-        meta: {
-            title: '404'
-        }
-    }
-]
+        meta: { title: '404' }
+    } ]

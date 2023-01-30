@@ -8,7 +8,12 @@ export const subscribeLayout = () => {
 
     // 侦听 布局变量变化
     watchEffect(() => {
-        const { sidebarWidth, mixedSidebarWidth, collapsedSidebarWidth, collapsedMixedSidebarWidth } = sidebar
+        const {
+            sidebarWidth,
+            mixedSidebarWidth,
+            collapsedSidebarWidth,
+            collapsedMixedSidebarWidth
+        } = sidebar
         const { footerHeight } = footer
         const { headerHeight, tabBarHeight } = header
         const originalVariable = {
@@ -20,8 +25,10 @@ export const subscribeLayout = () => {
             headerHeight,
             tabBarHeight
         }
-        const cssVariable = Object.keys(originalVariable).reduce<{ [k: string]: string }>((variable, key) => {
-            variable[key] = `${ originalVariable[key] }px`
+        const cssVariable = Object.keys(originalVariable).reduce<{
+            [k: string]: string
+        }>((variable, key) => {
+            variable[key] = `${originalVariable[key]}px`
             return variable
         }, {})
         setCSSVariable(cssVariable)

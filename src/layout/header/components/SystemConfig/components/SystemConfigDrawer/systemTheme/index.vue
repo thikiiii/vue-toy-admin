@@ -8,11 +8,16 @@ const themeStore = useThemeStore()
 </script>
 
 <template>
-  <n-divider title-placement="center">系统主题</n-divider>
-  <div class="systemTheme">
-    <span v-for="color in systemThemes" :key="color" :style="{background:color}"
-          class="systemTheme-block" @click="themeStore.setThemeColor(color)"></span>
-  </div>
+    <n-divider title-placement="center">系统主题</n-divider>
+    <div class="systemTheme">
+        <span
+            v-for="color in systemThemes"
+            :key="color"
+            :style="{ background: color }"
+            class="systemTheme-block"
+            @click="themeStore.setThemeColor(color)"
+        ></span>
+    </div>
 </template>
 
 <style lang="less" scoped>

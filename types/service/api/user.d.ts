@@ -3,7 +3,7 @@ declare namespace UserApiRequest {
     // 密码登录请求
     interface PasswordLogin {
         // 用户名
-        username: string,
+        username: string
         // 密码
         password: string
     }

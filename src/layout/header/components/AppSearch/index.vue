@@ -6,13 +6,12 @@ import { useToggle } from '@vueuse/core'
 defineOptions({ name: 'AppSearch' })
 
 const [ visibleModal ] = useToggle()
-
 </script>
 
 <template>
-  <!-- App搜索 -->
-  <icon-hover-container content="搜索" @click="visibleModal = true">
-    <icon icon="mdi:magnify" pointer />
-  </icon-hover-container>
-  <app-search-modal v-model:visible="visibleModal" />
+    <!-- App搜索 -->
+    <icon-hover-container content="搜索" @click="visibleModal = true">
+        <icon icon="mdi:magnify" pointer />
+    </icon-hover-container>
+    <app-search-modal v-model:visible="visibleModal" />
 </template>

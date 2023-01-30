@@ -1,11 +1,12 @@
 <template>
-  <n-menu
-      ref="menuRef"
-      :default-value="route.path"
-      :indent="30"
-      :root-indent="24"
-      :value="activeMenu"
-      @update:value="selectMenu"/>
+    <n-menu
+        ref="menuRef"
+        :default-value="route.path"
+        :indent="30"
+        :root-indent="24"
+        :value="activeMenu"
+        @update:value="selectMenu"
+    />
 </template>
 
 <script lang="ts" setup>
@@ -14,8 +15,7 @@ import { computed, ref, watch } from 'vue'
 import { MenuInst, MenuProps } from 'naive-ui'
 import { useRouteStore } from '@/store/modules/route'
 
-interface Props extends MenuProps {
-}
+interface Props extends MenuProps {}
 
 defineOptions({ name: 'Menu' })
 defineProps<Props>()
@@ -27,15 +27,13 @@ const menuRef = ref<MenuInst | null>(null)
 const activeMenu = computed(() => route.path)
 
 const selectMenu = (key: string) => {
-  routeStore.handleClickMenu(key)
+    routeStore.handleClickMenu(key)
 }
 
 watch(activeMenu, (newActiveMenu) => {
-  // 监听路由改变后，展开激活项
-  menuRef.value?.showOption(newActiveMenu)
+    // 监听路由改变后，展开激活项
+    menuRef.value?.showOption(newActiveMenu)
 })
 </script>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="less" scoped></style>

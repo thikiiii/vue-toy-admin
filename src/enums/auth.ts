@@ -17,6 +17,4 @@ export enum RoleEnum {
 }
 
 // 细粒度权限
-export enum PermissionEnum {
-}
-
+export enum PermissionEnum {}

@@ -16,46 +16,48 @@ const { state } = useMixSide()
 const collapsedIcon = computed(() => sidebar.isCollapsedMixedSidebar ? 'mdi:chevron-triple-right' : 'mdi:chevron-triple-left')
 const mixSideModeClass = computed(() => sidebar.isCollapsedMixedSidebar ? 'collapsed' : undefined)
 const handleMenu = (menu: Store.MenuOption) => {
-  if (menu.children) {
-    state.secondaryMenus = menu.children as MenuOption[]
-    sidebar.mixedSidebarDrawerVisible = true
-  } else {
-    routeStore.handleClickMenu(menu.key)
-    if (!sidebar.isFixedMixedSidebar) sidebar.mixedSidebarDrawerVisible = false
-    state.secondaryMenus = []
-  }
+    if (menu.children) {
+        state.secondaryMenus = menu.children as MenuOption[]
+        sidebar.mixedSidebarDrawerVisible = true
+    } else {
+        routeStore.handleClickMenu(menu.key as string)
+        if (!sidebar.isFixedMixedSidebar) sidebar.mixedSidebarDrawerVisible = false
+        state.secondaryMenus = []
+    }
 }
 
 const onMouseLeave = () => {
-  state.isLeave = true
-  if (!sidebar.isFixedMixedSidebar) sidebar.mixedSidebarDrawerVisible = false
+    state.isLeave = true
+    if (!sidebar.isFixedMixedSidebar) sidebar.mixedSidebarDrawerVisible = false
 }
-
 </script>
 <template>
-  <div
-      :class="mixSideModeClass"
-      class="mixSideMode"
-      @mouseenter="state.isLeave=false"
-      @mouseleave="onMouseLeave">
-    <logo/>
-    <div class="mixSideMode-scroll">
-      <mix-side-menu @handle-menu="handleMenu"/>
+    <div
+        :class="mixSideModeClass"
+        class="mixSideMode"
+        @mouseenter="state.isLeave = false"
+        @mouseleave="onMouseLeave"
+    >
+        <logo />
+        <div class="mixSideMode-scroll">
+            <mix-side-menu @handle-menu="handleMenu" />
+        </div>
+        <div
+            class="mixSideMode-collapsed"
+            @click="layoutStore.toggleCollapsedMixedSidebar()"
+        >
+            <icon :icon="collapsedIcon" pointer size="22" />
+        </div>
+        <mix-side-drawer :menus="state.secondaryMenus" />
     </div>
-    <div class="mixSideMode-collapsed" @click="layoutStore.toggleCollapsedMixedSidebar()">
-      <icon :icon="collapsedIcon" pointer size="22"/>
-    </div>
-    <mix-side-drawer :menus="state.secondaryMenus"/>
-  </div>
 </template>
-
 
 <style lang="less" scoped>
 .mixSideMode {
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
   align-items: center;
   position: relative;
   border-right: 1px solid @divider;
@@ -77,9 +79,8 @@ const onMouseLeave = () => {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: .2s ease-in-out;
+    transition: 0.2s ease-in-out;
     width: 100%;
-
 
     &:hover {
       color: @theme;

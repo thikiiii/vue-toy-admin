@@ -36,7 +36,7 @@ export class RouterHelpers {
         if (this.isExternalLink(route.path)) return undefined
         const vueRoute = { ...route, component: undefined } as RouteRecordRaw
         switch (route.component) {
-            // 本身就是页面
+        // 本身就是页面
             case 'Self':
                 vueRoute.component = this.getViewComponent(route)
                 break
@@ -55,16 +55,19 @@ export class RouterHelpers {
     static transformCustomRoutesToVueRoutes(routes: Route.RouteRecordRaw[]) {
         return routes.reduce<RouteRecordRaw[]>((vueRoutes, route) => {
             const vueRoute = this.transformCustomRouteToVueRoute(route)
-            if (route.children?.length && vueRoute) {
-                vueRoute.children = this.transformCustomRoutesToVueRoutes(route.children)
-            }
+            if (route.children?.length && vueRoute) vueRoute.children = this.transformCustomRoutesToVueRoutes(route.children)
+            
             vueRoute && vueRoutes.push(vueRoute)
             return vueRoutes
         }, [])
     }
 
     // 路由转菜单
-    static transformRouteToMenu({ path, meta, children }: Route.RouteRecordRaw): Store.MenuOption {
+    static transformRouteToMenu({
+        path,
+        meta,
+        children
+    }: Route.RouteRecordRaw): Store.MenuOption {
         const renderEllipsis = useRenderEllipsis()
         const renderIcon = useRenderIcon()
         return {
@@ -78,7 +81,7 @@ export class RouterHelpers {
     }
 
     static transformRoutesToMenus(routes: Route.RouteRecordRaw[]): Store.MenuOption[] {
-        const menus = routes.map((route) => {
+        const menus = routes.map(route => {
             if (!route.children) return this.transformRouteToMenu(route)
             const menu = this.transformRouteToMenu(route)
             menu.children = this.transformRoutesToMenus(route.children)
@@ -89,9 +92,12 @@ export class RouterHelpers {
 
     // 用layout包装单页面路由，一级路由转二级路由
     static useLayoutWrapperSingleViewRoute(authRoutes: Route.RouteRecordRaw[]) {
-        return authRoutes.map((route) => {
+        return authRoutes.map(route => {
             if (route.children) return route
-            const root: Route.RouteRecordRaw = { ...ROOT_ROUTE, name: route.name }
+            const root: Route.RouteRecordRaw = {
+                ...ROOT_ROUTE,
+                name: route.name
+            }
             root.children = [ route ]
             return root
         })
@@ -99,7 +105,7 @@ export class RouterHelpers {
 
     // 路由 name 转组件路径
     static transformRouteNameToComponentPath(name: string) {
-        return `/src/views/${ name.replaceAll('_', '/') }/index.vue`
+        return `/src/views/${name.replaceAll('_', '/')}/index.vue`
     }
 
     // 排序路由, 默认升序

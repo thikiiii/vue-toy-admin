@@ -12,7 +12,8 @@ export const setupDiscreteApi = () => {
         themeOverrides: themeStore.currentThemeOverrides,
         theme: themeStore.naiveThemeType
     }))
-    discreteApi = createDiscreteApi([ 'message', 'dialog', 'notification', 'loadingBar' ], {
-        configProviderProps
-    })
+    discreteApi = createDiscreteApi(
+        [ 'message', 'dialog', 'notification', 'loadingBar' ],
+        { configProviderProps }
+    )
 }

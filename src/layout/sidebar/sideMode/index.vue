@@ -14,19 +14,19 @@ const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : 
 </script>
 
 <template>
-  <div :class="sideModeClass" class="sideMode">
-    <logo></logo>
-    <div class="sideMode-scroll">
-      <Menu
-          :collapsed="sidebar.isCollapsedSidebar"
-          :collapsed-icon-size="24"
-          :collapsed-width="sidebar.collapsedSidebarWidth"
-          :icon-size="22"
-          :inverted="layoutStore.sideInverted"
-          :options="routeStore.menus"
-      />
+    <div :class="sideModeClass" class="sideMode">
+        <logo></logo>
+        <div class="sideMode-scroll">
+            <Menu
+                :collapsed="sidebar.isCollapsedSidebar"
+                :collapsed-icon-size="24"
+                :collapsed-width="sidebar.collapsedSidebarWidth"
+                :icon-size="22"
+                :inverted="layoutStore.sideInverted"
+                :options="routeStore.menus"
+            />
+        </div>
     </div>
-  </div>
 </template>
 
 <style lang="less" scoped>
@@ -35,7 +35,7 @@ const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : 
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
   border-right: 1px solid @divider;
   width: @sidebarWidth;
 

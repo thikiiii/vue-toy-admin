@@ -11,23 +11,23 @@ provide('loginType', loginType)
 </script>
 
 <template>
-  <div class="login">
-    <div v-if="!mobile.isMobile" class="login-bg">
-      <transition appear name="right-slide-fade">
-        <div class="login-bg-svg">
-          <icon color="red" local-icon="login" size="100%" />
+    <div class="login">
+        <div v-if="!mobile.isMobile" class="login-bg">
+            <transition appear name="right-slide-fade">
+                <div class="login-bg-svg">
+                    <icon color="red" local-icon="login" size="100%" />
+                </div>
+            </transition>
         </div>
-      </transition>
+        <div class="login-card">
+            <transition appear name="right-slide-fade">
+                <h1 class="login-card-title">Toy Admin</h1>
+            </transition>
+            <div class="login-card-form">
+                <component :is="loginType" />
+            </div>
+        </div>
     </div>
-    <div class="login-card">
-      <transition appear name="right-slide-fade">
-        <h1 class="login-card-title">Toy Admin</h1>
-      </transition>
-      <div class="login-card-form">
-        <component :is="loginType" />
-      </div>
-    </div>
-  </div>
 </template>
 
 <style lang="less" scoped>
@@ -55,7 +55,7 @@ provide('loginType', loginType)
     flex: 1;
     height: 100%;
     overflow: hidden;
-    transition: .3s;
+    transition: 0.3s;
     background: @subBackgroundColor;
     padding: 20px 40px;
     display: flex;

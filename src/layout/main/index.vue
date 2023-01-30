@@ -10,20 +10,23 @@ const tabBarStore = useTabBarStore()
 const layoutStore = useLayoutStore()
 const { app } = layoutStore.$state
 // 缓存菜单，转成大驼峰
-const cacheMenus = computed(() => tabBarStore.cacheMenus.map(name => startCase(name).replace(' ', '')))
+const cacheMenus = computed(() => tabBarStore.cacheMenus.map((name) => startCase(name).replace(' ', '')))
 const transitionName = computed(() => app.isPageStartAnimation ? app.pageAnimationMode : undefined)
 </script>
 
 <template>
-  <div class="layoutMain">
-    <router-view v-if="tabBarStore.mainVisible" v-slot="{Component,route}">
-      <transition appear mode="out-in" :name="transitionName">
-        <keep-alive :include="cacheMenus">
-          <component :is="Component" :key="route.fullPath"/>
-        </keep-alive>
-      </transition>
-    </router-view>
-  </div>
+    <div class="layoutMain">
+        <router-view
+            v-if="tabBarStore.mainVisible"
+            v-slot="{ Component, route }"
+        >
+            <transition appear mode="out-in" :name="transitionName">
+                <keep-alive :include="cacheMenus">
+                    <component :is="Component" :key="route.fullPath" />
+                </keep-alive>
+            </transition>
+        </router-view>
+    </div>
 </template>
 
 <style lang="less" scoped>

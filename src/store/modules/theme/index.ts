@@ -1,7 +1,11 @@
 import { defineStore } from 'pinia'
 import { ThemeStorage } from '@/storage/theme'
 import { setCSSVariable } from '@/utils'
-import { darkThemeConfig, lightThemeConfig, naiveThemeConfig } from '@/settings/theme'
+import {
+    darkThemeConfig,
+    lightThemeConfig,
+    naiveThemeConfig
+} from '@/settings/theme'
 import { appSettings } from '@/settings/app'
 import { darkTheme, lightTheme } from 'naive-ui'
 
@@ -24,10 +28,10 @@ export const useThemeStore = defineStore('theme', {
     }),
     getters: {
         // 当前主题覆盖
-        currentThemeOverrides: (themeStore) => themeStore.naive[themeStore.themeMode],
+        currentThemeOverrides: themeStore => themeStore.naive[themeStore.themeMode],
 
         // 组件库主题类型
-        naiveThemeType: (themeStore) => themeStore.themeMode === 'dark' ? darkTheme : lightTheme
+        naiveThemeType: themeStore => themeStore.themeMode === 'dark' ? darkTheme : lightTheme
     },
     actions: {
         // 初始化主题

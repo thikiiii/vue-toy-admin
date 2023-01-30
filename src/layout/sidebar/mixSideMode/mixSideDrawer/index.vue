@@ -19,17 +19,28 @@ const className = computed(() => layoutStore.sideInverted ? 'inverted' : undefin
 </script>
 
 <template>
-  <transition name="slideIn">
-    <div v-if="sidebar.mixedSidebarDrawerVisible" :class="className" class="mixedMenuDrawer">
-      <div class="mixedMenuDrawer-header">
-        <h1>sasdasda</h1>
-        <icon :icon="thumbtackIcon" pointer @click="layoutStore.toggleFixedMixedSidebar()" />
-      </div>
-      <div :style="{height:`${header.headerHeight}px`}" class="mixedMenuDrawer-scroll">
-        <Menu :inverted="layoutStore.sideInverted" :options="menus" />
-      </div>
-    </div>
-  </transition>
+    <transition name="slideIn">
+        <div
+            v-if="sidebar.mixedSidebarDrawerVisible"
+            :class="className"
+            class="mixedMenuDrawer"
+        >
+            <div class="mixedMenuDrawer-header">
+                <h1>sasdasda</h1>
+                <icon
+                    :icon="thumbtackIcon"
+                    pointer
+                    @click="layoutStore.toggleFixedMixedSidebar()"
+                />
+            </div>
+            <div
+                :style="{ height: `${header.headerHeight}px` }"
+                class="mixedMenuDrawer-scroll"
+            >
+                <Menu :inverted="layoutStore.sideInverted" :options="menus" />
+            </div>
+        </div>
+    </transition>
 </template>
 
 <style lang="less" scoped>
@@ -46,7 +57,7 @@ const className = computed(() => layoutStore.sideInverted ? 'inverted' : undefin
   z-index: 100;
   overflow: hidden;
   width: @sidebarWidth;
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
 
   &.inverted {
     background: @invertBackgroundColor;
@@ -69,7 +80,7 @@ const className = computed(() => layoutStore.sideInverted ? 'inverted' : undefin
 
 .slideIn-enter-active,
 .slideIn-leave-active {
-  transition: .2s ease-out;
+  transition: 0.2s ease-out;
   overflow: hidden;
 }
 

@@ -20,9 +20,8 @@ export class AxiosCancel {
         if (config.signal) return
         const key = this.getCancelRequestKey(config)
         const abortController = this.pendingMap.get(key)
-        if (abortController) {
-            config.signal = abortController.signal
-        } else {
+        if (abortController) config.signal = abortController.signal
+        else {
             const controller = new AbortController()
             this.pendingMap.set(key, controller)
             config.signal = controller.signal
@@ -38,7 +37,7 @@ export class AxiosCancel {
 
     // 取消全部请求
     cancelAllRequest(reason?: string) {
-        this.pendingMap.forEach((value) => value.abort(reason))
+        this.pendingMap.forEach(value => value.abort(reason))
         this.pendingMap.clear()
     }
 }

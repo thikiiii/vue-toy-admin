@@ -4,7 +4,10 @@ export const setupCompress = (viteEnv: ImportMetaEnv) => {
     const { VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv
     switch (VITE_BUILD_COMPRESS) {
         case 'gzip':
-            return compressPlugin({ ext: '.gz', deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE })
+            return compressPlugin({
+                ext: '.gz',
+                deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
+            })
 
         case 'brotli':
             return compressPlugin({

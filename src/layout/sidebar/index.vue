@@ -8,52 +8,49 @@ import { useToggle } from '@vueuse/core'
 
 defineOptions({ name: 'LayoutSidebar' })
 const layoutStore = useLayoutStore()
-const {
-  sidebar,
-  app,
-  mobile
-} = layoutStore.$state
+const { sidebar, app, mobile } = layoutStore.$state
 const [ isHidden ] = useToggle()
 
 const className = computed(() => {
-  const classList: string[] = []
-  switch (app.layoutMode) {
-    case 'Side':
-      sidebar.isCollapsedSidebar && classList.push('collapsed')
-      break
-    case 'MixSide':
-      sidebar.isFixedMixedSidebar ?
-          classList.push(sidebar.isCollapsedMixedSidebar ? 'mixSideCollapsedFixedWidth' : 'mixSideFixedWidth') :
-          classList.push(sidebar.isCollapsedMixedSidebar ? 'collapsedMixSide' : 'mixSide')
-      break
-  }
-  if (layoutStore.sideInverted) classList.push('inverted')
-  return classList.join(' ')
+    const classList: string[] = []
+    switch (app.layoutMode) {
+        case 'Side':
+            sidebar.isCollapsedSidebar && classList.push('collapsed')
+            break
+        case 'MixSide':
+            sidebar.isFixedMixedSidebar ? classList.push(sidebar.isCollapsedMixedSidebar ? 'mixSideCollapsedFixedWidth' : 'mixSideFixedWidth') : classList.push(sidebar.isCollapsedMixedSidebar ? 'collapsedMixSide' : 'mixSide')
+            break
+    }
+    if (layoutStore.sideInverted) classList.push('inverted')
+    return classList.join(' ')
 })
 </script>
 
 <template>
-  <transition name="slideIn">
-    <div
-        v-if="app.layoutMode!=='Top'&&!mobile.isMobile"
-        :class="className"
-        :style="{overflow: isHidden?'hidden':undefined}"
-        class="layoutSidebar"
-    >
-      <transition-group name="full" @after-leave="isHidden=false" @before-enter="isHidden=true">
-        <side-mode v-if="app.layoutMode==='Side'" />
-        <mix-side-mode v-if="app.layoutMode==='MixSide'" />
-      </transition-group>
-    </div>
-  </transition>
-  <mobile-sidebar v-if="mobile.isMobile" />
+    <transition name="slideIn">
+        <div
+            v-if="app.layoutMode !== 'Top' && !mobile.isMobile"
+            :class="className"
+            :style="{ overflow: isHidden ? 'hidden' : undefined }"
+            class="layoutSidebar"
+        >
+            <transition-group
+                name="full"
+                @after-leave="isHidden = false"
+                @before-enter="isHidden = true"
+            >
+                <side-mode v-if="app.layoutMode === 'Side'" />
+                <mix-side-mode v-if="app.layoutMode === 'MixSide'" />
+            </transition-group>
+        </div>
+    </transition>
+    <mobile-sidebar v-if="mobile.isMobile" />
 </template>
-
 
 <style lang="less" scoped>
 .layoutSidebar {
   background: @subBackgroundColor;
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
   position: relative;
   color: @mainTextColor;
   width: @sidebarWidth;
@@ -71,7 +68,6 @@ const className = computed(() => {
     width: @mixedSidebarWidth;
   }
 
-
   &.collapsedMixSide {
     width: @collapsedMixedSidebarWidth;
   }
@@ -87,7 +83,7 @@ const className = computed(() => {
 
 .slideIn-enter-active,
 .slideIn-leave-active {
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
   overflow: hidden;
 }
 
@@ -98,7 +94,7 @@ const className = computed(() => {
 
 .full-enter-active,
 .full-leave-active {
-  transition: .3s ease;
+  transition: 0.3s ease;
   position: absolute;
 }
 
@@ -106,7 +102,6 @@ const className = computed(() => {
 .full-leave-to {
   width: 100%;
   opacity: 0;
-  transform: scale(.90) skew(30deg);
+  transform: scale(0.9) skew(30deg);
 }
-
 </style>

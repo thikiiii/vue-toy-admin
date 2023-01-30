@@ -1,7 +1,6 @@
 // 系统管理
 import { RoleEnum } from '@/enums/auth'
 
-
 const system: Route.RouteRecordRaw = {
     path: '/system',
     name: 'system',
@@ -48,26 +47,24 @@ const system: Route.RouteRecordRaw = {
                 roles: [ RoleEnum.SUPER ]
             },
             component: 'Layout',
-            children: [
-                {
-                    path: '/system/role3',
-                    name: 'system_role3',
-                    meta: {
-                        title: '角色3',
-                        roles: [ RoleEnum.SUPER ]
-                    },
-                    component: 'View'
+            children: [ {
+                path: '/system/role3',
+                name: 'system_role3',
+                meta: {
+                    title: '角色3',
+                    roles: [ RoleEnum.SUPER ]
                 },
-                {
-                    path: '/system/role4',
-                    name: 'system_role4',
-                    meta: {
-                        title: '角色4',
-                        roles: [ RoleEnum.SUPER ]
-                    },
-                    component: 'View'
-                }
-            ]
+                component: 'View'
+            },
+            {
+                path: '/system/role4',
+                name: 'system_role4',
+                meta: {
+                    title: '角色4',
+                    roles: [ RoleEnum.SUPER ]
+                },
+                component: 'View'
+            } ]
         },
         {
             path: '/system/menu',
@@ -82,29 +79,25 @@ const system: Route.RouteRecordRaw = {
             path: '/system/test',
             name: 'system_test',
             component: 'Layout',
-            meta: {
-                title: '测试测试测试测试测试测试测试测试测试'
-            },
-            children: [
-                {
-                    path: '/system/test/menu',
-                    name: 'system_test_menu',
-                    meta: {
-                        title: '测试菜单',
-                        roles: [ RoleEnum.SUPER ]
-                    },
-                    component: 'View'
+            meta: { title: '测试测试测试测试测试测试测试测试测试' },
+            children: [ {
+                path: '/system/test/menu',
+                name: 'system_test_menu',
+                meta: {
+                    title: '测试菜单',
+                    roles: [ RoleEnum.SUPER ]
                 },
-                {
-                    path: '/system/test/menu1',
-                    name: 'system_test_menu1',
-                    meta: {
-                        title: '菜单',
-                        roles: [ RoleEnum.SUPER ]
-                    },
-                    component: 'View'
-                }
-            ]
+                component: 'View'
+            },
+            {
+                path: '/system/test/menu1',
+                name: 'system_test_menu1',
+                meta: {
+                    title: '菜单',
+                    roles: [ RoleEnum.SUPER ]
+                },
+                component: 'View'
+            } ]
         }
     ]
 }

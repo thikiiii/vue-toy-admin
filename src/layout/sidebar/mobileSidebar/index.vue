@@ -13,10 +13,18 @@ const className = computed(() => layoutStore.sideInverted ? 'inverted' : undefin
 </script>
 
 <template>
-  <n-drawer v-model:show="mobile.mobileMenuVisible" :class="className" class="mobileSidebar" placement="left">
-    <logo />
-    <Menu :inverted="layoutStore.sideInverted" :options="routeStore.menus" />
-  </n-drawer>
+    <n-drawer
+        v-model:show="mobile.mobileMenuVisible"
+        :class="className"
+        class="mobileSidebar"
+        placement="left"
+    >
+        <logo />
+        <Menu
+            :inverted="layoutStore.sideInverted"
+            :options="routeStore.menus"
+        />
+    </n-drawer>
 </template>
 
 <style lang="less" scoped>

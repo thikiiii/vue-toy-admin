@@ -1,61 +1,47 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "strictFunctionTypes": false,
-    "jsx": "preserve",
-    "baseUrl": ".",
-    "allowJs": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "esnext"
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowSyntheticDefaultImports": true,
+        "strictFunctionTypes": false,
+        "jsx": "preserve",
+        "baseUrl": ".",
+        "allowJs": true,
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "experimentalDecorators": true,
+        "lib": ["dom", "esnext"],
+        "types": [
+            "unplugin-vue-define-options/macros-global",
+            "vite/client",
+            "unplugin-icons/types/vue",
+            "vite-plugin-svg-icons/client"
+        ],
+        "typeRoots": ["./node_modules/@types/", "./types"],
+        "noImplicitAny": false,
+        "skipLibCheck": true,
+        "paths": {
+            "@/*": ["src/*"],
+            "#/*": ["types/*"]
+        }
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "types/**/*.d.ts",
+        "types/**/*.ts",
+        "build/**/*.ts",
+        "build/**/*.d.ts",
+        "mock/**/*.ts",
+        "vite.config.ts"
     ],
-    "types": [
-      "unplugin-vue-define-options/macros-global",
-      "vite/client",
-      "unplugin-icons/types/vue",
-      "vite-plugin-svg-icons/client"
-    ],
-    "typeRoots": [
-      "./node_modules/@types/",
-      "./types"
-    ],
-    "noImplicitAny": false,
-    "skipLibCheck": true,
-    "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "#/*": [
-        "types/*"
-      ]
-    }
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "types/**/*.d.ts",
-    "types/**/*.ts",
-    "build/**/*.ts",
-    "build/**/*.d.ts",
-    "mock/**/*.ts",
-    "vite.config.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.js"
-  ]
+    "exclude": ["node_modules", "dist", "**/*.js"]
 }

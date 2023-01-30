@@ -31,9 +31,7 @@ const useTabBarStore = defineStore('tabBar', {
             // 不存在就 push
             !this.isExist(tab.path) && this.tabBar.push(tab)
             // name 为真，且 name 不存在就push
-            tab.name
-            && !this.cacheMenus.some(name => name === tab.name)
-            && this.cacheMenus.push(tab.name)
+            tab.name && !this.cacheMenus.some(name => name === tab.name) && this.cacheMenus.push(tab.name)
         },
 
         // 关闭
@@ -43,7 +41,10 @@ const useTabBarStore = defineStore('tabBar', {
             // 激活状态 跳转到上一个标签
             this.isActive(tab.path) && router.push(this.tabBar[index - 1].path)
             if (!tab.meta?.keepAlive) return
-            this.cacheMenus.splice(this.cacheMenus.findIndex(name => name === tab.name), 1)
+            this.cacheMenus.splice(
+                this.cacheMenus.findIndex(name => name === tab.name),
+                1
+            )
         },
 
         // 刷新当前激活的路由
@@ -114,10 +115,13 @@ const useTabBarStore = defineStore('tabBar', {
 
         // 设置缓存菜单
         setCacheMenus() {
-            this.cacheMenus = this.tabBar.reduce<string[]>((cacheMenus, item) => {
-                item.meta?.keepAlive && cacheMenus.push(item.name as string)
-                return cacheMenus
-            }, [])
+            this.cacheMenus = this.tabBar.reduce<string[]>(
+                (cacheMenus, item) => {
+                    item.meta?.keepAlive && cacheMenus.push(item.name as string)
+                    return cacheMenus
+                },
+                []
+            )
         },
 
         // 匹配不到当前路由重定向到首页

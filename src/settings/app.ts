@@ -1,7 +1,6 @@
 import { AppStorage } from '@/storage/app'
 import { cloneDeep } from 'lodash'
 
-
 // setting 初始值
 export const appSettingsInitial: AppSettings = {
     // 主题色
@@ -76,51 +75,45 @@ export const appSettingsInitial: AppSettings = {
 }
 
 // 布局模式列表
-export const layoutModeList: Store.LayoutModeOption[] = [
-    {
-        value: 'Side',
-        label: '侧边菜单模式'
-    },
-    {
-        value: 'MixSide',
-        label: '侧边菜单混合模式'
-    },
-    {
-        value: 'Top',
-        label: '顶部菜单模式'
-    }
-]
+export const layoutModeList: Store.LayoutModeOption[] = [ {
+    value: 'Side',
+    label: '侧边菜单模式'
+},
+{
+    value: 'MixSide',
+    label: '侧边菜单混合模式'
+},
+{
+    value: 'Top',
+    label: '顶部菜单模式'
+} ]
 
 // 布局风格列表
-export const layoutStyleList: Store.LayoutStyleOption[] = [
-    {
-        value: 'SideDark',
-        label: '侧边暗色风格'
-    },
-    {
-        value: 'SideTopDark',
-        label: '侧边+顶部暗色风格'
-    },
-    {
-        value: 'SideTopLight',
-        label: '侧边+顶部明亮风格'
-    }
-]
+export const layoutStyleList: Store.LayoutStyleOption[] = [ {
+    value: 'SideDark',
+    label: '侧边暗色风格'
+},
+{
+    value: 'SideTopDark',
+    label: '侧边+顶部暗色风格'
+},
+{
+    value: 'SideTopLight',
+    label: '侧边+顶部明亮风格'
+} ]
 
 // 动画风格列表
-export const pageAnimationList: Store.PageAnimationOption[] = [
-    {
-        value: 'left-slide-fade',
-        label: '左滑淡出'
-    },
-    {
-        value: 'right-slide-fade',
-        label: '右滑淡出'
-    },
-    {
-        value: 'zoom-fade',
-        label: '缩放淡出'
-    }
-]
+export const pageAnimationList: Store.PageAnimationOption[] = [ {
+    value: 'left-slide-fade',
+    label: '左滑淡出'
+},
+{
+    value: 'right-slide-fade',
+    label: '右滑淡出'
+},
+{
+    value: 'zoom-fade',
+    label: '缩放淡出'
+} ]
 
 export const appSettings = AppStorage.getSettings() || cloneDeep(appSettingsInitial)

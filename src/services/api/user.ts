@@ -1,9 +1,7 @@
 import { serveRequest } from '@/services/request/handleRequest'
 
-
 // 用户相关的Api
 export abstract class UserApi {
-
     // 密码登录Url
     static passwordLoginUrl = '/mock/passwordLogin'
 
@@ -17,12 +15,11 @@ export abstract class UserApi {
     static signOutUrl = '/mock/signOut'
 
     // 密码登录
-    static passwordLogin = (data: UserApiRequest.PasswordLogin) =>
-        serveRequest<null, UserApiResponse.PasswordLogin>({
-            method: 'POST',
-            url: this.passwordLoginUrl,
-            data
-        })
+    static passwordLogin = (data: UserApiRequest.PasswordLogin) => serveRequest<null, UserApiResponse.PasswordLogin>({
+        method: 'POST',
+        url: this.passwordLoginUrl,
+        data
+    })
 
     // 获取用户信息
     static getUserinfo = () => serveRequest<UserApiResponse.UserDetails>({
@@ -42,4 +39,3 @@ export abstract class UserApi {
         url: this.signOutUrl
     })
 }
-

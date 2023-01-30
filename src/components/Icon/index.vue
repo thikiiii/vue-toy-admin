@@ -1,21 +1,17 @@
 <template>
-  <!-- iconify 图标 -->
-  <icon
-      v-if="!localIcon"
-      :icon="iconName"
-      :style="style"
-  />
-  <!-- 本地图标 -->
-  <svg
-      v-else
-      :height="size"
-      :style="{cursor:pointer? 'pointer':undefined,color}"
-      :width="size"
-      aria-hidden="true"
-      class="icon">
-    <use :xlink:href="iconName" />
-  </svg>
-
+    <!-- iconify 图标 -->
+    <icon v-if="!localIcon" :icon="iconName" :style="style" />
+    <!-- 本地图标 -->
+    <svg
+        v-else
+        :height="size"
+        :style="{ cursor: pointer ? 'pointer' : undefined, color }"
+        :width="size"
+        aria-hidden="true"
+        class="icon"
+    >
+        <use :xlink:href="iconName" />
+    </svg>
 </template>
 
 <script lang="ts" setup>
@@ -44,18 +40,18 @@ export interface IconProps {
 
 defineOptions({ name: 'Icon' })
 const props = withDefaults(defineProps<IconProps>(), {
-  mode: 'block',
-  size: '18px',
-  pointer: false
+    mode: 'block',
+    size: '18px',
+    pointer: false
 })
 
 const metaEnv = useMetaEnv()
-const iconName = computed(() => props.localIcon ? `#${ metaEnv.VITE_ICON_LOCAL_PREFIX }-${ props.localIcon }` : props.icon)
+const iconName = computed(() => props.localIcon ? `#${metaEnv.VITE_ICON_LOCAL_PREFIX}-${props.localIcon}` : props.icon)
 const style = computed(() => ({
-  cursor: props.pointer ? 'pointer' : undefined,
-  color: props.color,
-  width: isNumber(props.size) ? `${ props.size }px` : props.size,
-  height: isNumber(props.size) ? `${ props.size }px` : props.size
+    cursor: props.pointer ? 'pointer' : undefined,
+    color: props.color,
+    width: isNumber(props.size) ? `${props.size}px` : props.size,
+    height: isNumber(props.size) ? `${props.size}px` : props.size
 }))
 </script>
 

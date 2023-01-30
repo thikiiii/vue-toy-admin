@@ -3,31 +3,25 @@ import { inject, reactive, Ref, ref } from 'vue'
 import QrCode from '@/views/login/qrCode/index.vue'
 import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
-import { serve } from '@/services/request'
 import { LoginMethod } from '@/enums/common'
-import { UserApi } from '@/services/api/user'
 
 const authStore = useAuthStore()
 const formRef = ref<InstanceType<typeof NForm> | null>()
 const form = reactive({
-  username: 'admin',
-  password: '123456'
+    username: 'admin',
+    password: '123456'
 })
 const rules: FormRules = reactive({
-  username: [
-    {
-      required: true,
-      message: '请输入用户名',
-      trigger: 'blur'
-    }
-  ],
-  password: [
-    {
-      required: true,
-      message: '请输入密码',
-      trigger: 'blur'
-    }
-  ]
+    username: [ {
+        required: true,
+        message: '请输入用户名',
+        trigger: 'blur'
+    } ],
+    password: [ {
+        required: true,
+        message: '请输入密码',
+        trigger: 'blur'
+    } ]
 })
 const loginType = inject('loginType') as Ref<typeof QrCode>
 
@@ -36,64 +30,84 @@ const setLoginType = (component: typeof QrCode) => loginType.value = component
 
 // 处理登录
 const handleLogin = () => {
-  formRef.value?.validate(async (errors) => {
-    if (errors) return
-    await authStore.handleLogin(LoginMethod.Password, form)
-  })
+    formRef.value?.validate(async(errors) => {
+        if (errors) return
+        await authStore.handleLogin(LoginMethod.Password, form)
+    })
 }
-const test = () => {
-  serve.cancelAllRequest()
-}
-const test2 = () => {
-  serve.cancelRequest('POST', UserApi.passwordLoginUrl)
-}
-const test3 = () => {
-  UserApi.getUserinfo()
-}
+
 </script>
 
 <template>
-  <div class="passwordLogin">
-    <h1 class="passwordLogin-title">登录</h1>
-    <n-button @click="test">测试</n-button>
-    <n-button @click="test2">测试</n-button>
-    <n-button @click="test3">测试</n-button>
-    <n-form ref="formRef" :model="form" :rules="rules" label-placement="left">
-      <transition-group appear name="right-slide-fade">
-        <n-form-item key="1" path="username" required>
-          <n-input v-model:value="form.username" placeholder="请输入用户名" size="large">
-          </n-input>
-        </n-form-item>
-        <n-form-item key="2" path="password" required style="transition-delay: .1s">
-          <n-input
-              v-model:value="form.password" placeholder="请输入密码" show-password-on="mousedown"
-              size="large"
-              type="password">
-          </n-input>
-        </n-form-item>
-        <n-form-item key="3" style="transition-delay: .25s">
-          <n-row key="3" justify-content="space-between" style="transition-delay: .25s">
-            <n-col span="5">
-              <n-checkbox>记住我</n-checkbox>
-            </n-col>
-            <n-col span="5">
-              <span class="passwordLogin-forgotPassword">忘记密码？</span>
-            </n-col>
-          </n-row>
-        </n-form-item>
-        <n-form-item key="4" style="transition-delay: .4s">
-          <n-button :loading="authStore.loginLoading" block size="large" type="primary" @click="handleLogin">
-            登录
-          </n-button>
-        </n-form-item>
-        <n-space key="5" justify="space-evenly" style="transition-delay: .55s">
-          <n-button size="large">手机登录</n-button>
-          <n-button size="large" @click="setLoginType(QrCode)">二维码登录</n-button>
-          <n-button size="large">注册</n-button>
-        </n-space>
-      </transition-group>
-    </n-form>
-  </div>
+    <div class="passwordLogin">
+        <h1 class="passwordLogin-title">登录</h1>
+        <n-form
+            ref="formRef"
+            :model="form"
+            :rules="rules"
+            label-placement="left"
+        >
+            <transition-group appear name="right-slide-fade">
+                <n-form-item key="1" path="username" required>
+                    <n-input
+                        v-model:value="form.username"
+                        placeholder="请输入用户名"
+                        size="large"
+                    >
+                    </n-input>
+                </n-form-item>
+                <n-form-item
+                    key="2"
+                    path="password"
+                    required
+                    style="transition-delay: 0.1s"
+                >
+                    <n-input
+                        v-model:value="form.password"
+                        placeholder="请输入密码"
+                        show-password-on="mousedown"
+                        size="large"
+                        type="password"
+                    >
+                    </n-input>
+                </n-form-item>
+                <n-form-item key="3" style="transition-delay: 0.25s">
+                    <n-row
+                        key="3"
+                        justify-content="space-between"
+                        style="transition-delay: 0.25s"
+                    >
+                        <n-col span="5">
+                            <n-checkbox>记住我</n-checkbox>
+                        </n-col>
+                        <n-col span="5">
+                            <span class="passwordLogin-forgotPassword">忘记密码？</span>
+                        </n-col>
+                    </n-row>
+                </n-form-item>
+                <n-form-item key="4" style="transition-delay: 0.4s">
+                    <n-button
+                        :loading="authStore.loginLoading"
+                        block
+                        size="large"
+                        type="primary"
+                        @click="handleLogin"
+                    >
+                        登录
+                    </n-button>
+                </n-form-item>
+                <n-space
+                    key="5"
+                    justify="space-evenly"
+                    style="transition-delay: 0.55s"
+                >
+                    <n-button size="large">手机登录</n-button>
+                    <n-button size="large" @click="setLoginType(QrCode)">二维码登录</n-button>
+                    <n-button size="large">注册</n-button>
+                </n-space>
+            </transition-group>
+        </n-form>
+    </div>
 </template>
 
 <style lang="less" scoped>

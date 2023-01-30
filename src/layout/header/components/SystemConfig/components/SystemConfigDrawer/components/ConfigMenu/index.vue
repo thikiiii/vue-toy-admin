@@ -9,12 +9,12 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div class="configMenu">
-    <span class="configMenu-title">{{ label }}</span>
-    <div class="configMenu-content">
-      <slot></slot>
+    <div class="configMenu">
+        <span class="configMenu-title">{{ label }}</span>
+        <div class="configMenu-content">
+            <slot></slot>
+        </div>
     </div>
-  </div>
 </template>
 
 <style lang="less" scoped>

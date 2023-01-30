@@ -7,7 +7,6 @@ export interface RenderEllipsisProps extends EllipsisProps {
 }
 
 // 字体省略
-const useRenderEllipsis = () => (props: RenderEllipsisProps) => () =>
-    <NEllipsis { ...props }>{ props.content }</NEllipsis>
+const useRenderEllipsis = () => (props: RenderEllipsisProps) => () => <NEllipsis {...props}>{props.content}</NEllipsis>
 
 export default useRenderEllipsis

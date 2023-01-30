@@ -1,5 +1,8 @@
 import { AxiosResponse } from 'axios'
-import { handleInterceptorError, handleResponseStatusError } from '@/services/request/error'
+import {
+    handleInterceptorError,
+    handleResponseStatusError
+} from '@/services/request/error'
 import useMetaEnv from '@/hooks/common/useMetaEnv'
 import { CustomizeAxios } from '@/services/customizeAxios'
 
@@ -25,4 +28,3 @@ export const serve = new CustomizeAxios({
         }
     }
 })
-

@@ -17,14 +17,18 @@ const emits = defineEmits<Emits>()
 </script>
 
 <template>
-  <n-popover placement="bottom" trigger="hover">
-    <template #trigger>
-      <div :class="active?'active':undefined" class="layoutCard" @click="emits('clickCard')">
-        <slot></slot>
-      </div>
-    </template>
-    <span>{{ popoverContent }}</span>
-  </n-popover>
+    <n-popover placement="bottom" trigger="hover">
+        <template #trigger>
+            <div
+                :class="active ? 'active' : undefined"
+                class="layoutCard"
+                @click="emits('clickCard')"
+            >
+                <slot></slot>
+            </div>
+        </template>
+        <span>{{ popoverContent }}</span>
+    </n-popover>
 </template>
 
 <style lang="less" scoped>
@@ -35,7 +39,7 @@ const emits = defineEmits<Emits>()
   border-radius: 4px;
   cursor: pointer;
   box-shadow: 5px 5px 5px @shadow;
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
   border: 3px solid @fadedThemeColor;
   padding: 3px;
   gap: 4px;

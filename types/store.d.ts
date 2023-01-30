@@ -1,6 +1,9 @@
 declare namespace Store {
     // 页面切换动画  左滑淡出 | 右滑淡出 | 缩放淡入淡出
-    type PageAnimationMode = 'left-slide-fade' | 'right-slide-fade' | 'zoom-fade'
+    type PageAnimationMode =
+        | 'left-slide-fade'
+        | 'right-slide-fade'
+        | 'zoom-fade'
 
     // 布局模式：侧边 | 混合侧边 | 顶部
     type LayoutMode = 'Side' | 'MixSide' | 'Top'
@@ -9,17 +12,15 @@ declare namespace Store {
     type LayoutStyle = 'SideDark' | 'SideTopDark' | 'SideTopLight'
 
     type Option<T> = {
-        value: T,
+        value: T
         label: string
     }
 
     // 布局模式选项
     type LayoutModeOption = Option<LayoutMode>
 
-
     // 布局风格选项
     type LayoutStyleOption = Option<LayoutStyle>
-
 
     // 布局风格选项
     type PageAnimationOption = Option<PageAnimationMode>
@@ -124,7 +125,6 @@ declare namespace Store {
         app: LayoutApp
     }
 
-
     // 自定义主题配置
     interface CustomizeThemeConfig {
         // 主题颜色
@@ -223,7 +223,7 @@ declare namespace Store {
         token: Nullable<string>
 
         // 角色
-        roles: import('@/enums/auth').RoleEnum[],
+        roles: import('@/enums/auth').RoleEnum[]
 
         // 细粒度权限
         permissions: import('@/enums/auth').PermissionEnum[]
@@ -238,6 +238,7 @@ declare namespace Store {
         signOutLoading: boolean
     }
 
+    // TODO: 递归报错 Type instantiation is excessively deep and possibly infinite.
     type NMenuOption = import('naive-ui').MenuOption
 
     type MenuOption = NMenuOption & {

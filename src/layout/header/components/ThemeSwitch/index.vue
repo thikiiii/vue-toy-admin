@@ -8,21 +8,24 @@ defineOptions({ name: 'ThemeSwitch' })
 const themeStore = useThemeStore()
 
 const iconName = computed(() => {
-  switch (themeStore.themeMode) {
-    case 'light':
-      return 'ic:outline-wb-sunny'
-    case 'dark':
-      return 'ic:outline-dark-mode'
-    default:
-      return 'mdi:white-balance-sunny'
-  }
+    switch (themeStore.themeMode) {
+        case 'light':
+            return 'ic:outline-wb-sunny'
+        case 'dark':
+            return 'ic:outline-dark-mode'
+        default:
+            return 'mdi:white-balance-sunny'
+    }
 })
 </script>
 
 <template>
-  <icon-hover-container content="主题切换" @click="themeStore.toggleLightOrDarkTheme()">
-    <icon :icon="iconName" />
-  </icon-hover-container>
+    <icon-hover-container
+        content="主题切换"
+        @click="themeStore.toggleLightOrDarkTheme()"
+    >
+        <icon :icon="iconName" />
+    </icon-hover-container>
 </template>
 
 <style lang="less" scoped>

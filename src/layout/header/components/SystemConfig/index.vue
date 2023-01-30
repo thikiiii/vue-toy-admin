@@ -8,12 +8,10 @@ const [ drawerVisible ] = useToggle()
 </script>
 
 <template>
-  <icon-hover-container content="系统配置" @click="drawerVisible = true">
-    <icon icon="ant-design:setting-outlined" />
-  </icon-hover-container>
-  <system-config-drawer v-model:visible="drawerVisible" />
+    <icon-hover-container content="系统配置" @click="drawerVisible = true">
+        <icon icon="ant-design:setting-outlined" />
+    </icon-hover-container>
+    <system-config-drawer v-model:visible="drawerVisible" />
 </template>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="less" scoped></style>

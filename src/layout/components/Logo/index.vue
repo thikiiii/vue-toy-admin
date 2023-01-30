@@ -1,7 +1,7 @@
 <template>
-  <div class="logo">
-    <h3 class="title">Toy Admin</h3>
-  </div>
+    <div class="logo">
+        <h3 class="title">Toy Admin</h3>
+    </div>
 </template>
 
 <script lang="ts" setup></script>
@@ -14,7 +14,7 @@
   height: @headerHeight;
   width: 100%;
   flex-shrink: 0;
-  transition: .2s ease-in-out;
+  transition: 0.2s ease-in-out;
   .title {
     text-align: center;
   }

@@ -4,6 +4,7 @@ import { AxiosCancel } from '@/services/customizeAxios/AxiosCancel'
 export class CustomizeAxios {
     // axios 实例
     private readonly axios: AxiosInstance
+
     private readonly defaultConfig: CAxios.DefaultConfig
 
     constructor(defaultConfig: CAxios.DefaultConfig) {
@@ -48,15 +49,14 @@ export class CustomizeAxios {
         )
     }
 
-    async request<D = any>(config: CAxios.RequestConfig): Promise<CAxios.Response<D>> {
+    async request<D = never>(config: CAxios.RequestConfig): Promise<CAxios.Response<D>> {
         const responseBody = await this.axios.request<D>(config)
         return { ...responseBody.data, $responseBody: responseBody }
     }
-
+    
     // 取消请求
     cancelRequest: (method: Method, url: string, reason?: string) => void
 
     // 取消全部请求
     cancelAllRequest: (reason?: string) => void
 }
-

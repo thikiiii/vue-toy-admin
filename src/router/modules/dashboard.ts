@@ -11,18 +11,16 @@ const dashboard: Route.RouteRecordRaw = {
         icon: 'mdi:monitor-dashboard',
         orderNo: 1
     },
-    children: [
-        {
-            path: '/dashboard/analysis',
-            name: 'dashboard_analysis',
-            meta: {
-                title: '分析页',
-                roles: [ RoleEnum.SUPER ],
-                keepAlive: true,
-                affix: true
-            },
-            component: 'View'
-        }
-    ]
+    children: [ {
+        path: '/dashboard/analysis',
+        name: 'dashboard_analysis',
+        meta: {
+            title: '分析页',
+            roles: [ RoleEnum.SUPER ],
+            keepAlive: true,
+            affix: true
+        },
+        component: 'View'
+    } ]
 }
 export default dashboard

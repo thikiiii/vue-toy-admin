@@ -11,4 +11,3 @@ export class LayoutStorage {
     // 获取菜单模式
     static getMenuMode = (): Store.LayoutMode | undefined => store.get(this.menuMode)
 }
-

@@ -7,7 +7,7 @@ const about: Route.RouteRecordRaw = {
         icon: 'mdi:account-arrow-down-outline',
         keepAlive: true,
         orderNo: 3,
-        affix: true,
+        affix: true
     },
     component: 'View'
 }

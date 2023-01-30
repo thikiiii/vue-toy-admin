@@ -8,15 +8,15 @@ defineOptions({ name: 'FullScreen' })
 const { isFullscreen, enter, exit } = useFullscreen()
 
 const iconName = computed(() => isFullscreen.value ? 'ri:fullscreen-exit-fill' : 'ri:fullscreen-fill')
-
 </script>
 
 <template>
-  <icon-hover-container content="全屏" @click="isFullscreen? exit():enter()">
-    <icon :icon="iconName" />
-  </icon-hover-container>
+    <icon-hover-container
+        content="全屏"
+        @click="isFullscreen ? exit() : enter()"
+    >
+        <icon :icon="iconName" />
+    </icon-hover-container>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

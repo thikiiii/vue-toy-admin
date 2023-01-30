@@ -20,16 +20,16 @@ const useAuthStore = defineStore('auth', {
     }),
     getters: {
         // 是否登录
-        isLogin: (state) => Boolean(state.token),
+        isLogin: state => Boolean(state.token),
 
         // 是否有鉴权
-        isAuth: (state) => Boolean(state.roles.length) && Boolean(state.userinfo)
+        isAuth: state => Boolean(state.roles.length) && Boolean(state.userinfo)
     },
     actions: {
         // 密码登录
         async passwordLogin(form: UserApiRequest.PasswordLogin) {
             this.loginLoading = true
-            const { subCode,token,subMsg } = await UserApi.passwordLogin(form).catch(() => {
+            const { subCode, token, subMsg } = await UserApi.passwordLogin(form).catch(() => {
                 this.loginLoading = false
                 return Promise.reject()
             })
@@ -60,9 +60,12 @@ const useAuthStore = defineStore('auth', {
         },
 
         // 处理登录
-        async handleLogin(loginMethod: LoginMethod, form: UserApiRequest.PasswordLogin) {
+        async handleLogin(
+            loginMethod: LoginMethod,
+            form: UserApiRequest.PasswordLogin
+        ) {
             switch (loginMethod) {
-                // 密码登录
+            // 密码登录
                 case LoginMethod.Password:
                     await this.passwordLogin(form)
                     break
@@ -84,18 +87,16 @@ const useAuthStore = defineStore('auth', {
             await router.replace(redirect as string || Settings.homePath)
             discreteApi.notification.success({
                 title: '登录成功',
-                content: `欢迎回来，${ this.userinfo?.username }！`
+                content: `欢迎回来，${this.userinfo?.username}！`
             })
             this.loginLoading = false
-
         },
 
         // 退出登录
         async signOut() {
             const { subCode, subMsg } = await UserApi.signOut()
-            if (subCode !== 200) {
-                discreteApi.message.error(subMsg)
-            }
+            if (subCode !== 200) discreteApi.message.error(subMsg)
+            
             await this.handleSignOut()
         },
 
@@ -103,9 +104,7 @@ const useAuthStore = defineStore('auth', {
             this.signOutLoading = true
             await router.replace({
                 path: '/login',
-                query: {
-                    redirect: router.currentRoute.value.path
-                }
+                query: { redirect: router.currentRoute.value.path }
             })
             const routeStore = useRouteStore()
             this.initUserStore()
@@ -131,6 +130,5 @@ const useAuthStore = defineStore('auth', {
         }
     }
 })
-
 
 export default useAuthStore
