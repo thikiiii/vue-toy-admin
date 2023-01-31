@@ -3,7 +3,7 @@ import { useLayoutStore } from '@/store/modules/layout'
 import PasswordLogin from './password/index.vue'
 import QrCodeLogin from '@/views/login/qrCode/index.vue'
 import { useLoginContext } from '@/views/login/useLoginContext'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const layoutStore = useLayoutStore()
 const { mobile } = layoutStore
@@ -49,6 +49,8 @@ const otherLoginMethods = [
     }
 ]
 
+const show = ref(true)
+
 </script>
 
 <template>
@@ -58,12 +60,9 @@ const otherLoginMethods = [
         <icon color="red" local-icon="login" size="100%"/>
       </div>
     </div>
-    <side-fade-animation position="bottom" offset="20px">
-      <div class="test"></div>
-    </side-fade-animation>
     <div class="login-card">
-      <side-fade-animation :start-offset="['-20px','-20px']" :end-offset="[0,0]" appear >
-        <h1 class="login-card-title">Toy Admin</h1>
+      <side-fade-animation :end-offset="[0,0]" :start-offset="['-20px','-20px']" appear >
+        <h1 v-if="show" class="login-card-title">Toy Admin</h1>
       </side-fade-animation>
       <div class="login-card-form">
         <div class="login-card-form-title">{{ title }}</div>
@@ -73,9 +72,9 @@ const otherLoginMethods = [
           其他登录方式
         </n-divider>
         <n-space justify="space-around">
-          <n-popover placement="bottom" v-for="item in otherLoginMethods" :key="item.icon" :delay="300" trigger="hover">
+          <n-popover v-for="item in otherLoginMethods" :key="item.icon" :delay="300" placement="bottom" trigger="hover" >
             <template #trigger>
-              <icon class="login-card-form-icon" size="22" pointer :icon="item.icon"></icon>
+              <icon :icon="item.icon" class="login-card-form-icon" pointer size="22" @click="show=!show"></icon>
             </template>
             <span>{{ item.title }}</span>
           </n-popover>
