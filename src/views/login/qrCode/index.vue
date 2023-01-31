@@ -1,15 +1,11 @@
 <script lang="ts" setup>
-import { Component, inject, Ref } from 'vue'
-import Password from '@/views/login/password/index.vue'
+import { useLoginContext } from '@/views/login/useLoginContext'
 
-const loginType = inject('loginType') as Ref<Component>
-const set = () => {
-    loginType.value = Password
-}
+const { setAction } = useLoginContext()
 </script>
 
 <template>
-    <p @click="set">二维码</p>
+    <p @click="setAction('PasswordLogin')">二维码</p>
 </template>
 
 <style scoped></style>
