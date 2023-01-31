@@ -28,8 +28,10 @@ const bootStart = async() => {
     // 挂载路由
     await setupRouter(app)
 
-    // 必须在应用配置加载完成后调用
-    app.mount('#app', true)
+    setTimeout(() => {
+        // 必须在应用配置加载完成后调用
+        app.mount('#app', true)
+    },3000)
 }
 
 void bootStart()
