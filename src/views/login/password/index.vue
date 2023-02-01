@@ -39,15 +39,13 @@ const handleLogin = () => {
 </script>
 
 <template>
-  <div class="passwordLogin">
     <n-form
         ref="formRef"
         :model="form"
         :rules="rules"
         label-placement="left"
     >
-      <transition-group appear name="right-slide-fade">
-        <n-form-item key="1" path="username" required>
+        <n-form-item  path="username" required>
           <n-input
               v-model:value="form.username"
               placeholder="请输入用户名"
@@ -56,10 +54,8 @@ const handleLogin = () => {
           </n-input>
         </n-form-item>
         <n-form-item
-            key="2"
             path="password"
             required
-            style="transition-delay: 0.1s"
         >
           <n-input
               v-model:value="form.password"
@@ -70,11 +66,10 @@ const handleLogin = () => {
           >
           </n-input>
         </n-form-item>
-        <n-form-item key="3" style="transition-delay: 0.25s">
+        <n-form-item  >
           <n-row
               key="3"
               justify-content="space-between"
-              style="transition-delay: 0.25s"
           >
             <n-col span="6">
               <n-checkbox>记住我</n-checkbox>
@@ -84,7 +79,7 @@ const handleLogin = () => {
             </n-col>
           </n-row>
         </n-form-item>
-        <n-form-item key="4" style="transition-delay: 0.4s">
+        <n-form-item  >
           <n-button
               :loading="authStore.loginLoading"
               block
@@ -95,27 +90,18 @@ const handleLogin = () => {
             登录
           </n-button>
         </n-form-item>
-        <n-space
-            key="5"
-            justify="space-between"
-            style="transition-delay: 0.55s"
-        >
-          <n-button block style="width: 120px"  @click="setAction('PhoneLogin')">手机登录</n-button>
-          <n-button block style="width: 120px" @click="setAction('QrCodeLogin')">二维码登录</n-button>
-          <n-button block style="width: 120px" @click="setAction('Registered')">注册</n-button>
-        </n-space>
-      </transition-group>
+      <n-space
+          justify="space-between"
+      >
+        <n-button block style="width: 120px"  @click="setAction('PhoneLogin')">手机登录</n-button>
+        <n-button block style="width: 120px" @click="setAction('QrCodeLogin')">二维码登录</n-button>
+        <n-button block style="width: 120px" @click="setAction('Registered')">注册</n-button>
+      </n-space>
     </n-form>
-  </div>
 </template>
 
 <style lang="less" scoped>
 .passwordLogin {
-  &-title {
-    font-size: 30px;
-    color: @mainTextColor;
-    margin-bottom: 10px;
-  }
 
   &-forgotPassword {
     color: @subTextColor;

@@ -193,7 +193,7 @@ watch(tabBarStore.tabBar, () => {
     flex: 1;
     display: flex;
     gap: 15px;
-    overflow-y: hidden;
+    overflow: hidden;
     position: relative;
     height: 100%;
     align-items: center;

@@ -23,7 +23,7 @@ const bootStart = async() => {
     setupDiscreteApi()
 
     // 挂载全局指令
-    setupGlobalDirectives()
+    setupGlobalDirectives(app)
 
     // 挂载路由
     await setupRouter(app)
