@@ -27,11 +27,7 @@ declare module '@vue/runtime-core' {
     NEmpty: typeof import('naive-ui')['NEmpty']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
-    NFormItemGi: typeof import('naive-ui')['NFormItemGi']
-    NGi: typeof import('naive-ui')['NGi']
-    NGrid: typeof import('naive-ui')['NGrid']
     NInput: typeof import('naive-ui')['NInput']
-    NInputGroup: typeof import('naive-ui')['NInputGroup']
     NInputNumber: typeof import('naive-ui')['NInputNumber']
     NLayout: typeof import('naive-ui')['NLayout']
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
@@ -47,6 +43,5 @@ declare module '@vue/runtime-core' {
     NSwitch: typeof import('naive-ui')['NSwitch']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SlideFadeTransition: typeof import('./../src/components/animation/SlideFadeTransition.vue')['default']
   }
 }

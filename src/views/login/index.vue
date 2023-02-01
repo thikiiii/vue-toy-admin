@@ -54,18 +54,19 @@ const otherLoginMethods = [
 <template>
   <div class="login">
     <div v-if="!mobile.isMobile" class="login-frontCover">
-      <div class="login-frontCover-svg">
-        <icon color="red" local-icon="login" size="100%"/>
-      </div>
+      <img class="login-frontCover-img" src="src/assets/images/login-coverPicture.jpg"/>
     </div>
     <div class="login-card">
-      <h1 class="login-card-title">Toy Admin</h1>
+      <div class="login-card-header">
+        <img alt="" src="src/assets/images/logo.png">
+        <h1>Toy Admin</h1>
+      </div>
       <div class="login-card-form">
         <div class="login-card-form-title">{{ title }}</div>
-        <transition  mode="out-in" name="zoom-fade">
-          <password-login v-if="currentAction==='PasswordLogin'"/>
-          <qr-code-login v-else-if="currentAction==='QrCodeLogin'"/>
-          <phone-login v-else-if="currentAction==='PhoneLogin'"/>
+        <transition mode="out-in" name="zoom-fade">
+          <password-login v-if="currentAction==='PasswordLogin'" />
+          <qr-code-login v-else-if="currentAction==='QrCodeLogin'" />
+          <phone-login v-else-if="currentAction==='PhoneLogin'" />
         </transition>
         <n-divider title-placement="center">
           其他登录方式
@@ -97,9 +98,8 @@ const otherLoginMethods = [
     justify-content: center;
     align-items: center;
 
-    &-svg {
+    &-img {
       width: 60%;
-      height: 60%;
     }
   }
 
@@ -115,16 +115,25 @@ const otherLoginMethods = [
     align-items: center;
     position: relative;
 
-    &-title {
-      text-align: center;
-      font-size: 40px;
+    &-header {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
       position: absolute;
-      top: 50px;
-      color: @theme;
-      background-image: -webkit-linear-gradient(0deg, @theme, #aa7fff);
-      -webkit-background-clip: text;
-      text-fill-color: transparent;
-      -webkit-text-fill-color: transparent;
+      top: 30px;
+
+      h1 {
+        font-size: 40px;
+        color: @theme;
+        background-image: -webkit-linear-gradient(0deg, @theme, #aa7fff);
+        -webkit-background-clip: text;
+        text-fill-color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+
+      img {
+        height: 100px;
+      }
     }
 
     &-form {
@@ -132,10 +141,24 @@ const otherLoginMethods = [
 
       &-title {
         text-align: left;
-        font-size: 30px;
-        margin-bottom: 10px;
-        font-weight: 500;
+        font-size: 28px;
+        margin-bottom: 20px;
+        font-weight: bold;
         color: @mainTextColor;
+        display: inline-block;
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          height: 5px;
+          background: @theme;
+          width: 80%;
+          left: 50%;
+          bottom: -5px;
+          border-radius: 2px;
+          transform: translateX(-50%);
+        }
       }
 
       &-icon {

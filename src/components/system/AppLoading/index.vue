@@ -15,7 +15,8 @@ const themeConfig = (() => {
 </script>
 
 <template>
-  <div class="appLoading" :style="{background:themeConfig.mainBackgroundColor}">
+  <div :style="{background:themeConfig.mainBackgroundColor}" class="appLoading">
+    <img alt="" class="appLoading-logo"  src="src/assets/images/logo.png">
     <div class="appLoading-main">
       <div :style="{
         borderBottomColor: appSettings.theme,
@@ -23,11 +24,11 @@ const themeConfig = (() => {
       }"/>
       <div :style="{ background: appSettings.theme }"/>
     </div>
-    <h1 class="appLoading-title" :style="{color:themeConfig.mainTextColor}">{{ metaEnv.VITE_GLOB_APP_TITLE }}</h1>
+    <h1 :style="{color:themeConfig.mainTextColor}" class="appLoading-title">{{ metaEnv.VITE_GLOB_APP_TITLE }}</h1>
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .appLoading {
   width: 100vw;
   height: 100vh;
@@ -35,6 +36,11 @@ const themeConfig = (() => {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  &-logo{
+    margin-bottom: 60px;
+    height: 80px;
+  }
 
   &-main {
     display: block;
