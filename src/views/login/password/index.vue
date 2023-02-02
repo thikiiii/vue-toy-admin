@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { reactive, ref } from 'vue'
 import useAuthStore from '@/store/modules/auth'
 import { FormRules, NForm } from 'naive-ui'
@@ -6,7 +6,6 @@ import { useLoginContext } from '@/views/login/useLoginContext'
 import { LoginMethod } from '@/enums/common'
 
 defineOptions({ name: 'PasswordLogin' })
-
 const authStore = useAuthStore()
 const { setAction } = useLoginContext()
 const formRef = ref<InstanceType<typeof NForm> | null>()

@@ -10,7 +10,12 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        parser: '@typescript-eslint/parser'
+        parser: {
+            js: 'espree',
+            jsx: 'espree',
+            ts: '@typescript-eslint/parser',
+            tsx: '@typescript-eslint/parser'
+        }
     },
     plugins: [ 'vue', '@typescript-eslint' ],
     rules: {

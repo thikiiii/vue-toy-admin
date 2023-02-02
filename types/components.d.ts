@@ -43,5 +43,6 @@ declare module '@vue/runtime-core' {
     NSwitch: typeof import('naive-ui')['NSwitch']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SchemaForm: typeof import('./../src/components/common/SchemaForm/index.vue')['default']
   }
 }

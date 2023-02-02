@@ -14,7 +14,7 @@
     </svg>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { Icon } from '@iconify/vue'
 import { computed } from 'vue'
 import useMetaEnv from '@/hooks/common/useMetaEnv'
