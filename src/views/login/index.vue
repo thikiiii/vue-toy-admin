@@ -54,7 +54,7 @@ const otherLoginMethods = [
 <template>
   <div class="login">
     <div v-if="!mobile.isMobile" class="login-frontCover">
-      <img class="login-frontCover-img" src="src/assets/images/login-coverPicture.jpg"/>
+      <img class="login-frontCover-img" src="src/assets/images/login-coverPicture.png"/>
     </div>
     <div class="login-card">
       <div class="login-card-header">
@@ -99,7 +99,7 @@ const otherLoginMethods = [
     align-items: center;
 
     &-img {
-      width: 60%;
+      width: 90%;
     }
   }
 
