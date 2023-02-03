@@ -7,7 +7,8 @@ type UseRenderIconConfig = Omit<IconProps, 'icon'>
 
 // 渲染图标
 const useRenderIcon = (defaultConfig: UseRenderIconConfig = {}) => {
-    return (props: IconProps) => (): VNodeChild => <Icon {...Object.assign(defaultConfig, props)}></Icon>
+  return (props: IconProps) => (): VNodeChild =>
+    <Icon {...Object.assign(defaultConfig, props)}></Icon>
 }
 
 export default useRenderIcon

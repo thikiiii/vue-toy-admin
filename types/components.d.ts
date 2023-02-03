@@ -8,13 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppLoading: typeof import('./../src/components/system/AppLoading/index.vue')['default']
-    ButtonAction: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/buttonAction/index.vue')['default']
-    ConfigMenu: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/components/ConfigMenu/index.vue')['default']
-    Footer: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/footer/index.vue')['default']
     Icon: typeof import('./../src/components/common/Icon/index.vue')['default']
-    LayoutCard: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/components/LayoutCard/index.vue')['default']
-    LayoutMode: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/layoutMode/index.vue')['default']
-    LayoutStyle: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/layoutStyle/index.vue')['default']
     NaiveProvider: typeof import('./../src/components/system/NaiveProvider/index.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
@@ -47,16 +41,7 @@ declare module '@vue/runtime-core' {
     NSelect: typeof import('naive-ui')['NSelect']
     NSpace: typeof import('naive-ui')['NSpace']
     NSwitch: typeof import('naive-ui')['NSwitch']
-    Other: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/other/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SchemaForm: typeof import('./../src/components/common/SchemaForm/index.vue')['default']
-    Sidebar: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/sidebar/index.vue')['default']
-    SystemConfig: typeof import('./../src/components/system/SystemConfig/index.vue')['default']
-    SystemConfigDrawer: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/index.vue')['default']
-    SystemTheme: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/systemTheme/index.vue')['default']
-    ThemeMode: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/themeMode/index.vue')['default']
-    ThemeSwitch: typeof import('../src/layout/header/components/ThemeSwitch/index.vue')['default']
-    Top: typeof import('./../src/components/system/SystemConfig/components/SystemConfigDrawer/top/index.vue')['default']
   }
 }

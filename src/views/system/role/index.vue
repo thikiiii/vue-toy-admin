@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-    <div>role</div>
+  <div>role</div>
 </template>
 
 <style scoped></style>
