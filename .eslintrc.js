@@ -1,75 +1,92 @@
-module.exports = {
+const { defineConfig } = require('eslint-define-config')
+
+module.exports = defineConfig({
   root: true,
-  env: {
-    browser: true,
-    node: true,
-    es6: true,
-  },
+  /* 指定如何解析语法。*/
   parser: 'vue-eslint-parser',
+  /* 优先级低于parse的语法解析配置 */
   parserOptions: {
     parser: '@typescript-eslint/parser',
-    ecmaVersion: 2020,
+    //模块化方案
     sourceType: 'module',
-    jsxPragma: 'React',
-    ecmaFeatures: {
-      jsx: true,
-    },
+  },
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+    // 解决 defineProps and defineEmits generate no-undef warnings
+    'vue/setup-compiler-macros': true,
+  },
+  // https://eslint.bootcss.com/docs/user-guide/configuring#specifying-globals
+  globals: {
+    defineOptions: 'readonly',
   },
   extends: [
     'plugin:vue/vue3-recommended',
-    'plugin:@typescript-eslint/recommended',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended', // typescript-eslint推荐规则,
+    'prettier',
+    'plugin:prettier/recommended',
   ],
+  // https://cn.eslint.org/docs/rules/
   rules: {
-    'vue/script-setup-uses-vars': 'error',
-    '@typescript-eslint/ban-ts-ignore': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-var-requires': 'off',
-    '@typescript-eslint/no-empty-function': 'off',
-    'vue/custom-event-name-casing': 'off',
-    'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': 'off',
-    '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/ban-types': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off',
+    'vue/multi-word-component-names': 'off',
+    // 禁止使用 var
+    'no-var': 'error',
+    semi: 'off',
+    // 优先使用 interface 而不是 type
+    '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+    '@typescript-eslint/no-explicit-any': 'off', // 可以使用 any 类型
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    // 解决使用 require() Require statement not part of import statement. 的问题
+    '@typescript-eslint/no-var-requires': 0,
+    // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/ban-types.md
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        types: {
+          // add a custom message to help explain why not to use it
+          Foo: "Don't use Foo because it is unsafe",
+
+          // add a custom message, AND tell the plugin how to fix it
+          String: {
+            message: 'Use string instead',
+            fixWith: 'string',
+          },
+
+          '{}': {
+            message: 'Use object instead',
+            fixWith: 'object',
+          },
+        },
+      },
+    ],
+    // 禁止出现未使用的变量
     '@typescript-eslint/no-unused-vars': [
       'error',
+      { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
+    ],
+    'vue/html-indent': 'off',
+    // 关闭此规则 使用 prettier 的格式化规则，
+    'vue/max-attributes-per-line': ['off'],
+    // 优先使用驼峰，element 组件除外
+    'vue/component-name-in-template-casing': [
+      'error',
+      'PascalCase',
       {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
+        ignores: ['/^el-/', '/^router-/'],
+        registeredComponentsOnly: false,
       },
     ],
-    'no-unused-vars': [
+    // 强制使用驼峰
+    camelcase: ['error', { properties: 'always' }],
+    // 优先使用 const
+    'prefer-const': [
       'error',
       {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
+        destructuring: 'any',
+        ignoreReadBeforeAssign: false,
       },
     ],
-    'space-before-function-paren': 'off',
-
-    'vue/attributes-order': 'off',
-    'vue/one-component-per-file': 'off',
-    'vue/html-closing-bracket-newline': 'off',
-    'vue/max-attributes-per-line': 'off',
-    'vue/multiline-html-element-content-newline': 'off',
-    'vue/singleline-html-element-content-newline': 'off',
-    'vue/attribute-hyphenation': 'off',
-    'vue/require-default-prop': 'off',
-    'vue/require-explicit-emits': 'off',
-    'vue/html-self-closing': [
-      'error',
-      {
-        html: {
-          void: 'always',
-          normal: 'never',
-          component: 'always',
-        },
-        svg: 'always',
-        math: 'always',
-      },
-    ],
-    'vue/multi-word-component-names': 'off',
   },
-};
+})
