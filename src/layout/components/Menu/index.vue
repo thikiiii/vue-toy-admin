@@ -5,6 +5,7 @@
     :indent="30"
     :root-indent="24"
     :value="activeMenu"
+    v-bind="props"
     @update:value="selectMenu"
   />
 </template>
@@ -15,10 +16,10 @@ import { computed, ref, watch } from 'vue'
 import { MenuInst, MenuProps } from 'naive-ui'
 import { useRouteStore } from '@/store/modules/route'
 
-type Props = MenuProps
+interface Props extends MenuProps {}
 
 defineOptions({ name: 'Menu' })
-defineProps<Props>()
+const props = defineProps<Props>()
 const route = useRoute()
 const routeStore = useRouteStore()
 const menuRef = ref<MenuInst | null>(null)

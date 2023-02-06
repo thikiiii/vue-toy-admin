@@ -2,9 +2,10 @@
 import { RouteRecordRaw } from 'vue-router'
 import { ROOT_ROUTE } from '@/router/constRoutes'
 import { Sort } from '@/enums/common'
-import useRenderEllipsis from '@/hooks/components/useRenderEllipsis'
-import useRenderIcon from '@/hooks/components/useRenderIcon'
 import { matchUrl } from '@/utils/regularCheck'
+import Icon from '@/components/common/Icon/index.vue'
+import { h } from 'vue'
+import { NEllipsis } from 'naive-ui'
 
 export class RouterHelpers {
     // 前端路由模块列表
@@ -36,7 +37,7 @@ export class RouterHelpers {
         if (this.isExternalLink(route.path)) return undefined
         const vueRoute = { ...route, component: undefined } as RouteRecordRaw
         switch (route.component) {
-        // 本身就是页面
+            // 本身就是页面
             case 'Self':
                 vueRoute.component = this.getViewComponent(route)
                 break
@@ -56,24 +57,18 @@ export class RouterHelpers {
         return routes.reduce<RouteRecordRaw[]>((vueRoutes, route) => {
             const vueRoute = this.transformCustomRouteToVueRoute(route)
             if (route.children?.length && vueRoute) vueRoute.children = this.transformCustomRoutesToVueRoutes(route.children)
-            
+
             vueRoute && vueRoutes.push(vueRoute)
             return vueRoutes
         }, [])
     }
 
     // 路由转菜单
-    static transformRouteToMenu({
-        path,
-        meta,
-        children
-    }: Route.RouteRecordRaw): Store.MenuOption {
-        const renderEllipsis = useRenderEllipsis()
-        const renderIcon = useRenderIcon()
+    static transformRouteToMenu({ path, meta, children }: Route.RouteRecordRaw): Store.MenuOption {
         return {
             key: path,
-            label: renderEllipsis({ content: meta?.title }),
-            icon: meta?.icon ? renderIcon({ icon: meta.icon, size: '100%' }) : undefined,
+            label: () => h(NEllipsis, ()=>meta?.title),
+            icon: meta?.icon ? ()=> h(Icon, { icon: meta?.icon, size: '18px' }) : undefined,
             meta,
             children: children as Store.MenuOption['children'],
             show: !meta?.hideMenu
@@ -105,7 +100,7 @@ export class RouterHelpers {
 
     // 路由 name 转组件路径
     static transformRouteNameToComponentPath(name: string) {
-        return `/src/views/${name.replaceAll('_', '/')}/index.vue`
+        return `/src/views/${ name.replaceAll('_', '/') }/index.vue`
     }
 
     // 排序路由, 默认升序

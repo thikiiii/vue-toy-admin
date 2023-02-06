@@ -5,6 +5,7 @@ import QrCodeLogin from '@/views/login/qrCode/index.vue'
 import PhoneLogin from '@/views/login/phone/index.vue'
 import { useLoginContext } from '@/views/login/useLoginContext'
 import { computed } from 'vue'
+import { SchemaFormOption } from '@/components/common/SchemaForm/index.vue'
 
 const layoutStore = useLayoutStore()
 const { mobile } = layoutStore
@@ -49,19 +50,34 @@ const otherLoginMethods = [
         title: '推特'
     }
 ]
+
+const option: SchemaFormOption[] = [
+    {
+        type: 'input',
+        label: '测试',
+        field: 'test',
+        props: {}
+    }
+]
+
+const model = { test: 11 }
+
 </script>
 
 <template>
   <div class="login">
     <div v-if="!mobile.isMobile" class="login-frontCover">
       <img
-        class="login-frontCover-img"
-        src="src/assets/images/login-coverPicture.png"
+          class="login-frontCover-img"
+          src="../../assets/images/login-coverPicture.png"
       >
+      <n-card>
+        <schema-form :model="model" :option="option" />
+      </n-card>
     </div>
     <div class="login-card">
       <div class="login-card-header">
-        <img alt="" src="src/assets/images/logo.png">
+        <img alt="" src="../../assets/images/logo.png">
         <h1>Toy Admin</h1>
       </div>
       <div class="login-card-form">
@@ -71,21 +87,21 @@ const otherLoginMethods = [
           <qr-code-login v-else-if="currentAction === 'QrCodeLogin'" />
           <phone-login v-else-if="currentAction === 'PhoneLogin'" />
         </transition>
-        <n-divider title-placement="center"> 其他登录方式 </n-divider>
+        <n-divider title-placement="center"> 其他登录方式</n-divider>
         <n-space justify="space-around">
           <n-popover
-            v-for="item in otherLoginMethods"
-            :key="item.icon"
-            :delay="300"
-            placement="bottom"
-            trigger="hover"
+              v-for="item in otherLoginMethods"
+              :key="item.icon"
+              :delay="300"
+              placement="bottom"
+              trigger="hover"
           >
             <template #trigger>
               <icon
-                :icon="item.icon"
-                class="login-card-form-icon"
-                pointer
-                size="22"
+                  :icon="item.icon"
+                  class="login-card-form-icon"
+                  pointer
+                  size="22"
               />
             </template>
             <span>{{ item.title }}</span>

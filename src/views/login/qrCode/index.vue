@@ -10,7 +10,7 @@ const { setAction } = useLoginContext()
     <img
       alt=""
       height="250"
-      src="src/assets/images/login-qrCode.png"
+      src="../../../assets/images/login-qrCode.png"
       width="250"
     >
     <p class="qrCodeLogin-prompt">扫码点击“确定”，即可完成登录</p>

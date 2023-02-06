@@ -19,7 +19,7 @@ const themeConfig = (() => {
     :style="{ background: themeConfig.mainBackgroundColor }"
     class="appLoading"
   >
-    <img alt="" class="appLoading-logo" src="src/assets/images/logo.png">
+    <img alt="" class="appLoading-logo" src="../../../assets/images/logo.png">
     <div class="appLoading-main">
       <div
         :style="{

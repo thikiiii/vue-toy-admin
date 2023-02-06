@@ -8,14 +8,15 @@ module.exports = defineConfig({
     parserOptions: {
         parser: '@typescript-eslint/parser',
         // 模块化方案
-        sourceType: 'module'
+        sourceType: 'module',
+        jsxPragma: 'React',
+        // 可以使用 jsx | tsx
+        ecmaFeatures: { jsx: true }
     },
     env: {
         browser: true,
         es2021: true,
-        node: true,
-        // 解决 defineProps and defineEmits generate no-undef warnings
-        'vue/setup-compiler-macros': true
+        node: true
     },
     // https://eslint.bootcss.com/docs/user-guide/configuring#specifying-globals
     globals: { defineOptions: 'readonly' },

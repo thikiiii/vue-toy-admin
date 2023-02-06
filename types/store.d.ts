@@ -238,12 +238,17 @@ declare namespace Store {
         signOutLoading: boolean
     }
 
-    // TODO: 递归报错 Type instantiation is excessively deep and possibly infinite.
-    type NMenuOption = import('naive-ui').MenuOption
 
-    type MenuOption = NMenuOption & {
+    interface MenuOption {
         meta?: import('vue-router').RouteMeta
-        children?: MenuOption[]
+        children?: MenuOption[],
+        key?: string | number;
+        disabled?: boolean;
+        icon?: () => import('vue').VNodeChild;
+        extra?: string | (() => import('vue').VNodeChild);
+        show?: boolean;
+        titleExtra?: string | (() => import('vue').VNodeChild);
+        title?: string | (() => import('vue').VNodeChild)
     }
 
     // 路由 Store
