@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-  import Menu from '@/layout/components/Menu/index.vue'
-  import Logo from '@/layout/components/Logo/index.vue'
-  import { useLayoutStore } from '@/store/modules/layout'
-  import { useRouteStore } from '@/store/modules/route'
-  import { computed } from 'vue'
+import Menu from '@/layout/components/Menu/index.vue'
+import Logo from '@/layout/components/Logo/index.vue'
+import { useLayoutStore } from '@/store/modules/layout'
+import { useRouteStore } from '@/store/modules/route'
+import { computed } from 'vue'
 
-  defineOptions({ name: 'SideMode' })
-  const layoutStore = useLayoutStore()
-  const { sidebar } = layoutStore.$state
-  const routeStore = useRouteStore()
+defineOptions({ name: 'SideMode' })
+const layoutStore = useLayoutStore()
+const { sidebar } = layoutStore.$state
+const routeStore = useRouteStore()
 
-  const sideModeClass = computed(() => (sidebar.isCollapsedSidebar ? 'collapsed' : undefined))
+const sideModeClass = computed(() => sidebar.isCollapsedSidebar ? 'collapsed' : undefined)
 </script>
 
 <template>
@@ -30,22 +30,22 @@
 </template>
 
 <style lang="less" scoped>
-  .sideMode {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: 0.2s ease-in-out;
-    border-right: 1px solid @divider;
-    width: @sidebarWidth;
+.sideMode {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: 0.2s ease-in-out;
+  border-right: 1px solid @divider;
+  width: @sidebarWidth;
 
-    &.collapsed {
-      width: @collapsedSidebarWidth;
-    }
-
-    &-scroll {
-      flex: 1;
-      overflow: auto;
-    }
+  &.collapsed {
+    width: @collapsedSidebarWidth;
   }
+
+  &-scroll {
+    flex: 1;
+    overflow: auto;
+  }
+}
 </style>

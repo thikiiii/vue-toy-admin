@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import { useLoginContext } from '@/views/login/useLoginContext'
+import { useLoginContext } from '@/views/login/useLoginContext'
 
-  defineOptions({ name: 'PhoneLogin' })
-  const loginContext = useLoginContext()
+defineOptions({ name: 'PhoneLogin' })
+const loginContext = useLoginContext()
 </script>
 
 <template>
@@ -18,7 +18,11 @@
       <n-button block size="large" type="primary"> 登录 </n-button>
     </n-form-item>
     <n-form-item>
-      <n-button block size="large" @click="loginContext.setAction('PasswordLogin')">
+      <n-button
+        block
+        size="large"
+        @click="loginContext.setAction('PasswordLogin')"
+      >
         返回
       </n-button>
     </n-form-item>

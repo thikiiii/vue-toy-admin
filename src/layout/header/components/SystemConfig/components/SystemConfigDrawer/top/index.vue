@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  import ContextMenu from '../components/ConfigMenu/index.vue'
-  import { useLayoutStore } from '@/store/modules/layout'
+import ContextMenu from '../components/ConfigMenu/index.vue'
+import { useLayoutStore } from '@/store/modules/layout'
 
-  defineOptions({ name: 'Top' })
-  const layoutStore = useLayoutStore()
-  const { header } = layoutStore.$state
+defineOptions({ name: 'Top' })
+const layoutStore = useLayoutStore()
+const { header } = layoutStore.$state
 </script>
 
 <template>
@@ -14,10 +14,18 @@
       <n-switch v-model:value="header.isFixedHeaderAndTabBar" />
     </context-menu>
     <context-menu label="头部高度">
-      <n-input-number size="small" step="10" v-model:value="header.headerHeight" />
+      <n-input-number
+        size="small"
+        step="10"
+        v-model:value="header.headerHeight"
+      />
     </context-menu>
     <context-menu label="标签栏高度">
-      <n-input-number size="small" step="10" v-model:value="header.tabBarHeight" />
+      <n-input-number
+        size="small"
+        step="10"
+        v-model:value="header.tabBarHeight"
+      />
     </context-menu>
     <context-menu label="显示标签栏">
       <n-switch v-model:value="header.tabBarVisible" />

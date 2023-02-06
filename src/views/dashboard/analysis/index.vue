@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-  defineOptions({ name: 'DashboardAnalysis' })
+defineOptions({ name: 'DashboardAnalysis' })
 </script>
 
 <template>
-  <div class="dashboardAnalysis"></div>
+  <div class="dashboardAnalysis" />
 </template>
 
 <style lang="less" scoped>
-  .dashboardAnalysis {
-    display: grid;
-  }
+.dashboardAnalysis {
+  display: grid;
+}
 </style>

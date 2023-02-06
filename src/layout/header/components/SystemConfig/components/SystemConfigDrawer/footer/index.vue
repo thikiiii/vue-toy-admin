@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  import ContextMenu from '../components/ConfigMenu/index.vue'
-  import { useLayoutStore } from '@/store/modules/layout'
+import ContextMenu from '../components/ConfigMenu/index.vue'
+import { useLayoutStore } from '@/store/modules/layout'
 
-  defineOptions({ name: 'Footer' })
-  const layoutStore = useLayoutStore()
-  const { footer } = layoutStore.$state
+defineOptions({ name: 'Footer' })
+const layoutStore = useLayoutStore()
+const { footer } = layoutStore.$state
 </script>
 
 <template>
@@ -17,7 +17,11 @@
       <n-switch v-model:value="footer.isFixedFooter" />
     </context-menu>
     <context-menu label="底部高度">
-      <n-input-number size="small" step="10" v-model:value="footer.footerHeight" />
+      <n-input-number
+        size="small"
+        step="10"
+        v-model:value="footer.footerHeight"
+      />
     </context-menu>
   </n-space>
 </template>

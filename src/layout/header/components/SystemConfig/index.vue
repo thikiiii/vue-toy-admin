@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  import IconHoverContainer from '../IconHoverContainer/index.vue'
-  import SystemConfigDrawer from './components/SystemConfigDrawer/index.vue'
-  import { useToggle } from '@vueuse/core'
+import IconHoverContainer from '../IconHoverContainer/index.vue'
+import SystemConfigDrawer from './components/SystemConfigDrawer/index.vue'
+import { useToggle } from '@vueuse/core'
 
-  defineOptions({ name: 'SystemConfig' })
-  const [drawerVisible] = useToggle()
+defineOptions({ name: 'SystemConfig' })
+const [ drawerVisible ] = useToggle()
 </script>
 
 <template>

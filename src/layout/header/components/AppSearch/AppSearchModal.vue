@@ -1,105 +1,101 @@
 <script lang="ts" setup>
-  import { useRouteStore } from '@/store/modules/route'
-  import { reactive, toRefs, watch } from 'vue'
-  import { AppStorage } from '@/storage/app'
-  import { appSearchKeyPrompt, handleResult, searchMenus } from './utils'
-  import { useRouter } from 'vue-router'
-  import { useDebounceFn, useEventListener, useVModel } from '@vueuse/core'
-  import { RouterHelpers } from '@/router/helpers'
+import { useRouteStore } from '@/store/modules/route'
+import { reactive, toRefs, watch } from 'vue'
+import { AppStorage } from '@/storage/app'
+import { appSearchKeyPrompt, handleResult, searchMenus } from './utils'
+import { useRouter } from 'vue-router'
+import { useDebounceFn, useEventListener, useVModel } from '@vueuse/core'
+import { RouterHelpers } from '@/router/helpers'
 
-  // 菜单搜索历史记录
-  export interface AppMenuSearchHistoryRecord {
-    icon: string
-    menuNameList: string[]
-    path: string
-  }
+// 菜单搜索历史记录
+export interface AppMenuSearchHistoryRecord {
+  icon: string
+  menuNameList: string[]
+  path: string
+}
 
-  interface Props {
-    // 可见
-    visible: boolean
-  }
+interface Props {
+  // 可见
+  visible: boolean
+}
 
-  interface Emits {
-    (e: 'update:visible', isShow: boolean): void
-  }
+interface Emits {
+  (e: 'update:visible', isShow: boolean): void
+}
 
-  interface State {
-    // 搜索内容
-    searchText: string
-    // 搜索结果
-    searchResults: AppMenuSearchHistoryRecord[]
-    // 激活（默认激活索引0）
-    active: number
-  }
+interface State {
+  // 搜索内容
+  searchText: string
+  // 搜索结果
+  searchResults: AppMenuSearchHistoryRecord[]
+  // 激活（默认激活索引0）
+  active: number
+}
 
-  defineOptions({ name: 'AppSearchModal' })
-  const props = withDefaults(defineProps<Props>(), { visible: false })
-  const emit = defineEmits<Emits>()
+defineOptions({ name: 'AppSearchModal' })
+const props = withDefaults(defineProps<Props>(), { visible: false })
+const emit = defineEmits<Emits>()
 
-  const router = useRouter()
-  const routeStore = useRouteStore()
+const router = useRouter()
+const routeStore = useRouteStore()
 
-  const visible = useVModel(props, 'visible', emit)
+const visible = useVModel(props, 'visible', emit)
 
-  const state: State = reactive({
+const state: State = reactive({
     searchText: '',
     searchResults: [],
-    active: 0,
-  })
+    active: 0
+})
 
-  // 跳转到菜单
-  const jumpToMenu = (resultItem: AppMenuSearchHistoryRecord) => {
+// 跳转到菜单
+const jumpToMenu = (resultItem: AppMenuSearchHistoryRecord) => {
     // 如果是外链就打开外链，不是就跳转路由
-    RouterHelpers.isExternalLink(resultItem.path)
-      ? RouterHelpers.openTheLink(resultItem.path)
-      : router.push(resultItem.path)
+    RouterHelpers.isExternalLink(resultItem.path) ? RouterHelpers.openTheLink(resultItem.path) : router.push(resultItem.path)
     AppStorage.addSearchHistory(resultItem)
     emit('update:visible', false)
-  }
+}
 
-  // 清空历史记录
-  const clearSearchHistory = () => {
+// 清空历史记录
+const clearSearchHistory = () => {
     AppStorage.clearSearchHistory()
     if (!state.searchText.length && !state.searchResults.length) state.searchResults = []
-  }
+}
 
-  // 处理键盘事件
-  const handleKeyboardEvents = (event: KeyboardEvent) => {
+// 处理键盘事件
+const handleKeyboardEvents = (event: KeyboardEvent) => {
     const length = state.searchResults.length
     if (!length) return
     switch (event.code) {
-      case 'ArrowUp':
-        state.active === 0 ? (state.active = length - 1) : (state.active -= 1)
-        break
-      case 'ArrowDown':
-        state.active === length - 1 ? (state.active = 0) : (state.active += 1)
-        break
-      case 'Enter':
-        jumpToMenu(state.searchResults[state.active])
-        break
+        case 'ArrowUp':
+            state.active === 0 ? (state.active = length - 1) : (state.active -= 1)
+            break
+        case 'ArrowDown':
+            state.active === length - 1 ? (state.active = 0) : (state.active += 1)
+            break
+        case 'Enter':
+            jumpToMenu(state.searchResults[state.active])
+            break
     }
-  }
+}
 
-  watch(
+watch(
     () => state.searchText,
     useDebounceFn(() => {
-      const text = state.searchText
-      state.searchResults = !text
-        ? AppStorage.getSearchHistory() || []
-        : handleResult(searchMenus(text, routeStore.menus))
-      state.active = 0
-    }, 200),
-  )
+        const text = state.searchText
+        state.searchResults = !text ? AppStorage.getSearchHistory() || [] : handleResult(searchMenus(text, routeStore.menus))
+        state.active = 0
+    }, 200)
+)
 
-  watch(visible, () => {
+watch(visible, () => {
     if (!visible.value) return
     state.searchResults = AppStorage.getSearchHistory()
     state.searchText = ''
     state.active = 0
     useEventListener(window, 'keyup', handleKeyboardEvents)
-  })
+})
 
-  const { searchText, searchResults, active } = toRefs(state)
+const { searchText, searchResults, active } = toRefs(state)
 </script>
 <template>
   <n-modal v-model:show="visible">
@@ -111,7 +107,12 @@
       role="dialog"
       size="large"
     >
-      <n-input v-model:value.trim="searchText" clearable placeholder="搜索菜单..." size="large">
+      <n-input
+        v-model:value.trim="searchText"
+        clearable
+        placeholder="搜索菜单..."
+        size="large"
+      >
         <template #suffix>
           <icon icon="mdi:magnify" />
         </template>
@@ -177,72 +178,73 @@
 </template>
 
 <style lang="less" scoped>
-  .appSearch {
-    width: 600px;
+.appSearch {
+  width: 600px;
 
-    &-list {
-      width: 100%;
-      max-height: 400px;
-      overflow: auto;
-      margin-top: 10px;
-      padding: 10px 10px 0 10px;
+  &-list {
+    width: 100%;
+    max-height: 400px;
+    overflow: auto;
+    margin-top: 10px;
+    padding: 10px 10px 0 10px;
 
-      :deep(.n-card) {
-        margin-bottom: 5px;
-        transition: none;
+    :deep(.n-card) {
+      margin-bottom: 5px;
+      transition: none;
 
-        .n-card__content {
-          width: 100%;
-        }
-
-        &.active {
-          background: @theme;
-          color: white;
-        }
+      .n-card__content {
+        width: 100%;
       }
 
-      &-item {
-        display: flex;
-        justify-content: space-between;
-        cursor: pointer;
-
-        &-name {
-          display: flex;
-          align-items: center;
-          flex: 1;
-        }
-
-        span {
-          display: flex;
-          align-items: center;
-        }
-
-        &-icon {
-          margin-right: 10px;
-        }
+      &.active {
+        background: @theme;
+        color: white;
       }
     }
 
-    &-footer {
+    &-item {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      cursor: pointer;
 
-      &-prompt {
+      &-name {
         display: flex;
         align-items: center;
-        gap: 20px;
+        flex: 1;
+      }
 
-        &-key {
-          display: flex;
-          align-items: center;
-          gap: 5px;
+      span {
+        display: flex;
+        align-items: center;
+      }
 
-          &-icon {
-            box-shadow: inset 0 -2px #cdcde6, inset 0 0 1px 1px #fff, 0 1px 2px 1px #1e235a66;
-          }
+      &-icon {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  &-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-prompt {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      &-key {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        &-icon {
+          box-shadow: inset 0 -2px #cdcde6, inset 0 0 1px 1px #fff,
+            0 1px 2px 1px #1e235a66;
         }
       }
     }
   }
+}
 </style>

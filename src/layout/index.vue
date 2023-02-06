@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-  import { useLayoutStore } from '@/store/modules/layout'
-  import LayoutHeader from '@/layout/header/index.vue'
-  import LayoutMain from '@/layout/main/index.vue'
-  import LayoutSidebar from '@/layout/sidebar/index.vue'
-  import LayoutTabBar from '@/layout/tabBar/index.vue'
-  import LayoutFooter from '@/layout/footer/index.vue'
+import { useLayoutStore } from '@/store/modules/layout'
+import LayoutHeader from '@/layout/header/index.vue'
+import LayoutMain from '@/layout/main/index.vue'
+import LayoutSidebar from '@/layout/sidebar/index.vue'
+import LayoutTabBar from '@/layout/tabBar/index.vue'
+import LayoutFooter from '@/layout/footer/index.vue'
 
-  defineOptions({ name: 'Layout' })
+defineOptions({ name: 'Layout' })
 
-  const layoutStore = useLayoutStore()
+const layoutStore = useLayoutStore()
 
-  const { header, footer } = layoutStore.$state
+const { header, footer } = layoutStore.$state
 </script>
 
 <template>
@@ -31,26 +31,26 @@
 </template>
 
 <style lang="less" scoped>
-  .layout {
-    width: 100vw;
-    height: 100vh;
+.layout {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+
+  &-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
     display: flex;
-    overflow: hidden;
-
-    &-scroll {
-      flex: 1;
-      overflow-y: auto;
-      overflow-x: hidden;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .fixed {
-      position: sticky;
-      top: 0;
-      left: 0;
-      z-index: 10;
-    }
+    flex-direction: column;
   }
+
+  .fixed {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+}
 </style>

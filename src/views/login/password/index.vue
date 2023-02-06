@@ -11,33 +11,33 @@ const authStore = useAuthStore()
 const { setAction } = useLoginContext()
 const formRef = ref<InstanceType<typeof NForm> | null>()
 const form = reactive({
-  username: 'admin',
-  password: '123456',
+    username: 'admin',
+    password: '123456'
 })
 
 const rules: FormRules = reactive({
-  username: [
-    {
-      required: true,
-      message: '请输入用户名',
-      trigger: 'blur',
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: '请输入密码',
-      trigger: 'blur',
-    },
-  ],
+    username: [
+        {
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur'
+        }
+    ],
+    password: [
+        {
+            required: true,
+            message: '请输入密码',
+            trigger: 'blur'
+        }
+    ]
 })
 
 // 处理登录
 const handleLogin = () => {
-  formRef.value?.validate(async errors => {
-    if (errors) return
-    await authStore.handleLogin(LoginMethod.Password, form)
-  })
+    formRef.value?.validate(async errors => {
+        if (errors) return
+        await authStore.handleLogin(LoginMethod.Password, form)
+    })
 }
 </script>
 

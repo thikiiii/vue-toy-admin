@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-  import AppSearchModal from './AppSearchModal.vue'
-  import IconHoverContainer from '../IconHoverContainer/index.vue'
-  import { useToggle } from '@vueuse/core'
+import AppSearchModal from './AppSearchModal.vue'
+import IconHoverContainer from '../IconHoverContainer/index.vue'
+import { useToggle } from '@vueuse/core'
 
-  defineOptions({ name: 'AppSearch' })
+defineOptions({ name: 'AppSearch' })
 
-  const [visibleModal] = useToggle()
+const [ visibleModal ] = useToggle()
 </script>
 
 <template>
